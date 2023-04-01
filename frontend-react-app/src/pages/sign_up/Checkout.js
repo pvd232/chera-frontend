@@ -1,0 +1,79 @@
+import LocalStorageManager from '../../helpers/LocalStorageManager.js';
+import Grid from '@mui/material/Grid';
+import { useState } from 'react';
+import DeliveryInfo from './DeliveryInfo';
+import APIClient from '../../helpers/APIClient';
+import DiscountOrderSummary from './discount_order_summary/DiscountOrderSummary';
+
+const Checkout = (props) => {
+  const [editAddress, setEditAddress] = useState(
+    // if the client secret exists then this page is being rerendered and the address has already been inputted and is not being edited
+    true
+  );
+  const handleSubmit = async (newClient) => {
+    const subscriptionData = await APIClient.createStripeSubscription(
+      props.scheduleMeals.length,
+      newClient.id,
+      LocalStorageManager.shared.discount
+        ? LocalStorageManager.shared.discount.code
+        : '',
+      props.stagedClient.mealsPrepaid ? true : false
+    );
+    newClient.stripeId = subscriptionData.client_stripe_id;
+    props.setClient(newClient);
+    props.setClientSecret(subscriptionData.client_secret);
+    props.setStripeSubscriptionId(subscriptionData.stripe_subscription_id);
+    props.updateTaskIndex();
+  };
+
+  return (
+    <Grid
+      container
+      justifyContent={'center'}
+      marginBottom={'10vh'}
+      marginTop={'5vh'}
+      columnGap={3}
+      rowGap={3}
+    >
+      <Grid
+        item
+        container
+        justifyContent={
+          props.stagedClient.mealsPrepaid ? 'center' : 'flex-start'
+        }
+        md={props.stagedClient.mealsPrepaid ? '' : 7}
+        lg={props.stagedClient.mealsPrepaid ? '' : 5}
+      >
+        {/* Address and Phone Number */}
+        <DeliveryInfo
+          updateEditAddress={() => {
+            setEditAddress((prevEditAddress) => !prevEditAddress);
+          }}
+          editAddress={editAddress}
+          handleSubmit={(newClient) => handleSubmit(newClient)}
+          clientPassword={props.clientPassword}
+          stagedClientId={props.stagedClient.id}
+          dietitianId={props.stagedClient.dietitianId}
+          mealPlanId={props.stagedClient.mealPlanId}
+        />
+      </Grid>
+      {!props.stagedClient.mealsPrepaid ? (
+        <Grid item container lg={5} md={4}>
+          <DiscountOrderSummary
+            stagedClientId={props.stagedClient.id}
+            shippingCost={props.shippingCost}
+            scheduleMeals={props.scheduleMeals}
+            dietitianPrepaying={false}
+            setOrderDiscount={(orderDiscount) =>
+              props.setOrderDiscount(orderDiscount)
+            }
+            setDiscountCode={(discount) => props.setDiscountCode(discount)}
+          />
+        </Grid>
+      ) : (
+        <></>
+      )}
+    </Grid>
+  );
+};
+export default Checkout;

@@ -1,0 +1,34 @@
+
+.performance-facts {
+  border: 1px solid black;
+  float: left;
+  width: 300px;
+  padding: 0.5rem;
+}
+.performance-facts__title {
+  font-weight: bold;
+  font-size: 1.7rem;
+}
+.performance-facts__header {
+  border-bottom: 10px solid black;
+  padding: 0 0.25rem 0.25rem 0;
+ 
+}
+
+.small-info {
+  font-size: 0.7rem;
+}
+
+
+
+
+
+.text-center {
+  text-align: center;
+}
+.thick-end {
+  border-bottom: 10px solid black;
+}
+.thin-end {
+  border-bottom: 1px solid black;
+}

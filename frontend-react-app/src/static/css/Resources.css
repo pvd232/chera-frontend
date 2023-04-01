@@ -1,0 +1,10 @@
+.hoverLink:hover{
+    opacity:0.5;
+    cursor: pointer;
+}
+.hoverLink{
+    opacity:1.0;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
