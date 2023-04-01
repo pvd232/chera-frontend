@@ -1,10 +1,10 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
+const webpack = require('webpack');
+const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const path = require('path');
-const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
@@ -16,9 +16,26 @@ module.exports = {
     filename: 'js/[name].[contenthash:8].js',
     chunkFilename: 'js/[name].[contenthash:8].chunk.js',
     assetModuleFilename: 'media/[name].[hash][ext]',
+    sourceMapFilename: 'js/[name].[contenthash:8].js.map',
     // path: path.resolve(__dirname, '..', 'flask-server', 'static', 'react'),
     path: path.resolve(__dirname, '..', 'build'),
     clean: true,
+  },
+  devServer: {
+    static: [
+      {
+        directory: path.resolve(__dirname, '..', 'build'),
+      },
+      {
+        directory: path.resolve(__dirname, '..', 'build', 'css'),
+      },
+      {
+        directory: path.resolve(__dirname, '..', 'build', 'js'),
+      },
+      {
+        directory: path.resolve(__dirname, '..', 'build', 'media'),
+      },
+    ],
   },
   module: {
     rules: [
@@ -84,7 +101,6 @@ module.exports = {
             minifyCSS: true,
             minifyURLs: true,
           },
-          chunks: 'all',
         }
       )
     ),
@@ -94,16 +110,28 @@ module.exports = {
       chunkFilename: 'css/[name].[contenthash:8].css',
     }),
     new CompressionPlugin({
-      filename: '[path][base].gz',
+      filename: '[path][base].gz[query]',
       algorithm: 'gzip',
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0.8,
+      exclude: /.map$/,
+      deleteOriginalAssets: 'keep-source-map',
+    }),
+    new CompressionPlugin({
+      filename: '[path][base].br[query]',
+      algorithm: 'brotliCompress',
+      test: /\.(js|css|html|svg)$/,
+      threshold: 10240,
+      minRatio: 0.8,
+      exclude: /.map$/,
+      deleteOriginalAssets: 'keep-source-map',
     }),
   ],
 
   optimization: {
     splitChunks: {
+      chunks: 'all',
       cacheGroups: {
         styles: {
           name: 'styles',

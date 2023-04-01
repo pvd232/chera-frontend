@@ -11,7 +11,7 @@ RUN npm i
 RUN npm run build
 
 # server environment
-FROM nginx:alpine
+FROM fholzer/nginx-brotli:v1.21.6
 COPY nginx.conf /etc/nginx/conf.d/configfile.template
 
 COPY --from=react-build /app/build /usr/share/nginx/html

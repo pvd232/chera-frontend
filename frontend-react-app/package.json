@@ -31,6 +31,7 @@
     "webpack-cli": "^5.0.1"
   },
   "scripts": {
+    "start-build": "webpack serve --config webpack.prod.js --host localhost --port 8080 --open",
     "start": "react-scripts start",
     "build": "webpack --config webpack.prod.js",
     "test": "react-scripts test --watchAll=false --bail",
