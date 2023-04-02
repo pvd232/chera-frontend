@@ -116,7 +116,7 @@ module.exports = {
       threshold: 10240,
       minRatio: 0.8,
       exclude: /.map$/,
-      deleteOriginalAssets: 'keep-source-map',
+      // deleteOriginalAssets: 'keep-source-map',
     }),
     new CompressionPlugin({
       filename: '[path][base].br[query]',
@@ -125,7 +125,7 @@ module.exports = {
       threshold: 10240,
       minRatio: 0.8,
       exclude: /.map$/,
-      deleteOriginalAssets: 'keep-source-map',
+      // deleteOriginalAssets: 'keep-source-map',
     }),
   ],
 
