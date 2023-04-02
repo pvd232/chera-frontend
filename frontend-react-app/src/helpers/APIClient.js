@@ -277,7 +277,8 @@ class APIClient {
   }
   async authenticateDietitian(credentials) {
     const requestUrl = this.baseUrl + `/dietitian/authenticate`;
-
+    console.log('requestUrl', requestUrl);
+    console.log('window.location.host', window.location.host);
     const requestHeaders = new Headers();
     requestHeaders.set(
       'Authorization',
@@ -296,6 +297,8 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
+    console.log('response', response);
+
     // Dietitian failed to authenticate
     if (response.status === 401) {
       return false;
