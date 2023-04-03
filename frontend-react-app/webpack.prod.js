@@ -13,8 +13,8 @@ module.exports = {
   entry: './src/index.js',
   devtool: 'source-map',
   output: {
-    filename: 'js/[name].[contenthash:8].js',
-    chunkFilename: 'js/[name].[contenthash:8].chunk.js',
+    filename: 'js/[name].js',
+    chunkFilename: 'js/[name].chunk.js',
     assetModuleFilename: 'media/[name].[hash][ext]',
     sourceMapFilename: 'js/[name].[contenthash:8].js.map',
     path: path.resolve(__dirname, '..', 'build'),
@@ -105,26 +105,24 @@ module.exports = {
     ),
 
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[contenthash:8].css',
-      chunkFilename: 'css/[name].[contenthash:8].css',
+      filename: 'css/[name].css',
+      chunkFilename: 'css/[name].chunk.css',
     }),
-    // new CompressionPlugin({
-    //   filename: '[path][base].gz[query]',
-    //   algorithm: 'gzip',
-    //   test: /\.js$|\.css$|\.html$/,
-    //   threshold: 10240,
-    //   minRatio: 0.8,
-    //   exclude: /.map$/,
-    //   // deleteOriginalAssets: 'keep-source-map',
-    // }),
     new CompressionPlugin({
-      filename: '[path][base].br[query]',
+      filename: '[path][base]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0.8,
+      exclude: /.map$/,
+    }),
+    new CompressionPlugin({
+      filename: '[path][base]',
       algorithm: 'brotliCompress',
       test: /\.(js|css|html|svg)$/,
       threshold: 10240,
       minRatio: 0.8,
       exclude: /.map$/,
-      deleteOriginalAssets: 'keep-source-map',
     }),
   ],
 
