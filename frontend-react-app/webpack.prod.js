@@ -13,10 +13,10 @@ module.exports = {
   entry: './src/index.js',
   devtool: 'source-map',
   output: {
-    filename: 'js/[name].js',
-    chunkFilename: 'js/[name].chunk.js',
-    assetModuleFilename: 'media/[name].[hash][ext]',
-    sourceMapFilename: 'js/[name].[contenthash:8].js.map',
+    filename: 'js/[name].[contenthash].bundle.js',
+    chunkFilename: 'js/[name].[contenthash].chunk.js',
+    assetModuleFilename: 'media/[name].[contenthash][ext]',
+    sourceMapFilename: 'js/[name].[contenthash].js.map',
     path: path.resolve(__dirname, '..', 'build'),
     clean: true,
   },
@@ -25,15 +25,15 @@ module.exports = {
       {
         directory: path.resolve(__dirname, '..', 'build'),
       },
-      {
-        directory: path.resolve(__dirname, '..', 'build', 'css'),
-      },
-      {
-        directory: path.resolve(__dirname, '..', 'build', 'js'),
-      },
-      {
-        directory: path.resolve(__dirname, '..', 'build', 'media'),
-      },
+      // {
+      //   directory: path.resolve(__dirname, '..', 'build', 'css'),
+      // },
+      // {
+      //   directory: path.resolve(__dirname, '..', 'build', 'js'),
+      // },
+      // {
+      //   directory: path.resolve(__dirname, '..', 'build', 'media'),
+      // },
     ],
   },
   module: {
@@ -109,32 +109,30 @@ module.exports = {
       chunkFilename: 'css/[name].chunk.css',
     }),
     new CompressionPlugin({
-      filename: '[path][base]',
-      algorithm: 'gzip',
-      test: /\.js$|\.css$|\.html$/,
-      threshold: 10240,
-      minRatio: 0.8,
-      exclude: /.map$/,
-    }),
-    new CompressionPlugin({
-      filename: '[path][base]',
+      filename: '[path][base].br',
       algorithm: 'brotliCompress',
       test: /\.(js|css|html|svg)$/,
-      threshold: 10240,
+      threshold: 2440,
       minRatio: 0.8,
       exclude: /.map$/,
     }),
   ],
 
   optimization: {
+    moduleIds: 'deterministic',
+    runtimeChunk: 'single',
     splitChunks: {
       chunks: 'all',
       cacheGroups: {
-        styles: {
-          name: 'styles',
-          type: 'css/mini-extract',
+        common: {
+          test: /[\\/]src[\\/]reusable_ui_components[\\/]/,
           chunks: 'all',
-          enforce: true,
+          minSize: 0,
+        },
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
         },
       },
     },
