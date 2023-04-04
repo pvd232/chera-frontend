@@ -25,15 +25,6 @@ module.exports = {
       {
         directory: path.resolve(__dirname, '..', 'build'),
       },
-      // {
-      //   directory: path.resolve(__dirname, '..', 'build', 'css'),
-      // },
-      // {
-      //   directory: path.resolve(__dirname, '..', 'build', 'js'),
-      // },
-      // {
-      //   directory: path.resolve(__dirname, '..', 'build', 'media'),
-      // },
     ],
   },
   module: {
@@ -112,7 +103,7 @@ module.exports = {
       filename: '[path][base].br',
       algorithm: 'brotliCompress',
       test: /\.(js|css|html|svg)$/,
-      threshold: 2440,
+      threshold: 10240,
       minRatio: 0.8,
       exclude: /.map$/,
     }),
@@ -133,6 +124,7 @@ module.exports = {
           test: /[\\/]node_modules[\\/]/,
           name: 'vendors',
           chunks: 'all',
+          enforce: true,
         },
       },
     },
