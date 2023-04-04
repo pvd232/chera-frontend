@@ -110,6 +110,16 @@ class LocalStorageManager {
       { id: 'oz', ounces: 1.0 },
     ];
   }
+
+  get savedMealBuilderMeal() {
+    return this.getItem('saved_meal_builder_meal');
+  }
+  set savedMealBuilderMeal(newMeal) {
+    this.setItem('saved_meal_builder_meal', newMeal);
+  }
+  deleteSavedMealBuilderMeal() {
+    this.removeItem('saved_meal_builder_meal');
+  }
   logoutUser = () => {
     localStorage.clear();
   };

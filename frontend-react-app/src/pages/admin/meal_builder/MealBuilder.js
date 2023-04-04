@@ -11,10 +11,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import BlackButton from '../../../reusable_ui_components/BlackButton';
 import RowBorder from '../../dietitian/dietitian_menu/nutrition_details/RowBorder';
-import ExtendedUSDAIngredientDTO from '../../../data_models/dto/ExtendedUSDAIngredientDTO';
-import ExtendedUSDAIngredient from '../../../data_models/model/ExtendedUSDAIngredient';
-import USDAIngredientPortionDTOFactory from '../../../data_models/factories/dto/ExtendedUSDAIngredientDTOFactory';
-import USDAIngredientPortionFactory from '../../../data_models/factories/model/USDAIngredientPortionFactory';
 import capitalize from '../../../helpers/capitalize';
 import IngredientRow from './IngredientRow';
 import { v4 as uuid } from 'uuid';
@@ -24,68 +20,58 @@ import MealPlanMealDTO from '../../../data_models/dto/MealPlanMealDTO';
 import RecipeIngredientDTO from '../../../data_models/dto/RecipeIngredientDTO';
 import createMealData from './helpers/createMealData';
 import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
-// import
+import MealCard from './MealCard';
+import updateUSDAIngredients from './helpers/updateUSDAIngredients';
+import { CircularProgress } from '@mui/material';
 const MealBuilder = () => {
-  const [mealName, setMealName] = useState('');
-  const [mealTime, setMealTime] = useState('');
-  const [mealDescription, setMealDescription] = useState('');
+  const [mealName, setMealName] = useState(
+    LocalStorageManager.shared.savedMealBuilderMeal
+      ? LocalStorageManager.shared.savedMealBuilderMeal.mealName
+      : ''
+  );
+  const [mealTime, setMealTime] = useState(
+    LocalStorageManager.shared.savedMealBuilderMeal
+      ? LocalStorageManager.shared.savedMealBuilderMeal.mealTime
+      : ''
+  );
+  const [mealDescription, setMealDescription] = useState(
+    LocalStorageManager.shared.savedMealBuilderMeal
+      ? LocalStorageManager.shared.savedMealBuilderMeal.mealDescription
+      : ''
+  );
   const [mealPrice, setMealPrice] = useState(0);
-  const [isVegetarian, setIsVegetarian] = useState(false);
+  const [isVegetarian, setIsVegetarian] = useState(
+    LocalStorageManager.shared.savedMealBuilderMeal
+      ? LocalStorageManager.shared.savedMealBuilderMeal.isVegetarian
+      : false
+  );
+  const [imageUrl, setImageUrl] = useState(
+    LocalStorageManager.shared.savedMealBuilderMeal
+      ? LocalStorageManager.shared.savedMealBuilderMeal.imageUrl
+      : ''
+  );
+  const [mealIngredients, setMealIngredients] = useState(
+    LocalStorageManager.shared.savedMealBuilderMeal
+      ? LocalStorageManager.shared.savedMealBuilderMeal.mealIngredients
+      : []
+  );
   const [dietaryRestrictions, setDietaryRestrictions] = useState([]);
-  const [imageUrl, setImageUrl] = useState('');
-  const [mealIngredients, setMealIngredients] = useState([]);
+
   const [extendedUsdaIngredients, setExtendedUsdaIngredients] = useState([]);
   const [mealPlans, setMealPlans] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [saveButtonLoading, setSaveButtonLoading] = useState(false);
 
   useEffect(() => {
     let mounted = true;
-    APIClient.getExtendedUSDAIngredients().then(
-      (extendedUSDAIngredientData) => {
-        // Map out the USDA ingredients and add the portions to the object
-        const extendedUSDAIngredientDTOs = extendedUSDAIngredientData.map(
-          (ingredient) => {
-            return new ExtendedUSDAIngredientDTO(
-              ingredient,
-              new USDAIngredientPortionDTOFactory()
-            );
-          }
-        );
-        const extendedUSDAIngredients = extendedUSDAIngredientDTOs.map(
-          (ingredient) => {
-            return new ExtendedUSDAIngredient(
-              ingredient,
-              new USDAIngredientPortionFactory()
-            );
-          }
-        );
-        extendedUSDAIngredients.sort((a, b) => {
-          return a.name.localeCompare(b.name);
-        });
-        const extendedIngredientsMap = new Map();
-        extendedUSDAIngredients.forEach((ingredient) => {
-          extendedIngredientsMap.set(ingredient.id, ingredient);
-        });
-        if (mounted) {
-          setExtendedUsdaIngredients(extendedIngredientsMap);
-        }
-      }
-    );
-    APIClient.getMealPrice().then((price) => {
-      if (mounted) {
-        setMealPrice(price);
-      }
+    updateUSDAIngredients({
+      mounted: mounted,
+      setExtendedUsdaIngredients: setExtendedUsdaIngredients,
+      setMealPrice: setMealPrice,
+      setDietaryRestrictions: setDietaryRestrictions,
+      setMealPlans: setMealPlans,
     });
-    APIClient.getDietaryRestrictions().then((dietaryRestrictions) => {
-      if (mounted) {
-        setDietaryRestrictions(dietaryRestrictions);
-      }
-    });
-    APIClient.getMealPlans().then((mealPlans) => {
-      if (mounted) {
-        setMealPlans(mealPlans);
-      }
-    });
+
     return () => (mounted = false);
   }, []);
 
@@ -134,7 +120,29 @@ const MealBuilder = () => {
     }
     setLoading(false);
     alert('Meal created!');
+    LocalStorageManager.shared.deleteSavedMealBuilderMeal();
     window.location.reload();
+  };
+  const handleSave = () => {
+    setSaveButtonLoading(true);
+    const mealBuilderMeal = {
+      mealName: mealName,
+      mealTime: mealTime,
+      mealDescription: mealDescription,
+      mealPrice: mealPrice,
+      isVegetarian: isVegetarian,
+      dietaryRestrictions: dietaryRestrictions,
+      imageUrl: imageUrl,
+      mealIngredients: mealIngredients,
+    };
+    LocalStorageManager.shared.savedMealBuilderMeal = mealBuilderMeal;
+    updateUSDAIngredients({
+      mounted: true,
+      setExtendedUsdaIngredients: setExtendedUsdaIngredients,
+      setMealPrice: setMealPrice,
+      setDietaryRestrictions: setDietaryRestrictions,
+      setMealPlans: setMealPlans,
+    }).then(() => setSaveButtonLoading(false));
   };
 
   const handleAddIngredient = (newIngredient) => {
@@ -178,6 +186,15 @@ const MealBuilder = () => {
                     {'Meal Builder :)'}
                   </Typography>
                 </Grid>
+                <Grid container justifyContent={'flex-end'}>
+                  <BlackButton onClick={handleSave}>
+                    {saveButtonLoading ? (
+                      <CircularProgress size={24} />
+                    ) : (
+                      'Save'
+                    )}
+                  </BlackButton>
+                </Grid>
               </Grid>
               <Grid container item spacing={2}>
                 <Grid item xs={12}>
@@ -191,7 +208,13 @@ const MealBuilder = () => {
                     name="mealName"
                     multiline
                     value={mealName}
-                    onChange={(event) => setMealName(event.target.value)}
+                    onChange={(event) => {
+                      setMealName(event.target.value);
+                      setImageUrl(
+                        event.target.value.toLowerCase().split(' ').join('_') +
+                          '.jpg'
+                      );
+                    }}
                   />
                 </Grid>
 
@@ -231,7 +254,6 @@ const MealBuilder = () => {
                     name="imageURL"
                     multiline
                     value={imageUrl}
-                    onChange={(event) => setImageUrl(event.target.value)}
                   />
                 </Grid>
                 <Grid container item lg={1} alignItems="center">
@@ -273,6 +295,16 @@ const MealBuilder = () => {
                   }
                   extendedUSDAIngredients={extendedUsdaIngredients}
                 />
+              </Grid>
+              <Grid container justifyContent={'center'} paddingTop={4}>
+                <Grid item paddingBottom={2}>
+                  <MealCard
+                    mealName={mealName}
+                    mealTime={mealTime}
+                    mealDescription={mealDescription}
+                    imageUrl={imageUrl}
+                  />
+                </Grid>
               </Grid>
             </Grid>
           </Grid>

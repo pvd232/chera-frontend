@@ -5,7 +5,6 @@ import Typography from '@mui/material/Typography';
 import IngredientRow from './IngredientRow';
 import { FormControl } from '@mui/material';
 const MealPlanMealRow = (props) => {
-  console.log('props.mealPlanMeal', props.mealPlanMeal);
   const customTheme = useTheme();
   const handleUpdateIngredient = (ingredientIndex, newIngredient) => {
     props.updateIngredient(ingredientIndex, newIngredient);
