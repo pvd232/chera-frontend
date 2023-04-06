@@ -5,7 +5,6 @@ export default class USDAIngredientPortionDTO {
     this.usdaIngredientId = usdaIngredientPortionObject.usda_ingredient_id;
     this.fdaPortionId = usdaIngredientPortionObject.fda_portion_id;
     this.nonMetricUnit = usdaIngredientPortionObject.non_metric_unit;
-    this.unit = usdaIngredientPortionObject.unit;
     this.gramsPerNonMetricUnit =
       usdaIngredientPortionObject.grams_per_non_metric_unit;
     this.portionDescription = usdaIngredientPortionObject.portion_description;
@@ -19,7 +18,6 @@ export default class USDAIngredientPortionDTO {
       usda_ingredient_id: this.usdaIngredientId,
       fda_portion_id: this.fdaPortionId,
       non_metric_unit: this.nonMetricUnit,
-      unit: this.unit,
       grams_per_non_metric_unit: this.gramsPerNonMetricUnit,
       portion_description: this.portionDescription,
       is_imperial: this.isImperial,

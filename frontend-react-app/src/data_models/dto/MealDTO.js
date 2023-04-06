@@ -8,9 +8,6 @@ export default class MealDTO {
     this.imageUrl = mealObject.image_url;
     this.price = mealObject.price;
     this.active = mealObject.active;
-    // temporary image patch
-    this.imageUrl =
-      'https://storage.googleapis.com/meal-photos/bendito-small.png';
     this.properlyInitialized = (() => checkProperties(this))();
   }
   toJSON() {

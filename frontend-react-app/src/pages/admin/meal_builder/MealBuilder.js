@@ -23,37 +23,29 @@ import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularPr
 import MealCard from './MealCard';
 import updateUSDAIngredients from './helpers/updateUSDAIngredients';
 import { CircularProgress } from '@mui/material';
+import getMeal from './helpers/getMeal';
 const MealBuilder = () => {
+  const [mealPlanMeals, setMealPlanMeals] = useState([]);
+  const [selectedMealIndex, setSelectedMealIndex] = useState(0);
+  const [mealId, setMealId] = useState(false);
   const [mealName, setMealName] = useState(
-    LocalStorageManager.shared.savedMealBuilderMeal
-      ? LocalStorageManager.shared.savedMealBuilderMeal.mealName
-      : ''
+    getMeal(mealPlanMeals, selectedMealIndex).mealName
   );
   const [mealTime, setMealTime] = useState(
-    LocalStorageManager.shared.savedMealBuilderMeal
-      ? LocalStorageManager.shared.savedMealBuilderMeal.mealTime
-      : ''
+    getMeal(mealPlanMeals, selectedMealIndex).mealTime
   );
   const [mealDescription, setMealDescription] = useState(
-    LocalStorageManager.shared.savedMealBuilderMeal
-      ? LocalStorageManager.shared.savedMealBuilderMeal.mealDescription
-      : ''
+    getMeal(mealPlanMeals, selectedMealIndex).mealDescription
   );
   const [mealPrice, setMealPrice] = useState(0);
   const [isVegetarian, setIsVegetarian] = useState(
-    LocalStorageManager.shared.savedMealBuilderMeal
-      ? LocalStorageManager.shared.savedMealBuilderMeal.isVegetarian
-      : false
+    getMeal(mealPlanMeals, selectedMealIndex).isVegetarian
   );
   const [imageUrl, setImageUrl] = useState(
-    LocalStorageManager.shared.savedMealBuilderMeal
-      ? LocalStorageManager.shared.savedMealBuilderMeal.imageUrl
-      : ''
+    getMeal(mealPlanMeals, selectedMealIndex).imageUrl
   );
   const [mealIngredients, setMealIngredients] = useState(
-    LocalStorageManager.shared.savedMealBuilderMeal
-      ? LocalStorageManager.shared.savedMealBuilderMeal.mealIngredients
-      : []
+    getMeal(mealPlanMeals, selectedMealIndex).mealIngredients
   );
   const [dietaryRestrictions, setDietaryRestrictions] = useState([]);
 
@@ -70,22 +62,40 @@ const MealBuilder = () => {
       setMealPrice: setMealPrice,
       setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
+      setMealPlanMeals: setMealPlanMeals,
+      setSelectedMealIndex: setSelectedMealIndex,
     });
 
     return () => (mounted = false);
   }, []);
-
+  const handleUpdateMealIndex = (index) => {
+    setSelectedMealIndex(index);
+    setMealId(getMeal(mealPlanMeals, index).mealId);
+    setMealName(getMeal(mealPlanMeals, index).mealName);
+    setMealTime(getMeal(mealPlanMeals, index).mealTime);
+    setMealDescription(getMeal(mealPlanMeals, index).mealDescription);
+    setIsVegetarian(getMeal(mealPlanMeals, index).isVegetarian);
+    setImageUrl(getMeal(mealPlanMeals, index).imageUrl);
+    setMealIngredients(getMeal(mealPlanMeals, index).mealIngredients);
+  };
   const handleSubmit = async () => {
     setLoading(true);
-    const mealId = uuid();
+    if (mealId) {
+      // Delete old meal first
+      await APIClient.deleteMeal(mealId);
+    }
+
+    // Generate new meal id
+    const newMealId = uuid();
 
     const [newMealDTO, newMealDietaryRestrictionDTO] = createMealData(
-      mealId,
+      newMealId,
       dietaryRestrictions,
       mealName,
       mealTime,
       mealPrice,
       mealDescription,
+      imageUrl,
       isVegetarian
     );
     await APIClient.createMeal(newMealDTO);
@@ -99,7 +109,7 @@ const MealBuilder = () => {
     for (const mealPlan of mealPlans) {
       const mealPlanMealDTO = new MealPlanMealDTO({
         id: uuid(),
-        meal_id: mealId,
+        meal_id: newMealId,
         meal_plan_id: mealPlan.id,
         active: true,
       });
@@ -120,12 +130,12 @@ const MealBuilder = () => {
     }
     setLoading(false);
     alert('Meal created!');
-    LocalStorageManager.shared.deleteSavedMealBuilderMeal();
     window.location.reload();
   };
   const handleSave = () => {
     setSaveButtonLoading(true);
     const mealBuilderMeal = {
+      mealId: mealId,
       mealName: mealName,
       mealTime: mealTime,
       mealDescription: mealDescription,
@@ -142,6 +152,8 @@ const MealBuilder = () => {
       setMealPrice: setMealPrice,
       setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
+      setMealPlanMeals: setMealPlanMeals,
+      setSelectedMealIndex: setSelectedMealIndex,
     }).then(() => setSaveButtonLoading(false));
   };
 
@@ -195,6 +207,43 @@ const MealBuilder = () => {
                     )}
                   </BlackButton>
                 </Grid>
+                <Grid container justifyContent={'flex-end'} marginTop={2}>
+                  <Grid item lg={3} sx={{ textAlign: 'left' }}>
+                    <FormControl fullWidth>
+                      <InputLabel id="mealsLabel">Edit Meal</InputLabel>
+                      <Select
+                        labelId="mealsLabel"
+                        required
+                        label="Edit Meal"
+                        name="selectedMealIndex"
+                        value={selectedMealIndex}
+                        onChange={(event) => {
+                          handleUpdateMealIndex(event.target.value);
+                        }}
+                      >
+                        {mealPlanMeals.map((meal, i) => (
+                          <MenuItem key={i} value={i}>
+                            {capitalize(meal.mealName)}
+                          </MenuItem>
+                        ))}
+                        {
+                          <MenuItem value={mealPlanMeals.length}>
+                            {'New Meal'}
+                          </MenuItem>
+                        }
+                        {LocalStorageManager.shared.savedMealBuilderMeal && (
+                          <MenuItem value={mealPlanMeals.length + 1}>
+                            {'(Saved meal) ' +
+                              capitalize(
+                                LocalStorageManager.shared.savedMealBuilderMeal
+                                  .mealName
+                              )}
+                          </MenuItem>
+                        )}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
               </Grid>
               <Grid container item spacing={2}>
                 <Grid item xs={12}>
@@ -211,7 +260,12 @@ const MealBuilder = () => {
                     onChange={(event) => {
                       setMealName(event.target.value);
                       setImageUrl(
-                        event.target.value.toLowerCase().split(' ').join('_') +
+                        'https://storage.googleapis.com/chera_meal_photos/' +
+                          event.target.value
+                            .toLowerCase()
+                            .replace('&', 'and')
+                            .split(' ')
+                            .join('_') +
                           '.jpg'
                       );
                     }}
@@ -254,6 +308,7 @@ const MealBuilder = () => {
                     name="imageURL"
                     multiline
                     value={imageUrl}
+                    onChange={(event) => setImageUrl(event.target.value)}
                   />
                 </Grid>
                 <Grid container item lg={1} alignItems="center">
@@ -296,7 +351,7 @@ const MealBuilder = () => {
                   extendedUSDAIngredients={extendedUsdaIngredients}
                 />
               </Grid>
-              <Grid container justifyContent={'center'} paddingTop={4}>
+              <Grid container justifyContent={'center'} paddingTop={10}>
                 <Grid item paddingBottom={2}>
                   <MealCard
                     mealName={mealName}

@@ -2,7 +2,6 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import logoUrl from '../../../static/images/meal_photos/beef_&_broccoli_stir_fry.jpg';
 
 const MealCard = (props) => {
   return (
@@ -18,7 +17,7 @@ const MealCard = (props) => {
     >
       <CardMedia
         component="img"
-        src={logoUrl}
+        src={props.imageUrl}
         alt="green iguana"
         sx={{
           marginBottom: '20px',

@@ -9,6 +9,7 @@ export default function createMealData(
   mealTime,
   mealPrice,
   mealDescription,
+  imageUrl,
   isVegetarian
 ) {
   const newMealDietaryRestriction = (() => {
@@ -27,6 +28,7 @@ export default function createMealData(
     meal_time: mealTime,
     price: mealPrice,
     description: mealDescription,
+    image_url: imageUrl,
     active: true,
   });
   return [newMeal, newMealDietaryRestriction];

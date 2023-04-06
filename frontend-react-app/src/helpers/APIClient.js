@@ -714,6 +714,18 @@ class APIClient {
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
+  async deleteMeal(mealId) {
+    const requestUrl = this.baseUrl + `/meal/${mealId}`;
+
+    const requestParams = {
+      method: 'DELETE',
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
   async createRecipeIngredients(recipeIngredients) {
     const requestUrl = this.baseUrl + '/recipe_ingredient';
 
@@ -1084,23 +1096,10 @@ class APIClient {
     const mealPlanMealsData = await response.json();
     return mealPlanMealsData;
   }
-  async getMealPlanMeals() {
-    const requestUrl = this.baseUrl + '/meal_plan_meal';
 
-    const request = new Request(requestUrl);
-    const requestParams = {
-      method: 'GET',
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(request, requestParams);
-
-    const mealPlanMealsData = await response.json();
-    return mealPlanMealsData;
-  }
-  async getSpecificMealPlanMeals(mealPlanId) {
+  async getSpecificExtendedMealPlanMeals(mealPlanId) {
     const requestUrl =
-      this.baseUrl + `/meal_plan_meal?meal_plan_id=${mealPlanId}`;
+      this.baseUrl + `/extended_meal_plan_meal?meal_plan_id=${mealPlanId}`;
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -1112,8 +1111,8 @@ class APIClient {
     const mealPlanMealsData = await response.json();
     return mealPlanMealsData;
   }
+
   async updateRecipeIngredientNutrients(recipeIngredients) {
-    console.log('recipeIngredients', recipeIngredients);
     const requestUrl = this.baseUrl + '/recipe_ingredient_nutrient';
     const requestParams = {
       method: 'PUT',

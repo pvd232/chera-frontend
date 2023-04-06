@@ -4,7 +4,6 @@ export default class USDAIngredientPortion {
     this.id = portion.id;
     this.usdaIngredientId = portion.usdaIngredientId;
     this.nonMetricUnit = portion.nonMetricUnit;
-    this.unit = portion.unit;
     this.gramsPerNonMetricUnit = portion.gramsPerNonMetricUnit;
     this.portionDescription = portion.portionDescription;
     this.isImperial = portion.isImperial;
