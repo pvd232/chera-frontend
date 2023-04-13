@@ -28,25 +28,13 @@ const MealBuilder = () => {
   const [mealPlanMeals, setMealPlanMeals] = useState([]);
   const [selectedMealIndex, setSelectedMealIndex] = useState(0);
   const [mealId, setMealId] = useState(false);
-  const [mealName, setMealName] = useState(
-    getMeal(mealPlanMeals, selectedMealIndex).mealName
-  );
-  const [mealTime, setMealTime] = useState(
-    getMeal(mealPlanMeals, selectedMealIndex).mealTime
-  );
-  const [mealDescription, setMealDescription] = useState(
-    getMeal(mealPlanMeals, selectedMealIndex).mealDescription
-  );
+  const [mealName, setMealName] = useState('');
+  const [mealTime, setMealTime] = useState('');
+  const [mealDescription, setMealDescription] = useState('');
   const [mealPrice, setMealPrice] = useState(0);
-  const [isVegetarian, setIsVegetarian] = useState(
-    getMeal(mealPlanMeals, selectedMealIndex).isVegetarian
-  );
-  const [imageUrl, setImageUrl] = useState(
-    getMeal(mealPlanMeals, selectedMealIndex).imageUrl
-  );
-  const [mealIngredients, setMealIngredients] = useState(
-    getMeal(mealPlanMeals, selectedMealIndex).mealIngredients
-  );
+  const [isVegetarian, setIsVegetarian] = useState(false);
+  const [imageUrl, setImageUrl] = useState('');
+  const [mealIngredients, setMealIngredients] = useState([]);
   const [dietaryRestrictions, setDietaryRestrictions] = useState([]);
 
   const [extendedUsdaIngredients, setExtendedUsdaIngredients] = useState([]);
@@ -63,7 +51,6 @@ const MealBuilder = () => {
       setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
       setMealPlanMeals: setMealPlanMeals,
-      setSelectedMealIndex: setSelectedMealIndex,
     });
 
     return () => (mounted = false);
@@ -153,7 +140,6 @@ const MealBuilder = () => {
       setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
       setMealPlanMeals: setMealPlanMeals,
-      setSelectedMealIndex: setSelectedMealIndex,
     }).then(() => setSaveButtonLoading(false));
   };
 
@@ -218,19 +204,18 @@ const MealBuilder = () => {
                         name="selectedMealIndex"
                         value={selectedMealIndex}
                         onChange={(event) => {
+                          console.log('event.target.value', event.target.value);
                           handleUpdateMealIndex(event.target.value);
                         }}
                       >
+                        <MenuItem value={0} key={0}>
+                          {'New Meal'}
+                        </MenuItem>
                         {mealPlanMeals.map((meal, i) => (
-                          <MenuItem key={i} value={i}>
+                          <MenuItem key={i + 1} value={i + 1}>
                             {capitalize(meal.mealName)}
                           </MenuItem>
                         ))}
-                        {
-                          <MenuItem value={mealPlanMeals.length}>
-                            {'New Meal'}
-                          </MenuItem>
-                        }
                         {LocalStorageManager.shared.savedMealBuilderMeal && (
                           <MenuItem value={mealPlanMeals.length + 1}>
                             {'(Saved meal) ' +

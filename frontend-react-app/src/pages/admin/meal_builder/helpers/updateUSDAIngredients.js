@@ -12,7 +12,6 @@ export default async function updateUSDAIngredients({
   setDietaryRestrictions,
   setMealPlans,
   setMealPlanMeals,
-  setSelectedMealIndex,
 }) {
   const extendedUSDAIngredientData =
     await APIClient.getExtendedUSDAIngredients();
@@ -58,43 +57,42 @@ export default async function updateUSDAIngredients({
   const mealPlanMeals = await APIClient.getSpecificExtendedMealPlanMeals(
     mealPlans[4].id
   );
-  if (mounted) {
-    const mealsToReturn = [];
-    for (const extendedMealPlanMeal of mealPlanMeals) {
-      const mealIngredients = [];
-      for (const recipeIngredient of extendedMealPlanMeal.recipe) {
-        const extendedUSDAIngredient = {
-          ...extendedIngredientsMap.get(recipeIngredient.usda_ingredient_id),
-        };
-        const servingSize = extendedUSDAIngredient.portions.find(
-          (portion) =>
-            portion.id === recipeIngredient.usda_ingredient_portion_id
-        );
-        const recipeIngredientId = uuid();
-        const recipeIngredientItem =
-          RecipeIngredientItem.constructFromExtendedUSDAIngredient(
-            extendedUSDAIngredient,
-            recipeIngredientId
-          );
-        recipeIngredientItem.quantity = recipeIngredient.quantity;
-        recipeIngredientItem.usdaIngredientPortionId =
-          recipeIngredient.usda_ingredient_portion_id;
-        recipeIngredientItem.nonMetricUnit = servingSize.non_metric_unit;
-        mealIngredients.push(recipeIngredientItem);
-      }
-      const meal = {
-        mealId: extendedMealPlanMeal.associated_meal.id,
-        mealName: extendedMealPlanMeal.associated_meal.name,
-        mealTime: extendedMealPlanMeal.associated_meal.meal_time,
-        mealDescription: extendedMealPlanMeal.associated_meal.description,
-        isVegetarian:
-          extendedMealPlanMeal.associated_meal.dietary_restrictions.length > 0,
-        imageUrl: extendedMealPlanMeal.associated_meal.image_url,
-        mealIngredients: mealIngredients,
+  const mealsToReturn = [];
+  for (const extendedMealPlanMeal of mealPlanMeals) {
+    const mealIngredients = [];
+    for (const recipeIngredient of extendedMealPlanMeal.recipe) {
+      const extendedUSDAIngredient = {
+        ...extendedIngredientsMap.get(recipeIngredient.usda_ingredient_id),
       };
-      mealsToReturn.push(meal);
+      const servingSize = extendedUSDAIngredient.portions.find(
+        (portion) => portion.id === recipeIngredient.usda_ingredient_portion_id
+      );
+      const recipeIngredientId = uuid();
+      const recipeIngredientItem =
+        RecipeIngredientItem.constructFromExtendedUSDAIngredient(
+          extendedUSDAIngredient,
+          recipeIngredientId
+        );
+      recipeIngredientItem.quantity = recipeIngredient.quantity;
+      recipeIngredientItem.usdaIngredientPortionId =
+        recipeIngredient.usda_ingredient_portion_id;
+      recipeIngredientItem.nonMetricUnit = servingSize.non_metric_unit;
+      mealIngredients.push(recipeIngredientItem);
     }
+    const meal = {
+      mealId: extendedMealPlanMeal.associated_meal.id,
+      mealName: extendedMealPlanMeal.associated_meal.name,
+      mealTime: extendedMealPlanMeal.associated_meal.meal_time,
+      mealDescription: extendedMealPlanMeal.associated_meal.description,
+      isVegetarian:
+        extendedMealPlanMeal.associated_meal.dietary_restrictions.length > 0,
+      imageUrl: extendedMealPlanMeal.associated_meal.image_url,
+      mealIngredients: mealIngredients,
+    };
+    mealsToReturn.push(meal);
+  }
+  if (mounted) {
     setMealPlanMeals(mealsToReturn);
   }
-  return true;
+  return mealsToReturn;
 }

@@ -1,14 +1,14 @@
 # Build environment
 # Static React app
-FROM node:16.13.1-bullseye as react-build
+FROM node:19.9.0-alpine3.16 as react-build
 WORKDIR /app
 RUN mkdir -p /app/frontend-react-app
 ADD /frontend-react-app ./frontend-react-app
 # Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
 WORKDIR /app/frontend-react-app
-RUN npm i
+RUN yarn install --production
 # Build the app
-RUN npm run build
+RUN yarn run build
 
 # Server environment
 FROM ghcr.io/zvonimirsun/nginx:stable-alpine-brotli
