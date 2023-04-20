@@ -1,10 +1,10 @@
 # Build environment
 # Static React app
-FROM node:19.9.0-alpine3.16 as react-build
+FROM node:19.9.0-bullseye as react-build
 WORKDIR /app
 RUN mkdir -p /app/frontend-react-app
 ADD /frontend-react-app ./frontend-react-app
-# Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
+# Install dependencies 
 WORKDIR /app/frontend-react-app
 RUN yarn install --production
 # Build the app

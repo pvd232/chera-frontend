@@ -7,7 +7,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
-
 module.exports = {
   mode: 'production',
   entry: './src/index.js',
@@ -60,8 +59,10 @@ module.exports = {
           },
         },
       },
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
+      {
+        test: /\.(glsl|frag)$/i,
+        loader: '@davcri/webpack-glsl-loader',
+      },
     ],
   },
   plugins: [

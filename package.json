@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@pixi/filter-kawase-blur": "3.2.0"
+  }
+}

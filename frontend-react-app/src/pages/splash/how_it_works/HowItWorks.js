@@ -4,7 +4,13 @@ import LogisticsStep from './LogisticsStep';
 import ratioAdjustment from './helpers/ratioAdjustment';
 const HowItWorks = (props) => {
   return (
-    <Grid item container justifyContent={'center'} rowSpacing={5}>
+    <Grid
+      item
+      container
+      justifyContent={'center'}
+      rowSpacing={5}
+      sx={{ backgroundColor: 'white', opacity: '0.3' }}
+    >
       <Grid item xs={10}>
         <Typography
           sx={{

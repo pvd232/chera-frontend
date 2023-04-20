@@ -10,6 +10,7 @@ import WhyBendito from './WhyBendito';
 import BenditoIntro from './BenditoIntro';
 import FNCEApproved from './FNCEApproved';
 import DietitianSignUp from './dietitian_sign_up/DietitianSignUp';
+import BenditoIntroNew from './splash_orb/BenditoIntroNew';
 const Splash = () => {
   const customTheme = useTheme();
   const myRef = useRef();
@@ -24,7 +25,11 @@ const Splash = () => {
     >
       <Grid item xs={12}>
         {
-          <BenditoIntro
+          // <BenditoIntro
+          // executeScroll={executeScroll}
+          // customTheme={customTheme}
+          // />
+          <BenditoIntroNew
             executeScroll={executeScroll}
             customTheme={customTheme}
           />

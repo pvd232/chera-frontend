@@ -22,6 +22,7 @@ import ContactUs from './pages/splash/ContactUs';
 import Navbar from './reusable_ui_components/navbar/Navbar';
 import DietitianMenu from './pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './pages/splash/Resources';
+import BenditoIntroNew from './pages/splash/splash_orb/BenditoIntroNew';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
