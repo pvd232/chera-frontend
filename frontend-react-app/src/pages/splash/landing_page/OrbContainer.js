@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material/styles';
 import { useRef, useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import { Container, Stage, withFilters } from '@pixi/react';
@@ -7,6 +8,7 @@ import '../../../static/css/Orb.css';
 import ColorPalette from './ColorPalette';
 
 const OrbContainer = (props) => {
+  const customTheme = useTheme();
   const canvasWidth = 10;
   const orbRef = useRef();
   const [mounted, setMounted] = useState(false);
@@ -47,6 +49,7 @@ const OrbContainer = (props) => {
             width={window.innerWidth * (canvasWidth / 12)}
             ref={orbRef}
             fill={ColorPalette.randomColor()}
+            smallerScreen={customTheme.smallerScreen()}
           />
           {mounted &&
             (() => {
@@ -58,6 +61,7 @@ const OrbContainer = (props) => {
                     geometry={orbRef}
                     width={window.innerWidth * (canvasWidth / 12)}
                     fill={ColorPalette.randomColor()}
+                    smallerScreen={customTheme.smallerScreen()}
                   />
                 );
               }

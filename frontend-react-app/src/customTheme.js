@@ -3,8 +3,8 @@ import Inter from './static/fonts/Inter-Regular.ttf';
 const themeBase = createTheme({
   palette: {
     olive: {
-      main: '#FF0020',
-      secondary: '#ff8c9b',
+      main: '#ff3e56',
+      secondary: '#ff2e48',
       tertiary: '#fcb052',
       quaternary: '#fee1be',
     },

@@ -32,7 +32,13 @@ const IntroTextBox = () => {
           >
             <Grid item>
               <Typography
-                fontSize={'3rem'}
+                fontSize={
+                  customTheme.largerScreen()
+                    ? '3rem'
+                    : customTheme.smallScreen()
+                    ? '2rem'
+                    : '1.6rem'
+                }
                 textAlign={'center'}
                 margin={'0 auto'}
                 mb={10}
@@ -41,10 +47,17 @@ const IntroTextBox = () => {
                 Meal planning is hard. We make it easy.
               </Typography>
             </Grid>
-            <Typography variant="h2" className="intro-text">
-              <span className="intro-text__bold">Chera</span> is a community of
-              dietitians, doctors, and engineers who are passionate about
-              helping you overcome your eating disorder.
+            <Typography
+              fontSize={
+                customTheme.largerScreen()
+                  ? '1.4rem'
+                  : customTheme.smallScreen()
+                  ? '1.2rem'
+                  : '1.1rem'
+              }
+            >
+              Chera is a community of dietitians, doctors, and engineers
+              dedicated to eating disorder recovery.
             </Typography>
           </Grid>
         </div>

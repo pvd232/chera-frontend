@@ -18,7 +18,6 @@
       to bottom,
       hsl(286, 95%, 100%),
       hsl(286, 95%, 84%)
-
     );
     color: var(--dark-color);
     background: var(--bg-gradient);
@@ -32,7 +31,6 @@
     width: 100%;
     max-width: 1140px;
     max-height: 640px;
-    padding: 8rem 6rem;
     opacity: 0.9;
   }
   
@@ -113,20 +111,10 @@
       display: none;
     }
   }
-  
-  @media only screen and (max-width: 1140px) {
-    .overlay {
-      padding: 8rem 4rem;
-    }
-  }
+
   
   @media only screen and (max-width: 840px) {
-    body {
-      padding: 1.5rem;
-    }
-  
     .overlay {
-      padding: 4rem;
       height: auto;
     }
   

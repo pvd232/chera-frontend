@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
 import { Link as RRLink } from 'react-router-dom';
-import logo from '../../static/images/chera-logo-3.png';
+import logo from '../../static/images/chera_logo_fucia_150.png';
 import LocalStorageManager from '../../helpers/LocalStorageManager';
 import SplashLinks from './SplashLinks';
 import AdminLinks from './AdminLinks';
@@ -30,6 +30,13 @@ const Navbar = (props) => {
               sx={{
                 minHeight: '50px',
                 py: 3,
+                background: `
+                linear-gradient(
+                  to top,
+                  hsl(286, 95%, 100%),
+                  hsl(286, 95%, 84%)
+                );
+                `,
               }}
             >
               <Grid
@@ -43,29 +50,37 @@ const Navbar = (props) => {
                 ml={2}
               >
                 {/* logo */}
-                <RRLink
-                  to={LocalStorageManager.shared.homeUrl}
-                  style={{
-                    textDecoration: 'none',
-                  }}
-                >
-                  <img src={logo} alt="" height={'65vh'} />
-                </RRLink>
+                {/* <Grid item xl={0.65} lg={1.1}>
+                  <RRLink
+                    to={LocalStorageManager.shared.homeUrl}
+                    style={{
+                      textDecoration: 'none',
+                    }}
+                  >
+                    <img src={logo} alt="" height={'80vh'} />
+                  </RRLink>
+                </Grid> */}
                 {/* logo */}
-                <Grid container item lg={1.1} justifyContent={'flex-end'}>
-                  <Grid item>
-                    <RRLink
-                      to={props.url}
-                      style={{
-                        textDecoration: 'none',
-                        fontSize: '3rem',
-                        color: `${customTheme.palette.olive.main}`,
-                        fontWeight: 'bold',
-                      }}
-                    >
-                      Chera
-                    </RRLink>
-                  </Grid>
+                <Grid
+                  container
+                  item
+                  lg={1.1}
+                  md={2}
+                  justifyContent={'center'}
+                  alignItems={'flex-start'}
+                >
+                  <RRLink
+                    to={props.url}
+                    style={{
+                      textDecoration: 'none',
+                      fontSize: '3.5rem',
+                      color: `${customTheme.palette.olive.main}`,
+                      fontWeight: 'bold',
+                      fontFamily: 'Lilita One',
+                    }}
+                  >
+                    Chera
+                  </RRLink>
                 </Grid>
                 {/* navbar links */}
                 <Grid
@@ -79,7 +94,7 @@ const Navbar = (props) => {
                   sx={{
                     marginLeft: props.domain === 'splash' ? 'auto' : '',
                   }}
-                  columnGap={3.5}
+                  columnGap={!customTheme.extraSmallScreen() ? 3.5 : 1.5}
                 >
                   {props.domain === 'splash' ? (
                     <SplashLinks customTheme={customTheme} />

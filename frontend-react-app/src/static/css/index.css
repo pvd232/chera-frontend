@@ -20,7 +20,7 @@ body {
 
 
 @font-face {
-  font-family: "Cormorant Garamond";   /*Can be any text*/
-  src: local("Cormorant"),
-    url("../fonts/CormorantGaramond-Regular.ttf") format("woff");
+  font-family: "Lilita One";   /*Can be any text*/
+  src: local("Lilita"),
+    url("../fonts/LilitaOne-Regular.ttf") format("woff");
 }

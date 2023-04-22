@@ -20,7 +20,13 @@ const Orb = forwardRef((props, ref) => {
   const inc = 0.08;
   const draw = useCallback(
     (g) => {
-      const radius = randomNum(window.innerHeight / 9, window.innerHeight / 6);
+      const radius = (() => {
+        if (props.smallerScreen) {
+          return randomNum(window.innerWidth / 8, window.innerWidth / 5);
+        } else {
+          return randomNum(window.innerHeight / 8, window.innerHeight / 5);
+        }
+      })();
 
       g.scale.set(1);
 
@@ -32,7 +38,9 @@ const Orb = forwardRef((props, ref) => {
       // Draw a circle at { 0, 0 } with it's size set by this.radius
       g.drawCircle(
         randomNum(2.8 * (props.width / 4), 3.3 * (props.width / 4)),
-        window.innerHeight * 0.2,
+        props.smallerScreen
+          ? window.innerHeight * 0.4
+          : window.innerHeight * 0.5,
         radius
       );
       // Let graphics know we won't be filling in any more shapes
