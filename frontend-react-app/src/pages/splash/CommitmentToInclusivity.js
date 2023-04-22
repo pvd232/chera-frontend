@@ -39,7 +39,7 @@ const CommitmentToInclusivity = (props) => (
           color={props.customTheme.palette.black.main}
           textAlign={'center'}
         >
-          We recognize this and are committed to making Bendito as culturally
+          We recognize this and are committed to making Chera as culturally
           inclusive as possible. We offer ten different meal plans, incorporate
           multiple cuisines into our menus, and provide vegetarian options.
         </Typography>

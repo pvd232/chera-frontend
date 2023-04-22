@@ -111,6 +111,7 @@ const AccountRegistration = (props) => {
                 boxSizing: 'border-box',
                 margin: '0 10%',
                 height: 'fit-content',
+                border: 'none',
               }}
             >
               <FormGroup>

@@ -204,7 +204,6 @@ const MealBuilder = () => {
                         name="selectedMealIndex"
                         value={selectedMealIndex}
                         onChange={(event) => {
-                          console.log('event.target.value', event.target.value);
                           handleUpdateMealIndex(event.target.value);
                         }}
                       >

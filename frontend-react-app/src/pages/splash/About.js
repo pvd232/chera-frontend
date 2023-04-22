@@ -56,8 +56,8 @@ const About = (props) => {
                 textAlign={'center'}
                 paddingTop={'5vh'}
               >
-                Here at Bendito, our clients are at the heart of everything we
-                do. Through a blend of personalized meal preparation, catered
+                Here at Chera, our clients are at the heart of everything we do.
+                Through a blend of personalized meal preparation, catered
                 labeling and packaging, and high precision nutrition data, we
                 empower our clients to stay committed to their meal plans.
               </Typography>
@@ -105,7 +105,7 @@ const About = (props) => {
                 color={props.customTheme.palette.black.main}
                 textAlign={'center'}
               >
-                At Bendito, we understand that there can be so many obstacles
+                At Chera, we understand that there can be so many obstacles
                 between our clients and eating disorder recovery. In our work,
                 we hope to ease the burden by providing individualized, prepared
                 meals with the guidance of our client’s dietitians.
@@ -118,8 +118,7 @@ const About = (props) => {
                 textAlign={'center'}
               >
                 The journey to recovery is not something you have to do alone,
-                and we at Bendito hope to be a part of your support along the
-                way.
+                and we at Chera hope to be a part of your support along the way.
               </Typography>
             </Stack>
             <Stack
@@ -165,7 +164,7 @@ const About = (props) => {
                 textAlign={'center'}
                 paddingTop={'5vh'}
               >
-                Bendito is a rare intersection of technology and healthcare that
+                Chera is a rare intersection of technology and healthcare that
                 inspires me. Mental health is an area that everyone struggles
                 with, yet as a society we have not prioritized it for
                 innovation.

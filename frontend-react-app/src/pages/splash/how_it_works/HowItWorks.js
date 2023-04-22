@@ -14,7 +14,7 @@ const HowItWorks = (props) => {
             textAlign: 'center',
           }}
         >
-          How Bendito Works
+          How Chera Works
         </Typography>
       </Grid>
       <Grid
@@ -56,7 +56,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'We Cook and Ship Meals'}
             bodyText={
-              "Meal serving sizes fined tuned according to client's chosen meal plan. Meals are shipped in discreetly labeled Bendito Box delivered on Sundays."
+              "Meal serving sizes fined tuned according to client's chosen meal plan. Meals are shipped in discreetly labeled Chera Box delivered on Sundays."
             }
             symbolName={'delivery_dining_outlined'}
             scale={ratioAdjustment(props.customTheme)}

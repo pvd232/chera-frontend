@@ -4,12 +4,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
 import { Link as RRLink } from 'react-router-dom';
-import logo from '../../static/images/bendito-small.png';
+import logo from '../../static/images/chera-logo-3.png';
 import LocalStorageManager from '../../helpers/LocalStorageManager';
 import SplashLinks from './SplashLinks';
 import AdminLinks from './AdminLinks';
 import ClientLinks from './ClientLinks';
 import DietitianLinks from './DietitianLinks';
+
 const Navbar = (props) => {
   const customTheme = useTheme();
   return (
@@ -17,7 +18,6 @@ const Navbar = (props) => {
       <Grid
         container
         sx={{
-          width: '100vw',
           height: 'auto',
         }}
       >
@@ -51,9 +51,22 @@ const Navbar = (props) => {
                 >
                   <img src={logo} alt="" height={'65vh'} />
                 </RRLink>
-
                 {/* logo */}
-
+                <Grid container item lg={1.1} justifyContent={'flex-end'}>
+                  <Grid item>
+                    <RRLink
+                      to={props.url}
+                      style={{
+                        textDecoration: 'none',
+                        fontSize: '3rem',
+                        color: '# ',
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      Chera
+                    </RRLink>
+                  </Grid>
+                </Grid>
                 {/* navbar links */}
                 <Grid
                   container

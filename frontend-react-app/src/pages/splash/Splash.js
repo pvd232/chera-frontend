@@ -8,6 +8,7 @@ import CommitmentToInclusivity from './CommitmentToInclusivity';
 import FAQs from './faqs/FAQs';
 import WhyBendito from './WhyBendito';
 import BenditoIntro from './BenditoIntro';
+import LandingPage from './landing_page/LandingPage';
 import FNCEApproved from './FNCEApproved';
 import DietitianSignUp from './dietitian_sign_up/DietitianSignUp';
 const Splash = () => {
@@ -24,10 +25,11 @@ const Splash = () => {
     >
       <Grid item xs={12}>
         {
-          <BenditoIntro
-            executeScroll={executeScroll}
-            customTheme={customTheme}
-          />
+          // <CheraIntro
+          //   executeScroll={executeScroll}
+          //   customTheme={customTheme}
+          // />
+          <LandingPage customTheme={customTheme} />
         }
       </Grid>
       <Grid item xs={12}>

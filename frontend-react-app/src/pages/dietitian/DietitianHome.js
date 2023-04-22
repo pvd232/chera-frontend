@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -21,24 +21,28 @@ import ExtendedStagedClient from '../../data_models/model/ExtendedStagedClient';
 import MealPlanFactory from '../../data_models/factories/model/MealPlanFactory';
 const DietititanHome = (props) => {
   const customTheme = useTheme();
-  const [reminderLoading, setReminderLoading] = React.useState(
+  const [reminderLoading, setReminderLoading] = useState(
     props.dataProps.clients.clientArray
-      .map((client) => ({ id: client.id, isLoading: false }))
-      .concat(
-        props.dataProps.stagedClients.map((stagedClient) => ({
-          id: stagedClient.id,
-          isLoading: false,
-        }))
-      )
+      ? props.dataProps.clients.clientArray
+          .map((client) => ({ id: client.id, isLoading: false }))
+          .concat(
+            props.dataProps.stagedClients.map((stagedClient) => ({
+              id: stagedClient.id,
+              isLoading: false,
+            }))
+          )
+      : []
   );
-  const [clientItems, setClientItems] = React.useState(
+  const [clientItems, setClientItems] = useState(
     props.dataProps.clients.clientArray
-      .map((client) => new ClientItem(client, false))
-      .concat(
-        props.dataProps.stagedClients.map(
-          (stagedClient) => new ClientItem(stagedClient, true)
-        )
-      )
+      ? props.dataProps.clients.clientArray
+          .map((client) => new ClientItem(client, false))
+          .concat(
+            props.dataProps.stagedClients.map(
+              (stagedClient) => new ClientItem(stagedClient, true)
+            )
+          )
+      : []
   );
 
   const handleFinishEditing = (newStagedClient) => {

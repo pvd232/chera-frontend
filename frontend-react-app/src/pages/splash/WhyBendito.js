@@ -10,7 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import BlackButton from '../../reusable_ui_components/BlackButton';
 import splashImage2 from '../../static/images/splash_image_2.png';
 
-const WhyBendito = () => {
+const WhyChera = () => {
   const customTheme = useTheme();
   const [reasonOpen, setReasonOpen] = useReducer(
     (state, name) => {
@@ -141,7 +141,7 @@ const WhyBendito = () => {
             setReasonOpen={() => props.setReasonOpen('second')}
             bulletPrimaryText={'Thoughtful Labeling & Packaging '}
             bulletSecondaryText={
-              "We don't place nutrition labels on our meals, easing meal time stress, and use discreet packaging when shipping your clients their weekly Bendito Box."
+              "We don't place nutrition labels on our meals, easing meal time stress, and use discreet packaging when shipping your clients their weekly Chera Box."
             }
             icon={'redeem'}
           ></ReasonBullet>
@@ -188,7 +188,7 @@ const WhyBendito = () => {
           }}
           color={customTheme.palette.black.main}
         >
-          Why Bendito?
+          Why Chera?
         </Typography>
       </Grid>
       <Grid item xs={11} sm={10} lg={6}>
@@ -253,4 +253,4 @@ const WhyBendito = () => {
     </Grid>
   );
 };
-export default WhyBendito;
+export default WhyChera;

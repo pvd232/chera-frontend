@@ -1,6 +1,5 @@
 import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
-import './static/css/App.css';
 import Main from './Main.js';
 import { ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';

@@ -188,7 +188,7 @@ const DietitianHomeContainer = (props) => {
     // remove duplicative clients from stagedClients if they have already created their account
     const filteredExtendedStagedClients = extendedStagedClients.filter(
       (stagedClient) =>
-        extendedClients.clientArray.findIndex(
+        extendedClients.clientArray?.findIndex(
           (client) => client.id === stagedClient.id
         ) === -1
     );

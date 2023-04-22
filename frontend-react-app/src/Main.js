@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import Splash from './pages/splash/Splash';
 import SplashMenu from './pages/splash/SplashMenu';
@@ -21,7 +21,8 @@ import ReactGA from 'react-ga';
 import ContactUs from './pages/splash/ContactUs';
 import Navbar from './reusable_ui_components/navbar/Navbar';
 import DietitianMenu from './pages/dietitian/dietitian_menu/DietitianMenu';
-import Resources from './pages/splash/Resources';
+import Resources from './pages/splash/resources/Resources';
+import SignUpPage from './pages/sign_up/ClientSignUp';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -29,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const Main = (props) => {
-  React.useEffect(() => {
+  useEffect(() => {
     if (process.env.NODE_ENV === 'production') {
       ReactGA.pageview(window.location.pathname + window.location.search);
     }
@@ -86,11 +87,12 @@ const Main = (props) => {
         />
         <Route
           path="/client-sign-up"
-          element={<TaskBar stripePromise={props.stripePromise} />}
-        />
-        <Route
-          path="/client-menu"
-          element={<TaskBar childComponent={'ClientMenu'} />}
+          element={
+            <TaskBar
+              stripePromise={props.stripePromise}
+              childComponent={<SignUpPage />}
+            />
+          }
         />
         <Route path="/meal-builder" element={<MealBuilder />} />
         <Route

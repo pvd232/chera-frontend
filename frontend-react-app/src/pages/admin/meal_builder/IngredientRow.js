@@ -83,10 +83,6 @@ const IngredientRow = (props) => {
               newIngredient.nonMetricUnit = event.target.nonMetricUnit;
               newIngredient.usdaIngredientPortionId = usdaIngredientPortion.id;
               props.updateIngredient(newIngredient);
-              console.log(
-                'props.ingredient.usdaIngredientPortions',
-                props.ingredient.usdaIngredientPortions
-              );
             }}
           >
             {props.ingredient &&

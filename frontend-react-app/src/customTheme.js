@@ -1,11 +1,10 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import Inter from './static/fonts/Inter-Regular.ttf';
-
 const themeBase = createTheme({
   palette: {
     olive: {
-      main: '#ffa40c',
-      secondary: '#fb971c',
+      main: '#FF0020',
+      secondary: '#ff8c9b',
       tertiary: '#fcb052',
       quaternary: '#fee1be',
     },
@@ -122,8 +121,7 @@ const themeBase = createTheme({
             font-style: normal;
             font-weight: 400;
             src: local('Inter'), local('Inter-Regular'), url("${Inter}") format('woff2');
-        }
-
+        },
       `,
     },
   },

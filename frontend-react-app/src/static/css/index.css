@@ -1,0 +1,26 @@
+.App {
+  text-align: center;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+
+}
+
+
+
+@font-face {
+  font-family: "Cormorant Garamond";   /*Can be any text*/
+  src: local("Cormorant"),
+    url("../fonts/CormorantGaramond-Regular.ttf") format("woff");
+}

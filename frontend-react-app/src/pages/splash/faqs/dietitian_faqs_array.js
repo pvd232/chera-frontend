@@ -15,7 +15,7 @@ const dietitianFAQsArray = () => [
       'You can add a client through your dashboard upon logging in. Once you add a client, they will automatically receive an email with instructions on how to create an account.',
   },
   {
-    question: 'Does Bendito put nutrition labels on client meals?',
+    question: 'Does Chera put nutrition labels on client meals?',
 
     answer: 'No, meals come free of any nutritional labeling.',
   },

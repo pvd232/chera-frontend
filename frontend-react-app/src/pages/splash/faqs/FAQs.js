@@ -5,7 +5,10 @@ import dietitianFAQsArray from './dietitian_faqs_array';
 import clientFAQsArray from './client_faqs_array';
 import ListOfClientFAQs from './ListOfClientFAQs';
 import ListOfDietitianFAQs from './ListOfDietitianFAQs';
+import { useTheme } from '@mui/material/styles';
+
 const FAQs = (props) => {
+  const customTheme = useTheme();
   const reasonOpenObject = {};
   const combinedListOfFAQS = [...clientFAQsArray(), ...dietitianFAQsArray()];
   combinedListOfFAQS.forEach(
@@ -27,31 +30,31 @@ const FAQs = (props) => {
       <Grid item xs={12}>
         <Typography
           sx={{
-            fontSize: props.customTheme.fontEqualizer(48),
+            fontSize: customTheme.fontEqualizer(48),
 
             fontWeight: '500',
             textAlign: 'center',
             marginBottom: '3vh',
           }}
-          color={props.customTheme.palette.black.main}
+          color={customTheme.palette.black.main}
         >
           Frequently Asked Questions
         </Typography>
         <Typography
           sx={{
-            fontSize: props.customTheme.fontEqualizer(28),
+            fontSize: customTheme.fontEqualizer(28),
 
             textAlign: 'center',
             fontStyle: 'italic',
           }}
-          color={props.customTheme.palette.black.main}
+          color={customTheme.palette.black.main}
         >
           (For Clients)
         </Typography>
       </Grid>
       <Grid item xl={8} lg={6} xs={11}>
         <ListOfClientFAQs
-          customTheme={props.customTheme}
+          customTheme={customTheme}
           reasonOpen={reasonOpen}
           setReasonOpen={(reason) => handleSetReasonOpen(reason)}
         />
@@ -59,20 +62,20 @@ const FAQs = (props) => {
       <Grid item xs={12}>
         <Typography
           sx={{
-            fontSize: props.customTheme.fontEqualizer(28),
+            fontSize: customTheme.fontEqualizer(28),
 
             textAlign: 'center',
             paddingTop: '2vh',
             fontStyle: 'italic',
           }}
-          color={props.customTheme.palette.black.main}
+          color={customTheme.palette.black.main}
         >
           (For Dietitians)
         </Typography>
       </Grid>
       <Grid item xl={8} lg={6} xs={11}>
         <ListOfDietitianFAQs
-          customTheme={props.customTheme}
+          customTheme={customTheme}
           reasonOpen={reasonOpen}
           setReasonOpen={(reason) => handleSetReasonOpen(reason)}
         ></ListOfDietitianFAQs>

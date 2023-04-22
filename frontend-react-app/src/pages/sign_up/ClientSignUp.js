@@ -1,7 +1,8 @@
+import { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import LocalStorageManager from '../../helpers/LocalStorageManager.js';
 import ClientMenu from './client_menu/ClientMenu';
 import AccountRegistration from './account_registration/AccountRegistration';
-import PaymentForm from './payment_form/PaymentForm';
 import Checkout from './Checkout.js';
 import APIClient from '../../helpers/APIClient';
 import MealSubscription from '../../data_models/model/MealSubscription.js';
@@ -12,14 +13,10 @@ import OrderMealDTO from '../../data_models/dto/OrderMealDTO.js';
 import Client from '../../data_models/model/Client';
 import ClientDTO from '../../data_models/dto/ClientDTO';
 import ClientPreSelectedMenu from './client_pre_selected_menu/ClientPreSelectedMenu';
-import ClientOrderSummary from './ClientOrderSummary.js';
 import ScheduleMealDTO from '../../data_models/dto/ScheduleMealDTO.js';
 import ScheduledOrderMealDTO from '../../data_models/dto/ScheduledOrderMealDTO.js';
 import createInitialOrderMeals from './helpers/createInitialOrderMeals.js';
-import Grid from '@mui/material/Grid';
-import { Elements } from '@stripe/react-stripe-js';
-import { useState } from 'react';
-import { v4 as uuid } from 'uuid';
+import Payment from './Payment.js';
 const SignUpPage = (props) => {
   const [clientSecret, setClientSecret] = useState(false);
   const [stripeSubscriptionId, setStripeSubscriptionId] = useState(false);
@@ -108,54 +105,7 @@ const SignUpPage = (props) => {
     await APIClient.createOrderMeals(orderMealDTOArray);
     return;
   };
-  const getPaymentElement = () => {
-    if (clientSecret) {
-      const appearance = {
-        theme: 'stripe',
-      };
-      const stripeOptions = {
-        clientSecret,
-        appearance,
-      };
-      return (
-        <Elements
-          options={stripeOptions}
-          stripe={props.stripePromise}
-          key={clientSecret}
-        >
-          <Grid
-            container
-            justifyContent={'center'}
-            sx={{ position: 'fixed', top: '25%', bottom: '25%' }}
-            columnGap={3}
-          >
-            <Grid item md={6}>
-              <PaymentForm
-                dietitianPrepaying={false}
-                numMeals={scheduleMeals.length}
-                clientSecret={clientSecret}
-                returnUrl={APIClient.getClientHomeUrl()}
-                discountCode={discountCode}
-                handleSubmit={() => handleSubmit()}
-              />
-            </Grid>
-            <Grid item lg={3} md={4}>
-              <ClientOrderSummary
-                discountCode={discountCode}
-                orderDiscount={orderDiscount}
-                prepaid={props.stagedClient.mealsPrepaid}
-                stagedClientId={props.stagedClient.id}
-                shippingCost={props.shippingCost}
-                scheduleMeals={scheduleMeals}
-              />
-            </Grid>
-          </Grid>
-        </Elements>
-      );
-    } else {
-      return <></>;
-    }
-  };
+
   const ContainerObject = {};
   ContainerObject['AccountRegistration'] = (
     <AccountRegistration
@@ -224,8 +174,21 @@ const SignUpPage = (props) => {
     />
   );
 
-  ContainerObject['Payment'] = getPaymentElement();
+  ContainerObject['Payment'] = (
+    <Payment
+      clientSecret={clientSecret}
+      stripePromise={props.stripePromise}
+      scheduleMeals={scheduleMeals}
+      discountCode={discountCode}
+      orderDiscount={orderDiscount}
+      stagedClient={props.stagedClient}
+      shippingCost={props.shippingCost}
+      handleSubmit={handleSubmit}
+    />
+  );
   if (props.stagedClient) {
+    const test = ContainerObject[`${taskIndexArray[props.taskIndex]}`];
+    console.log('test', test);
     return ContainerObject[`${taskIndexArray[props.taskIndex]}`];
   } else {
     return <></>;

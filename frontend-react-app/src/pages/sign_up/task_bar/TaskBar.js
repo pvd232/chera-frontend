@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, cloneElement } from 'react';
 import APIClient from '../../../helpers/APIClient';
-import ClientSignUp from '../ClientSignUp';
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
 import MealDietaryRestrictionDTOFactory from '../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
 import StagedClientDTO from '../../../data_models/dto/StagedClientDTO';
@@ -80,6 +79,15 @@ const TaskBar = (props) => {
   }, []);
 
   if (stripePriceId && stagedClient && extendedMeals) {
+    const signupProps = {
+      extendedMeals: extendedMeals,
+      stripePriceId: stripePriceId,
+      stagedClient: stagedClient,
+      shippingCost: shippingCost,
+      stripePromise: props.stripePromise,
+      updateTaskIndex: (newTaskIndex) => setTaskIndex(newTaskIndex),
+      taskIndex: taskIndex,
+    };
     return (
       <>
         <Grid
@@ -130,8 +138,7 @@ const TaskBar = (props) => {
             />
           </Grid>
         </Grid>
-
-        <ClientSignUp
+        {/* <ClientSignUp
           extendedMeals={extendedMeals}
           stripePriceId={stripePriceId}
           stagedClient={stagedClient}
@@ -141,7 +148,8 @@ const TaskBar = (props) => {
             setTaskIndex(newTaskIndex);
           }}
           taskIndex={taskIndex}
-        />
+        /> */}
+        {cloneElement(props.childComponent, { ...signupProps })}
       </>
     );
   } else {

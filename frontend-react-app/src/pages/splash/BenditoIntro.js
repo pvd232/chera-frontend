@@ -42,8 +42,8 @@ const BenditoIntro = (props) => (
         color={props.customTheme.palette.black.main}
       >
         Pick the right meal plan for your client and we ship delicious,
-        ready-made meals to their door. Bendito is the easiest way to improve
-        meal plan compliance for clients with eating disorders.
+        ready-made meals to their door. Chera is the easiest way to improve meal
+        plan compliance for clients with eating disorders.
       </Typography>
       <BlackButton
         variant={'contained'}
