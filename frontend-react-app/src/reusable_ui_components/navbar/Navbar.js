@@ -59,7 +59,7 @@ const Navbar = (props) => {
                       style={{
                         textDecoration: 'none',
                         fontSize: '3rem',
-                        color: '# ',
+                        color: `${customTheme.palette.olive.main}`,
                         fontWeight: 'bold',
                       }}
                     >
