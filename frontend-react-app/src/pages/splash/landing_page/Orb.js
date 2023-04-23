@@ -22,9 +22,9 @@ const Orb = forwardRef((props, ref) => {
     (g) => {
       const radius = (() => {
         if (props.smallerScreen) {
-          return randomNum(window.innerWidth / 8, window.innerWidth / 5);
+          return randomNum(window.innerWidth / 7, window.innerWidth / 5);
         } else {
-          return randomNum(window.innerHeight / 8, window.innerHeight / 5);
+          return randomNum(window.innerHeight / 7, window.innerHeight / 4);
         }
       })();
 
@@ -37,10 +37,10 @@ const Orb = forwardRef((props, ref) => {
       g.beginFill(props.fill);
       // Draw a circle at { 0, 0 } with it's size set by this.radius
       g.drawCircle(
-        randomNum(2.8 * (props.width / 4), 3.3 * (props.width / 4)),
         props.smallerScreen
-          ? window.innerHeight * 0.4
-          : window.innerHeight * 0.5,
+          ? 0
+          : randomNum(0.2 * (window.innerWidth / 4), window.innerWidth * 0.6),
+        window.innerHeight * 0.45,
         radius
       );
       // Let graphics know we won't be filling in any more shapes
@@ -78,7 +78,6 @@ const Orb = forwardRef((props, ref) => {
         return orbData;
       }
     })();
-
     const newCoordinates = incrementOrbData(
       normalizeDimensions(updatedValues.xPosition, false, bounds),
       orbRef.current.x,

@@ -6,10 +6,20 @@ import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import Orb from './Orb';
 import '../../../static/css/Orb.css';
 import ColorPalette from './ColorPalette';
-
+class KawaseOverride extends KawaseBlurFilter {
+  constructor(blur, quality, clamp) {
+    super(blur, quality, true);
+  }
+}
 const OrbContainer = (props) => {
   const customTheme = useTheme();
-  const canvasWidth = 10;
+  const canvasWidth = (() => {
+    if (window.innerWidth / 1000) {
+      return 3;
+    } else {
+      return 10;
+    }
+  })();
   const orbRef = useRef();
   const [mounted, setMounted] = useState(false);
 
@@ -17,9 +27,8 @@ const OrbContainer = (props) => {
   useEffect(() => {
     setMounted(true);
   }, []);
-
   const KawaseBlurFilterImpl = withFilters(Container, {
-    blur: KawaseBlurFilter,
+    blur: KawaseOverride,
   });
 
   return (
@@ -36,12 +45,16 @@ const OrbContainer = (props) => {
           backgroundAlpha: 0,
         }}
         width={window.innerWidth}
-        height={window.innerHeight}
+        height={
+          customTheme.smallerScreen()
+            ? window.innerHeight * 0.9
+            : window.innerHeight * 0.9
+        }
       >
         <KawaseBlurFilterImpl
           blur={{ blur: 30, quality: 10 }}
           width={window.innerWidth * (canvasWidth / 12)}
-          height={window.innerHeight * 0.75}
+          height={window.innerHeight}
           position={[0, window.innerHeight * 0.15]}
         >
           {/* create the graphics component here */}

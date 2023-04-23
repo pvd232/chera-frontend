@@ -67,7 +67,6 @@ const themeBase = createTheme({
       large: '0px 0px 15px 0px rgba(0,0,0,0.2)',
     },
   },
-
   // 1920 is the screen size of my monitor
   // 1200 is the size of my laptop
   extraLargeScreen: () => window.innerWidth > 1536,
@@ -111,7 +110,29 @@ const themeBase = createTheme({
       return fontSize;
     }
   },
-
+  pages: {
+    splash: {
+      fontSize: {
+        header: '3.5rem',
+        subHeader: '1.3rem',
+      },
+      spacing: {
+        pages: { padding: '12vh' },
+        header: {
+          marginBottom: '10vh',
+        },
+      },
+      color: {
+        lightBlue: '#BBDDFF',
+      },
+    },
+    about: {
+      fontSize: {
+        body: '1.5rem',
+        signature: '2rem',
+      },
+    },
+  },
   components: {
     MuiCssBaseline: {
       // These fonts can support more unicode ranges (character sets associated with different alphabets) but i dont see a need to import them now. the raleway import was in the MUI documentation, also unicode range is optional

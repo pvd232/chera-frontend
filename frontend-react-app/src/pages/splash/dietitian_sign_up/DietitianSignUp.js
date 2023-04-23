@@ -96,18 +96,18 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
       justifyContent={'center'}
       sx={{
         backgroundColor: customTheme.palette.lightGrey.secondary,
-        py: 10,
+        py: customTheme.pages.splash.spacing.pages,
       }}
       ref={ref}
     >
       <CardContent>
         <Typography
-          fontSize="2.5rem"
+          fontSize={customTheme.pages.splash.fontSize.header}
           color={customTheme.palette.black.main}
           textAlign={'center'}
           fontWeight={'500'}
           sx={{
-            mb: 10,
+            mb: customTheme.pages.splash.spacing.header.marginBottom,
           }}
         >
           Dietitian Sign Up

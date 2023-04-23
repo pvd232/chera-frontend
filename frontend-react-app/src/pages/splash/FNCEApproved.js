@@ -5,19 +5,22 @@ import logo from '../../static/images/bendito-small.png';
 import academy from '../../static/images/eat_right_4.png';
 import academy2 from '../../static/images/eat_right_logo_5.png';
 import FNCElogo from '../../static/images/fnce_logo.png';
+import { useTheme } from '@mui/material/styles';
 
-const FNCEApproved = (props) => {
+const FNCEApproved = () => {
+  const customTheme = useTheme();
   return (
     <Grid
       item
       container
       justifyContent={'center'}
-      rowSpacing={props.customTheme.largerScreen() ? '15vh' : '5vh'}
+      rowSpacing={customTheme.largerScreen() ? '15vh' : '5vh'}
+      py={customTheme.pages.splash.spacing.pages}
     >
       <Grid item xs={10}>
         <Typography
           sx={{
-            fontSize: props.customTheme.fontEqualizer(48),
+            fontSize: customTheme.pages.splash.fontSize.header,
             fontWeight: '500',
             textAlign: 'center',
           }}
@@ -33,7 +36,7 @@ const FNCEApproved = (props) => {
         justifyContent={'center'}
         alignItems={'flex-end'}
       >
-        {props.customTheme.largerScreen() ? (
+        {customTheme.largerScreen() ? (
           <Grid
             container
             item
@@ -44,18 +47,22 @@ const FNCEApproved = (props) => {
             md={10}
             sx={{ marginRight: '15vw' }}
           >
-            <Grid item paddingBottom={'2vh'} lg={4} md={2.5} xs={10}>
-              <img
-                src={logo}
-                alt=""
-                height={!props.customTheme.mediumScreen() ? '110vh' : '90vh'}
-              />
+            <Grid item lg={3} md={2.5} xs={10}>
+              <Typography
+                sx={{
+                  fontSize: '5rem',
+                  color: `${customTheme.palette.olive.main}`,
+                  fontWeight: 'bold',
+                  fontFamily: 'Lilita One',
+                }}
+              >
+                Chera
+              </Typography>
             </Grid>
             <Grid item marginBottom={'2vh'} lg={1} md={0.5} xs={4}>
               <Icon
                 style={{
                   fontSize: '3rem',
-                  marginLeft: '1vw',
                 }}
               >
                 add
@@ -64,7 +71,7 @@ const FNCEApproved = (props) => {
             <Grid item paddingBottom={'0vh'} lg={4} md={5} xs={10}>
               <img
                 src={academy}
-                height={!props.customTheme.mediumScreen() ? '110vh' : '90vh'}
+                height={!customTheme.mediumScreen() ? '110vh' : '90vh'}
                 alt=""
               />
             </Grid>
@@ -112,11 +119,11 @@ const FNCEApproved = (props) => {
         md={7}
         justifyContent={'space-evenly'}
         alignItems={'flex-end'}
-        rowSpacing={props.customTheme.smallerScreen() ? 2 : 0}
+        rowSpacing={customTheme.smallerScreen() ? 2 : 0}
       >
         <Typography
           sx={{
-            fontSize: props.customTheme.fontEqualizer(20),
+            fontSize: customTheme.fontEqualizer(20),
 
             fontWeight: '500',
             textAlign: 'center',

@@ -4,12 +4,15 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 const CommitmentToInclusivity = (props) => (
   <Grid
+    container
     item
+    lg={8}
     xs={12}
-    sx={{
-      paddingLeft: '5vw',
-      paddingRight: '5vw',
-    }}
+    justifySelf={'center'}
+    justifyContent={'center'}
+    px={'5vw'}
+    py={props.customTheme.pages.splash.spacing.pages}
+    mx={'auto'}
   >
     <CardContent>
       <Stack spacing={5}>

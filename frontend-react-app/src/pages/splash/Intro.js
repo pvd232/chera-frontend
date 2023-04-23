@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import splashImage1 from '../../static/images/splash_image_1.png';
 import BlackButton from '../../reusable_ui_components/BlackButton';
-const BenditoIntro = (props) => (
+const Intro = (props) => (
   <Grid
     item
     container
@@ -66,4 +66,4 @@ const BenditoIntro = (props) => (
     </Grid>
   </Grid>
 );
-export default BenditoIntro;
+export default Intro;

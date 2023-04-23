@@ -6,8 +6,8 @@ import HowItWorks from './how_it_works/HowItWorks';
 import About from './About';
 import CommitmentToInclusivity from './CommitmentToInclusivity';
 import FAQs from './faqs/FAQs';
-import WhyBendito from './WhyBendito';
-import BenditoIntro from './BenditoIntro';
+import WhyUs from './why_us/WhyUs';
+import Intro from './Intro';
 import LandingPage from './landing_page/LandingPage';
 import FNCEApproved from './FNCEApproved';
 import DietitianSignUp from './dietitian_sign_up/DietitianSignUp';
@@ -17,12 +17,7 @@ const Splash = () => {
   const executeScroll = () => myRef.current.scrollIntoView();
 
   return (
-    <Grid
-      container
-      justifyContent={'center'}
-      rowSpacing={20}
-      marginBottom={'20vh'}
-    >
+    <Grid container justifyContent={'center'} marginBottom={'20vh'}>
       <Grid item xs={12}>
         {
           // <CheraIntro
@@ -36,7 +31,7 @@ const Splash = () => {
         <HowItWorks customTheme={customTheme} />
       </Grid>
       <Grid item xs={12}>
-        <WhyBendito customTheme={customTheme} />
+        <WhyUs customTheme={customTheme} />
       </Grid>
       <Grid item xs={12}>
         <FNCEApproved customTheme={customTheme} />

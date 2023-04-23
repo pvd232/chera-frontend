@@ -6,14 +6,6 @@
     --base: hsl(286, 95%, 50%);
     --complimentary1: hsl(var(--hue-complimentary1), 95%, 50%);
     --complimentary2: hsl(var(--hue-complimentary2), 95%, 50%);
-  
-    /* --bg-gradient: linear-gradient(
-        to bottom,
-        hsl(286, 82%, 97%),
-        hsl(286, 90%, 84%),
-        hsl(286, 84%, 97%)
-  
-      ); */
     --bg-gradient: linear-gradient(
       to bottom,
       hsl(286, 95%, 100%),

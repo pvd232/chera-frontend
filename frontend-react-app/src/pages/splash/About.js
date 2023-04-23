@@ -3,21 +3,22 @@ import Stack from '@mui/material/Stack';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import fncePic from '../../static/images/me_at_fnce.jpg';
-const About = (props) => {
+import { useTheme } from '@mui/material/styles';
+const About = () => {
+  const customTheme = useTheme();
   return (
-    <Grid container item>
-      <Grid
-        container
-        item
-        xs={12}
-        justifyContent={'center'}
-        marginBottom={'5vh'}
-      >
+    <Grid
+      container
+      item
+      py={customTheme.pages.splash.spacing.pages}
+      spacing={'10vh'}
+    >
+      <Grid container item xs={12} justifyContent={'center'}>
         <CardContent>
           <Typography
             fontFamily={'Inter'}
-            fontSize={props.customTheme.fontEqualizer(48)}
-            color={props.customTheme.palette.black.main}
+            fontSize={customTheme.pages.splash.fontSize.header}
+            color={customTheme.palette.black.main}
             fontWeight={'500'}
           >
             Meet the Team
@@ -27,31 +28,27 @@ const About = (props) => {
           container
           item
           justifyContent={'center'}
-          sx={{ marginTop: '5vh' }}
+          sx={{ marginTop: '5vh', marginBottom: '5vh' }}
         >
           <img
             src={fncePic}
-            height={props.customTheme.smallerScreen() ? '250vh' : '600vh'}
+            height={customTheme.smallerScreen() ? '250vh' : '600vh'}
             alt="me at FNCE"
           ></img>
         </Grid>
       </Grid>
       <Grid container spacing={10}>
-        <Grid
-          item
-          xs={9}
-          marginLeft={props.customTheme.smallerScreen() ? '5vw' : ''}
-        >
+        <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
           <CardContent
             sx={{
-              backgroundColor: props.customTheme.palette.lightGrey.secondary,
+              backgroundColor: customTheme.palette.lightGrey.secondary,
             }}
           >
             <Stack spacing={10}>
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(12, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.body}
+                color={customTheme.palette.black.main}
                 fontWeight={500}
                 textAlign={'center'}
                 paddingTop={'5vh'}
@@ -68,8 +65,8 @@ const About = (props) => {
             >
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(16, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
@@ -77,8 +74,8 @@ const About = (props) => {
               </Typography>
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(16, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
                 textAlign={'center'}
               >
                 CEO, Founder
@@ -91,18 +88,18 @@ const About = (props) => {
           xs={9}
           sx={{
             marginLeft: 'auto',
-            marginRight: props.customTheme.smallerScreen() ? '5vw' : '',
+            marginRight: customTheme.smallerScreen() ? '5vw' : '',
           }}
         >
           <CardContent
-            sx={{ backgroundColor: props.customTheme.palette.olive.quaternary }}
+            sx={{ backgroundColor: customTheme.pages.splash.color.lightBlue }}
           >
             <Stack spacing={10}>
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(12, true)}
+                fontSize={customTheme.pages.about.fontSize.body}
                 paddingTop={'5vh'}
-                color={props.customTheme.palette.black.main}
+                color={customTheme.palette.black.main}
                 textAlign={'center'}
               >
                 At Chera, we understand that there can be so many obstacles
@@ -113,8 +110,8 @@ const About = (props) => {
 
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(12, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.body}
+                color={customTheme.palette.black.main}
                 textAlign={'center'}
               >
                 The journey to recovery is not something you have to do alone,
@@ -127,8 +124,8 @@ const About = (props) => {
             >
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(16, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
@@ -136,8 +133,8 @@ const About = (props) => {
               </Typography>
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(16, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
                 textAlign={'center'}
               >
                 Chief Clinical Officer
@@ -145,21 +142,17 @@ const About = (props) => {
             </Stack>
           </CardContent>
         </Grid>
-        <Grid
-          item
-          xs={9}
-          marginLeft={props.customTheme.smallerScreen() ? '5vw' : ''}
-        >
+        <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
           <CardContent
             sx={{
-              backgroundColor: props.customTheme.palette.lightGrey.secondary,
+              backgroundColor: customTheme.palette.lightGrey.secondary,
             }}
           >
             <Stack spacing={10}>
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(12, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.body}
+                color={customTheme.palette.black.main}
                 fontWeight={500}
                 textAlign={'center'}
                 paddingTop={'5vh'}
@@ -176,8 +169,8 @@ const About = (props) => {
             >
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(16, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
@@ -185,8 +178,8 @@ const About = (props) => {
               </Typography>
               <Typography
                 fontFamily={'Inter'}
-                fontSize={props.customTheme.fontEqualizer(16, true)}
-                color={props.customTheme.palette.black.main}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
                 textAlign={'center'}
               >
                 Advisor

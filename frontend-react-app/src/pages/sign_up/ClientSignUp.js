@@ -187,8 +187,6 @@ const SignUpPage = (props) => {
     />
   );
   if (props.stagedClient) {
-    const test = ContainerObject[`${taskIndexArray[props.taskIndex]}`];
-    console.log('test', test);
     return ContainerObject[`${taskIndexArray[props.taskIndex]}`];
   } else {
     return <></>;

@@ -26,11 +26,17 @@ const FAQs = (props) => {
   };
 
   return (
-    <Grid container item justifyContent={'center'} rowSpacing={4}>
+    <Grid
+      container
+      item
+      justifyContent={'center'}
+      rowSpacing={4}
+      py={customTheme.pages.splash.spacing.pages}
+    >
       <Grid item xs={12}>
         <Typography
           sx={{
-            fontSize: customTheme.fontEqualizer(48),
+            fontSize: customTheme.pages.splash.fontSize.header,
 
             fontWeight: '500',
             textAlign: 'center',

@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
 import { Link as RRLink } from 'react-router-dom';
-import logo from '../../static/images/chera_logo_fucia_150.png';
+// import logo from '../../static/images/chera_logo_fucia_150.png';
 import LocalStorageManager from '../../helpers/LocalStorageManager';
 import SplashLinks from './SplashLinks';
 import AdminLinks from './AdminLinks';
@@ -30,13 +30,6 @@ const Navbar = (props) => {
               sx={{
                 minHeight: '50px',
                 py: 3,
-                background: `
-                linear-gradient(
-                  to top,
-                  hsl(286, 95%, 100%),
-                  hsl(286, 95%, 84%)
-                );
-                `,
               }}
             >
               <Grid

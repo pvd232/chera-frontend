@@ -3,24 +3,31 @@ import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 
 const LogisticsStep = (props) => (
-  <Grid container spacing={2} justifyContent={'center'}>
+  <Grid container spacing={5} justifyContent={'center'}>
     {/* center the logo */}
     <Grid container item justifyContent={'center'}>
-      <Icon
-        sx={{
-          fontSize: '4rem',
-          color: `${props.customTheme.palette.olive.secondary}`,
+      <div
+        style={{
+          borderRadius: '50%',
+          padding: '1.5rem',
+          backgroundColor: `#ffd5da`,
         }}
       >
-        {props.symbolName}
-      </Icon>
+        <Icon
+          sx={{
+            fontSize: '4.5rem',
+            color: `${props.customTheme.palette.olive.main}`,
+          }}
+        >
+          {props.symbolName}
+        </Icon>
+      </div>
     </Grid>
     <Grid item xs={12}>
       <Typography
-        fontFamily={'Inter'}
-        fontSize={props.customTheme.fontEqualizer(18)}
-        fontWeight={800}
-        color={props.customTheme.palette.darkGrey.main}
+        fontSize={props.customTheme.pages.splash.fontSize.subHeader}
+        fontWeight={'bold'}
+        color={props.customTheme.palette.black.main}
         textAlign={'center'}
       >
         {props.headerText}

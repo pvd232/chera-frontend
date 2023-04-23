@@ -5,8 +5,22 @@ export default function normalizeDimensions(
   bounds
 ) {
   if (xPosition) {
-    return mapValues(xPosition, bounds['x'].min, bounds['x'].max, 0, 800);
+    return mapValues(
+      xPosition,
+      bounds['x'].min,
+      bounds['x'].max,
+      0,
+      window.innerWidth
+    );
   } else if (yPosition) {
-    return mapValues(yPosition, bounds['y'].min, bounds['y'].max, 0, 600);
+    return mapValues(
+      yPosition,
+      bounds['y'].min,
+      bounds['y'].max,
+      0,
+      window.innerWidth < 1000
+        ? window.innerHeight * 0.5
+        : window.innerHeight * 0.85
+    );
   }
 }
