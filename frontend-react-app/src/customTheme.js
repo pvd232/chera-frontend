@@ -119,7 +119,7 @@ const themeBase = createTheme({
       spacing: {
         pages: { padding: '12vh' },
         header: {
-          marginBottom: '10vh',
+          marginBottom: '8vh',
         },
       },
       color: {

@@ -15,17 +15,17 @@ const CommitmentToInclusivity = (props) => (
     mx={'auto'}
   >
     <CardContent>
+      <Typography
+        fontFamily={'Inter'}
+        fontSize={props.customTheme.fontEqualizer(48)}
+        color={props.customTheme.palette.black.main}
+        fontWeight={'500'}
+        textAlign={'center'}
+        mb={props.customTheme.pages.splash.spacing.header}
+      >
+        Commitment to Inclusivity
+      </Typography>
       <Stack spacing={5}>
-        <Typography
-          fontFamily={'Inter'}
-          fontSize={props.customTheme.fontEqualizer(48)}
-          color={props.customTheme.palette.black.main}
-          fontWeight={'500'}
-          textAlign={'center'}
-        >
-          Commitment to Inclusivity
-        </Typography>
-
         <Typography
           fontFamily={'Inter'}
           fontSize={props.customTheme.fontEqualizer(20)}

@@ -40,7 +40,7 @@ const FAQs = (props) => {
 
             fontWeight: '500',
             textAlign: 'center',
-            marginBottom: '3vh',
+            marginBottom: props.customTheme.pages.splash.spacing.header,
           }}
           color={customTheme.palette.black.main}
         >

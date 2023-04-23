@@ -14,7 +14,7 @@ const FNCEApproved = () => {
       item
       container
       justifyContent={'center'}
-      rowSpacing={customTheme.largerScreen() ? '15vh' : '5vh'}
+      rowSpacing={customTheme.largerScreen() ? '12vh' : '5vh'}
       py={customTheme.pages.splash.spacing.pages}
     >
       <Grid item xs={10}>
