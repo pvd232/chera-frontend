@@ -33,8 +33,8 @@ const CommitmentToInclusivity = (props) => (
           textAlign={'center'}
         >
           Eating disorders don't discriminate. However, Black, Indigenous, POC,
-          LGBTQ+, men, and people in larger bodies are less likely to receive
-          the care needed to successfully recover from an eating disorder.
+          LGBTQ+, Men, and people in larger bodies are less likely to receive
+          the care they need to recover from an eating disorder.
         </Typography>
         <Typography
           fontFamily={'Inter'}

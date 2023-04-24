@@ -63,7 +63,7 @@ const Navbar = (props) => {
                   alignItems={'flex-start'}
                 >
                   <RRLink
-                    to={props.url}
+                    to={LocalStorageManager.shared.homeUrl}
                     style={{
                       textDecoration: 'none',
                       fontSize: '3.5rem',
@@ -87,7 +87,13 @@ const Navbar = (props) => {
                   sx={{
                     marginLeft: props.domain === 'splash' ? 'auto' : '',
                   }}
-                  columnGap={!customTheme.extraSmallScreen() ? 3.5 : 1.5}
+                  columnGap={
+                    customTheme.extraSmallScreen()
+                      ? 1.5
+                      : customTheme.extraExtraSmallScreen()
+                      ? 0
+                      : 3.5
+                  }
                 >
                   {props.domain === 'splash' ? (
                     <SplashLinks customTheme={customTheme} />

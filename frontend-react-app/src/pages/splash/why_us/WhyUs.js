@@ -81,7 +81,7 @@ const WhyUs = () => {
       rowGap={5}
       sx={{
         backgroundColor: customTheme.pages.splash.color.lightBlue,
-        py: '20vh',
+        py: customTheme.pages.splash.spacing.pages,
         paddingLeft: customTheme.smallerScreen()
           ? '0vw'
           : customTheme.extraLargeScreen()

@@ -28,14 +28,14 @@ const TableOfContents = (props) => {
             customTheme.largerScreen()
               ? {
                   position: 'absolute',
-                  top: '30%',
+                  top: '36%',
                   transform: 'translateY(-30%)',
                   left: '2%',
                   width: 'max-content',
                   height: 'max-content',
                   backgroundColor: customTheme.palette.olive.quaternary,
-                  paddingTop: '3vh',
-                  paddingBottom: '3vh',
+                  paddingTop: '2vh',
+                  paddingBottom: '2vh',
                   paddingRight: '3vw',
                   paddingLeft: '3vw',
                 }
@@ -52,7 +52,7 @@ const TableOfContents = (props) => {
         >
           <Typography
             sx={{
-              fontSize: customTheme.fontEqualizer(48),
+              fontSize: customTheme.pages.resources.fontSize.header,
               textAlign: 'center',
             }}
           >
@@ -61,7 +61,7 @@ const TableOfContents = (props) => {
           {
             <Typography
               sx={{
-                fontSize: customTheme.fontEqualizer(20),
+                fontSize: customTheme.pages.resources.fontSize.subHeader,
                 textAlign: 'center',
                 marginTop: customTheme.smallerScreen() ? '2vh' : '',
               }}

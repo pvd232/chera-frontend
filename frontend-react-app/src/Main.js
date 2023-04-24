@@ -59,7 +59,7 @@ const Main = (props) => {
           }
         />
         <Route
-          path="/contact-us"
+          path="/contact"
           element={
             <Navbar childComponent={<ContactUs />} domain={'splash'}></Navbar>
           }

@@ -9,10 +9,11 @@ const LandingPage = (props) => (
     justifyContent={'center'}
     sx={{
       backgroundColor: props.customTheme.palette.white1.main,
+      height: '100vh',
     }}
   >
     <OrbContainer customTheme={props.customTheme} />
-    <IntroTextBox />
+    <IntroTextBox executeScroll={props.executeScroll} />
   </Grid>
 );
 export default LandingPage;

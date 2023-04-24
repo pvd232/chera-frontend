@@ -3,19 +3,22 @@ import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 
 const LogisticsStep = (props) => (
-  <Grid container spacing={5} justifyContent={'center'}>
+  <Grid container spacing={3} justifyContent={'center'}>
     {/* center the logo */}
     <Grid container item justifyContent={'center'}>
       <div
         style={{
           borderRadius: '50%',
-          padding: '1.5rem',
+          padding: '1rem',
           backgroundColor: `#ffd5da`,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
         }}
       >
         <Icon
+          fontSize="large"
           sx={{
-            fontSize: '4.5rem',
             color: `${props.customTheme.palette.olive.main}`,
           }}
         >

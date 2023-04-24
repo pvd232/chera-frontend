@@ -1,5 +1,6 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import Inter from './static/fonts/Inter-Regular.ttf';
+import fontEqualizer from './helpers/fontEqualizer';
 const themeBase = createTheme({
   palette: {
     olive: {
@@ -7,6 +8,10 @@ const themeBase = createTheme({
       secondary: '#ff2e48',
       tertiary: '#fcb052',
       quaternary: '#fee1be',
+    },
+    fucia: {
+      main: '#ff3e56',
+      secondary: '#ffd5da',
     },
     oliveCompliment: {
       main: '#0473fb',
@@ -79,6 +84,7 @@ const themeBase = createTheme({
 
   largerScreen: () => window.innerWidth >= 900,
   smallerScreen: () => window.innerWidth <= 900,
+  extraSmallerScreen: () => window.innerWidth <= 600,
   tablet: () =>
     window.innerWidth > 700 &&
     window.innerWidth < 1000 &&
@@ -113,8 +119,9 @@ const themeBase = createTheme({
   pages: {
     splash: {
       fontSize: {
-        header: '3.5rem',
-        subHeader: '1.3rem',
+        header: fontEqualizer(42, false),
+        subHeader: fontEqualizer(22, false),
+        button: fontEqualizer(18, false),
       },
       spacing: {
         pages: { padding: '12vh' },
@@ -124,12 +131,29 @@ const themeBase = createTheme({
       },
       color: {
         lightBlue: '#BBDDFF',
+        lightGreen: '#73C371',
       },
     },
     about: {
       fontSize: {
         body: '1.5rem',
         signature: '2rem',
+      },
+    },
+    resources: {
+      fontSize: {
+        header: fontEqualizer(42, false),
+        cardTitle: fontEqualizer(16, false),
+      },
+      spacing: {
+        pages: { padding: '12vh' },
+        header: {
+          marginBottom: '8vh',
+        },
+      },
+      color: {
+        lightBlue: '#BBDDFF',
+        lightGreen: '#73C371',
       },
     },
   },

@@ -66,15 +66,14 @@ const AppToDownload = (props) => (
         justifyContent={'center'}
         alignItems="flex-start"
         left={'50%'}
-        top={'5%'}
         sx={{
-          backgroundColor: props.customTheme.palette.olive.main,
+          backgroundColor: props.customTheme.palette.fucia.secondary,
           transform: 'translate(-50%,0%)',
         }}
         rowGap={2}
       >
         <Typography
-          fontSize={props.customTheme.fontEqualizer(16)}
+          fontSize={props.customTheme.pages.resources.fontSize.cardTitle}
           fontWeight={'bold'}
           sx={{
             letterSpacing: '1.5px',

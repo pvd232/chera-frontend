@@ -11,6 +11,7 @@ const About = () => {
       container
       item
       py={customTheme.pages.splash.spacing.pages}
+      px={0}
       spacing={'10vh'}
     >
       <Grid container item xs={12} justifyContent={'center'}>

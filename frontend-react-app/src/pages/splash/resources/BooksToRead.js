@@ -18,7 +18,9 @@ const BooksToRead = () => {
       }}
     >
       <Grid lg={12} md={12} marginBottom="1vh">
-        <Typography fontSize={customTheme.fontEqualizer(48)}>Books</Typography>
+        <Typography fontSize={customTheme.pages.resources.fontSize.header}>
+          Books
+        </Typography>
       </Grid>
       <BookToRead
         customTheme={customTheme}

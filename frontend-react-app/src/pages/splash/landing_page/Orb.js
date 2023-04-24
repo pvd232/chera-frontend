@@ -24,7 +24,7 @@ const Orb = forwardRef((props, ref) => {
         if (props.smallerScreen) {
           return randomNum(window.innerWidth / 7, window.innerWidth / 5);
         } else {
-          return randomNum(window.innerHeight / 7, window.innerHeight / 4);
+          return randomNum(window.innerHeight / 9, window.innerHeight / 6);
         }
       })();
 
@@ -40,7 +40,7 @@ const Orb = forwardRef((props, ref) => {
         props.smallerScreen
           ? 0
           : randomNum(0.2 * (window.innerWidth / 4), window.innerWidth * 0.6),
-        window.innerHeight * 0.45,
+        window.innerHeight * 0.6,
         radius
       );
       // Let graphics know we won't be filling in any more shapes

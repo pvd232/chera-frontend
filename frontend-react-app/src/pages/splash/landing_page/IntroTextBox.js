@@ -2,13 +2,15 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import { useTheme } from '@mui/material/styles';
-const IntroTextBox = () => {
+import BlackButton from '../../../reusable_ui_components/BlackButton';
+
+const IntroTextBox = (props) => {
   const customTheme = useTheme();
   return (
     <Grid
       container
       item
-      lg={8}
+      lg={10}
       justifyContent={'center'}
       sx={{ position: 'absolute', top: '25%', bottom: '25%' }}
     >
@@ -30,35 +32,38 @@ const IntroTextBox = () => {
             alignItems={'center'}
             height={'100%'}
           >
-            <Grid item>
+            <Grid item mb={5}>
               <Typography
-                fontSize={
-                  customTheme.largerScreen()
-                    ? '3rem'
-                    : customTheme.smallScreen()
-                    ? '2rem'
-                    : '1.6rem'
-                }
+                fontSize={customTheme.pages.splash.fontSize.header}
                 textAlign={'center'}
-                margin={'0 auto'}
-                mb={10}
                 fontWeight={'bold'}
               >
-                Meal planning is hard. We make it easy.
+                Meal planning is hard.
+              </Typography>
+              <Typography
+                fontSize={customTheme.pages.splash.fontSize.header}
+                textAlign={'center'}
+                fontWeight={'bold'}
+              >
+                We make it easy.
               </Typography>
             </Grid>
-            <Typography
-              fontSize={
-                customTheme.largerScreen()
-                  ? '1.4rem'
-                  : customTheme.smallScreen()
-                  ? '1.2rem'
-                  : '1.1rem'
-              }
-            >
+            <Typography fontSize={customTheme.pages.splash.fontSize.subHeader}>
               Chera is a community of dietitians, doctors, and engineers
               dedicated to eating disorder recovery.
             </Typography>
+            <BlackButton
+              variant={'contained'}
+              onClick={props.executeScroll}
+              sx={{
+                fontSize: customTheme.pages.splash.fontSize.button,
+                marginTop: '5vh',
+                padding: '1.5vh 1.5vh',
+                borderRadius: '30px',
+              }}
+            >
+              Get started
+            </BlackButton>
           </Grid>
         </div>
       </CardContent>

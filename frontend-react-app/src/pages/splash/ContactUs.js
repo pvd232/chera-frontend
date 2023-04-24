@@ -4,22 +4,20 @@ import { useTheme } from '@mui/material/styles';
 import FAQs from './faqs/FAQs';
 const ContactUs = () => {
   const customTheme = useTheme();
-
   return (
-    <Grid item container justifyContent={'center'} marginBottom={'10vh'}>
+    <Grid item container justifyContent={'center'} my={10}>
       <Grid
         item
         container
         justifyContent={'center'}
         marginRight={'auto'}
         marginLeft={'auto'}
-        paddingTop={customTheme.largerScreen() ? '5vh' : '3v'}
-        paddingBottom={'10vh'}
+        pt={10}
+        pb={20}
         sx={{
-          backgroundColor: '#ffd491',
+          backgroundColor: customTheme.palette.fucia.secondary,
         }}
         rowSpacing={10}
-        margin={'0 !important'}
       >
         <Grid item xs={10}>
           <Typography
@@ -33,7 +31,7 @@ const ContactUs = () => {
           </Typography>
         </Grid>
 
-        <Grid item lg={4} xs={10}>
+        <Grid item lg={6} xs={10}>
           <Typography fontSize={customTheme.fontEqualizer(28)}>
             Email us at{' '}
             <span>
@@ -48,11 +46,11 @@ const ContactUs = () => {
                 contact@bendito.io
               </a>
             </span>{' '}
-            and we will get back to you in an hour or less!
+            and we will get back to you by end of day!
           </Typography>
         </Grid>
       </Grid>
-      <Grid item container marginTop={'10vh'}>
+      <Grid item container>
         <FAQs></FAQs>
       </Grid>
     </Grid>

@@ -43,43 +43,6 @@ const MealCard = (props) => {
           {props.mealDescription}
         </Typography>
       </CardContent>
-      {/* <CardActions>
-        <Grid
-          container
-          justifyContent={'space-around'}
-          sx={{
-            position: 'absolute',
-            bottom: '4vh',
-          }}
-        >
-          <Grid item>
-            <IconButton
-              sx={{
-                transform: 'scale(1.8)',
-                cursor: 'pointer',
-                color: 'rgba(0, 0, 0, 1)',
-              }}
-            >
-              <RemoveCircleIcon />
-            </IconButton>
-          </Grid>
-
-          <Grid item>
-            <Typography fontSize={'1rem'}>1 in your box</Typography>
-          </Grid>
-          <Grid item>
-            <IconButton
-              sx={{
-                transform: 'scale(1.8)',
-                cursor: 'pointer',
-                color: 'rgba(0, 0, 0, 1)',
-              }}
-            >
-              <AddCircleIcon />
-            </IconButton>
-          </Grid>
-        </Grid>
-      </CardActions> */}
     </Card>
   );
 };

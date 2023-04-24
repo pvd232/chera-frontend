@@ -8,8 +8,8 @@ const SplashLinks = (props) => (
     />
 
     <FormattedLink
-      url={'/contact-us'}
-      text={'Contact Us'}
+      url={'/contact'}
+      text={'Contact'}
       customTheme={props.customTheme}
     />
     <FormattedLink
@@ -19,7 +19,7 @@ const SplashLinks = (props) => (
     />
     <FormattedLink
       url={'/login-sign-up-choice'}
-      text={'Log in'}
+      text={'Login'}
       customTheme={props.customTheme}
     />
   </>

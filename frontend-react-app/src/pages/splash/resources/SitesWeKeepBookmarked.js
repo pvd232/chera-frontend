@@ -10,7 +10,7 @@ const SitesWeKeepBookmarked = () => {
     <>
       <Grid lg={8} md={8}>
         <Typography
-          fontSize={customTheme.fontEqualizer(48)}
+          fontSize={customTheme.pages.resources.fontSize.header}
           marginBottom={'2vh'}
         >
           Trusted Experts

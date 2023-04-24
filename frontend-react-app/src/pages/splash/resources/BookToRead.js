@@ -16,7 +16,6 @@ const BookToRead = (props) => (
       md={10}
       justifyContent="center"
       alignItems="flex-end"
-      // border={"2px black solid"}
       height={'auto'}
       margin={0}
     >
@@ -41,10 +40,10 @@ const BookToRead = (props) => (
       marginTop={1}
       padding={2}
       sx={{
-        backgroundColor: props.customTheme.palette.olive.main,
+        backgroundColor: props.customTheme.palette.fucia.secondary,
       }}
     >
-      <Typography fontSize={props.customTheme.fontEqualizer(14)}>
+      <Typography fontSize={props.customTheme.pages.resources.fontSize.cardTitle}>
         {props.resourceDescription}
       </Typography>
     </Grid>

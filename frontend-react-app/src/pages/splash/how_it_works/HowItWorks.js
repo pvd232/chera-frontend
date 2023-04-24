@@ -7,18 +7,18 @@ const HowItWorks = (props) => {
       container
       item
       justifyContent={'center'}
-      rowSpacing={5}
-      py={'30vh'}
-      sx={{}}
+      py={props.customTheme.pages.splash.spacing.pages}
+      px={0}
+      my={'10vh'}
     >
-      <Grid item xs={10} sx={{ padding: '0 !important' }}>
+      <Grid item xs={12} lg={10} sx={{ padding: '0 !important' }}>
         <Typography
           sx={{
             fontSize: props.customTheme.pages.splash.fontSize.header,
             fontWeight: '500',
             textAlign: 'center',
           }}
-          mb={'10vh'}
+          mb={props.customTheme.largerScreen() ? 10 : 5}
         >
           How Chera Works
         </Typography>
@@ -29,13 +29,14 @@ const HowItWorks = (props) => {
         justifyContent={
           props.customTheme.largerScreen() ? 'space-evenly' : 'center'
         }
+        rowSpacing={5}
       >
         <Grid item lg={2.5} md={5} xs={10}>
           <LogisticsStep
             customTheme={props.customTheme}
             headerText={'Dietitian Refers Client'}
             bodyText={
-              'After creating your account, add clients via your dashboard and select which of our ten different meal plans best fit their needs.'
+              'Add clients via your dashboard and select which of our ten different meal plans best fit their needs.'
             }
             symbolName={'format_list_numbered'}
           />
@@ -43,9 +44,9 @@ const HowItWorks = (props) => {
         <Grid item lg={2.5} md={5} xs={10}>
           <LogisticsStep
             customTheme={props.customTheme}
-            headerText={'Client or Dietitian Picks Weekly Meals'}
+            headerText={'Pick Weekly Meals'}
             bodyText={
-              'Client receives sign up email, creates account and chooses at least 6 weekly meals, then receives confirmation email with delivery details.'
+              'Client creates account and chooses 6 or more weekly meals. (Dietitian may also preselect meals for their client)'
             }
             symbolName={'dinner_dining'}
           />
@@ -55,7 +56,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'We Cook and Ship Meals'}
             bodyText={
-              'Meals are fined tuned according to personalized meal plans. Meals are shipped in discreetly labeled boxes and delivered on Saturday.'
+              'Meals fined tuned to their meal plan are shipped with discreet packaging and delivered on Saturday or Sunday.'
             }
             symbolName={'delivery_dining_outlined'}
           />

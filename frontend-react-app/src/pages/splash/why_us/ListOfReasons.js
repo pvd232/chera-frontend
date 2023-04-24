@@ -31,7 +31,7 @@ const ListOfReasons = (props) => {
           customTheme={customTheme}
           reasonOpen={props.reasonOpen.second}
           setReasonOpen={() => props.setReasonOpen('second')}
-          bulletPrimaryText={'Thoughtful Labeling & Packaging '}
+          bulletPrimaryText={'Thoughtful Labeling '}
           bulletSecondaryText={
             "We don't place nutrition labels on our meals, easing meal time stress, and use discreet packaging when shipping your clients their weekly Chera Box."
           }
@@ -41,7 +41,7 @@ const ListOfReasons = (props) => {
           customTheme={customTheme}
           reasonOpen={props.reasonOpen.third}
           setReasonOpen={() => props.setReasonOpen('third')}
-          bulletPrimaryText={'Client Nutritional Insights'}
+          bulletPrimaryText={'Client Recovery Tracking'}
           bulletSecondaryText={
             "Our platform provides an easy-to-use dashboard to manage your client's meal plan, view your client's meals, and comprehensively monitor their nutritional intake using the 25+ nutrient daily values we track."
           }
@@ -51,7 +51,7 @@ const ListOfReasons = (props) => {
           customTheme={customTheme}
           reasonOpen={props.reasonOpen.fourth}
           setReasonOpen={() => props.setReasonOpen('fourth')}
-          bulletPrimaryText={'Trusted Food Science Credentials'}
+          bulletPrimaryText={'Trusted Nutrition Credentials'}
           bulletSecondaryText={
             'All our meals are all dietitian approved, and were served to hundreds of nutritional experts at FNCE 2022.'
           }

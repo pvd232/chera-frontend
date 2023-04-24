@@ -7,7 +7,7 @@ import ListOfClientFAQs from './ListOfClientFAQs';
 import ListOfDietitianFAQs from './ListOfDietitianFAQs';
 import { useTheme } from '@mui/material/styles';
 
-const FAQs = (props) => {
+const FAQs = () => {
   const customTheme = useTheme();
   const reasonOpenObject = {};
   const combinedListOfFAQS = [...clientFAQsArray(), ...dietitianFAQsArray()];
@@ -32,6 +32,7 @@ const FAQs = (props) => {
       justifyContent={'center'}
       rowSpacing={4}
       py={customTheme.pages.splash.spacing.pages}
+      px={0}
     >
       <Grid item xs={12}>
         <Typography
@@ -40,7 +41,7 @@ const FAQs = (props) => {
 
             fontWeight: '500',
             textAlign: 'center',
-            marginBottom: props.customTheme.pages.splash.spacing.header,
+            marginBottom: customTheme.pages.splash.spacing.header,
           }}
           color={customTheme.palette.black.main}
         >

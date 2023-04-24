@@ -7,46 +7,40 @@ import About from './About';
 import CommitmentToInclusivity from './CommitmentToInclusivity';
 import FAQs from './faqs/FAQs';
 import WhyUs from './why_us/WhyUs';
-import Intro from './Intro';
 import LandingPage from './landing_page/LandingPage';
 import FNCEApproved from './FNCEApproved';
 import DietitianSignUp from './dietitian_sign_up/DietitianSignUp';
 const Splash = () => {
   const customTheme = useTheme();
   const myRef = useRef();
-  const executeScroll = () => myRef.current.scrollIntoView();
+  const executeScroll = () =>
+    myRef.current.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <Grid container justifyContent={'center'} marginBottom={'20vh'}>
-      <Grid item xs={12}>
-        {
-          // <CheraIntro
-          //   executeScroll={executeScroll}
-          //   customTheme={customTheme}
-          // />
-          <LandingPage customTheme={customTheme} />
-        }
+      <Grid container item>
+        <LandingPage customTheme={customTheme} executeScroll={executeScroll} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid container item>
         <HowItWorks customTheme={customTheme} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid container item>
         <WhyUs customTheme={customTheme} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid container item>
         <FNCEApproved customTheme={customTheme} />
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid container item>
         <DietitianSignUp customTheme={customTheme} ref={myRef} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid container item>
         <FAQs customTheme={customTheme} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid container item>
         <About customTheme={customTheme} />
       </Grid>
-      <Grid item xs={12}>
+      <Grid container item>
         <CommitmentToInclusivity customTheme={customTheme} />
       </Grid>
     </Grid>

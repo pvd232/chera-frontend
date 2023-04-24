@@ -2,6 +2,9 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import Icon from '@mui/material/Icon';
+import { IconButton, Stack } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 
 const ReasonBullet = (props) => (
   <Grid
@@ -9,27 +12,16 @@ const ReasonBullet = (props) => (
     container
     justifyContent={'flex-start'}
     alignItems={'center'}
-    sx={{
-      marginTop: '1vh',
-    }}
+    my={2}
+    mx={0}
+    px={1}
     onClick={props.setReasonOpen}
   >
     <Grid item justifyContent={'center'} alignContent={'center'}>
-      <Icon
-        sx={{
-          transform: `scale(1.3)`,
-          paddingTop: '2px',
-        }}
-      >
-        {props.icon ?? 'ac_unit'}
-      </Icon>
+      <Icon fontSize="large">{props.icon}</Icon>
     </Grid>
     <Grid item>
-      <CardContent
-        sx={{
-          paddingBottom: '16px !important',
-        }}
-      >
+      <CardContent>
         <Typography
           fontWeight={500}
           fontSize={props.customTheme.fontEqualizer(18)}
@@ -38,14 +30,22 @@ const ReasonBullet = (props) => (
         </Typography>
       </CardContent>
     </Grid>
-    <Grid item sx={{ marginLeft: 'auto' }}>
-      <Icon
-        sx={{
-          transform: `scale(1.3)`,
-        }}
-      >
-        arrow_drop_down
-      </Icon>
+    <Grid item container lg={1} xs={1} sx={{ marginLeft: 'auto' }}>
+      <Stack>
+        <IconButton
+          sx={{
+            padding: '0',
+            color: 'rgba(0, 0, 0, 1)',
+            background: `${props.customTheme.palette.lightGrey.main}`,
+          }}
+        >
+          {props.reasonOpen ? (
+            <ArrowDropUpIcon fontSize="large" />
+          ) : (
+            <ArrowDropDownIcon fontSize="large" />
+          )}
+        </IconButton>
+      </Stack>
     </Grid>
     <Grid container item>
       <CardContent
