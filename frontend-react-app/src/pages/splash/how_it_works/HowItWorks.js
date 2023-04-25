@@ -9,7 +9,7 @@ const HowItWorks = (props) => {
       justifyContent={'center'}
       py={props.customTheme.pages.splash.spacing.pages}
       px={0}
-      my={'10vh'}
+      my={props.customTheme.largerScreen() ? '10vh' : '0vh'}
     >
       <Grid item xs={12} lg={10} sx={{ padding: '0 !important' }}>
         <Typography

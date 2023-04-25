@@ -7,13 +7,7 @@ import { useTheme } from '@mui/material/styles';
 const About = () => {
   const customTheme = useTheme();
   return (
-    <Grid
-      container
-      item
-      py={customTheme.pages.splash.spacing.pages}
-      px={0}
-      spacing={'10vh'}
-    >
+    <Grid container item py={customTheme.pages.splash.spacing.pages} px={5}>
       <Grid container item xs={12} justifyContent={'center'}>
         <CardContent>
           <Typography

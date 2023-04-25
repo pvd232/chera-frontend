@@ -94,9 +94,10 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
       xs={12}
       alignItems="stretch"
       justifyContent={'center'}
+      py={customTheme.pages.splash.spacing.pages}
+      px={0}
       sx={{
         backgroundColor: customTheme.palette.lightGrey.secondary,
-        py: customTheme.pages.splash.spacing.pages,
       }}
       ref={ref}
     >
