@@ -4,6 +4,7 @@ export default class RecipeIngredient {
     this.id = recipeIngredientObject.id;
     this.usdaIngredientId = recipeIngredientObject.usdaIngredientId;
     this.mealPlanMealId = recipeIngredientObject.mealPlanMealId;
+    this.mealPlanSnackId = recipeIngredientObject.mealPlanSnackId;
     this.usdaIngredientPortionId =
       recipeIngredientObject.usdaIngredientPortionId;
     this.quantity = recipeIngredientObject.quantity;
