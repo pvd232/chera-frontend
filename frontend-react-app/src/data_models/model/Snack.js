@@ -1,8 +1,7 @@
 import checkProperties from '../../helpers/checkProperties';
-export default class Meal {
+export default class Snack {
   constructor(mealObject) {
     this.id = mealObject.id;
-    this.mealTime = mealObject.mealTime;
     this.name = mealObject.name;
     this.description = mealObject.description;
     this.imageUrl = mealObject.imageUrl;

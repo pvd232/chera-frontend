@@ -23,6 +23,7 @@ import Navbar from './reusable_ui_components/navbar/Navbar';
 import DietitianMenu from './pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './pages/splash/resources/Resources';
 import SignUpPage from './pages/sign_up/ClientSignUp';
+import SnackBuilder from './pages/admin/snack_builder/SnackBuilder';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -95,6 +96,7 @@ const Main = (props) => {
           }
         />
         <Route path="/meal-builder" element={<MealBuilder />} />
+        <Route path="/snack-builder" element={<SnackBuilder />} />
         <Route
           path="/meal-plan-meal-builder"
           element={

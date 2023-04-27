@@ -120,6 +120,15 @@ class LocalStorageManager {
   deleteSavedMealBuilderMeal() {
     this.removeItem('saved_meal_builder_meal');
   }
+  get savedMealBuilderSnack() {
+    return this.getItem('saved_meal_builder_snack');
+  }
+  set savedMealBuilderSnack(newSnack) {
+    this.setItem('saved_meal_builder_snack', newSnack);
+  }
+  deleteSavedMealBuilderSnack() {
+    this.removeItem('saved_meal_builder_snack');
+  }
   logoutUser = () => {
     localStorage.clear();
   };

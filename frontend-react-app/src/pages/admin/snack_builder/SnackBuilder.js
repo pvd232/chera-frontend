@@ -16,25 +16,25 @@ import IngredientRow from './IngredientRow';
 import { v4 as uuid } from 'uuid';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import OrangeSwitch from './OrangeSwitch';
-import MealPlanMealDTO from '../../../data_models/dto/MealPlanMealDTO';
+import MealPlanSnackDTO from '../../../data_models/dto/MealPlanSnackDTO';
 import RecipeIngredientDTO from '../../../data_models/dto/RecipeIngredientDTO';
-import createMealData from './helpers/createSnackData';
+import createSnackData from './helpers/createSnackData';
 import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
-import MealCard from './SnackCard';
+import SnackCard from './SnackCard';
 import updateUSDAIngredients from './helpers/updateUSDAIngredients';
 import { CircularProgress } from '@mui/material';
-import getMeal from './helpers/getSnack';
-const MealBuilder = () => {
-  const [mealPlanMeals, setMealPlanMeals] = useState([]);
-  const [selectedMealIndex, setSelectedMealIndex] = useState(0);
-  const [mealId, setMealId] = useState(false);
-  const [mealName, setMealName] = useState('');
-  const [mealTime, setMealTime] = useState('');
-  const [mealDescription, setMealDescription] = useState('');
-  const [mealPrice, setMealPrice] = useState(0);
+import getSnack from './helpers/getSnack';
+
+const SnackBuilder = () => {
+  const [mealPlanSnacks, setMealPlanSnacks] = useState([]);
+  const [selectedSnackIndex, setSelectedSnackIndex] = useState(0);
+  const [snackId, setSnackId] = useState(false);
+  const [snackName, setSnackName] = useState('');
+  const [snackDescription, setSnackDescription] = useState('');
+  const [snackPrice, setSnackPrice] = useState(0);
   const [isVegetarian, setIsVegetarian] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
-  const [mealIngredients, setMealIngredients] = useState([]);
+  const [snackIngredients, setSnackIngredients] = useState([]);
   const [dietaryRestrictions, setDietaryRestrictions] = useState([]);
 
   const [extendedUsdaIngredients, setExtendedUsdaIngredients] = useState([]);
@@ -47,66 +47,64 @@ const MealBuilder = () => {
     updateUSDAIngredients({
       mounted: mounted,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
-      setMealPrice: setMealPrice,
+      setSnackPrice: setSnackPrice,
       setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
-      setMealPlanMeals: setMealPlanMeals,
+      setMealPlanSnacks: setMealPlanSnacks,
     });
 
     return () => (mounted = false);
   }, []);
-  const handleUpdateMealIndex = (index) => {
-    setSelectedMealIndex(index);
-    setMealId(getMeal(mealPlanMeals, index).mealId);
-    setMealName(getMeal(mealPlanMeals, index).mealName);
-    setMealTime(getMeal(mealPlanMeals, index).mealTime);
-    setMealDescription(getMeal(mealPlanMeals, index).mealDescription);
-    setIsVegetarian(getMeal(mealPlanMeals, index).isVegetarian);
-    setImageUrl(getMeal(mealPlanMeals, index).imageUrl);
-    setMealIngredients(getMeal(mealPlanMeals, index).mealIngredients);
+  const handleUpdateSnackIndex = (index) => {
+    setSelectedSnackIndex(index);
+    setSnackId(getSnack(mealPlanSnacks, index).snackId);
+    setSnackName(getSnack(mealPlanSnacks, index).snackName);
+    setSnackDescription(getSnack(mealPlanSnacks, index).snackDescription);
+    setIsVegetarian(getSnack(mealPlanSnacks, index).isVegetarian);
+    setImageUrl(getSnack(mealPlanSnacks, index).imageUrl);
+    setSnackIngredients(getSnack(mealPlanSnacks, index).snackIngredients);
   };
   const handleSubmit = async () => {
     setLoading(true);
-    if (mealId) {
-      // Delete old meal first
-      await APIClient.deleteMeal(mealId);
+    if (snackId) {
+      // Delete old snack first
+      await APIClient.deleteSnack(snackId);
     }
 
-    // Generate new meal id
-    const newMealId = uuid();
+    // Generate new snack id
+    const newSnackId = uuid();
 
-    const [newMealDTO, newMealDietaryRestrictionDTO] = createMealData(
-      newMealId,
+    const [newSnackDTO, newSnackDietaryRestrictionDTO] = createSnackData(
+      newSnackId,
       dietaryRestrictions,
-      mealName,
-      mealTime,
-      mealPrice,
-      mealDescription,
+      snackName,
+      snackPrice,
+      snackDescription,
       imageUrl,
       isVegetarian
     );
-    await APIClient.createMeal(newMealDTO);
+    await APIClient.createSnack(newSnackDTO);
 
-    if (newMealDietaryRestrictionDTO) {
-      await APIClient.createMealDietaryRestriction(
-        newMealDietaryRestrictionDTO
+    if (newSnackDietaryRestrictionDTO) {
+      await APIClient.createSnackDietaryRestriction(
+        newSnackDietaryRestrictionDTO
       );
     }
 
     for (const mealPlan of mealPlans) {
-      const mealPlanMealDTO = new MealPlanMealDTO({
+      const mealPlanSnackDTO = new MealPlanSnackDTO({
         id: uuid(),
-        meal_id: newMealId,
+        snack_id: newSnackId,
         meal_plan_id: mealPlan.id,
         active: true,
       });
-      await APIClient.createMealPlanMeal(mealPlanMealDTO);
-      const recipeIngredients = mealIngredients.map((ingredient) => {
+      await APIClient.createMealPlanSnack(mealPlanSnackDTO);
+      const recipeIngredients = snackIngredients.map((ingredient) => {
         const newRecipeIngredientId = uuid();
         return new RecipeIngredientDTO({
           id: newRecipeIngredientId,
           usda_ingredient_id: ingredient.usdaIngredientId,
-          meal_plan_meal_id: mealPlanMealDTO.id,
+          meal_plan_snack_id: mealPlanSnackDTO.id,
           usda_ingredient_portion_id: ingredient.usdaIngredientPortionId,
           quantity: ingredient.quantity,
           active: true,
@@ -116,48 +114,47 @@ const MealBuilder = () => {
       await APIClient.createRecipeIngredientNutrients(recipeIngredients);
     }
     setLoading(false);
-    alert('Meal created!');
+    alert('Snack created!');
     window.location.reload();
   };
   const handleSave = () => {
     setSaveButtonLoading(true);
-    const mealBuilderMeal = {
-      mealId: mealId,
-      mealName: mealName,
-      mealTime: mealTime,
-      mealDescription: mealDescription,
-      mealPrice: mealPrice,
+    const mealBuilderSnack = {
+      snackId: snackId,
+      snackName: snackName,
+      snackDescription: snackDescription,
+      snackPrice: snackPrice,
       isVegetarian: isVegetarian,
       dietaryRestrictions: dietaryRestrictions,
       imageUrl: imageUrl,
-      mealIngredients: mealIngredients,
+      snackIngredients: snackIngredients,
     };
-    LocalStorageManager.shared.savedMealBuilderMeal = mealBuilderMeal;
+    LocalStorageManager.shared.savedMealBuilderSnack = mealBuilderSnack;
     updateUSDAIngredients({
       mounted: true,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
-      setMealPrice: setMealPrice,
+      setSnackPrice: setSnackPrice,
       setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
-      setMealPlanMeals: setMealPlanMeals,
+      setMealPlanSnacks: setMealPlanSnacks,
     }).then(() => setSaveButtonLoading(false));
   };
 
   const handleAddIngredient = (newIngredient) => {
-    setMealIngredients([...mealIngredients, newIngredient]);
+    setSnackIngredients([...snackIngredients, newIngredient]);
   };
   const handleRemoveIngredient = (index) => {
-    setMealIngredients((prevMealIngredients) => {
-      const newIngredients = [...prevMealIngredients];
+    setSnackIngredients((prevSnackIngredients) => {
+      const newIngredients = [...prevSnackIngredients];
       newIngredients.splice(index, 1);
       return newIngredients;
     });
   };
   const handleUpdateIngredient = (index, newIngredient) => {
-    setMealIngredients((prevMealIngredients) => {
-      const newMealIngredients = [...prevMealIngredients];
-      newMealIngredients.splice(index, 1, newIngredient);
-      return newMealIngredients;
+    setSnackIngredients((prevSnackIngredients) => {
+      const newSnackIngredients = [...prevSnackIngredients];
+      newSnackIngredients.splice(index, 1, newIngredient);
+      return newSnackIngredients;
     });
   };
   return (
@@ -181,7 +178,7 @@ const MealBuilder = () => {
               <Grid item container justifyContent={'center'}>
                 <Grid item>
                   <Typography variant="h4" fontWeight={'bold'}>
-                    {'Meal Builder :)'}
+                    {'Snack Builder :)'}
                   </Typography>
                 </Grid>
                 <Grid container justifyContent={'flex-end'}>
@@ -196,31 +193,31 @@ const MealBuilder = () => {
                 <Grid container justifyContent={'flex-end'} marginTop={2}>
                   <Grid item lg={3} sx={{ textAlign: 'left' }}>
                     <FormControl fullWidth>
-                      <InputLabel id="mealsLabel">Edit Meal</InputLabel>
+                      <InputLabel id="snacksLabel">Edit Snack</InputLabel>
                       <Select
-                        labelId="mealsLabel"
+                        labelId="snacksLabel"
                         required
-                        label="Edit Meal"
-                        name="selectedMealIndex"
-                        value={selectedMealIndex}
+                        label="Edit Snack"
+                        name="selectedSnackIndex"
+                        value={selectedSnackIndex}
                         onChange={(event) => {
-                          handleUpdateMealIndex(event.target.value);
+                          handleUpdateSnackIndex(event.target.value);
                         }}
                       >
                         <MenuItem value={0} key={0}>
-                          {'New Meal'}
+                          {'New Snack'}
                         </MenuItem>
-                        {mealPlanMeals.map((meal, i) => (
+                        {mealPlanSnacks.map((snack, i) => (
                           <MenuItem key={i + 1} value={i + 1}>
-                            {capitalize(meal.mealName)}
+                            {capitalize(snack.snackName)}
                           </MenuItem>
                         ))}
-                        {LocalStorageManager.shared.savedMealBuilderMeal && (
-                          <MenuItem value={mealPlanMeals.length + 1}>
-                            {'(Saved meal) ' +
+                        {LocalStorageManager.shared.savedMealBuilderSnack && (
+                          <MenuItem value={mealPlanSnacks.length + 1}>
+                            {'(Saved snack) ' +
                               capitalize(
-                                LocalStorageManager.shared.savedMealBuilderMeal
-                                  .mealName
+                                LocalStorageManager.shared.savedMealBuilderSnack
+                                  .snackName
                               )}
                           </MenuItem>
                         )}
@@ -231,18 +228,18 @@ const MealBuilder = () => {
               </Grid>
               <Grid container item spacing={2}>
                 <Grid item xs={12}>
-                  <Typography>Meal</Typography>
+                  <Typography>Snack</Typography>
                 </Grid>
-                {/* Meal information */}
+                {/* Snack information */}
                 <Grid item lg={2}>
                   <TextField
                     fullWidth
                     label="Name"
-                    name="mealName"
+                    name="snackName"
                     multiline
-                    value={mealName}
+                    value={snackName}
                     onChange={(event) => {
-                      setMealName(event.target.value);
+                      setSnackName(event.target.value);
                       setImageUrl(
                         'https://storage.googleapis.com/chera_meal_photos/' +
                           event.target.value
@@ -260,31 +257,15 @@ const MealBuilder = () => {
                   <TextField
                     fullWidth
                     label="Description"
-                    name="mealDescription"
+                    name="snackDescription"
                     multiline
-                    value={mealDescription}
-                    onChange={(event) => setMealDescription(event.target.value)}
+                    value={snackDescription}
+                    onChange={(event) =>
+                      setSnackDescription(event.target.value)
+                    }
                   />
                 </Grid>
-                <Grid item lg={1.5} sx={{ textAlign: 'left' }}>
-                  <FormControl fullWidth>
-                    <InputLabel id="mealTimeLabel">Meal Time</InputLabel>
-                    <Select
-                      labelId="mealTimeLabel"
-                      required
-                      label="Meal Time"
-                      name="mealTime"
-                      value={mealTime}
-                      onChange={(event) => setMealTime(event.target.value)}
-                    >
-                      {LocalStorageManager.shared.mealTimes.map((mealTime) => (
-                        <MenuItem key={mealTime} value={mealTime}>
-                          {capitalize(mealTime)}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Grid>
+
                 <Grid item lg={2} sx={{ textAlign: 'right' }}>
                   <TextField
                     fullWidth
@@ -314,7 +295,7 @@ const MealBuilder = () => {
               {/* Ingredients */}
 
               <Grid container spacing={2}>
-                {mealIngredients.map((ingredient, i) => (
+                {snackIngredients.map((ingredient, i) => (
                   <IngredientRow
                     key={ingredient.id}
                     ingredient={ingredient}
@@ -327,7 +308,7 @@ const MealBuilder = () => {
                   />
                 ))}
                 <IngredientRow
-                  index={mealIngredients.length + 1}
+                  index={snackIngredients.length + 1}
                   key={'newIngredient'}
                   updateIngredient={(newIngredient) =>
                     handleAddIngredient(newIngredient)
@@ -337,10 +318,9 @@ const MealBuilder = () => {
               </Grid>
               <Grid container justifyContent={'center'} paddingTop={10}>
                 <Grid item paddingBottom={2}>
-                  <MealCard
-                    mealName={mealName}
-                    mealTime={mealTime}
-                    mealDescription={mealDescription}
+                  <SnackCard
+                    snackName={snackName}
+                    snackDescription={snackDescription}
                     imageUrl={imageUrl}
                   />
                 </Grid>
@@ -364,4 +344,4 @@ const MealBuilder = () => {
     </Grid>
   );
 };
-export default MealBuilder;
+export default SnackBuilder;

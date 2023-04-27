@@ -33,7 +33,7 @@ const ListOfReasons = (props) => {
           setReasonOpen={() => props.setReasonOpen('second')}
           bulletPrimaryText={'Thoughtful Labeling '}
           bulletSecondaryText={
-            "We don't place nutrition labels on our meals, easing meal time stress, and use discreet packaging when shipping your clients their weekly Chera Box."
+            "We don't place nutrition labels on our meals, easing meal time stress, and use discreet packaging when shipping your clients their weekly meals."
           }
           icon={'redeem'}
         ></ReasonBullet>

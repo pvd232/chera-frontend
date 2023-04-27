@@ -14,9 +14,9 @@ const clientFAQsArray = () => [
       'Yes. You can skip any delivery until your order is processed (Monday).',
   },
   {
-    question: 'How will I know if my Chera Box has been delivered?',
+    question: 'How will I know if my meals has been delivered?',
     answer:
-      'After ordering your first Chera Box, you will receive an email with delivery information and a tracking link.',
+      'After ordering your first meals, you will receive an email with delivery information and a tracking link.',
   },
   {
     question: 'Do I have to get breakfast, lunch, and dinner?',
