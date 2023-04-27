@@ -107,6 +107,7 @@ const MealBuilder = () => {
           id: newRecipeIngredientId,
           usda_ingredient_id: ingredient.usdaIngredientId,
           meal_plan_meal_id: mealPlanMealDTO.id,
+          meal_plan_snack_id: '',
           usda_ingredient_portion_id: ingredient.usdaIngredientPortionId,
           quantity: ingredient.quantity,
           active: true,

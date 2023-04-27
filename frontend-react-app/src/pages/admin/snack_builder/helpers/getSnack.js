@@ -1,33 +1,28 @@
 import LocalStorageManager from '../../../../helpers/LocalStorageManager';
 
-export default function getMeal(meals, index) {
+export default function getSnack(snacks, index) {
   if (index === 0) {
     return {
-      mealId: false,
-      mealName: '',
-      mealTime: '',
-      mealDescription: '',
-      mealPrice: '',
-      isVegetarian: false,
+      snackId: false,
+      snackName: '',
+      snackDescription: '',
+      snackPrice: '',
       imageUrl: '',
-      mealIngredients: [],
+      snackIngredients: [],
     };
-  } else if (index === meals.length + 1) {
+  } else if (index === snacks.length + 1) {
     return {
-      mealId: LocalStorageManager.shared.savedMealBuilderMeal.mealId,
-      mealName: LocalStorageManager.shared.savedMealBuilderMeal.mealName,
-      mealTime: LocalStorageManager.shared.savedMealBuilderMeal.mealTime,
-      mealDescription:
-        LocalStorageManager.shared.savedMealBuilderMeal.mealDescription,
-      mealPrice: LocalStorageManager.shared.savedMealBuilderMeal.mealPrice,
-      isVegetarian:
-        LocalStorageManager.shared.savedMealBuilderMeal.isVegetarian,
-      imageUrl: LocalStorageManager.shared.savedMealBuilderMeal.imageUrl,
-      mealIngredients:
-        LocalStorageManager.shared.savedMealBuilderMeal.mealIngredients,
+      snackId: LocalStorageManager.shared.savedMealBuilderSnack.snackId,
+      snackName: LocalStorageManager.shared.savedMealBuilderSnack.snackName,
+      snackDescription:
+        LocalStorageManager.shared.savedMealBuilderSnack.snackDescription,
+      snackPrice: LocalStorageManager.shared.savedMealBuilderSnack.snackPrice,
+      imageUrl: LocalStorageManager.shared.savedMealBuilderSnack.imageUrl,
+      snackIngredients:
+        LocalStorageManager.shared.savedMealBuilderSnack.snackIngredients,
     };
   } else {
-    // Index is decreased by 1 because the first meal is a blank new meal
-    return meals[index - 1];
+    // Index is decreased by 1 because the first snack is a blank new snack
+    return snacks[index - 1];
   }
 }

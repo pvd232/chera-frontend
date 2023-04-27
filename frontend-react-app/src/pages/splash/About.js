@@ -3,6 +3,9 @@ import Stack from '@mui/material/Stack';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import fncePic from '../../static/images/me_at_fnce.jpg';
+import anyaPic from '../../static/images/anya.jpg';
+import zoePic from '../../static/images/zoe.jpg';
+import carolPic from '../../static/images/carol_3.png';
 import { useTheme } from '@mui/material/styles';
 const About = () => {
   const customTheme = useTheme();
@@ -19,18 +22,6 @@ const About = () => {
             Meet the Team
           </Typography>
         </CardContent>
-        <Grid
-          container
-          item
-          justifyContent={'center'}
-          sx={{ marginTop: '5vh', marginBottom: '5vh' }}
-        >
-          <img
-            src={fncePic}
-            height={customTheme.smallerScreen() ? '250vh' : '600vh'}
-            alt="me at FNCE"
-          ></img>
-        </Grid>
       </Grid>
       <Grid container spacing={10}>
         <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
@@ -39,7 +30,14 @@ const About = () => {
               backgroundColor: customTheme.palette.lightGrey.secondary,
             }}
           >
-            <Stack spacing={10}>
+            <Stack spacing={10} mt={'10vh'}>
+              <Grid container item justifyContent={'center'}>
+                <img
+                  src={fncePic}
+                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
+                  alt="me at FNCE"
+                ></img>
+              </Grid>
               <Typography
                 fontFamily={'Inter'}
                 fontSize={customTheme.pages.about.fontSize.body}
@@ -73,7 +71,7 @@ const About = () => {
                 color={customTheme.palette.black.main}
                 textAlign={'center'}
               >
-                CEO, Founder
+                CEO
               </Typography>
             </Stack>
           </CardContent>
@@ -89,7 +87,14 @@ const About = () => {
           <CardContent
             sx={{ backgroundColor: customTheme.pages.splash.color.lightBlue }}
           >
-            <Stack spacing={10}>
+            <Stack spacing={10} mt={'10vh'}>
+              <Grid container item justifyContent={'center'}>
+                <img
+                  src={zoePic}
+                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
+                  alt="me at FNCE"
+                ></img>
+              </Grid>
               <Typography
                 fontFamily={'Inter'}
                 fontSize={customTheme.pages.about.fontSize.body}
@@ -143,20 +148,14 @@ const About = () => {
               backgroundColor: customTheme.palette.lightGrey.secondary,
             }}
           >
-            <Stack spacing={10}>
-              <Typography
-                fontFamily={'Inter'}
-                fontSize={customTheme.pages.about.fontSize.body}
-                color={customTheme.palette.black.main}
-                fontWeight={500}
-                textAlign={'center'}
-                paddingTop={'5vh'}
-              >
-                Chera is a rare intersection of technology and healthcare that
-                inspires me. Mental health is an area that everyone struggles
-                with, yet as a society we have not prioritized it for
-                innovation.
-              </Typography>
+            <Stack spacing={10} mt={'10vh'}>
+              <Grid container item justifyContent={'center'}>
+                <img
+                  src={carolPic}
+                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
+                  alt="me at FNCE"
+                ></img>
+              </Grid>
             </Stack>
             <Stack
               justifyContent={'center'}
@@ -169,7 +168,7 @@ const About = () => {
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
-                Davis Handler
+                Carol Spiliotis
               </Typography>
               <Typography
                 fontFamily={'Inter'}
@@ -177,7 +176,90 @@ const About = () => {
                 color={customTheme.palette.black.main}
                 textAlign={'center'}
               >
-                Advisor
+                Chief Culinary Officer
+              </Typography>
+            </Stack>
+          </CardContent>
+        </Grid>
+        <Grid
+          item
+          xs={9}
+          marginRight={customTheme.smallerScreen() ? '5vw' : ''}
+          sx={{ marginLeft: 'auto' }}
+        >
+          <CardContent
+            sx={{
+              backgroundColor: customTheme.pages.splash.color.lightBlue,
+            }}
+          >
+            <Stack spacing={10} mt={'10vh'}>
+              <Grid container item justifyContent={'center'}>
+                <img
+                  src={anyaPic}
+                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
+                  alt="me at FNCE"
+                ></img>
+              </Grid>
+            </Stack>
+            <Stack
+              justifyContent={'center'}
+              sx={{ marginTop: '10vh', marginBottom: '5vh' }}
+            >
+              <Typography
+                fontFamily={'Inter'}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
+                textAlign={'center'}
+                fontWeight={'bold'}
+              >
+                Anya Zeng
+              </Typography>
+              <Typography
+                fontFamily={'Inter'}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
+                textAlign={'center'}
+              >
+                Lead UX Designer
+              </Typography>
+            </Stack>
+          </CardContent>
+        </Grid>
+        <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
+          <CardContent
+            sx={{
+              backgroundColor: customTheme.palette.lightGrey.secondary,
+            }}
+          >
+            <Stack spacing={10} mt={'10vh'}>
+              <Grid container item justifyContent={'center'}>
+                <img
+                  src={fncePic}
+                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
+                  alt="me at FNCE"
+                ></img>
+              </Grid>
+            </Stack>
+            <Stack
+              justifyContent={'center'}
+              sx={{ marginTop: '10vh', marginBottom: '5vh' }}
+            >
+              <Typography
+                fontFamily={'Inter'}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
+                textAlign={'center'}
+                fontWeight={'bold'}
+              >
+                Ourania Rosettos
+              </Typography>
+              <Typography
+                fontFamily={'Inter'}
+                fontSize={customTheme.pages.about.fontSize.signature}
+                color={customTheme.palette.black.main}
+                textAlign={'center'}
+              >
+                MD Advisor
               </Typography>
             </Stack>
           </CardContent>

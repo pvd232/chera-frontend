@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 
-const MealCard = (props) => {
+const SnackCard = (props) => {
   return (
     <Card
       square={true}
@@ -36,14 +36,14 @@ const MealCard = (props) => {
           component="div"
           paddingBottom={1}
         >
-          {props.mealName}
+          {props.snackName}
         </Typography>
 
         <Typography variant="body2" color="text.secondary">
-          {props.mealDescription}
+          {props.snackDescription}
         </Typography>
       </CardContent>
     </Card>
   );
 };
-export default MealCard;
+export default SnackCard;

@@ -6,7 +6,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import BlackButton from '../../../reusable_ui_components/BlackButton';
@@ -15,7 +14,6 @@ import capitalize from '../../../helpers/capitalize';
 import IngredientRow from './IngredientRow';
 import { v4 as uuid } from 'uuid';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
-import OrangeSwitch from './OrangeSwitch';
 import MealPlanSnackDTO from '../../../data_models/dto/MealPlanSnackDTO';
 import RecipeIngredientDTO from '../../../data_models/dto/RecipeIngredientDTO';
 import createSnackData from './helpers/createSnackData';
@@ -32,10 +30,8 @@ const SnackBuilder = () => {
   const [snackName, setSnackName] = useState('');
   const [snackDescription, setSnackDescription] = useState('');
   const [snackPrice, setSnackPrice] = useState(0);
-  const [isVegetarian, setIsVegetarian] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [snackIngredients, setSnackIngredients] = useState([]);
-  const [dietaryRestrictions, setDietaryRestrictions] = useState([]);
 
   const [extendedUsdaIngredients, setExtendedUsdaIngredients] = useState([]);
   const [mealPlans, setMealPlans] = useState([]);
@@ -48,22 +44,22 @@ const SnackBuilder = () => {
       mounted: mounted,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
       setSnackPrice: setSnackPrice,
-      setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
       setMealPlanSnacks: setMealPlanSnacks,
     });
 
     return () => (mounted = false);
   }, []);
+
   const handleUpdateSnackIndex = (index) => {
     setSelectedSnackIndex(index);
     setSnackId(getSnack(mealPlanSnacks, index).snackId);
     setSnackName(getSnack(mealPlanSnacks, index).snackName);
     setSnackDescription(getSnack(mealPlanSnacks, index).snackDescription);
-    setIsVegetarian(getSnack(mealPlanSnacks, index).isVegetarian);
     setImageUrl(getSnack(mealPlanSnacks, index).imageUrl);
     setSnackIngredients(getSnack(mealPlanSnacks, index).snackIngredients);
   };
+
   const handleSubmit = async () => {
     setLoading(true);
     if (snackId) {
@@ -73,23 +69,14 @@ const SnackBuilder = () => {
 
     // Generate new snack id
     const newSnackId = uuid();
-
-    const [newSnackDTO, newSnackDietaryRestrictionDTO] = createSnackData(
+    const newSnackDTO = createSnackData(
       newSnackId,
-      dietaryRestrictions,
       snackName,
       snackPrice,
       snackDescription,
-      imageUrl,
-      isVegetarian
+      imageUrl
     );
     await APIClient.createSnack(newSnackDTO);
-
-    if (newSnackDietaryRestrictionDTO) {
-      await APIClient.createSnackDietaryRestriction(
-        newSnackDietaryRestrictionDTO
-      );
-    }
 
     for (const mealPlan of mealPlans) {
       const mealPlanSnackDTO = new MealPlanSnackDTO({
@@ -104,6 +91,7 @@ const SnackBuilder = () => {
         return new RecipeIngredientDTO({
           id: newRecipeIngredientId,
           usda_ingredient_id: ingredient.usdaIngredientId,
+          meal_plan_meal_id: '',
           meal_plan_snack_id: mealPlanSnackDTO.id,
           usda_ingredient_portion_id: ingredient.usdaIngredientPortionId,
           quantity: ingredient.quantity,
@@ -124,8 +112,6 @@ const SnackBuilder = () => {
       snackName: snackName,
       snackDescription: snackDescription,
       snackPrice: snackPrice,
-      isVegetarian: isVegetarian,
-      dietaryRestrictions: dietaryRestrictions,
       imageUrl: imageUrl,
       snackIngredients: snackIngredients,
     };
@@ -134,7 +120,6 @@ const SnackBuilder = () => {
       mounted: true,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
       setSnackPrice: setSnackPrice,
-      setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
       setMealPlanSnacks: setMealPlanSnacks,
     }).then(() => setSaveButtonLoading(false));
@@ -275,19 +260,6 @@ const SnackBuilder = () => {
                     value={imageUrl}
                     onChange={(event) => setImageUrl(event.target.value)}
                   />
-                </Grid>
-                <Grid container item lg={1} alignItems="center">
-                  <Grid item lg={2}>
-                    <FormControlLabel
-                      control={
-                        <OrangeSwitch
-                          checked={isVegetarian}
-                          onChange={() => setIsVegetarian(!isVegetarian)}
-                        />
-                      }
-                      label="Vegetarian"
-                    />
-                  </Grid>
                 </Grid>
               </Grid>
               {/* Spacer */}

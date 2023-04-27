@@ -8,10 +8,9 @@ import RecipeIngredientItem from '../../../../ui_data_containers/RecipeIngredien
 export default async function updateUSDAIngredients({
   mounted,
   setExtendedUsdaIngredients,
-  setMealPrice,
-  setDietaryRestrictions,
+  setSnackPrice,
   setMealPlans,
-  setMealPlanMeals,
+  setMealPlanSnacks,
 }) {
   const extendedUSDAIngredientData =
     await APIClient.getExtendedUSDAIngredients();
@@ -41,26 +40,22 @@ export default async function updateUSDAIngredients({
   if (mounted) {
     setExtendedUsdaIngredients(extendedIngredientsMap);
   }
-  const mealPrice = await APIClient.getMealPrice();
+  const snackPrice = await APIClient.getSnackPrice();
   if (mounted) {
-    setMealPrice(mealPrice);
-  }
-  const dietaryRestrictions = await APIClient.getDietaryRestrictions();
-  if (mounted) {
-    setDietaryRestrictions(dietaryRestrictions);
+    setSnackPrice(snackPrice);
   }
   const mealPlans = await APIClient.getMealPlans();
   if (mounted) {
     setMealPlans(mealPlans);
   }
-  //   4th meal plan is the default meal plan
-  const mealPlanMeals = await APIClient.getSpecificExtendedMealPlanMeals(
+  //   4th snack plan is the default snack plan
+  const mealPlanSnacks = await APIClient.getSpecificExtendedMealPlanSnacks(
     mealPlans[4].id
   );
-  const mealsToReturn = [];
-  for (const extendedMealPlanMeal of mealPlanMeals) {
-    const mealIngredients = [];
-    for (const recipeIngredient of extendedMealPlanMeal.recipe) {
+  const snacksToReturn = [];
+  for (const extendedMealPlanSnack of mealPlanSnacks) {
+    const snackIngredients = [];
+    for (const recipeIngredient of extendedMealPlanSnack.recipe) {
       const extendedUSDAIngredient = {
         ...extendedIngredientsMap.get(recipeIngredient.usda_ingredient_id),
       };
@@ -77,22 +72,19 @@ export default async function updateUSDAIngredients({
       recipeIngredientItem.usdaIngredientPortionId =
         recipeIngredient.usda_ingredient_portion_id;
       recipeIngredientItem.nonMetricUnit = servingSize.non_metric_unit;
-      mealIngredients.push(recipeIngredientItem);
+      snackIngredients.push(recipeIngredientItem);
     }
-    const meal = {
-      mealId: extendedMealPlanMeal.associated_meal.id,
-      mealName: extendedMealPlanMeal.associated_meal.name,
-      mealTime: extendedMealPlanMeal.associated_meal.meal_time,
-      mealDescription: extendedMealPlanMeal.associated_meal.description,
-      isVegetarian:
-        extendedMealPlanMeal.associated_meal.dietary_restrictions.length > 0,
-      imageUrl: extendedMealPlanMeal.associated_meal.image_url,
-      mealIngredients: mealIngredients,
+    const snack = {
+      snackId: extendedMealPlanSnack.associated_snack.id,
+      snackName: extendedMealPlanSnack.associated_snack.name,
+      snackDescription: extendedMealPlanSnack.associated_snack.description,
+      imageUrl: extendedMealPlanSnack.associated_snack.image_url,
+      snackIngredients: snackIngredients,
     };
-    mealsToReturn.push(meal);
+    snacksToReturn.push(snack);
   }
   if (mounted) {
-    setMealPlanMeals(mealsToReturn);
+    setMealPlanSnacks(snacksToReturn);
   }
-  return mealsToReturn;
+  return snacksToReturn;
 }

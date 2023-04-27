@@ -1,39 +1,39 @@
-export default function getFilteredMealPlanMeals({
-  allMealPlanMeals,
-  mealPlanMealsByMealPlan,
-  mealPlanMealsByMeal,
+export default function getFilteredMealPlanSnacks({
+  allMealPlanSnacks,
+  mealPlanSnacksByMealPlan,
+  mealPlanSnacksByMeal,
   filterMealPlanId,
-  filterMealId,
+  filterSnackIs,
 }) {
   const mealFilteredMealArray =
-    filterMealId === 'all'
-      ? allMealPlanMeals
-      : mealPlanMealsByMeal.get(filterMealId);
-  const mealFilteredMealMap = new Map();
+    filterSnackIs === 'all'
+      ? allMealPlanSnacks
+      : mealPlanSnacksByMeal.get(filterSnackIs);
+  const mealFilteredSnackMap = new Map();
   mealFilteredMealArray.forEach((item) => {
-    if (!mealFilteredMealMap.has(item.id)) {
-      mealFilteredMealMap.set(item.id, item);
+    if (!mealFilteredSnackMap.has(item.id)) {
+      mealFilteredSnackMap.set(item.id, item);
     }
   });
 
   const mealPlanFilteredArray =
     filterMealPlanId === 'all'
-      ? allMealPlanMeals
-      : mealPlanMealsByMealPlan.get(filterMealPlanId);
-  const mealPlanFilteredMealsMap = new Map();
+      ? allMealPlanSnacks
+      : mealPlanSnacksByMealPlan.get(filterMealPlanId);
+  const mealPlanFilteredSnacksMap = new Map();
   mealPlanFilteredArray.forEach((item) => {
-    if (!mealPlanFilteredMealsMap.has(item.id)) {
-      mealPlanFilteredMealsMap.set(item.id, item);
+    if (!mealPlanFilteredSnacksMap.has(item.id)) {
+      mealPlanFilteredSnacksMap.set(item.id, item);
     }
   });
-  const filteredMealPlanMealsArray = [];
-  allMealPlanMeals.forEach((item) => {
+  const filteredMealPlanSnacksArray = [];
+  allMealPlanSnacks.forEach((item) => {
     if (
-      mealFilteredMealMap.has(item.id) &&
-      mealPlanFilteredMealsMap.has(item.id)
+      mealFilteredSnackMap.has(item.id) &&
+      mealPlanFilteredSnacksMap.has(item.id)
     ) {
-      filteredMealPlanMealsArray.push(item);
+      filteredMealPlanSnacksArray.push(item);
     }
   });
-  return filteredMealPlanMealsArray;
+  return filteredMealPlanSnacksArray;
 }

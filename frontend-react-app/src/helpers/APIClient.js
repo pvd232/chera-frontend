@@ -277,8 +277,6 @@ class APIClient {
   }
   async authenticateDietitian(credentials) {
     const requestUrl = this.baseUrl + `/dietitian/authenticate`;
-    console.log('requestUrl', requestUrl);
-    console.log('window.location.host', window.location.host);
     const requestHeaders = new Headers();
     requestHeaders.set(
       'Authorization',
@@ -297,7 +295,6 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-    console.log('response', response);
 
     // Dietitian failed to authenticate
     if (response.status === 401) {
@@ -725,6 +722,58 @@ class APIClient {
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
+  }
+  async createSnack(snack) {
+    const requestUrl = this.baseUrl + '/snack';
+
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(snack),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async deleteSnack(snackId) {
+    const requestUrl = this.baseUrl + `/snack/${snackId}`;
+
+    const requestParams = {
+      method: 'DELETE',
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async createMealPlanSnack(mealPlanSnack) {
+    const requestUrl = this.baseUrl + '/meal_plan_snack';
+
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(mealPlanSnack),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async getSpecificExtendedMealPlanSnacks(mealPlanId) {
+    const requestUrl =
+      this.baseUrl + `/extended_meal_plan_snack?meal_plan_id=${mealPlanId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const mealPlanSnacksData = await response.json();
+    return mealPlanSnacksData;
   }
   async createRecipeIngredients(recipeIngredients) {
     const requestUrl = this.baseUrl + '/recipe_ingredient';
@@ -1281,7 +1330,6 @@ class APIClient {
     };
 
     const response = await this.fetchWrapper(requestUrl, requestParams);
-    console.log('response', response);
     const dietaryRestrictionData = await response.json();
     return dietaryRestrictionData;
   }
@@ -1295,9 +1343,21 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-    console.log('response', response);
     const mealPrice = await response.json();
     return mealPrice;
+  }
+  async getSnackPrice() {
+    const requestUrl = this.baseUrl + '/snack_price';
+    const request = new Request(requestUrl);
+
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const snackPrice = await response.json();
+    return snackPrice;
   }
   async getShippingCost(state) {
     const requestUrl = this.baseUrl + '/shipping_cost';
