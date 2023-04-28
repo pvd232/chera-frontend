@@ -1,7 +1,17 @@
-export default function getSubtotal(scheduleMeals) {
+export default function getSubtotal(
+  scheduleMeals = false,
+  scheduleSnacks = false
+) {
   let subtotal = 0;
-  scheduleMeals.forEach(
-    (scheduleMeal) => (subtotal += scheduleMeal.associatedMeal.price)
-  );
+  if (scheduleSnacks) {
+    scheduleSnacks.forEach(
+      (scheduleSnack) => (subtotal += scheduleSnack.associatedSnack.price)
+    );
+  }
+  if (scheduleMeals) {
+    scheduleMeals.forEach(
+      (scheduleMeal) => (subtotal += scheduleMeal.associatedMeal.price)
+    );
+  }
   return subtotal;
 }

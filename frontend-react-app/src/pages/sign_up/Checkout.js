@@ -13,6 +13,7 @@ const Checkout = (props) => {
   const handleSubmit = async (newClient) => {
     const subscriptionData = await APIClient.createStripeSubscription(
       props.scheduleMeals.length,
+      props.scheduleSnacks.length,
       newClient.id,
       LocalStorageManager.shared.discount
         ? LocalStorageManager.shared.discount.code
@@ -63,6 +64,7 @@ const Checkout = (props) => {
             stagedClientId={props.stagedClient.id}
             shippingCost={props.shippingCost}
             scheduleMeals={props.scheduleMeals}
+            scheduleSnacks={props.scheduleSnacks}
             dietitianPrepaying={false}
             setOrderDiscount={(orderDiscount) =>
               props.setOrderDiscount(orderDiscount)

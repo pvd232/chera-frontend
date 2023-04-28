@@ -6,11 +6,14 @@ import MealDietaryRestrictionDTOFactory from '../../../data_models/factories/dto
 import StagedClientDTO from '../../../data_models/dto/StagedClientDTO';
 import ExtendedMealDTO from '../../../data_models/dto/ExtendedMealDTO';
 import ExtendedMeal from '../../../data_models/model/ExtendedMeal';
+import SnackDTO from '../../../data_models/dto/SnackDTO';
+import Snack from '../../../data_models/model/Snack';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import TaskBarItem from './TaskBarItem';
 import TaskBarLine from './TaskBarLine';
 const TaskBar = (props) => {
   const [extendedMeals, setExtendedMeals] = useState(false);
+  const [snacks, setSnacks] = useState(false);
   const [stripePriceId, setStripePriceId] = useState(false);
   const [shippingCost, setShippingCost] = useState(false);
   const [stagedClient, setStagedClient] = useState(false);
@@ -46,6 +49,19 @@ const TaskBar = (props) => {
         setExtendedMeals(extendedMealArray);
       }
     });
+    APIClient.getSnacks().then((snacks) => {
+      console.log('snacks', snacks);
+      if (mounted) {
+        const snackArray = [];
+        for (const snack of snacks) {
+          const newSnackDTO = new SnackDTO(snack);
+          const newSnack = new Snack(newSnackDTO);
+          snackArray.push(newSnack);
+        }
+        setSnacks(snackArray);
+        console.log('snackArray', snackArray);
+      }
+    });
     APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {
       const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
         (date) => parseFloat(date) * 1000
@@ -78,9 +94,10 @@ const TaskBar = (props) => {
     return () => (mounted = false);
   }, []);
 
-  if (stripePriceId && stagedClient && extendedMeals) {
+  if (stripePriceId && stagedClient && extendedMeals && snacks) {
     const signupProps = {
       extendedMeals: extendedMeals,
+      snacks: snacks,
       stripePriceId: stripePriceId,
       stagedClient: stagedClient,
       shippingCost: shippingCost,
@@ -138,17 +155,6 @@ const TaskBar = (props) => {
             />
           </Grid>
         </Grid>
-        {/* <ClientSignUp
-          extendedMeals={extendedMeals}
-          stripePriceId={stripePriceId}
-          stagedClient={stagedClient}
-          shippingCost={shippingCost}
-          stripePromise={props.stripePromise}
-          updateTaskIndex={(newTaskIndex) => {
-            setTaskIndex(newTaskIndex);
-          }}
-          taskIndex={taskIndex}
-        /> */}
         {cloneElement(props.childComponent, { ...signupProps })}
       </>
     );

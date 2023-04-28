@@ -14,12 +14,23 @@ import ScheduleMeal from '../../../data_models/model/ScheduleMeal';
 import ScheduleMealDTO from '../../../data_models/dto/ScheduleMealDTO';
 import ScheduledOrderMealDTO from '../../../data_models/dto/ScheduledOrderMealDTO';
 import ExtendedScheduleMeal from '../../../data_models/model/ExtendedScheduleMeal';
+import ScheduleSnack from '../../../data_models/model/ScheduleSnack';
+import ScheduleSnackDTO from '../../../data_models/dto/ScheduleSnackDTO';
+import ScheduledOrderSnackDTO from '../../../data_models/dto/ScheduledOrderSnackDTO';
+import ExtendedScheduleSnack from '../../../data_models/model/ExtendedScheduleSnack';
+
 import ExtendedMealFactory from '../../../data_models/factories/model/ExtendedMealFactory';
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
 import createScheduledOrderMeals from './helpers/createScheduledOrderMeals';
+import createScheduledOrderSnacks from './helpers/createScheduledOrderSnacks';
 import SideBar from './SideBar';
 import MediaCard from './MediaCard';
-
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@mui/icons-material/Info';
+import SnackCard from './SnackCard';
+import SnackFactory from '../../../data_models/factories/model/SnackFactory';
 const ClientMenu = (props) => {
   const customTheme = useTheme();
   const [loading, setLoading] = useState(false);
@@ -28,6 +39,7 @@ const ClientMenu = (props) => {
   const [filterMealPreferences, setFilterMealPreferences] = useState('all');
   const [extendedMeals, setExtendedMeals] = useState(props.extendedMeals);
   const [chosenScheduleMeals, setChosenScheduleMeals] = useState([]);
+  const [chosenScheduleSnacks, setChosenScheduleSnacks] = useState([]);
   const mealTimes = ['breakfast', 'lunch', 'dinner'];
   const mealsByDietaryRestrictionMap = (() => {
     const mealsByDietaryRestrictionMapToReturn = new Map();
@@ -73,7 +85,7 @@ const ClientMenu = (props) => {
     return () => {
       clearTimeout(timer.current);
     };
-  }, [props.editMeals]);
+  }, []);
 
   const handleFilterChange = (event) => {
     // Meal time filter selected
@@ -187,6 +199,29 @@ const ClientMenu = (props) => {
       })
     );
   };
+  const handleAddSnack = (snack) => {
+    setChosenScheduleSnacks((prevChosenSnack) => {
+      const newScheduleSnack = ScheduleSnack.initializeFromSnack(
+        uuid(),
+        snack.id,
+        props.mealSubscriptionId
+      );
+      const newExtendedScheduleSnack =
+        ExtendedScheduleSnack.constructFromScheduleSnack(
+          newScheduleSnack,
+          snack,
+          new SnackFactory()
+        );
+      return [...prevChosenSnack, newExtendedScheduleSnack];
+    });
+  };
+  const handleRemoveSnack = (scheduleSnack) => {
+    setChosenScheduleSnacks((prevChosenSnack) =>
+      prevChosenSnack.filter((prevScheduleSnack) => {
+        return prevScheduleSnack.id !== scheduleSnack.id;
+      })
+    );
+  };
   const handleSubmit = async () => {
     setEditing(false);
     if (chosenScheduleMeals.length < 6) {
@@ -201,13 +236,35 @@ const ClientMenu = (props) => {
         chosenScheduleMeals,
         props.editMeals && !props.canChangeFirstWeek ? false : true
       );
+
+      const scheduledOrderSnacks = (() => {
+        if (chosenScheduleSnacks.length > 0) {
+          return createScheduledOrderSnacks(
+            chosenScheduleSnacks,
+            props.editMeals && !props.canChangeFirstWeek ? false : true
+          );
+        } else {
+          return [];
+        }
+      })();
       if (props.editMeals) {
+        //  Delete meals
         await APIClient.deleteScheduleMeals(
           LocalStorageManager.shared.clientMealSubscription.id
         );
         await APIClient.deleteScheduledOrderMeals(
           LocalStorageManager.shared.clientMealSubscription.id
         );
+
+        // Delete snacks
+        await APIClient.deleteScheduleSnacks(
+          LocalStorageManager.shared.clientMealSubscription.id
+        );
+        await APIClient.deleteScheduledOrderSnacks(
+          LocalStorageManager.shared.clientMealSubscription.id
+        );
+
+        // Create meals
         const scheduleMealDTOs = chosenScheduleMeals.map((scheduleMeal) =>
           ScheduleMealDTO.initializeFromScheduleMeal(scheduleMeal)
         );
@@ -221,9 +278,24 @@ const ClientMenu = (props) => {
         );
 
         await APIClient.createScheduledOrderMeals(scheduledOrderMealDTOs);
+
+        // Create snacks
+        const scheduleSnackDTOs = chosenScheduleSnacks.map((scheduleSnack) =>
+          ScheduleSnackDTO.initializeFromScheduleSnack(scheduleSnack)
+        );
+        await APIClient.createScheduleSnacks(scheduleSnackDTOs);
+        const scheduledOrderSnackDTOs = scheduledOrderSnacks.map(
+          (scheduledOrderSnack) =>
+            ScheduledOrderSnackDTO.initializeFromScheduledOrderSnack(
+              scheduledOrderSnack
+            )
+        );
+
+        await APIClient.createScheduledOrderSnacks(scheduledOrderSnackDTOs);
         await APIClient.updateStripeSubscription(
           LocalStorageManager.shared.clientMealSubscription.id,
-          chosenScheduleMeals.length
+          chosenScheduleMeals.length,
+          chosenScheduleSnacks.length
         );
         timer.current = window.setTimeout(() => {
           setLoading(false);
@@ -232,11 +304,17 @@ const ClientMenu = (props) => {
       } else {
         const scheduledOrderMeals =
           createScheduledOrderMeals(chosenScheduleMeals);
-
+        const scheduledOrderSnacks =
+          createScheduledOrderSnacks(chosenScheduleSnacks);
         timer.current = window.setTimeout(() => {
           setLoading(false);
           LocalStorageManager.shared.taskIndex += 1;
-          props.updateMealsData(chosenScheduleMeals, scheduledOrderMeals);
+          props.updateMealsData(
+            chosenScheduleMeals,
+            scheduledOrderMeals,
+            chosenScheduleSnacks,
+            scheduledOrderSnacks
+          );
         }, 500);
       }
     } else {
@@ -253,7 +331,7 @@ const ClientMenu = (props) => {
       paddingBottom={'10vh'}
       // Removes extra 'purple' space in view layout in chrome dev tools.
       alignItems="flex-start"
-      paddingTop="3vh"
+      paddingTop="5vh"
       backgroundColor={customTheme.palette.olive.quaternary}
     >
       {/* Meals Cards */}
@@ -263,21 +341,27 @@ const ClientMenu = (props) => {
         md={8.5}
         lg={9.5}
         xs={12}
-        spacing={4}
+        columnSpacing={4}
         marginBottom={customTheme.smallerScreen() ? '6vh' : ''}
         justifyContent={'center'}
-        sx={{
-          borderRight: `solid 2px ${customTheme.palette.lightGrey.main}`,
-        }}
       >
         <Grid
           item
           container
-          xs={12}
           spacing={2}
           sx={{ height: 'min-content' }}
           marginBottom="5vh"
         >
+          <Grid item container justifyContent={'flex-start'}>
+            <Typography
+              fontSize={'1.5rem'}
+              textAlign={'center'}
+              marginBottom={'2vh'}
+              marginTop={'2vh'}
+            >
+              Meals
+            </Typography>
+          </Grid>
           <Grid item lg={2} md={3} xs={5.5}>
             <FormControl fullWidth>
               <InputLabel
@@ -340,7 +424,7 @@ const ClientMenu = (props) => {
             </FormHelperText>
           </Grid>
         </Grid>
-        <Grid container item spacing={7}>
+        <Grid container item spacing={7} mb={'5vh'}>
           {extendedMeals.map((extendedMeal, i) => (
             <Grid item key={`mealGridItem${i}`} md={4}>
               {MediaCard({
@@ -352,16 +436,53 @@ const ClientMenu = (props) => {
             </Grid>
           ))}
         </Grid>
+        {/* Snack Cards */}
+        <Grid item container justifyContent={'flex-start'}>
+          <Grid item></Grid>
+          <Typography
+            fontSize={'1.5rem'}
+            textAlign={'center'}
+            marginBottom={'5vh'}
+            marginTop={'2vh'}
+          >
+            Snacks
+          </Typography>
+          <Grid item>
+            <Tooltip
+              title="Optional, ordered in quantities of 2"
+              placement="right"
+            >
+              <IconButton>
+                <InfoIcon />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
+        <Grid container item spacing={7}>
+          {props.snacks.map((snack, i) => (
+            <Grid item key={`snackGridItem${i}`} md={4}>
+              {SnackCard({
+                key: `snackMediaCard${i}`,
+                snack: snack,
+                index: i,
+                handleAddSnack: (snack) => handleAddSnack(snack),
+              })}
+            </Grid>
+          ))}
+        </Grid>
+        {/* Snack Cards */}
       </Grid>
-      {/* Meals Cards */}
 
       {/* Side Bar */}
       <Grid item lg={2.5} md={3.5} xs={12} sx={{ marginTop: '0vh' }}>
         <SideBar
           chosenScheduleMeals={chosenScheduleMeals}
+          chosenScheduleSnacks={chosenScheduleSnacks}
           handleSubmit={handleSubmit}
           handleAddMeal={(newMeal) => handleAddMeal(newMeal)}
+          handleAddSnack={(newSnack) => handleAddSnack(newSnack)}
           handleRemoveMeal={(removedMeal) => handleRemoveMeal(removedMeal)}
+          handleRemoveSnack={(removedSnack) => handleRemoveSnack(removedSnack)}
           customTheme={customTheme}
           loading={loading}
           editMeals={props.editMeals}

@@ -5,16 +5,23 @@ import Card from '@mui/material/Card';
 const ClientOrderSummary = (props) => {
   const customTheme = useTheme();
 
-  const subtotal = (() => {
-    let subtotal = 0;
+  const mealsSubtotal = (() => {
+    let mealsSubtotal = 0;
     props.scheduleMeals.forEach(
-      (scheduleMeal) => (subtotal += scheduleMeal.associatedMeal.price)
+      (scheduleMeal) => (mealsSubtotal += scheduleMeal.associatedMeal.price)
     );
-    return subtotal;
+    return mealsSubtotal;
+  })();
+  const snacksSubtotal = (() => {
+    let snacksSubtotal = 0;
+    props.scheduleSnacks.forEach(
+      (scheduleSnack) => (snacksSubtotal += scheduleSnack.associatedSnack.price)
+    );
+    return snacksSubtotal;
   })();
 
   const total = (() => {
-    const total = subtotal + props.shippingCost;
+    const total = mealsSubtotal + snacksSubtotal + props.shippingCost;
     return total;
   })();
 
@@ -58,9 +65,17 @@ const ClientOrderSummary = (props) => {
               </p>
             </Grid>
             <Grid item container xs={6} justifyContent={'flex-end'}>
-              <p>{subtotal.toFixed(2)}</p>
+              <p>{mealsSubtotal.toFixed(2)}</p>
             </Grid>
-
+            <Grid item container xs={6} justifyContent={'flex-start'}>
+              <p>
+                {props.scheduleSnacks.length} {'snack'}
+                {props.scheduleSnacks.length > 1 ? 's' : ''}
+              </p>
+            </Grid>
+            <Grid item container xs={6} justifyContent={'flex-end'}>
+              <p>{snacksSubtotal.toFixed(2)}</p>
+            </Grid>
             <Grid item container xs={6} justifyContent={'flex-start'}>
               <p>Shipping</p>
             </Grid>

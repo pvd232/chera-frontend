@@ -42,6 +42,7 @@ const Payment = (props) => {
               stagedClientId={props.stagedClient.id}
               shippingCost={props.shippingCost}
               scheduleMeals={props.scheduleMeals}
+              scheduleSnacks={props.scheduleSnacks}
             />
           </Grid>
         </Grid>

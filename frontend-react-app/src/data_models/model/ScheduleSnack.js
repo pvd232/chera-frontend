@@ -7,7 +7,7 @@ export default class ScheduleSnack {
     this.properlyInitialized = (() => checkProperties(this))();
   }
 
-  static initializeFromMeal(id, snackId, mealSubscriptionId) {
+  static initializeFromSnack(id, snackId, mealSubscriptionId) {
     const newScheduleSnack = new ScheduleSnack({
       id: id,
       snackId: snackId,

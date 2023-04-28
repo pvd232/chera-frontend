@@ -21,18 +21,19 @@ export default class ScheduledOrderSnack {
     }
     this.properlyInitialized = (() => checkProperties(this))();
   }
-  static initializeFromScheduleMeal(scheduleMeal, deliveryDate) {
+  static initializeFromScheduleSnack(scheduleSnack, deliveryDate) {
     const newScheduledOrderSnack = new ScheduledOrderSnack();
     newScheduledOrderSnack.id = uuid();
-    newScheduledOrderSnack.snackId = scheduleMeal.snackId;
-    newScheduledOrderSnack.mealSubscriptionId = scheduleMeal.mealSubscriptionId;
+    newScheduledOrderSnack.snackId = scheduleSnack.snackId;
+    newScheduledOrderSnack.mealSubscriptionId =
+      scheduleSnack.mealSubscriptionId;
     newScheduledOrderSnack.deliveryDate = deliveryDate;
     newScheduledOrderSnack.deliveryPaused = false;
     newScheduledOrderSnack.deliverySkipped = false;
     newScheduledOrderSnack.datetime = Date.now();
     return newScheduledOrderSnack;
   }
-  static initializeFromMeal(snackId, mealSubscriptionId, deliveryDate) {
+  static initializeFromSnack(snackId, mealSubscriptionId, deliveryDate) {
     const newScheduledOrderSnack = new ScheduledOrderSnack();
     newScheduledOrderSnack.id = uuid();
     newScheduledOrderSnack.snackId = snackId;

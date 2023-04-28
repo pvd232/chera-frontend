@@ -1,48 +1,42 @@
-export default class ExtendedMealPlanMeal {
+export default class ExtendedMealPlanSnack {
   constructor(
-    extendedMealPlanMealDTO,
-    extendedMealFactory,
+    extendedMealPlanSnackDTO,
+    snackFactory,
     extendedMealPlanFactory,
     extendedRecipeIngredientFactory,
     recipeIngredientNutrientFactory
   ) {
-    this.id = extendedMealPlanMealDTO.id;
-    this.mealId = extendedMealPlanMealDTO.mealId;
-    this.mealPlanId = extendedMealPlanMealDTO.mealPlanId;
-    this.carbKcal = extendedMealPlanMealDTO.carbKcal;
-    this.proteinKcal = extendedMealPlanMealDTO.proteinKcal;
-    this.fatKcal = extendedMealPlanMealDTO.fatKcal;
-    this.kCal = extendedMealPlanMealDTO.kCal;
-    this.active = extendedMealPlanMealDTO.active;
+    this.id = extendedMealPlanSnackDTO.id;
+    this.snackId = extendedMealPlanSnackDTO.snackId;
+    this.mealPlanId = extendedMealPlanSnackDTO.mealPlanId;
+    this.carbKcal = extendedMealPlanSnackDTO.carbKcal;
+    this.proteinKcal = extendedMealPlanSnackDTO.proteinKcal;
+    this.fatKcal = extendedMealPlanSnackDTO.fatKcal;
+    this.kCal = extendedMealPlanSnackDTO.kCal;
+    this.active = extendedMealPlanSnackDTO.active;
 
     // Relationships
-    this.associatedMeal = extendedMealFactory.injectInstance(
-      extendedMealPlanMealDTO.associatedMeal
+    this.associatedSnack = snackFactory.injectInstance(
+      extendedMealPlanSnackDTO.associatedSnack
     );
     this.mealPlan = extendedMealPlanFactory.injectInstance(
-      extendedMealPlanMealDTO.mealPlan
+      extendedMealPlanSnackDTO.mealPlan
     );
-    this.recipe = extendedMealPlanMealDTO.recipe.map((recipeIngredient) =>
+    this.recipe = extendedMealPlanSnackDTO.recipe.map((recipeIngredient) =>
       extendedRecipeIngredientFactory.injectInstance(recipeIngredient)
     );
-    this.nutrients = extendedMealPlanMealDTO.nutrients.map((nutrient) =>
+    this.nutrients = extendedMealPlanSnackDTO.nutrients.map((nutrient) =>
       recipeIngredientNutrientFactory.injectInstance(nutrient)
     );
   }
   get name() {
-    return this.associatedMeal.name;
-  }
-  get mealTime() {
-    return this.associatedMeal.mealTime;
+    return this.associatedSnack.name;
   }
   get imageUrl() {
-    return this.associatedMeal.imageUrl;
-  }
-  get dietaryRestrictions() {
-    return this.associatedMeal.dietaryRestrictions;
+    return this.associatedSnack.imageUrl;
   }
   get description() {
-    return this.associatedMeal.description;
+    return this.associatedSnack.description;
   }
   get mealPlanCalories() {
     if (this.mealTime === 'breakfast') {

@@ -19,9 +19,16 @@ const DiscountOrderSummary = (props) => {
   const [orderDiscountAmount, setOrderDiscountAmount] = useState(0);
   const [discountCode, setDiscountCode] = useState('');
   const [discountValid, setDiscountValid] = useState(true);
-  const [subtotal, setSubtotal] = useState(getSubtotal(props.scheduleMeals));
+  const [mealsSubtotal, setMealsSubtotal] = useState(
+    getSubtotal(props.scheduleMeals, false)
+  );
+  const [snacksSubtotal, setSnacksSubtotal] = useState(
+    getSubtotal(false, props.scheduleSnacks)
+  );
   const [total, setTotal] = useState(
-    getSubtotal(props.scheduleMeals) + props.shippingCost
+    getSubtotal(props.scheduleMeals, false) +
+      getSubtotal(false, props.scheduleSnacks) +
+      props.shippingCost
   );
   const handleSubmit = async () => {
     if (discountCode !== '') {
@@ -34,16 +41,22 @@ const DiscountOrderSummary = (props) => {
         const newOrderDiscount = OrderDiscount.initializeFromDiscount(
           newDiscount.id
         );
-        const newDiscountedSubtotal = subtotal * newDiscount.discountPercentage;
-
+        const newDiscountedMealSubtotal =
+          mealsSubtotal * newDiscount.discountPercentage;
+        const newDiscountedSnackSubtotal =
+          snacksSubtotal * newDiscount.discountPercentage;
+        const newDiscountedSubtotal =
+          newDiscountedMealSubtotal + newDiscountedSnackSubtotal;
         newOrderDiscount.stagedClientId = props.stagedClientId;
 
         // Discount amount is equal to the subtotal minus the discounted subtotal
-        newOrderDiscount.amount = subtotal - newDiscountedSubtotal;
+        newOrderDiscount.amount =
+          mealsSubtotal + snacksSubtotal - newDiscountedSubtotal;
 
         const newTotal = newDiscountedSubtotal + props.shippingCost;
         setTotal(newTotal);
-        setSubtotal(newDiscountedSubtotal);
+        setMealsSubtotal(newDiscountedMealSubtotal);
+        setSnacksSubtotal(newDiscountedSnackSubtotal);
         setDiscountValid(true);
         setDiscountPercentage(newDiscount.discountPercentage);
         setOrderDiscountAmount(newOrderDiscount.amount);
@@ -162,7 +175,16 @@ const DiscountOrderSummary = (props) => {
                 </p>
               </Grid>
               <Grid item container xs={6} justifyContent={'flex-end'}>
-                <p>{subtotal.toFixed(2)}</p>
+                <p>{mealsSubtotal.toFixed(2)}</p>
+              </Grid>
+              <Grid item container xs={6} justifyContent={'flex-start'}>
+                <p>
+                  {props.scheduleSnacks.length} {'snack'}
+                  {props.scheduleSnacks.length > 1 ? 's' : ''}
+                </p>
+              </Grid>
+              <Grid item container xs={6} justifyContent={'flex-end'}>
+                <p>{snacksSubtotal.toFixed(2)}</p>
               </Grid>
               {discountPercentage ? (
                 <>

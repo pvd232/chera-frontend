@@ -10,13 +10,17 @@ import MealSubscriptionDTO from '../../data_models/dto/MealSubscriptionDTO.js';
 import MealSubscriptionInvoice from '../../data_models/model/MealSubscriptionInvoice.js';
 import MealSubscriptionInvoiceDTO from '../../data_models/dto/MealSubscriptionInvoiceDTO.js';
 import OrderMealDTO from '../../data_models/dto/OrderMealDTO.js';
+import OrderSnackDTO from '../../data_models/dto/OrderSnackDTO.js';
 import Client from '../../data_models/model/Client';
 import ClientDTO from '../../data_models/dto/ClientDTO';
-import ClientPreSelectedMenu from './client_pre_selected_menu/ClientPreSelectedMenu';
+import ClientPreSelectedMenu from './client_menu/ClientPreSelectedMenu.js';
 import ScheduleMealDTO from '../../data_models/dto/ScheduleMealDTO.js';
 import ScheduledOrderMealDTO from '../../data_models/dto/ScheduledOrderMealDTO.js';
 import createInitialOrderMeals from './helpers/createInitialOrderMeals.js';
+import createInitialOrderSnacks from './helpers/createInitialOrderSnacks.js';
 import Payment from './Payment.js';
+import ScheduleSnackDTO from '../../data_models/dto/ScheduleSnackDTO.js';
+import ScheduledOrderSnackDTO from '../../data_models/dto/ScheduledOrderSnackDTO.js';
 const SignUpPage = (props) => {
   const [clientSecret, setClientSecret] = useState(false);
   const [stripeSubscriptionId, setStripeSubscriptionId] = useState(false);
@@ -25,6 +29,9 @@ const SignUpPage = (props) => {
   const [mealSubscription, setMealSubscription] = useState(false);
   const [scheduleMeals, setScheduleMeals] = useState([]);
   const [scheduledOrderMeals, setScheduledOrderMeals] = useState([]);
+  const [scheduleSnacks, setScheduleSnacks] = useState([]);
+  const [scheduledOrderSnacks, setScheduledOrderSnacks] = useState([]);
+
   const [orderDiscount, setOrderDiscount] = useState(false);
   const [discountCode, setDiscountCode] = useState(false);
   const taskIndexArray = [
@@ -73,7 +80,20 @@ const SignUpPage = (props) => {
     );
 
     await APIClient.createScheduledOrderMeals(scheduledOrderMealDTOs);
-
+    if (scheduleSnacks.length > 0) {
+      console.log('scheduleSnacks', scheduleSnacks);
+      const scheduleSnackDTOs = scheduleSnacks.map((scheduleSnack) =>
+        ScheduleSnackDTO.initializeFromScheduleSnack(scheduleSnack)
+      );
+      await APIClient.createScheduleSnacks(scheduleSnackDTOs);
+      const scheduledOrderSnackDTOs = scheduledOrderSnacks.map(
+        (scheduledOrderSnack) =>
+          ScheduledOrderSnackDTO.initializeFromScheduledOrderSnack(
+            scheduledOrderSnack
+          )
+      );
+      await APIClient.createScheduledOrderSnacks(scheduledOrderSnackDTOs);
+    }
     // Create first invoice
 
     const newMealSubscriptionInvoiceId = uuid();
@@ -103,6 +123,21 @@ const SignUpPage = (props) => {
     }
 
     await APIClient.createOrderMeals(orderMealDTOArray);
+
+    // Create first order snacks
+    if (scheduleSnacks.length > 0) {
+      const initialOrderSnacks = createInitialOrderSnacks(
+        newMealSubscriptionInvoice.id,
+        scheduledOrderSnacks
+      );
+      const orderSnackDTOArray = [];
+      for (const orderSnack of initialOrderSnacks) {
+        const orderSnackDTO =
+          OrderSnackDTO.initializeFromOrderSnack(orderSnack);
+        orderSnackDTOArray.push(orderSnackDTO);
+      }
+      await APIClient.createOrderSnacks(orderSnackDTOArray);
+    }
     return;
   };
 
@@ -141,13 +176,21 @@ const SignUpPage = (props) => {
       return (
         <ClientMenu
           extendedMeals={props.extendedMeals}
+          snacks={props.snacks}
           mealSubscriptionId={mealSubscription.id}
           userId={props.stagedClient.id}
           editMeals={false}
           dietitianChoosingClientMeals={false}
-          updateMealsData={(newScheduleMeals, newScheduledOrderMeals) => {
+          updateMealsData={(
+            newScheduleMeals,
+            newScheduledOrderMeals,
+            newScheduleSnacks,
+            newScheduledOrderSnacks
+          ) => {
             setScheduleMeals(newScheduleMeals);
             setScheduledOrderMeals(newScheduledOrderMeals);
+            setScheduleSnacks(newScheduleSnacks);
+            setScheduledOrderSnacks(newScheduledOrderSnacks);
             props.updateTaskIndex(2);
           }}
         />
@@ -160,6 +203,7 @@ const SignUpPage = (props) => {
       stagedClient={props.stagedClient}
       clientPassword={clientPassword}
       scheduleMeals={scheduleMeals}
+      scheduleSnacks={scheduleSnacks}
       stripePromse={props.stripePromise}
       updateTaskIndex={() => props.updateTaskIndex(3)}
       setClient={(newClient) => setClient(newClient)}
@@ -179,6 +223,7 @@ const SignUpPage = (props) => {
       clientSecret={clientSecret}
       stripePromise={props.stripePromise}
       scheduleMeals={scheduleMeals}
+      scheduleSnacks={scheduleSnacks}
       discountCode={discountCode}
       orderDiscount={orderDiscount}
       stagedClient={props.stagedClient}

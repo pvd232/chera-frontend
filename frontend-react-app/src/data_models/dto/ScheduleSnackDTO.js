@@ -10,7 +10,7 @@ export default class ScheduleSnackDTO {
     return new ScheduleSnackDTO({
       id: scheduleSnack.id,
       snack_id: scheduleSnack.snackId,
-      snack_subscription_id: scheduleSnack.mealSubscriptionId,
+      meal_subscription_id: scheduleSnack.mealSubscriptionId,
     });
   }
   toJSON() {
