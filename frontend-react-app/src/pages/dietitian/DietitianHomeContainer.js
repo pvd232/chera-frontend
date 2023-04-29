@@ -12,6 +12,8 @@ import MealSubscriptionDTO from '../../data_models/dto/MealSubscriptionDTO';
 import MealSubscription from '../../data_models/model/MealSubscription';
 import ExtendedMeal from '../../data_models/model/ExtendedMeal';
 import ExtendedMealDTO from '../../data_models/dto/ExtendedMealDTO';
+import SnackDTO from '../../data_models/dto/SnackDTO';
+import Snack from '../../data_models/model/Snack';
 import ExtendedMealDTOFactory from '../../data_models/factories/dto/ExtendedMealDTOFactory';
 import MealDietaryRestrictionDTOFactory from '../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
 import ExtendedMealFactory from '../../data_models/factories/model/ExtendedMealFactory';
@@ -28,6 +30,7 @@ const DietitianHomeContainer = (props) => {
   const [mealSubscriptions, setMealSubscriptions] = useState(false);
   const [mealPlans, setMealPlans] = useState(false);
   const [extendedMeals, setExtendedMeals] = useState(false);
+  const [snacks, setSnacks] = useState(false);
 
   // eslint-disable-next-line no-unused-vars
   const [searchParams, setSearchParams] = useSearchParams();
@@ -171,6 +174,13 @@ const DietitianHomeContainer = (props) => {
         setExtendedMeals(extendedMeals);
       }
     });
+    APIClient.getSnacks().then((snacksData) => {
+      if (mounted) {
+        const snackDTOs = snacksData.map((json) => new SnackDTO(json));
+        const snacks = snackDTOs.map((snackDTO) => new Snack(snackDTO));
+        setSnacks(snacks);
+      }
+    });
     const stagedClientId = searchParams.get('stagedClientId');
     if (stagedClientId) {
       setStagedClientId(stagedClientId);
@@ -185,13 +195,20 @@ const DietitianHomeContainer = (props) => {
     mealSubscriptions &&
     mealPlans
   ) {
-    // remove duplicative clients from stagedClients if they have already created their account
-    const filteredExtendedStagedClients = extendedStagedClients.filter(
-      (stagedClient) =>
-        extendedClients.clientArray?.findIndex(
-          (client) => client.id === stagedClient.id
-        ) === -1
-    );
+    // Remove duplicative clients from stagedClients if they have already created their account
+    const filteredExtendedStagedClients = (() => {
+      if (extendedClients.clientArray) {
+        return extendedStagedClients.filter(
+          (stagedClient) =>
+            extendedClients.clientArray?.findIndex(
+              (client) => client.id === stagedClient.id
+            ) === -1
+        );
+      } else {
+        return extendedStagedClients;
+      }
+    })();
+
     const dataProps = {
       dietitianId: LocalStorageManager.shared.dietitian.id,
       stripePromise: props.stripePromise,
@@ -203,9 +220,10 @@ const DietitianHomeContainer = (props) => {
       mealSubscriptions: mealSubscriptions,
       mealPlans: mealPlans,
       extendedMeals: extendedMeals,
+      snacks: snacks,
     };
     // Pass the dataProps to the child component
-    return cloneElement(props.childComponent, { dataProps: dataProps });
+    return cloneElement(props.childComponent, { ...dataProps });
   } else {
     return <></>;
   }

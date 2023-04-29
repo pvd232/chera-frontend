@@ -21,7 +21,7 @@ const Login = (props) => {
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
-      id: '',
+      username: '',
       password: '',
     }
   );
@@ -136,14 +136,14 @@ const Login = (props) => {
                         required
                         fullWidth
                         label={'Email'}
-                        id="id"
+                        id="username"
                         sx={{
                           marginLeft: 'auto',
                           marginRight: 'auto',
                           width: '100%',
                         }}
                         onChange={handleInput}
-                        value={formValue.id}
+                        value={formValue.username}
                       />
                       <TextField
                         autoComplete="new-password"
@@ -170,6 +170,7 @@ const Login = (props) => {
                       marginTop={'5vh'}
                     >
                       <BlackButton
+                        id="login-submit"
                         type="submit"
                         variant="contained"
                         disabled={loading}

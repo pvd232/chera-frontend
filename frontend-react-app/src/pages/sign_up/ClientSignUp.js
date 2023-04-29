@@ -81,7 +81,6 @@ const SignUpPage = (props) => {
 
     await APIClient.createScheduledOrderMeals(scheduledOrderMealDTOs);
     if (scheduleSnacks.length > 0) {
-      console.log('scheduleSnacks', scheduleSnacks);
       const scheduleSnackDTOs = scheduleSnacks.map((scheduleSnack) =>
         ScheduleSnackDTO.initializeFromScheduleSnack(scheduleSnack)
       );

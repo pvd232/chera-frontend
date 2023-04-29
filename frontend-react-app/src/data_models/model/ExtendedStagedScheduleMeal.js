@@ -1,10 +1,20 @@
 import StagedScheduleMeal from './StagedScheduleMeal';
 
 export default class ExtendedStagedScheduleMeal extends StagedScheduleMeal {
-  constructor(extendedStagedScheduleMealDTO, extendedMealFactory) {
+  constructor(extendedStagedScheduleMealDTO) {
     super(extendedStagedScheduleMealDTO);
-    this.associatedMeal = extendedMealFactory.injectInstance(
-      extendedStagedScheduleMealDTO.associatedMeal
+    this.associatedMeal = null;
+  }
+  static constructFromStagedScheduleMeal(
+    stagedScheduleMeal,
+    extendedMeal,
+    extendedMealFactory
+  ) {
+    const newExtendedStagedScheduleMeal = new ExtendedStagedScheduleMeal(
+      stagedScheduleMeal
     );
+    newExtendedStagedScheduleMeal.associatedMeal =
+      extendedMealFactory.injectInstance(extendedMeal);
+    return newExtendedStagedScheduleMeal;
   }
 }

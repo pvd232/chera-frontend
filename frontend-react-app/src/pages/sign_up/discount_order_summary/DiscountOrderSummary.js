@@ -63,6 +63,7 @@ const DiscountOrderSummary = (props) => {
         if (props.dietitianPrepaying) {
           APIClient.createPaymentIntent(
             props.scheduleMeals.length,
+            props.scheduleSnacks.length,
             props.stagedClientId,
             newDiscount.code
           ).then((clientSecret) => {

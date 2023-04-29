@@ -107,7 +107,11 @@ const ModalBody = (props) => (
                     onChange={props.handleInput}
                   >
                     {props.mealPlans.map((mealPlan, i) => (
-                      <MenuItem key={`mealPlan-${i}`} value={mealPlan.id}>
+                      <MenuItem
+                        key={`mealPlan-${i}`}
+                        id={`mealPlan-${i}`}
+                        value={mealPlan.id}
+                      >
                         {`${capitalize(mealPlan.name)}: ${
                           mealPlan.statedCaloricLowerBound
                         }-${mealPlan.statedCaloricUpperBound} calories`}
@@ -142,6 +146,7 @@ const ModalBody = (props) => (
                   />
                 </FormGroup>
                 <BlackButton
+                  id="staged-client-submit"
                   type="submit"
                   variant="contained"
                   disabled={props.loading}

@@ -15,6 +15,7 @@ const SignUpSummary = (props) => {
     let mounted = true;
     APIClient.createPaymentIntent(
       props.numMeals,
+      props.numSnacks,
       props.stagedClientId,
       false
     ).then((paymentIntentData) => {
@@ -24,7 +25,7 @@ const SignUpSummary = (props) => {
       }
     });
     return () => (mounted = false);
-  }, [props.numMeals, props.stagedClientId]);
+  }, [props.numMeals, props.numSnacks, props.stagedClientId]);
 
   const appearance = {
     theme: 'stripe',
@@ -57,6 +58,7 @@ const SignUpSummary = (props) => {
               stagedClientId={props.stagedClientId}
               shippingCost={props.shippingCost}
               scheduleMeals={props.prepaidMeals}
+              scheduleSnacks={props.prepaidSnacks}
               dietitianPrepaying={true}
               setDiscountCode={(discount) => setDiscountCode(discount)}
               setPaymentIntentData={(newPaymentIntentData) => {
@@ -79,6 +81,7 @@ const SignUpSummary = (props) => {
                 discountCode={discountCode}
                 stripePaymentIntentId={stripePaymentIntentId}
                 numMeals={props.numMeals}
+                numSnacks={props.numSnacks}
                 stagedClientId={props.stagedClientId}
                 dietitianId={props.dietitianId}
                 clientSecret={clientSecret}

@@ -54,7 +54,7 @@ const MenuListComposition = (props) => {
     <Grid
       container
       item
-      xs={3}
+      xs={3.5}
       xl={1}
       lg={1.5}
       columnGap={customTheme.smallerScreen() ? 0.3 : 1}

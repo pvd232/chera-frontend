@@ -31,6 +31,11 @@ import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import SnackCard from './SnackCard';
 import SnackFactory from '../../../data_models/factories/model/SnackFactory';
+import StagedScheduleMeal from '../../../data_models/model/StagedScheduleMeal';
+import ExtendedStagedScheduleMeal from '../../../data_models/model/ExtendedStagedScheduleMeal';
+import StagedScheduleSnack from '../../../data_models/model/StagedScheduleSnack';
+import ExtendedStagedScheduleSnack from '../../../data_models/model/ExtendedStagedScheduleSnack';
+
 const ClientMenu = (props) => {
   const customTheme = useTheme();
   const [loading, setLoading] = useState(false);
@@ -178,17 +183,40 @@ const ClientMenu = (props) => {
 
   const handleAddMeal = (meal) => {
     setChosenScheduleMeals((prevChosenMeal) => {
-      const newScheduleMeal = ScheduleMeal.initializeFromMeal(
-        uuid(),
-        meal.id,
-        props.mealSubscriptionId
-      );
-      const newExtendedScheduleMeal =
-        ExtendedScheduleMeal.constructFromScheduleMeal(
-          newScheduleMeal,
-          meal,
-          new ExtendedMealFactory(new MealDietaryRestrictionFactory())
-        );
+      const newScheduleMeal = (() => {
+        const scheduleMealId = uuid();
+
+        // Dynamically construct the correct type of schedule meal based on whether the dietitian is choosing meals for a client or for a meal subscription
+        if (props.dietitianChoosingClientMeals) {
+          return new StagedScheduleMeal({
+            id: scheduleMealId,
+            mealId: meal.id,
+            stagedClientId: props.stagedClientId,
+          });
+        } else {
+          return ScheduleMeal.initializeFromMeal(
+            scheduleMealId,
+            meal.id,
+            props.mealSubscriptionId
+          );
+        }
+      })();
+      const newExtendedScheduleMeal = (() => {
+        if (props.dietitianChoosingClientMeals) {
+          return ExtendedStagedScheduleMeal.constructFromStagedScheduleMeal(
+            newScheduleMeal,
+            meal,
+            new ExtendedMealFactory(new MealDietaryRestrictionFactory())
+          );
+        } else {
+          return ExtendedScheduleMeal.constructFromScheduleMeal(
+            newScheduleMeal,
+            meal,
+            new ExtendedMealFactory(new MealDietaryRestrictionFactory())
+          );
+        }
+      })();
+
       return [...prevChosenMeal, newExtendedScheduleMeal];
     });
   };
@@ -201,17 +229,37 @@ const ClientMenu = (props) => {
   };
   const handleAddSnack = (snack) => {
     setChosenScheduleSnacks((prevChosenSnack) => {
-      const newScheduleSnack = ScheduleSnack.initializeFromSnack(
-        uuid(),
-        snack.id,
-        props.mealSubscriptionId
-      );
-      const newExtendedScheduleSnack =
-        ExtendedScheduleSnack.constructFromScheduleSnack(
-          newScheduleSnack,
-          snack,
-          new SnackFactory()
-        );
+      const newScheduleSnack = (() => {
+        const scheduleSnackId = uuid();
+        if (props.dietitianChoosingClientMeals) {
+          return new StagedScheduleSnack({
+            id: scheduleSnackId,
+            snackId: snack.id,
+            stagedClientId: props.stagedClientId,
+          });
+        } else {
+          return ScheduleSnack.initializeFromSnack(
+            uuid(),
+            snack.id,
+            props.mealSubscriptionId
+          );
+        }
+      })();
+      const newExtendedScheduleSnack = (() => {
+        if (props.dietitianChoosingClientMeals) {
+          return ExtendedStagedScheduleSnack.constructFromStagedScheduleSnack(
+            newScheduleSnack,
+            snack,
+            new SnackFactory()
+          );
+        } else {
+          return ExtendedScheduleSnack.constructFromScheduleSnack(
+            newScheduleSnack,
+            snack,
+            new SnackFactory()
+          );
+        }
+      })();
       return [...prevChosenSnack, newExtendedScheduleSnack];
     });
   };
@@ -319,7 +367,7 @@ const ClientMenu = (props) => {
       }
     } else {
       // Dietitian choosing meals
-      props.onSubmit(chosenScheduleMeals);
+      props.onSubmit(chosenScheduleMeals, chosenScheduleSnacks);
     }
   };
 

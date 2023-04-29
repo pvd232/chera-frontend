@@ -2,8 +2,6 @@ import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import { useState, useReducer } from 'react';
 import Icon from '@mui/material/Icon';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/system';
 import Dialog from '@mui/material/Dialog';
 import Transition from '../../../reusable_ui_components/Transition';
 import APIClient from '../../../helpers/APIClient';
@@ -11,19 +9,11 @@ import StagedClient from '../../../data_models/model/StagedClient';
 import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
 import ClientMenu from '../../sign_up/client_menu/ClientMenu';
-import StagedScheduleMeal from '../../../data_models/model/StagedScheduleMeal';
 import StagedScheduleMealDTO from '../../../data_models/dto/StagedScheduleMealDTO';
+import StagedScheduleSnackDTO from '../../../data_models/dto/StagedScheduleSnackDTO';
 import StagedClientDTO from '../../../data_models/dto/StagedClientDTO';
-const OrangeSolidButton = styled(Button)(({ theme }) => ({
-  borderColor: theme.palette.olive.main,
-  color: theme.palette.white1.main,
-  backgroundColor: theme.palette.olive.main,
-  fontWeight: 'bold',
-  fontSize: theme.fontEqualizer(14),
-  '&:hover': {
-    borderColor: theme.palette.olive.main,
-  },
-}));
+import ModalButton from './ModalButton';
+
 const CreateNewStagedClientModal = (props) => {
   const customTheme = useTheme();
   const [open, setOpen] = useState(false);
@@ -32,7 +22,9 @@ const CreateNewStagedClientModal = (props) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showCheckout, setShowCheckout] = useState(false);
   const [numberOfPrePaidMeals, setNumberOfPrePaidMeals] = useState(0);
+  const [numberOfPrePaidSnacks, setNumberOfPrePaidSnacks] = useState(0);
   const [prepaidMeals, setPrepaidMeals] = useState([]);
+  const [prepaidSnacks, setPrepaidSnacks] = useState([]);
   const [page, setPage] = useState('SignUp');
   const [shippingCost, setShippingCost] = useState(false);
   const [stagedClientId, setStagedClientId] = useState('');
@@ -86,14 +78,16 @@ const CreateNewStagedClientModal = (props) => {
   };
 
   // Input handlers
-  const handleButtonClick = async (scheduleMeals) => {
+  const handleButtonClick = async (scheduleMeals, scheduleSnacks) => {
     const newStagedClient = new StagedClient(formValue);
     setStagedClientId(newStagedClient.id);
 
     // Regular client creation with no meals selected nor paid for
     if (!formValue.mealsPreSelected) {
       setLoading(true);
-      await APIClient.createStagedClient(newStagedClient);
+      const newStagedClientDTO =
+        StagedClientDTO.initializeFromStagedClient(newStagedClient);
+      await APIClient.createStagedClient(newStagedClientDTO);
       props.handleFinishEditing(newStagedClient);
       resetFormValues();
       setLoading(false);
@@ -101,30 +95,31 @@ const CreateNewStagedClientModal = (props) => {
       // Dietitian is selecting client meals, and has already filled out their info on the form
     } else if (formValue.mealsPreSelected && scheduleMeals) {
       const newStagedClient = new StagedClient(formValue);
-      // Schedule Meals are created in Menu Page, must map them to StagedScheduleMeals
-      const stagedScheduleMeals = scheduleMeals.map((scheduleMeal) =>
-        StagedScheduleMeal.initializeFromScheduleMeal(
-          scheduleMeal,
-          newStagedClient.id
+      const stagedScheduleMealDTOs = scheduleMeals.map((stagedScheduleMeal) =>
+        StagedScheduleMealDTO.initializeFromStagedScheduleMeal(
+          stagedScheduleMeal
         )
       );
-      const stagedScheduleMealDTOs = stagedScheduleMeals.map(
-        (stagedScheduleMeal) =>
-          StagedScheduleMealDTO.initializeFromStagedScheduleMeal(
-            stagedScheduleMeal
+      const stagedScheduleSnackDTOs = scheduleSnacks.map(
+        (stagedScheduleSnack) =>
+          StagedScheduleSnackDTO.initializeFromStagedScheduleSnack(
+            stagedScheduleSnack
           )
       );
       const newStagedClientDTO =
         StagedClientDTO.initializeFromStagedClient(newStagedClient);
       await APIClient.createStagedClient(newStagedClientDTO);
       await APIClient.createStagedScheduleMeals(stagedScheduleMealDTOs);
+      await APIClient.createStagedScheduleSnacks(stagedScheduleSnackDTOs);
 
       props.handleFinishEditing(newStagedClient);
 
       if (formValue.mealsPrepaid) {
         // Pass extendedScheduleMeals to DiscountOrderSummary page via props
         setNumberOfPrePaidMeals(scheduleMeals.length);
+        setNumberOfPrePaidSnacks(scheduleSnacks.length);
         setPrepaidMeals(scheduleMeals);
+        setPrepaidSnacks(scheduleSnacks);
         setShowCheckout(true);
         setPage('SignUpSummary');
       } else {
@@ -135,7 +130,7 @@ const CreateNewStagedClientModal = (props) => {
         setPage('SignUp');
       }
     } else {
-      // dietitian is selecting client meals, and has just filled out their info on the form
+      // Dietitian is selecting client meals, and has just filled out their info on the form
       setShowMenu(true);
       setPage('DietitianChooseClientMealsMenu');
     }
@@ -144,10 +139,10 @@ const CreateNewStagedClientModal = (props) => {
     event.preventDefault();
     const form = event.target;
 
-    // check that all required values have been populated before triggering button click
+    // Check that all required values have been populated before triggering button click
     const validated = await validate(form);
     if (validated) {
-      handleButtonClick(false);
+      handleButtonClick(false, false);
     } else {
       return false;
     }
@@ -208,9 +203,11 @@ const CreateNewStagedClientModal = (props) => {
     <SignUpSummary
       stripePromise={props.stripePromise}
       numMeals={numberOfPrePaidMeals}
+      numSnacks={numberOfPrePaidSnacks}
       stagedClientId={stagedClientId}
       dietitianId={props.dietitianId}
       prepaidMeals={prepaidMeals}
+      prepaidSnacks={prepaidSnacks}
       shippingCost={shippingCost}
     />
   );
@@ -218,8 +215,11 @@ const CreateNewStagedClientModal = (props) => {
     <ClientMenu
       stagedClientId={formValue.id}
       dietitianChoosingClientMeals={true}
-      onSubmit={(param) => handleButtonClick(param)}
+      onSubmit={(scheduleMeals, scheduleSnacks) =>
+        handleButtonClick(scheduleMeals, scheduleSnacks)
+      }
       extendedMeals={props.extendedMeals}
+      snacks={props.snacks}
     />
   );
   UIContainer['SignUp'] = (
@@ -241,7 +241,8 @@ const CreateNewStagedClientModal = (props) => {
           paddingBottom: '4vh',
         }}
       >
-        <OrangeSolidButton
+        <ModalButton
+          id="add-staged-client-button"
           variant="contained"
           onClick={handleClickOpen}
           fontSize={customTheme.fontEqualizer(14)}
@@ -250,7 +251,7 @@ const CreateNewStagedClientModal = (props) => {
           }}
         >
           + Add New Client
-        </OrangeSolidButton>
+        </ModalButton>
         <Dialog
           open={open}
           TransitionComponent={Transition}

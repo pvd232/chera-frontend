@@ -50,7 +50,6 @@ const TaskBar = (props) => {
       }
     });
     APIClient.getSnacks().then((snacks) => {
-      console.log('snacks', snacks);
       if (mounted) {
         const snackArray = [];
         for (const snack of snacks) {
@@ -59,7 +58,6 @@ const TaskBar = (props) => {
           snackArray.push(newSnack);
         }
         setSnacks(snackArray);
-        console.log('snackArray', snackArray);
       }
     });
     APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {

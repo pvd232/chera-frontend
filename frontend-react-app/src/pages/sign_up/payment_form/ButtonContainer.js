@@ -11,6 +11,7 @@ const ButtonContainer = (props) => {
   };
   return (
     <BlackButton
+      id="submit-order-button"
       onClick={() => handleSubmit()}
       disabled={loading}
       variant="contained"

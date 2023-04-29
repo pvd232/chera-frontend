@@ -379,6 +379,7 @@ class APIClient {
 
   async createDietitianPrePayment(
     numMeals,
+    numSnacks,
     stagedClientId,
     dietitianId,
     stripePaymentIntentId,
@@ -387,6 +388,7 @@ class APIClient {
     const requestUrl = this.baseUrl + '/dietitian_prepayment';
     const requestData = {
       num_meals: numMeals,
+      num_snacks: numSnacks,
       staged_client_id: stagedClientId,
       dietitian_id: dietitianId,
       // Send empty string if no discount code exists
@@ -449,7 +451,7 @@ class APIClient {
     requestHeaders.set(
       'Authorization',
       'Basic ' +
-        Buffer.from(`${credentials.id}:${credentials.password}`).toString(
+        Buffer.from(`${credentials.username}:${credentials.password}`).toString(
           'base64'
         )
     );
@@ -538,7 +540,7 @@ class APIClient {
     const response = await this.fetchWrapper(request, requestParams);
 
     // Staged client does not exist
-    if (response.status === 404) {
+    if (response.status === 200) {
       return false;
     }
     const responseData = await response.json();
@@ -763,7 +765,7 @@ class APIClient {
     requestHeaders.set(
       'Authorization',
       'Basic ' +
-        Buffer.from(`${credentials.id}:${credentials.password}`).toString(
+        Buffer.from(`${credentials.username}:${credentials.password}`).toString(
           'base64'
         )
     );
@@ -924,21 +926,6 @@ class APIClient {
     };
     await this.fetchWrapper(requestUrl, requestParams);
     return;
-  }
-
-  async getMealSubscriptionInvoices(mealSubscriptionId) {
-    const requestUrl =
-      this.baseUrl +
-      `/meal_subscription_invoice?meal_subscription_id=${mealSubscriptionId}`;
-
-    const requestParams = {
-      method: 'GET',
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(requestUrl, requestParams);
-    const mealSubscriptionInvoiceData = await response.json();
-    return mealSubscriptionInvoiceData;
   }
 
   async createMealSubscriptionInvoice(mealSubscriptionInvoice) {
@@ -1181,6 +1168,18 @@ class APIClient {
     const extendedStagedScheduleSnackObjects = await response.json();
     return extendedStagedScheduleSnackObjects;
   }
+  async createStagedScheduleSnacks(stagedScheduleSnacks) {
+    const requestUrl = this.baseUrl + '/staged_schedule_snack';
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(stagedScheduleSnacks),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
 
   getClientHomeUrl() {
     if (this.env === 'debug') {
@@ -1328,12 +1327,18 @@ class APIClient {
     }
   }
 
-  async createPaymentIntent(numMeals, staged_client_id, discountCode) {
+  async createPaymentIntent(
+    numMeals,
+    numSnacks,
+    staged_client_id,
+    discountCode
+  ) {
     const requestUrl = this.baseUrl + '/stripe/payment_intent';
     const request = new Request(requestUrl);
 
     const requestHeaders = new Headers();
     requestHeaders.set('number_of_meals', numMeals);
+    requestHeaders.set('number_of_snacks', numSnacks);
     requestHeaders.set('staged_client_id', staged_client_id);
     requestHeaders.set('discount_code', !discountCode ? '' : discountCode);
     const requestParams = {

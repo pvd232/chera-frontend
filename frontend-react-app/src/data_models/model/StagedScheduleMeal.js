@@ -12,11 +12,4 @@ export default class StagedScheduleMeal {
     }
     this.properlyInitialized = (() => checkProperties(this))();
   }
-  static initializeFromScheduleMeal(scheduleMeal, stagedClientId) {
-    const newStagedScheduleMeal = new StagedScheduleMeal();
-    newStagedScheduleMeal.id = scheduleMeal.id;
-    newStagedScheduleMeal.mealId = scheduleMeal.mealId;
-    newStagedScheduleMeal.stagedClientId = stagedClientId;
-    return newStagedScheduleMeal;
-  }
 }

@@ -4,10 +4,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
 import { Link as RRLink } from 'react-router-dom';
-// import logo from '../../static/images/chera_logo_fucia_150.png';
+import logo from '../../static/images/chera_logo.png';
 import LocalStorageManager from '../../helpers/LocalStorageManager';
 import SplashLinks from './SplashLinks';
-import AdminLinks from './AdminLinks';
 import ClientLinks from './ClientLinks';
 import DietitianLinks from './DietitianLinks';
 
@@ -42,38 +41,33 @@ const Navbar = (props) => {
                 mr={2}
                 ml={2}
               >
-                {/* logo */}
-                {/* <Grid item xl={0.65} lg={1.1}>
-                  <RRLink
-                    to={LocalStorageManager.shared.homeUrl}
-                    style={{
-                      textDecoration: 'none',
-                    }}
-                  >
-                    <img src={logo} alt="" height={'80vh'} />
-                  </RRLink>
-                </Grid> */}
-                {/* logo */}
-                <Grid
+                {/* <Grid
                   container
                   item
-                  lg={1.1}
-                  md={2}
-                  justifyContent={'center'}
-                  alignItems={'flex-start'}
-                >
+                  lg={1.5}
+                  md={2.5}
+                  xs={12}
+                  alignItems={'flex-end'}
+                  height={'16vh'}
+                > */}
+                <Grid item>
                   <RRLink
                     to={LocalStorageManager.shared.homeUrl}
-                    style={{
-                      textDecoration: 'none',
-                      fontSize: '3.5rem',
-                      color: `${customTheme.palette.olive.main}`,
-                      fontWeight: 'bold',
-                      fontFamily: 'Lilita One',
-                    }}
+                    // style={{
+                    //   textDecoration: 'none',
+                    //   fontSize: '3.5rem',
+                    //   color: `${customTheme.palette.olive.main}`,
+                    //   fontWeight: 'bold',
+                    //   fontFamily: 'Lilita One',
+                    // }}
                   >
-                    Chera
+                    <img
+                      src={logo}
+                      alt="chera logo"
+                      style={{ height: '6vh' }}
+                    ></img>
                   </RRLink>
+                  {/* </Grid> */}
                 </Grid>
                 {/* navbar links */}
                 <Grid
@@ -82,7 +76,6 @@ const Navbar = (props) => {
                   lg={5}
                   md={props.domain !== 'splash' ? 7 : 10}
                   xs={12}
-                  alignItems="flex-end"
                   justifyContent={'space-around'}
                   sx={{
                     marginLeft: props.domain === 'splash' ? 'auto' : '',
@@ -97,12 +90,6 @@ const Navbar = (props) => {
                 >
                   {props.domain === 'splash' ? (
                     <SplashLinks customTheme={customTheme} />
-                  ) : props.domain === 'admin' ? (
-                    <AdminLinks
-                      customTheme={customTheme}
-                      logoutUser={() => LocalStorageManager.shared.logoutUser()}
-                      firstName={LocalStorageManager.shared.dietitian.firstName}
-                    />
                   ) : props.domain === 'client' ? (
                     <ClientLinks
                       customTheme={customTheme}

@@ -19,34 +19,44 @@ import APIClient from '../../helpers/APIClient';
 import StagedClientPaymentConfirmed from './StagedClientPaymentConfirmed';
 import ExtendedStagedClient from '../../data_models/model/ExtendedStagedClient';
 import MealPlanFactory from '../../data_models/factories/model/MealPlanFactory';
+
 const DietititanHome = (props) => {
   const customTheme = useTheme();
   const [reminderLoading, setReminderLoading] = useState(
-    props.dataProps.clients.clientArray
-      ? props.dataProps.clients.clientArray
+    props.clients.clientArray
+      ? props.clients.clientArray
           .map((client) => ({ id: client.id, isLoading: false }))
           .concat(
-            props.dataProps.stagedClients.map((stagedClient) => ({
+            props.stagedClients.map((stagedClient) => ({
               id: stagedClient.id,
               isLoading: false,
             }))
           )
+      : props.stagedClients
+      ? props.stagedClients.map((stagedClient) => ({
+          id: stagedClient.id,
+          isLoading: false,
+        }))
       : []
   );
   const [clientItems, setClientItems] = useState(
-    props.dataProps.clients.clientArray
-      ? props.dataProps.clients.clientArray
+    props.clients.clientArray
+      ? props.clients.clientArray
           .map((client) => new ClientItem(client, false))
           .concat(
-            props.dataProps.stagedClients.map(
+            props.stagedClients.map(
               (stagedClient) => new ClientItem(stagedClient, true)
             )
           )
+      : props.stagedClients
+      ? props.stagedClients.map(
+          (stagedClient) => new ClientItem(stagedClient, true)
+        )
       : []
   );
 
   const handleFinishEditing = (newStagedClient) => {
-    const stagedClientMealPlan = props.dataProps.mealPlans.mealPlansMap.get(
+    const stagedClientMealPlan = props.mealPlans.mealPlansMap.get(
       newStagedClient.mealPlanId
     );
     const newExtendedStagedClient = new ExtendedStagedClient(
@@ -70,10 +80,10 @@ const DietititanHome = (props) => {
   };
   const handleFinishEditingMealPlan = () => {
     setClientItems(
-      props.dataProps.clients.clientArray
+      props.clients.clientArray
         .map((client) => new ClientItem(client, true))
         .concat(
-          props.dataProps.stagedClients.map(
+          props.stagedClients.map(
             (stagedClient) => new ClientItem(stagedClient, false)
           )
         )
@@ -104,10 +114,11 @@ const DietititanHome = (props) => {
         </Grid>
         <Grid item sx={{ marginLeft: 'auto', marginRight: '1vw' }}>
           <CreateNewStagedClientModal
-            extendedMeals={props.dataProps.extendedMeals}
-            mealPlans={props.dataProps.mealPlans.mealPlansArray}
-            dietitianId={props.dataProps.dietitianId}
-            stripePromise={props.dataProps.stripePromise}
+            extendedMeals={props.extendedMeals}
+            snacks={props.snacks}
+            mealPlans={props.mealPlans.mealPlansArray}
+            dietitianId={props.dietitianId}
+            stripePromise={props.stripePromise}
             handleFinishEditing={handleFinishEditing}
           ></CreateNewStagedClientModal>
         </Grid>
@@ -125,7 +136,7 @@ const DietititanHome = (props) => {
                 <TableCell align="left">Meal Plan</TableCell>
                 <TableCell align="left">Notes</TableCell>
                 <TableCell align="center">Account Created</TableCell>
-                {props.dataProps.stagedClients.length > 0 ? (
+                {props.stagedClients.length > 0 ? (
                   <TableCell></TableCell>
                 ) : (
                   <></>
@@ -162,7 +173,7 @@ const DietititanHome = (props) => {
                           handleFinishEditingMealPlan
                         }
                         isStagedClient={row.isStagedClient}
-                        mealPlans={props.dataProps.mealPlans.mealPlansArray}
+                        mealPlans={props.mealPlans.mealPlansArray}
                       />
                     </div>
                   </TableCell>
@@ -234,11 +245,11 @@ const DietititanHome = (props) => {
           </Table>
         </TableContainer>
       </Grid>
-      {props.dataProps.paymentConfirmed && (
+      {props.paymentConfirmed && (
         <StagedClientPaymentConfirmed
-          paymentConfirmed={props.dataProps.paymentConfirmed}
-          stagedClientId={props.dataProps.paymentStagedClientId}
-          stagedClients={props.dataProps.stagedClients}
+          paymentConfirmed={props.paymentConfirmed}
+          stagedClientId={props.paymentStagedClientId}
+          stagedClients={props.stagedClients}
         />
       )}
     </Grid>

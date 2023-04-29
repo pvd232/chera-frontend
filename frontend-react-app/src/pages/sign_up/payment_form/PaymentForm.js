@@ -16,6 +16,7 @@ const PaymentForm = (props) => {
     if (props.dietitianPrepaying) {
       await APIClient.createDietitianPrePayment(
         props.numMeals,
+        props.numSnacks,
         props.stagedClientId,
         props.dietitianId,
         props.stripePaymentIntentId,
