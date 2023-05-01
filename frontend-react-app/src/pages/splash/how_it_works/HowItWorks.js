@@ -36,7 +36,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'Dietitian Refers Client'}
             bodyText={
-              'Add clients via your dashboard and select which of our ten different meal plans best fit their needs.'
+              'Add clients via our dashboard and select which of our ten different meal plans best fit their needs.'
             }
             symbolName={'format_list_numbered'}
           />
@@ -56,7 +56,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'We Cook and Ship Meals'}
             bodyText={
-              'Meals fined tuned to their meal plan are shipped with discreet packaging and delivered on Saturday or Sunday.'
+              'Meals fined tuned to their meal plan are shipped with discreet packaging and delivered on Monday.'
             }
             symbolName={'delivery_dining_outlined'}
           />
@@ -64,7 +64,7 @@ const HowItWorks = (props) => {
         <Grid item lg={2.5} md={5} xs={10}>
           <LogisticsStep
             customTheme={props.customTheme}
-            headerText={'Heat Up, Sit Back and Enjoy'}
+            headerText={'Heat, Sit Back and Enjoy'}
             bodyText={
               'Simple instructions + microwave safe packaging = ready to go in minutes! Skip a week or cancel anytime.'
             }

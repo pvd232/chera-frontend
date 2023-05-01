@@ -27,14 +27,25 @@ const LogisticsStep = (props) => (
         justifyContent={props.customTheme.smallerScreen() ? 'center' : ''}
       >
         <Grid item>
-          <Icon
-            sx={{
-              fontSize: props.customTheme.largerScreen() ? '4rem' : '3rem',
-              color: `${props.customTheme.palette.olive.secondary}`,
+          <div
+            style={{
+              borderRadius: '50%',
+              padding: '1rem',
+              backgroundColor: `#ffd5da`,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
           >
-            {props.symbolName}
-          </Icon>
+            <Icon
+              fontSize="large"
+              sx={{
+                color: `${props.customTheme.palette.olive.main}`,
+              }}
+            >
+              {props.symbolName}
+            </Icon>
+          </div>
         </Grid>
         <Grid container item lg={9} md={9} xs={12} spacing={1}>
           <Grid item xs={12}>

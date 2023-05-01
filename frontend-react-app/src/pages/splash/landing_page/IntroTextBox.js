@@ -55,6 +55,7 @@ const IntroTextBox = (props) => {
             <BlackButton
               variant={'contained'}
               onClick={props.executeScroll}
+              id="getStartedButton"
               sx={{
                 fontSize: customTheme.pages.splash.fontSize.button,
                 marginTop: '5vh',

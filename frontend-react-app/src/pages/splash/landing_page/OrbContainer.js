@@ -11,7 +11,7 @@ class KawaseOverride extends KawaseBlurFilter {
     super(blur, quality, true);
   }
 }
-const OrbContainer = (props) => {
+const OrbContainer = () => {
   const customTheme = useTheme();
   const canvasWidth = (() => {
     if (window.innerWidth / 1000) {
@@ -51,7 +51,6 @@ const OrbContainer = (props) => {
           blur={{ blur: 30, quality: 10 }}
           width={window.innerWidth * (canvasWidth / 12)}
           height={window.innerHeight}
-          position={[0, window.innerHeight * 0.15]}
         >
           {/* create the graphics component here */}
           <Orb

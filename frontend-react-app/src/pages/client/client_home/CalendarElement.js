@@ -9,7 +9,7 @@ const CalendarElement = (props) => (
       '&>div': {
         color: `${
           props.deliveryDayIndex === props.selectedDeliveryIndex
-            ? props.customTheme.palette.olive.main
+            ? props.customTheme.palette.orange.main
             : props.customTheme.palette.black.main
         }`,
         fontWeight: `${
@@ -23,22 +23,22 @@ const CalendarElement = (props) => (
       },
       borderBottom: `${
         props.deliveryDayIndex === props.selectedDeliveryIndex
-          ? `solid 2px ${props.customTheme.palette.olive.main}`
+          ? `solid 2px ${props.customTheme.palette.orange.main}`
           : ''
       }`,
     }}
     onClick={props.handleChangeDeliveryIndex}
   >
     <Grid container direction={'column'} alignItems={'center'}>
-      <Grid item xs={3}>
+      <Grid item xs={3} sx={{ fontSize: '1rem' }}>
         Sunday
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={6} sx={{ fontSize: '1rem' }}>
         {`${DeliveryDateUtility.getDeliveryDateFromIndex(
           props.deliveryDayIndex
         ).getDate()}`}
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={3} sx={{ fontSize: '1rem' }}>
         {`${
           DeliveryDateUtility.months[
             DeliveryDateUtility.getDeliveryDateFromIndex(

@@ -19,12 +19,8 @@ const DiscountOrderSummary = (props) => {
   const [orderDiscountAmount, setOrderDiscountAmount] = useState(0);
   const [discountCode, setDiscountCode] = useState('');
   const [discountValid, setDiscountValid] = useState(true);
-  const [mealsSubtotal, setMealsSubtotal] = useState(
-    getSubtotal(props.scheduleMeals, false)
-  );
-  const [snacksSubtotal, setSnacksSubtotal] = useState(
-    getSubtotal(false, props.scheduleSnacks)
-  );
+  const mealsSubtotal = getSubtotal(props.scheduleMeals, false);
+  const snacksSubtotal = getSubtotal(false, props.scheduleSnacks);
   const [total, setTotal] = useState(
     getSubtotal(props.scheduleMeals, false) +
       getSubtotal(false, props.scheduleSnacks) +
@@ -55,8 +51,6 @@ const DiscountOrderSummary = (props) => {
 
         const newTotal = newDiscountedSubtotal + props.shippingCost;
         setTotal(newTotal);
-        setMealsSubtotal(newDiscountedMealSubtotal);
-        setSnacksSubtotal(newDiscountedSnackSubtotal);
         setDiscountValid(true);
         setDiscountPercentage(newDiscount.discountPercentage);
         setOrderDiscountAmount(newOrderDiscount.amount);

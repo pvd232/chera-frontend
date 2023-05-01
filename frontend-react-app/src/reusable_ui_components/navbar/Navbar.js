@@ -41,33 +41,14 @@ const Navbar = (props) => {
                 mr={2}
                 ml={2}
               >
-                {/* <Grid
-                  container
-                  item
-                  lg={1.5}
-                  md={2.5}
-                  xs={12}
-                  alignItems={'flex-end'}
-                  height={'16vh'}
-                > */}
                 <Grid item>
-                  <RRLink
-                    to={LocalStorageManager.shared.homeUrl}
-                    // style={{
-                    //   textDecoration: 'none',
-                    //   fontSize: '3.5rem',
-                    //   color: `${customTheme.palette.olive.main}`,
-                    //   fontWeight: 'bold',
-                    //   fontFamily: 'Lilita One',
-                    // }}
-                  >
+                  <RRLink to={LocalStorageManager.shared.homeUrl}>
                     <img
                       src={logo}
                       alt="chera logo"
                       style={{ height: '6vh' }}
                     ></img>
                   </RRLink>
-                  {/* </Grid> */}
                 </Grid>
                 {/* navbar links */}
                 <Grid

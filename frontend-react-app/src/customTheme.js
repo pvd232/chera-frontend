@@ -9,9 +9,20 @@ const themeBase = createTheme({
       tertiary: '#fcb052',
       quaternary: '#fee1be',
     },
+    orange: {
+      main: '#ffa40c',
+      secondary: '#fb971c',
+      tertiary: '#fcb052',
+      quaternary: '#fee1be',
+    },
     fucia: {
       main: '#ff3e56',
       secondary: '#ffd5da',
+    },
+    blue: {
+      main: '#5AA9E6',
+      secondary: '#7FC8F8',
+      tertiary: '#BBDDFF',
     },
     oliveCompliment: {
       main: '#0473fb',
@@ -154,6 +165,11 @@ const themeBase = createTheme({
       color: {
         lightBlue: '#BBDDFF',
         lightGreen: '#73C371',
+      },
+    },
+    signUp: {
+      color: {
+        lightBlue: '#BBDDFF',
       },
     },
   },
