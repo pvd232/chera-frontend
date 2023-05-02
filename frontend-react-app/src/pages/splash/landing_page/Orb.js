@@ -42,7 +42,7 @@ const Orb = forwardRef((props, ref) => {
           : randomNum(0.2 * (window.innerWidth / 4), window.innerWidth * 0.6),
         props.smallerScreen
           ? window.innerHeight * 0.75
-          : window.innerHeight * 0.6,
+          : window.innerHeight * 0.65,
         radius
       );
       // Let graphics know we won't be filling in any more shapes

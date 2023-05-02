@@ -9,7 +9,7 @@ const LandingPage = (props) => (
     justifyContent={'center'}
     sx={{
       backgroundColor: props.customTheme.palette.white1.main,
-      height: '100vh',
+      height: props.customTheme.smallerScreen() ? '90vh' : '100vh',
     }}
   >
     <OrbContainer customTheme={props.customTheme} />

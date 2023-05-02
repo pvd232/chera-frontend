@@ -12,7 +12,7 @@ const IntroTextBox = (props) => {
       item
       lg={10}
       justifyContent={'center'}
-      sx={{ position: 'absolute', top: '25%', bottom: '25%' }}
+      sx={{ position: 'absolute', top: '22%', bottom: '25%' }}
     >
       <CardContent>
         <div
@@ -48,10 +48,14 @@ const IntroTextBox = (props) => {
                 We make it easy.
               </Typography>
             </Grid>
-            <Typography fontSize={customTheme.pages.splash.fontSize.subHeader}>
-              Chera is a community of dietitians, doctors, and engineers
-              dedicated to eating disorder recovery.
-            </Typography>
+            <Grid item lg={12}>
+              <Typography
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
+              >
+                Chera is a community of dietitians, doctors, and engineers
+                dedicated to eating disorder recovery.
+              </Typography>
+            </Grid>
             <BlackButton
               variant={'contained'}
               onClick={props.executeScroll}
