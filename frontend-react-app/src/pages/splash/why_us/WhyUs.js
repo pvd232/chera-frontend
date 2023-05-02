@@ -36,7 +36,7 @@ const WhyUs = () => {
             fontSize: customTheme.pages.splash.fontSize.header,
 
             fontWeight: '500',
-            textAlign: 'left',
+            textAlign: customTheme.smallerScreen() ? 'center' : 'left',
           }}
           color={customTheme.palette.black.main}
         >

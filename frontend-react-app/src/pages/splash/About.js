@@ -6,6 +6,7 @@ import fncePic from '../../static/images/me_at_fnce.jpg';
 import anyaPic from '../../static/images/anya.jpg';
 import zoePic from '../../static/images/zoe.jpg';
 import carolPic from '../../static/images/carol_3.png';
+import titiPic from '../../static/images/titi.jpg';
 import { useTheme } from '@mui/material/styles';
 const About = () => {
   const customTheme = useTheme();
@@ -234,7 +235,7 @@ const About = () => {
             </Stack>
           </CardContent>
         </Grid>
-        {/* <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
+        <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
           <CardContent
             sx={{
               backgroundColor: customTheme.palette.lightGrey.secondary,
@@ -243,7 +244,7 @@ const About = () => {
             <Stack spacing={10} mt={'10vh'}>
               <Grid container item justifyContent={'center'}>
                 <img
-                  src={fncePic}
+                  src={titiPic}
                   height={customTheme.smallerScreen() ? '250vh' : '600vh'}
                   alt="me at FNCE"
                 ></img>
@@ -272,7 +273,7 @@ const About = () => {
               </Typography>
             </Stack>
           </CardContent>
-        </Grid> */}
+        </Grid>
       </Grid>
     </Grid>
   );
