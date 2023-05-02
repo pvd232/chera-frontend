@@ -24,7 +24,12 @@ const About = () => {
         </CardContent>
       </Grid>
       <Grid container spacing={10}>
-        <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
+        <Grid
+          item
+          lg={9}
+          xs={11}
+          marginLeft={customTheme.smallerScreen() ? '5vw' : ''}
+        >
           <CardContent
             sx={{
               backgroundColor: customTheme.palette.lightGrey.secondary,
@@ -34,7 +39,7 @@ const About = () => {
               <Grid container item justifyContent={'center'}>
                 <img
                   src={fncePic}
-                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
+                  height={customTheme.smallerScreen() ? '200vh' : '600vh'}
                   alt="me at FNCE"
                 ></img>
               </Grid>
@@ -78,7 +83,7 @@ const About = () => {
         </Grid>
         <Grid
           item
-          xs={9}
+          xs={11}
           sx={{
             marginLeft: 'auto',
             marginRight: customTheme.smallerScreen() ? '5vw' : '',
@@ -142,7 +147,11 @@ const About = () => {
             </Stack>
           </CardContent>
         </Grid>
-        <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
+        <Grid
+          item
+          xs={11}
+          marginLeft={customTheme.smallerScreen() ? '5vw' : ''}
+        >
           <CardContent
             sx={{
               backgroundColor: customTheme.palette.lightGrey.secondary,
@@ -183,7 +192,7 @@ const About = () => {
         </Grid>
         <Grid
           item
-          xs={9}
+          xs={11}
           marginRight={customTheme.smallerScreen() ? '5vw' : ''}
           sx={{ marginLeft: 'auto' }}
         >
@@ -225,7 +234,7 @@ const About = () => {
             </Stack>
           </CardContent>
         </Grid>
-        <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
+        {/* <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
           <CardContent
             sx={{
               backgroundColor: customTheme.palette.lightGrey.secondary,
@@ -263,7 +272,7 @@ const About = () => {
               </Typography>
             </Stack>
           </CardContent>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );
