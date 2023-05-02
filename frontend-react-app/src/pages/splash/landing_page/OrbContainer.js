@@ -52,7 +52,7 @@ const OrbContainer = () => {
           width={window.innerWidth * (canvasWidth / 12)}
           height={window.innerHeight}
         >
-          {/* create the graphics component here */}
+          {/* Create the graphics component here */}
           <Orb
             width={window.innerWidth * (canvasWidth / 12)}
             ref={orbRef}
