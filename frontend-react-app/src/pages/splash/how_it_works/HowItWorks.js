@@ -9,7 +9,7 @@ const HowItWorks = (props) => {
       justifyContent={'center'}
       py={props.customTheme.pages.splash.spacing.pages}
       px={0}
-      my={props.customTheme.largerScreen() ? '10vh' : '0vh'}
+      my={props.customTheme.largerScreen() ? '10vh' : '10vh'}
     >
       <Grid item xs={12} lg={10} sx={{ padding: '0 !important' }}>
         <Typography
@@ -46,7 +46,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'Pick Weekly Meals'}
             bodyText={
-              'Client creates account and chooses 6 or more weekly meals. (Dietitian may also preselect meals for their client)'
+              'Client creates account and chooses their weekly meals. (Dietitian may also preselect meals for their client)'
             }
             symbolName={'dinner_dining'}
           />
@@ -56,7 +56,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'We Cook and Ship Meals'}
             bodyText={
-              'Meals fined tuned to their meal plan are shipped with discreet packaging and delivered on Monday.'
+              'Meals fined tuned to a meal plan are shipped with discreet packaging and delivered on Monday.'
             }
             symbolName={'delivery_dining_outlined'}
           />

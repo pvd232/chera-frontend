@@ -32,11 +32,12 @@ const ReasonBullet = (props) => (
     </Grid>
     <Grid item container lg={1} xs={1} sx={{ marginLeft: 'auto' }}>
       <Stack>
-        <IconButton
-          sx={{
-            padding: '0',
-            color: 'rgba(0, 0, 0, 1)',
-            background: `${props.customTheme.palette.lightGrey.main}`,
+        <div
+          style={{
+            padding: '0px',
+            display: 'flex',
+            borderRadius: '50%',
+            backgroundColor: `${props.customTheme.palette.lightGrey.secondary}`,
           }}
         >
           {props.reasonOpen ? (
@@ -44,7 +45,7 @@ const ReasonBullet = (props) => (
           ) : (
             <ArrowDropDownIcon fontSize="large" />
           )}
-        </IconButton>
+        </div>
       </Stack>
     </Grid>
     <Grid container item>
