@@ -5,9 +5,10 @@ import Typography from '@mui/material/Typography';
 import fncePic from '../../static/images/me_at_fnce.jpg';
 import anyaPic from '../../static/images/anya.jpg';
 import zoePic from '../../static/images/zoe.jpg';
-import carolPic from '../../static/images/carol_3.png';
+import carolPic from '../../static/images/carol_greece.jpg';
 import titiPic from '../../static/images/titi.jpg';
 import { useTheme } from '@mui/material/styles';
+
 const About = () => {
   const customTheme = useTheme();
   return (
@@ -261,7 +262,7 @@ const About = () => {
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
-                Ourania Rosettos
+                Ourania Rosettos, MD
               </Typography>
               <Typography
                 fontFamily={'Inter'}
@@ -269,7 +270,7 @@ const About = () => {
                 color={customTheme.palette.black.main}
                 textAlign={'center'}
               >
-                MD Advisor
+                Advisor
               </Typography>
             </Stack>
           </CardContent>
