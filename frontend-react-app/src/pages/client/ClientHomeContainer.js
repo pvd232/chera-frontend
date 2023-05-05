@@ -2,22 +2,21 @@ import { useState, useEffect } from 'react';
 import APIClient from '../../helpers/APIClient';
 import ClientHome from './client_home/ClientHome';
 import LocalStorageManager from '../../helpers/LocalStorageManager';
+import SnackDTO from '../../data_models/dto/SnackDTO';
+import Snack from '../../data_models/model/Snack';
 import MealSubscriptionDTO from '../../data_models/dto/MealSubscriptionDTO';
 import MealSubscription from '../../data_models/model/MealSubscription';
 import ExtendedMeal from '../../data_models/model/ExtendedMeal';
-import ExtendedMealFactory from '../../data_models/factories/model/ExtendedMealFactory';
 import ExtendedMealDTO from '../../data_models/dto/ExtendedMealDTO';
-import ExtendedMealDTOFactory from '../../data_models/factories/dto/ExtendedMealDTOFactory';
 import MealDietaryRestrictionDTOFactory from '../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
-import ExtendedScheduledOrderMeal from '../../data_models/model/ExtendedScheduledOrderMeal';
-import ExtendedScheduledOrderMealDTO from '../../data_models/dto/ExtendedScheduledOrderMealDTO';
 import MealDietaryRestrictionFactory from '../../data_models/factories/model/MealDietaryRestrictionFactory';
-import refreshScheduledOrderMeals from './client_home/helpers/refreshScheduledOrderMeals';
+
 const ClientHomeContainer = () => {
   const [mealSubscription, setMealSubscription] = useState(false);
-  const [extendedScheduledOrderMeals, setExtendedScheduledOrderMeals] =
-    useState(false);
+
   const [extendedMeals, setExtendedMeals] = useState(false);
+  const [snacks, setSnacks] = useState(false);
+
   useEffect(() => {
     let mounted = true;
 
@@ -29,32 +28,6 @@ const ClientHomeContainer = () => {
       const mealSubscription = new MealSubscription(mealSubscriptionDTO);
       LocalStorageManager.shared.clientMealSubscription = mealSubscription;
       setMealSubscription(mealSubscription);
-
-      //  Then get client's scheduled order meals using meal subscription id
-      APIClient.getExtendedScheduledOrderMeals(mealSubscription.id).then(
-        (extendedScheduledOrderMealsData) => {
-          const extendedScheduledOrderMealDTOs =
-            extendedScheduledOrderMealsData.map(
-              (json) =>
-                new ExtendedScheduledOrderMealDTO(
-                  json,
-                  new ExtendedMealDTOFactory(
-                    new MealDietaryRestrictionDTOFactory()
-                  )
-                )
-            );
-          const extendedScheduledOrderMeals =
-            extendedScheduledOrderMealDTOs.map(
-              (extendedScheduledOrderMealDTO) =>
-                ExtendedScheduledOrderMeal.constructFromExtendedScheduledOrderMealDTO(
-                  extendedScheduledOrderMealDTO,
-                  new ExtendedMealFactory(new MealDietaryRestrictionFactory())
-                )
-            );
-
-          setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
-        }
-      );
     });
     // Get all meals, irrespective of meal subscription thread
     APIClient.getExtendedMeals().then((extendedMealsData) => {
@@ -73,6 +46,16 @@ const ClientHomeContainer = () => {
         setExtendedMeals(extendedMeals);
       }
     });
+
+    // Get all snacks
+    APIClient.getSnacks().then((snacksData) => {
+      if (mounted) {
+        const snackDTOs = snacksData.map((json) => new SnackDTO(json));
+        const snacks = snackDTOs.map((snackDTO) => new Snack(snackDTO));
+        setSnacks(snacks);
+      }
+    });
+
     APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {
       const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
         (date) => parseFloat(date) * 1000
@@ -86,36 +69,13 @@ const ClientHomeContainer = () => {
     });
     return () => (mounted = false);
   }, []);
-  const handleSkipWeek = async () => {
-    const extendedScheduledOrderMeals = await refreshScheduledOrderMeals(
-      mealSubscription.id
-    );
-    setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
-    return;
-  };
-  const handleUnskipWeek = async () => {
-    const extendedScheduledOrderMeals = await refreshScheduledOrderMeals(
-      mealSubscription.id
-    );
-    setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
-    setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
-    return;
-  };
-  const handleChangeMeals = async () => {
-    const extendedScheduledOrderMeals = refreshScheduledOrderMeals(
-      mealSubscription.id
-    );
-    setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
-  };
-  if (mealSubscription && extendedScheduledOrderMeals && extendedMeals) {
+
+  if (mealSubscription && extendedMeals) {
     return (
       <ClientHome
         mealSubscription={mealSubscription}
+        snacks={snacks}
         extendedMeals={extendedMeals}
-        extendedScheduledOrderMeals={extendedScheduledOrderMeals}
-        handleChangeMeals={() => handleChangeMeals()}
-        skipWeek={() => handleSkipWeek()}
-        unskipWeek={() => handleUnskipWeek()}
         pauseMealSubscription={() => {
           setMealSubscription((prevState) => {
             prevState.paused = true;

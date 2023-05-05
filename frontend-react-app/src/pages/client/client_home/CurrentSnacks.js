@@ -1,10 +1,11 @@
 import Grid from '@mui/material/Grid';
-import ScheduledOrderMealCard from './ScheduledOrderMealCard';
+import ScheduledOrderSnackCard from './ScheduledOrderSnackCard';
 import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-const CurrentMeals = (props) => {
+
+const CurrentSnacks = (props) => {
   return (
     <Grid
       container
@@ -21,7 +22,7 @@ const CurrentMeals = (props) => {
           marginBottom={'5vh'}
           marginTop={'2vh'}
         >
-          Meals
+          Snacks
         </Typography>
         {props.cantMakeChanges && !props.isFirstDelivery ? (
           <Grid item>
@@ -49,29 +50,33 @@ const CurrentMeals = (props) => {
           <></>
         )}
       </Grid>
-      {props.currentScheduledOrderMeals.map((scheduledOrderMealCardData, i) => (
-        <Grid
-          item
-          key={`gridChosenScheduledOrderMeal${i}`}
-          sx={{
-            marginLeft: window.innerWidth < 450 ? 'auto' : '',
-            marginRight: window.innerWidth < 450 ? 'auto' : '',
-          }}
-        >
-          <ScheduledOrderMealCard
-            mealData={scheduledOrderMealCardData}
-            handleAddScheduledOrderMeal={(scheduledOrderMealCardData) =>
-              props.handleAddScheduledOrderMeal(scheduledOrderMealCardData)
-            }
-            handleRemoveScheduledOrderMeal={(scheduledOrderMealCardData) =>
-              props.handleRemoveScheduledOrderMeal(scheduledOrderMealCardData)
-            }
-            key={`clientMeal${i}`}
-            cantMakeChanges={props.cantMakeChanges}
-          ></ScheduledOrderMealCard>
-        </Grid>
-      ))}
+      {props.currentScheduledOrderSnacks.map(
+        (scheduledOrderSnackCardData, i) => (
+          <Grid
+            item
+            key={`gridChosenScheduledOrderSnack${i}`}
+            sx={{
+              marginLeft: window.innerWidth < 450 ? 'auto' : '',
+              marginRight: window.innerWidth < 450 ? 'auto' : '',
+            }}
+          >
+            <ScheduledOrderSnackCard
+              snackData={scheduledOrderSnackCardData}
+              handleAddScheduledOrderSnack={(scheduledOrderSnackCardData) =>
+                props.handleAddScheduledOrderSnack(scheduledOrderSnackCardData)
+              }
+              handleRemoveScheduledOrderSnack={(scheduledOrderSnackCardData) =>
+                props.handleRemoveScheduledOrderSnack(
+                  scheduledOrderSnackCardData
+                )
+              }
+              key={`clientSnack${i}`}
+              cantMakeChanges={props.cantMakeChanges}
+            ></ScheduledOrderSnackCard>
+          </Grid>
+        )
+      )}
     </Grid>
   );
 };
-export default CurrentMeals;
+export default CurrentSnacks;

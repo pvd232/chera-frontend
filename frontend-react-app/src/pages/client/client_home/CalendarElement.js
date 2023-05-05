@@ -4,6 +4,7 @@ import DeliveryDateUtility from '../../../helpers/DeliveryDateUtility';
 
 const CalendarElement = (props) => (
   <CalendarGrid
+    id={`calendarElement${props.deliveryDayIndex}`}
     item
     sx={{
       '&>div': {
@@ -29,16 +30,16 @@ const CalendarElement = (props) => (
     }}
     onClick={props.handleChangeDeliveryIndex}
   >
-    <Grid container direction={'column'} alignItems={'center'}>
-      <Grid item xs={3} sx={{ fontSize: '1rem' }}>
+    <Grid container direction={'column'} alignItems={'center'} rowSpacing={0.5}>
+      <Grid item xs={3} sx={{ fontSize: '1.1rem' }}>
         Sunday
       </Grid>
-      <Grid item xs={6} sx={{ fontSize: '1rem' }}>
+      <Grid item xs={6} sx={{ fontSize: '1.1rem' }}>
         {`${DeliveryDateUtility.getDeliveryDateFromIndex(
           props.deliveryDayIndex
         ).getDate()}`}
       </Grid>
-      <Grid item xs={3} sx={{ fontSize: '1rem' }}>
+      <Grid item xs={3} sx={{ fontSize: '1.1rem' }}>
         {`${
           DeliveryDateUtility.months[
             DeliveryDateUtility.getDeliveryDateFromIndex(

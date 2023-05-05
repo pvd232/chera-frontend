@@ -14,7 +14,6 @@ const WhiteInput = styled(InputBase)(({ theme }) => ({
       'background-color',
       'box-shadow',
     ]),
-    // Use the system font instead of the default Roboto font.
   },
 }));
 export default WhiteInput;

@@ -88,7 +88,7 @@ const CreateNewStagedClientModal = (props) => {
       const newStagedClientDTO =
         StagedClientDTO.initializeFromStagedClient(newStagedClient);
       await APIClient.createStagedClient(newStagedClientDTO);
-      props.handleFinishEditing(newStagedClient);
+      props.handleFinishCreatingStagedClient(newStagedClient);
       resetFormValues();
       setLoading(false);
       setOpen(false);
@@ -112,7 +112,7 @@ const CreateNewStagedClientModal = (props) => {
       await APIClient.createStagedScheduleMeals(stagedScheduleMealDTOs);
       await APIClient.createStagedScheduleSnacks(stagedScheduleSnackDTOs);
 
-      props.handleFinishEditing(newStagedClient);
+      props.handleFinishCreatingStagedClient(newStagedClient);
 
       if (formValue.mealsPrepaid) {
         // Pass extendedScheduleMeals to DiscountOrderSummary page via props

@@ -111,6 +111,7 @@ const PreviousDeliveries = () => {
           }}
         >
           <Typography
+            id={'previous-deliveries-header'}
             fontFamily={'Inter'}
             fontSize={customTheme.fontEqualizer(24)}
             textAlign={'center'}

@@ -57,7 +57,10 @@ const ClientPreSelectedMenu = (props) => {
           stagedScheduleMeal
         )
     );
-    const newScheduledOrderMeals = createScheduledOrderMeals(newScheduleMeals);
+    const newScheduledOrderMeals = createScheduledOrderMeals(
+      newScheduleMeals,
+      true
+    );
     timer.current = window.setTimeout(() => {
       setLoading(false);
       LocalStorageManager.shared.taskIndex += 1;

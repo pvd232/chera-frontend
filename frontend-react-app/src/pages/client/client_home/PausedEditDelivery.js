@@ -14,6 +14,7 @@ const PausedEditDelivery = (props) => (
     <Grid container item lg={6} md={8} xs={8} justifyContent={'center'}>
       {props.paused ? (
         <Typography
+          id="paused-edit-delivery"
           fontFamily={'Inter'}
           fontSize={props.customTheme.fontEqualizer(18)}
         >
@@ -22,6 +23,7 @@ const PausedEditDelivery = (props) => (
         </Typography>
       ) : (
         <Typography
+          id="skipped-edit-delivery"
           fontFamily={'Inter'}
           fontSize={props.customTheme.fontEqualizer(18)}
         >

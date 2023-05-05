@@ -6,8 +6,11 @@ export default class DietitianDTO {
     this.password = dietitianObject.password;
     this.firstName = dietitianObject.first_name;
     this.lastName = dietitianObject.last_name;
-    this.clinicName = dietitianObject.clinic_name;
-    this.clinicZipcode = dietitianObject.clinic_zipcode;
+    this.dieteticRegistrationNumber =
+      dietitianObject.dietetic_registration_number;
+    this.clinicCity = dietitianObject.clinic_city;
+    this.clinicState = dietitianObject.clinic_state;
+    this.clinicUrl = dietitianObject.clinic_url;
     this.datetime = dietitianObject.datetime * 1000;
     this.active = dietitianObject.active;
     this.admin = dietitianObject.admin;
@@ -20,8 +23,10 @@ export default class DietitianDTO {
       password: formData.password,
       first_name: formData.firstName,
       last_name: formData.lastName,
-      clinic_name: formData.clinicName,
-      clinic_zipcode: formData.clinicZipcode,
+      dietetic_registration_number: formData.dieteticRegistrationNumber,
+      clinic_city: formData.clinicCity,
+      clinic_state: formData.clinicState,
+      clinic_url: formData.clinicUrl,
       admin: formData.admin,
       notes: formData.notes,
       datetime: formData.datetime / 1000,
@@ -35,8 +40,10 @@ export default class DietitianDTO {
       password: this.password,
       first_name: this.firstName,
       last_name: this.lastName,
-      clinic_name: this.clinicName,
-      clinic_zipcode: this.clinicZipcode,
+      dietetic_registration_number: this.dieteticRegistrationNumber,
+      clinic_city: this.clinicCity,
+      clinic_state: this.clinicState,
+      clinic_url: this.clinicUrl,
       datetime: this.datetime / 1000,
       active: this.active,
       admin: this.admin,

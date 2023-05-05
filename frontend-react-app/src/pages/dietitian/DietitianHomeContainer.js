@@ -68,9 +68,9 @@ const DietitianHomeContainer = (props) => {
 
     APIClient.getExtendedClients(LocalStorageManager.shared.dietitian.id).then(
       (clientData) => {
+        const clientArray = [];
+        const clientMap = new Map();
         if (clientData) {
-          const clientArray = [];
-          const clientMap = new Map();
           for (const client of clientData) {
             const newClientDTO = new ExtendedClientDTO(
               client,
@@ -83,14 +83,12 @@ const DietitianHomeContainer = (props) => {
             clientArray.push(newClient);
             clientMap.set(newClient.id, newClient);
           }
-          if (mounted) {
-            setExtendedClients({
-              clientArray: clientArray,
-              clientMap: clientMap,
-            });
-          }
-        } else {
-          setExtendedClients({});
+        }
+        if (mounted) {
+          setExtendedClients({
+            clientArray: clientArray,
+            clientMap: clientMap,
+          });
         }
       }
     );

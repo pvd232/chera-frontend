@@ -1,21 +1,23 @@
 import DeliveryDateUtility from '../../../helpers/DeliveryDateUtility';
-import ScheduledOrderMeal from '../../../data_models/model/ScheduledOrderMeal';
-const createScheduledOrderMeals = (scheduleMeals) => {
-  const scheduledOrderMeals = [];
+import ScheduledOrderSnack from '../../../data_models/model/ScheduledOrderSnack';
+const createScheduledOrderSnacks = (scheduleSnacks, createFirstWeekSnacks) => {
+  const scheduledOrderSnacks = [];
 
-  // add scheduled ordered meals for weeks 0-3
-  for (let i = 0; i < 4; i++) {
+  // If editing a current meal subscription and past the deadline to edit current week snacks (i.e. today is after the cutoff date for the current week), then start at week 1
+  const startingSnackIndex = createFirstWeekSnacks ? 0 : 1;
+  // Add scheduled ordered snacks for weeks 0-3
+  for (let i = startingSnackIndex; i < 4; i++) {
     const deliveryDate = DeliveryDateUtility.getDeliveryDateFromIndex(i);
-    // use chosen schedule Meals to created future scheduledOrderMeals
-    for (const scheduleMeal of scheduleMeals) {
-      const newScheduledOrderMeal =
-        ScheduledOrderMeal.initializeFromScheduleMeal(
-          scheduleMeal,
+    // Use chosen Schedule Snacks to created future scheduledOrderSnacks
+    for (const scheduleSnack of scheduleSnacks) {
+      const newScheduledOrderSnack =
+        ScheduledOrderSnack.initializeFromScheduleSnack(
+          scheduleSnack,
           deliveryDate
         );
-      scheduledOrderMeals.push(newScheduledOrderMeal);
+      scheduledOrderSnacks.push(newScheduledOrderSnack);
     }
   }
-  return scheduledOrderMeals;
+  return scheduledOrderSnacks;
 };
-export default createScheduledOrderMeals;
+export default createScheduledOrderSnacks;

@@ -1,4 +1,3 @@
-import capitalize from '../../../helpers/capitalize';
 import logo from '../../../static/images/bendito-small.png';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -10,7 +9,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import IconButton from '@mui/material/IconButton';
 
-const ScheduledOrderMealCard = (props) => {
+const ScheduledOrderSnackCard = (props) => {
+  console.log('props', props);
   return (
     <Card
       sx={{
@@ -40,17 +40,10 @@ const ScheduledOrderMealCard = (props) => {
           fontWeight={'500'}
           component="div"
         >
-          {props.mealData.meal.name}
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-            component="div"
-          >
-            {capitalize(props.mealData.meal.mealTime)}
-          </Typography>
+          {props.snackData.snack.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {props.mealData.meal.description}
+          {props.snackData.snack.description}
         </Typography>
       </CardContent>
       <CardActions>
@@ -64,9 +57,9 @@ const ScheduledOrderMealCard = (props) => {
         >
           <Grid item>
             <IconButton
-              id={`remove-${props.mealData.extendedScheduledOrderMeal.id}`}
+              id={`remove-${props.snackData.extendedScheduledOrderSnack.id}`}
               onClick={() =>
-                props.handleRemoveScheduledOrderMeal(props.mealData)
+                props.handleRemoveScheduledOrderSnack(props.snackData)
               }
               disabled={props.cantMakeChanges}
               sx={{
@@ -81,13 +74,15 @@ const ScheduledOrderMealCard = (props) => {
 
           <Grid item>
             <Typography fontSize={'1rem'}>
-              {props.mealData.quantity} in your box
+              {props.snackData.quantity} in your box
             </Typography>
           </Grid>
           <Grid item>
             <IconButton
-              id={`add-${props.mealData.extendedScheduledOrderMeal.id}`}
-              onClick={() => props.handleAddScheduledOrderMeal(props.mealData)}
+              id={`add-${props.snackData.extendedScheduledOrderSnack.id}`}
+              onClick={() =>
+                props.handleAddScheduledOrderSnack(props.snackData)
+              }
               disabled={props.cantMakeChanges}
               sx={{
                 transform: 'scale(1.8)',
@@ -103,4 +98,4 @@ const ScheduledOrderMealCard = (props) => {
     </Card>
   );
 };
-export default ScheduledOrderMealCard;
+export default ScheduledOrderSnackCard;

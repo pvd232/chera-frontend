@@ -55,7 +55,7 @@ const EditDeliveryModal = (props) => {
       const isFirstDelivery = await APIClient.checkIfFirstWeek(
         props.mealSubscription.id
       );
-      if (!isFirstDelivery) {
+      if (!isFirstDelivery || props.selectedDeliveryIndex > 0) {
         await APIClient.skipWeek(
           props.mealSubscription.id,
           props.mealSubscription.stripeSubscriptionId,
@@ -204,6 +204,7 @@ const EditDeliveryModal = (props) => {
             <DialogActions>
               <Grid container justifyContent={'center'}>
                 <OrangeButtonWhiteText
+                  id="skip-week-button"
                   disabled={
                     !canMakeChanges(props.selectedDeliveryIndex) || props.paused
                   }
@@ -257,6 +258,7 @@ const EditDeliveryModal = (props) => {
               <Grid container justifyContent={'center'} marginBottom={'40px'}>
                 {!props.paused ? (
                   <OrangeButtonWhiteText
+                    id="pause-subscription-button"
                     onClick={handlePauseMealSubscription}
                     variant="contained"
                   >
@@ -268,6 +270,7 @@ const EditDeliveryModal = (props) => {
                   </OrangeButtonWhiteText>
                 ) : (
                   <OrangeButtonWhiteText
+                    id="unpause-subscription-button"
                     onClick={handleUnpauseMealSubscription}
                   >
                     {loadingPauseSubscription ? (

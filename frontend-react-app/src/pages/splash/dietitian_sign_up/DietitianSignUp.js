@@ -78,8 +78,10 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
       password: '',
       firstName: '',
       lastName: '',
-      clinicName: '',
-      clinicZipcode: '',
+      dieteticRegistrationNumber: '',
+      clinicCity: '',
+      clinicState: '',
+      clinicUrl: '',
       datetime: Date.now(),
       clients: [],
       active: true,
@@ -185,13 +187,28 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
                   required
                   error
                   fullWidth
-                  placeholder="Clinic name"
-                  id="clinicName"
+                  placeholder="Dietetic registration number"
+                  id="dieteticRegistrationNumber"
                   sx={{
                     mx: 'auto',
                   }}
                   onChange={handleInput}
-                  value={formValue.clinicName}
+                  value={formValue.dieteticRegistrationNumber}
+                />
+              </FormControl>
+              <FormControl variant="filled">
+                <WhiteInput
+                  required
+                  error
+                  fullWidth
+                  placeholder="Clinic website url"
+                  id="clinicUrl"
+                  sx={{
+                    mx: 'auto',
+                  }}
+                  type="url"
+                  onChange={handleInput}
+                  value={formValue.clinicUrl}
                   autoComplete={'off'}
                 />
               </FormControl>
@@ -200,18 +217,33 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
                   required
                   error
                   fullWidth
-                  placeholder="Clinic zipcode"
-                  id="clinicZipcode"
+                  placeholder="Clinic city"
+                  id="clinicCity"
                   sx={{
                     mx: 'auto',
                   }}
                   onChange={handleInput}
-                  value={formValue.clinicZipcode}
+                  value={formValue.clinicCity}
                   autoComplete={'off'}
                 />
               </FormControl>
-
+              <FormControl variant="filled">
+                <WhiteInput
+                  required
+                  error
+                  fullWidth
+                  placeholder="Clinic state"
+                  id="clinicState"
+                  sx={{
+                    mx: 'auto',
+                  }}
+                  onChange={handleInput}
+                  value={formValue.clinicState}
+                  autoComplete={'off'}
+                />
+              </FormControl>
               <BlackButton
+                id="dietRegSubmit"
                 disabled={loading}
                 variant="contained"
                 type={'submit'}

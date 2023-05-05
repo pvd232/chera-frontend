@@ -2,6 +2,7 @@ import { Link as RRLink } from 'react-router-dom';
 
 const FormattedLink = (props) => (
   <RRLink
+    id={props.id}
     to={props.url}
     style={{
       textDecoration: 'none',

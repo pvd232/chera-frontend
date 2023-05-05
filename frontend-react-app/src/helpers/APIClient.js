@@ -540,7 +540,7 @@ class APIClient {
     const response = await this.fetchWrapper(request, requestParams);
 
     // Staged client does not exist
-    if (response.status === 200) {
+    if (response.status === 404) {
       return false;
     }
     const responseData = await response.json();
@@ -865,7 +865,19 @@ class APIClient {
     const clientJSON = await response.json();
     return clientJSON;
   }
+  async updateClient(clientData) {
+    const requestUrl = this.baseUrl + '/client';
 
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'PUT',
+      body: JSON.stringify(clientData),
+      mode: this.mode,
+      cache: 'default',
+    };
+    await this.fetchWrapper(request, requestParams);
+    return;
+  }
   async getClientMealSubscription(clientId) {
     const requestUrl =
       this.baseUrl + `/meal_subscription?client_id=${clientId}`;
@@ -1115,7 +1127,21 @@ class APIClient {
 
     return snacksData;
   }
+  async getExtendedScheduledOrderSnacks(mealSubscriptionId) {
+    const requestUrl =
+      this.baseUrl +
+      `/extended_scheduled_order_snack?meal_subscription_id=${mealSubscriptionId}`;
 
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const responseData = await response.json();
+    return responseData;
+  }
   async createScheduleSnacks(scheduleSnacks) {
     const requestUrl = this.baseUrl + '/schedule_snack';
     const requestParams = {

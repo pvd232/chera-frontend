@@ -21,8 +21,8 @@ import ExtendedScheduleSnack from '../../../data_models/model/ExtendedScheduleSn
 
 import ExtendedMealFactory from '../../../data_models/factories/model/ExtendedMealFactory';
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
-import createScheduledOrderMeals from './helpers/createScheduledOrderMeals';
-import createScheduledOrderSnacks from './helpers/createScheduledOrderSnacks';
+import createScheduledOrderMeals from '../helpers/createScheduledOrderMeals';
+import createScheduledOrderSnacks from '../helpers/createScheduledOrderSnacks';
 import SideBar from './SideBar';
 import MediaCard from './MediaCard';
 import Typography from '@mui/material/Typography';
@@ -350,10 +350,14 @@ const ClientMenu = (props) => {
           props.finishEditing();
         }, 500);
       } else {
-        const scheduledOrderMeals =
-          createScheduledOrderMeals(chosenScheduleMeals);
-        const scheduledOrderSnacks =
-          createScheduledOrderSnacks(chosenScheduleSnacks);
+        const scheduledOrderMeals = createScheduledOrderMeals(
+          chosenScheduleMeals,
+          true
+        );
+        const scheduledOrderSnacks = createScheduledOrderSnacks(
+          chosenScheduleSnacks,
+          true
+        );
         timer.current = window.setTimeout(() => {
           setLoading(false);
           LocalStorageManager.shared.taskIndex += 1;
@@ -486,7 +490,6 @@ const ClientMenu = (props) => {
         </Grid>
         {/* Snack Cards */}
         <Grid item container justifyContent={'flex-start'}>
-          <Grid item></Grid>
           <Typography
             fontSize={'1.5rem'}
             textAlign={'center'}

@@ -6,6 +6,10 @@ import ExtendedMealDTOFactory from '../../../data_models/factories/dto/ExtendedM
 import MealDietaryRestrictionDTOFactory from '../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
 import ExtendedScheduledOrderMealDTO from '../../../data_models/dto/ExtendedScheduledOrderMealDTO';
 import ExtendedScheduledOrderMeal from '../../../data_models/model/ExtendedScheduledOrderMeal';
+import ExtendedScheduledOrderSnackDTO from '../../../data_models/dto/ExtendedScheduledOrderSnackDTO';
+import ExtendedScheduledOrderSnack from '../../../data_models/model/ExtendedScheduledOrderSnack';
+import SnackFactory from '../../../data_models/factories/model/SnackFactory';
+import SnackDTOFactory from '../../../data_models/factories/dto/SnackDTOFactory';
 import ScheduledOrderMeal from '../../../data_models/model/ScheduledOrderMeal';
 import ExtendedMealFactory from '../../../data_models/factories/model/ExtendedMealFactory';
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
@@ -14,10 +18,12 @@ import APIClient from '../../../helpers/APIClient';
 import DeliveryInfo from './DeliveryInfo';
 import CalendarSelector from './CalendarSelector';
 import PausedEditDelivery from './PausedEditDelivery';
+import CurrentSnacks from './CurrentSnacks';
 import CurrentMeals from './CurrentMeals';
 import OtherMeals from './OtherMeals';
 import getOtherMeals from './helpers/getOtherMeals';
 import createScheduledOrderMealCardItems from './helpers/createScheduledOrderMealCardItems';
+import createScheduledOrderSnackCardItems from './helpers/createScheduledOrderSnackCardItems';
 import getUniqueExtendedMealsMap from './helpers/getUniqueExtendedMealsMap';
 import checkIfWeekSkipped from './helpers/checkIfWeekSkipped';
 import refreshScheduledOrderMeals from './helpers/refreshScheduledOrderMeals';
@@ -25,9 +31,11 @@ import getMealsByDietaryRestrictionMap from './helpers/mealsByDietaryRestriction
 import getMealsByMealTimeMap from './helpers/getMealsByTimeMap';
 import ScheduledOrderMealDTO from '../../../data_models/dto/ScheduledOrderMealDTO';
 import canMakeChanges from '../helpers/canMakeChanges';
+
 const ClientHome = (props) => {
   const customTheme = useTheme();
   const [netChangeInWeeklyMeals, setNetChangeInWeeklyMeals] = useState(0);
+  const [netChangeInWeeklySnacks, setNetChangeInWeeklySnacks] = useState(0);
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   // Paused state inherited from parent, but updated locally when the user pauses the subscription
@@ -36,6 +44,9 @@ const ClientHome = (props) => {
 
   // This is the list of the client's current scheduled order meals, represented as ClientMealCardData
   const [extendedScheduledOrderMeals, setExtendedScheduledOrderMeals] =
+    useState([]);
+
+  const [extendedScheduledOrderSnacks, setExtendedScheduledOrderSnacks] =
     useState([]);
 
   // WeekSkipped state inherited from parent, but updated locally when the user pauses the subscription
@@ -81,6 +92,30 @@ const ClientHome = (props) => {
         }
       }
     );
+
+    // Get extended scheduled order snacks
+    APIClient.getExtendedScheduledOrderSnacks(props.mealSubscription.id).then(
+      (extendedScheduledOrderSnackData) => {
+        if (mounted) {
+          const extendedScheduledOrderSnackDTOs =
+            extendedScheduledOrderSnackData.map(
+              (json) =>
+                new ExtendedScheduledOrderSnackDTO(json, new SnackDTOFactory())
+            );
+
+          const extendedScheduledOrderSnacks =
+            extendedScheduledOrderSnackDTOs.map(
+              (extendedScheduledOrderSnackDTO) =>
+                ExtendedScheduledOrderSnack.constructFromExtendedScheduledOrderSnackDTO(
+                  extendedScheduledOrderSnackDTO,
+                  new SnackFactory()
+                )
+            );
+
+          setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
+        }
+      }
+    );
     APIClient.checkIfFirstWeek(props.mealSubscription.id).then(
       (isFirstWeek) => {
         if (mounted) {
@@ -90,8 +125,10 @@ const ClientHome = (props) => {
     );
     return () => (mounted = false);
   }, [props.mealSubscription.id]);
+
   const [filterMealTime, setFilterMealTime] = useState('all');
   const [filterMealPreferences, setFilterMealPreferences] = useState('all');
+
   const mealsByDietaryRestrictionMap = (() => {
     return getMealsByDietaryRestrictionMap(props.extendedMeals);
   })();
@@ -133,6 +170,46 @@ const ClientHome = (props) => {
       ];
     });
   };
+  const handleAddFromScheduledOrderSnackCard = (clientSnackCardData) => {
+    setEditing(true);
+
+    const newExtendedScheduledOrderSnack =
+      ExtendedScheduledOrderSnack.constructNewInstanceFromExtendedScheduledOrderSnackDTO(
+        uuid(),
+        clientSnackCardData.extendedScheduledOrderSnack,
+        new SnackFactory()
+      );
+
+    setExtendedScheduledOrderSnacks((prevExtendedScheduledOrderSnacks) => {
+      setNetChangeInWeeklySnacks((prevNum) => (prevNum -= 1));
+      return [
+        ...prevExtendedScheduledOrderSnacks,
+        newExtendedScheduledOrderSnack,
+      ];
+    });
+  };
+
+  const handleRemoveScheduledOrderSnack = (clientMealCardData) => {
+    setEditing(true);
+
+    setExtendedScheduledOrderSnacks((prevExtendedScheduledOrderSnacks) => {
+      const newExtendedScheduledOrderSnacks =
+        prevExtendedScheduledOrderSnacks.filter(
+          (extendedScheduledOrderSnack) =>
+            extendedScheduledOrderSnack.id !==
+            clientMealCardData.extendedScheduledOrderSnack.id
+        );
+      setOtherMeals(
+        getOtherMeals(
+          getUniqueExtendedMealsMap(newExtendedScheduledOrderSnacks),
+          props.extendedMeals
+        )
+      );
+      return newExtendedScheduledOrderSnacks;
+    });
+    setNetChangeInWeeklyMeals((prevNum) => (prevNum += 1));
+  };
+
   const handleAddFromOtherMealCard = (extendedMeal) => {
     // ExtendedMeal parameter is an ExtendedMeal object
     setEditing(true);
@@ -166,6 +243,7 @@ const ClientHome = (props) => {
     });
     setNetChangeInWeeklyMeals((prevNum) => (prevNum -= 1));
   };
+
   const handleRemoveScheduledOrderMeal = (clientMealCardData) => {
     setEditing(true);
 
@@ -196,7 +274,7 @@ const ClientHome = (props) => {
   };
 
   const handleSaveChanges = async () => {
-    if (netChangeInWeeklyMeals !== 0) {
+    if (netChangeInWeeklyMeals !== 0 || netChangeInWeeklySnacks !== 0) {
       return;
     }
     setLoading(true);
@@ -208,26 +286,33 @@ const ClientHome = (props) => {
       )
     );
     setLoading(false);
+    setEditing(false);
   };
+
   const handleSkipWeek = async () => {
     // Get fresh meals from server
     const extendedScheduledOrderMeals = await refreshScheduledOrderMeals(
       props.mealSubscription.id
     );
     setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
+    setWeekSkipped(true);
   };
+
   const handleUnskipWeek = async () => {
     const extendedScheduledOrderMeals = await refreshScheduledOrderMeals(
       props.mealSubscription.id
     );
     setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
+    setWeekSkipped(false);
   };
+
   const handleChangeMeals = async () => {
     const newScheduledOrderMeals = await refreshScheduledOrderMeals(
       props.mealSubscription.id
     );
     setExtendedScheduledOrderMeals(newScheduledOrderMeals);
   };
+
   const handleFilterChange = (event) => {
     const originalOtherMeals = getOtherMeals(
       getUniqueExtendedMealsMap(extendedScheduledOrderMeals),
@@ -252,7 +337,6 @@ const ClientHome = (props) => {
         }
       } else {
         // Meal time filter
-
         if (filterMealPreferences === 'all') {
           // Meal time filter, no dietary restriction filter
           const filteredOtherMeals = originalOtherMeals.filter((otherMeal) =>
@@ -413,7 +497,30 @@ const ClientHome = (props) => {
                 selectedDeliveryIndex === 0 &&
                 (isFirstDelivery || !canMakeChanges(selectedDeliveryIndex))
               }
+              isFirstDelivery={isFirstDelivery}
             />
+            {extendedScheduledOrderSnacks.length > 0 && (
+              <CurrentSnacks
+                customTheme={customTheme}
+                currentScheduledOrderSnacks={Array.from(
+                  createScheduledOrderSnackCardItems(
+                    extendedScheduledOrderSnacks,
+                    selectedDeliveryIndex
+                  ).values()
+                )}
+                handleAddScheduledOrderSnack={(item) =>
+                  handleAddFromScheduledOrderSnackCard(item)
+                }
+                handleRemoveScheduledOrderSnack={(snack) =>
+                  handleRemoveScheduledOrderSnack(snack)
+                }
+                cantMakeChanges={
+                  selectedDeliveryIndex === 0 &&
+                  (isFirstDelivery || !canMakeChanges(selectedDeliveryIndex))
+                }
+                isFirstDelivery={isFirstDelivery}
+              />
+            )}
             <OtherMeals
               customTheme={customTheme}
               otherMeals={otherMeals}

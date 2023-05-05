@@ -3,8 +3,9 @@ import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import BlackButton from '../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton';
 import Stack from '@mui/material/Stack';
+
 const LoginSignUpChoice = () => {
   const customTheme = useTheme();
   const navigate = useNavigate();

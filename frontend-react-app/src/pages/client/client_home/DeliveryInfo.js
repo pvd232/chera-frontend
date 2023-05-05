@@ -22,7 +22,6 @@ const DeliveryInfo = (props) => {
       lg={10}
       justifyContent={'space-between'}
       alignItems={'center'}
-      px={3}
       py={3}
     >
       <Grid
@@ -37,7 +36,7 @@ const DeliveryInfo = (props) => {
             fontFamily={'Inter'}
             fontSize={props.customTheme.fontEqualizer(18)}
           >
-            Modify this week's meals by{' '}
+            Modify this week's delivery by{' '}
             {DeliveryDateUtility.getDeliveryDateForDisplay(
               DeliveryDateUtility.getCutoffDateFromIndex(
                 props.selectedDeliveryIndex
@@ -65,7 +64,7 @@ const DeliveryInfo = (props) => {
         xs={6}
         direction={'column'}
         alignItems={'flex-end'}
-        marginBottom={props.customTheme.smallerScreen() ? '2vh' : ''}
+        marginBottom={props.customTheme.smallerScreen() ? '2vh' : '4vh'}
         marginTop={props.customTheme.smallerScreen() ? '2vh' : '2vh'}
       >
         <Grid
@@ -93,6 +92,7 @@ const DeliveryInfo = (props) => {
         {props.editing === true ? (
           <Grid item>
             <GreenFilledButton
+              id={'save-changes-button'}
               variant={'filled'}
               sx={{ marginTop: '2vh' }}
               onClick={props.handleSaveChanges}

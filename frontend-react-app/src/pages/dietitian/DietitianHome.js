@@ -23,39 +23,21 @@ import MealPlanFactory from '../../data_models/factories/model/MealPlanFactory';
 const DietititanHome = (props) => {
   const customTheme = useTheme();
   const [reminderLoading, setReminderLoading] = useState(
-    props.clients.clientArray
-      ? props.clients.clientArray
-          .map((client) => ({ id: client.id, isLoading: false }))
-          .concat(
-            props.stagedClients.map((stagedClient) => ({
-              id: stagedClient.id,
-              isLoading: false,
-            }))
-          )
-      : props.stagedClients
-      ? props.stagedClients.map((stagedClient) => ({
-          id: stagedClient.id,
-          isLoading: false,
-        }))
-      : []
+    props.stagedClients.map((stagedClient) => ({
+      id: stagedClient.id,
+      isLoading: false,
+    }))
+  );
+  const [stagedClientItems, setStagedClientItems] = useState(
+    props.stagedClients.map(
+      (stagedClient) => new ClientItem(stagedClient, true)
+    )
   );
   const [clientItems, setClientItems] = useState(
-    props.clients.clientArray
-      ? props.clients.clientArray
-          .map((client) => new ClientItem(client, false))
-          .concat(
-            props.stagedClients.map(
-              (stagedClient) => new ClientItem(stagedClient, true)
-            )
-          )
-      : props.stagedClients
-      ? props.stagedClients.map(
-          (stagedClient) => new ClientItem(stagedClient, true)
-        )
-      : []
+    props.clients.clientArray.map((client) => new ClientItem(client, false))
   );
 
-  const handleFinishEditing = (newStagedClient) => {
+  const handleFinishCreatingStagedClient = (newStagedClient) => {
     const stagedClientMealPlan = props.mealPlans.mealPlansMap.get(
       newStagedClient.mealPlanId
     );
@@ -65,7 +47,7 @@ const DietititanHome = (props) => {
       new MealPlanFactory()
     );
     const newClientItem = new ClientItem(newExtendedStagedClient, true);
-    setClientItems((prevClientItems) => {
+    setStagedClientItems((prevStagedClientItems) => {
       // add new client to reminderLoading Array, which must be indexed to clientItems array
       setReminderLoading((prevReminderLoadingItems) => {
         const newReminderLoadingItems = [...prevReminderLoadingItems];
@@ -75,18 +57,17 @@ const DietititanHome = (props) => {
         });
         return newReminderLoadingItems;
       });
-      return [...prevClientItems, newClientItem];
+      return [...prevStagedClientItems, newClientItem];
     });
   };
   const handleFinishEditingMealPlan = () => {
     setClientItems(
-      props.clients.clientArray
-        .map((client) => new ClientItem(client, true))
-        .concat(
-          props.stagedClients.map(
-            (stagedClient) => new ClientItem(stagedClient, false)
-          )
-        )
+      props.clients.clientArray.map((client) => new ClientItem(client, false))
+    );
+    setStagedClientItems(
+      props.stagedClients.map(
+        (stagedClient) => new ClientItem(stagedClient, true)
+      )
     );
   };
 
@@ -119,7 +100,7 @@ const DietititanHome = (props) => {
             mealPlans={props.mealPlans.mealPlansArray}
             dietitianId={props.dietitianId}
             stripePromise={props.stripePromise}
-            handleFinishEditing={handleFinishEditing}
+            handleFinishCreatingStagedClient={handleFinishCreatingStagedClient}
           ></CreateNewStagedClientModal>
         </Grid>
       </Grid>
@@ -144,103 +125,155 @@ const DietititanHome = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {clientItems.map((row, i) => (
-                <TableRow
-                  key={i}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.formattedName}
-                  </TableCell>
-                  <TableCell align="left">{row.address}</TableCell>
-                  <TableCell align="left">{row.email}</TableCell>
-                  <TableCell align="left">
-                    <Grid item container>
-                      {customTheme.smallerScreen()
-                        ? row.mealPlanNumber
-                        : row.mealPlanName}
-                    </Grid>
-                    <div
-                      style={{
-                        marginTop: '10px',
-                        marginRight: 'auto',
-                        marginLeft: 'auto',
-                      }}
-                    >
-                      <EditClientMealPlanModal
-                        client={row}
-                        handleFinishEditingMealPlan={
-                          handleFinishEditingMealPlan
-                        }
-                        isStagedClient={row.isStagedClient}
-                        mealPlans={props.mealPlans.mealPlansArray}
-                      />
-                    </div>
-                  </TableCell>
-                  <TableCell align="left">{row.notes}</TableCell>
-                  <TableCell align="center">
-                    {row.accountCreated ? (
-                      <Icon sx={{ color: 'green' }}>check</Icon>
-                    ) : (
-                      <Icon
-                        sx={{
-                          color: 'red',
-                          transform: 'scale(1.3)',
+              <div id="client-items">
+                {clientItems.map((row, i) => (
+                  <TableRow
+                    key={i}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.formattedName}
+                    </TableCell>
+                    <TableCell align="left">{row.address}</TableCell>
+                    <TableCell align="left">{row.email}</TableCell>
+                    <TableCell align="left">
+                      <Grid item container>
+                        {customTheme.smallerScreen()
+                          ? row.mealPlanNumber
+                          : row.mealPlanName}
+                      </Grid>
+                      <div
+                        style={{
+                          marginTop: '10px',
+                          marginRight: 'auto',
+                          marginLeft: 'auto',
                         }}
                       >
-                        clear_outlined
-                      </Icon>
-                    )}
-                  </TableCell>
-                  {!row.accountCreated ? (
-                    <TableCell>
-                      <Grid
-                        container
-                        alignItems="center"
-                        justifyContent={'center'}
-                      >
-                        <Grid item sx={{ cursor: 'pointer' }}>
-                          <BlackButton
-                            variant="contained"
-                            sx={{ fontSize: '.75rem' }}
-                            onClick={() => {
-                              setReminderLoading((prevReminderLoading) => {
-                                const newReminderLoading = [
-                                  ...prevReminderLoading,
-                                ];
-                                newReminderLoading[i].isLoading = true;
-                                return newReminderLoading;
-                              });
-                              APIClient.sendReminderEmail(row.client.id).then(
-                                () => {
-                                  setReminderLoading((prevReminderLoading) => {
-                                    const newReminderLoading = [
-                                      ...prevReminderLoading,
-                                    ];
-                                    prevReminderLoading[i].isLoading = false;
-                                    return newReminderLoading;
-                                  });
-                                }
-                              );
-                            }}
-                          >
-                            {reminderLoading[i].isLoading ? (
-                              <CircularProgress
-                                sx={{ color: customTheme.palette.white1.main }}
-                                size={'1.2rem'}
-                              />
-                            ) : (
-                              'Email a Reminder'
-                            )}
-                          </BlackButton>
-                        </Grid>
-                      </Grid>
+                        <EditClientMealPlanModal
+                          buttonIndex={i}
+                          clientItem={row}
+                          handleFinishEditingMealPlan={
+                            handleFinishEditingMealPlan
+                          }
+                          isStagedClient={row.isStagedClient}
+                          mealPlans={props.mealPlans.mealPlansArray}
+                        />
+                      </div>
                     </TableCell>
-                  ) : (
+                    <TableCell align="left">{row.notes}</TableCell>
+                    <TableCell align="center">
+                      <Icon sx={{ color: 'green' }}>check</Icon>
+                    </TableCell>
                     <TableCell></TableCell>
-                  )}
-                </TableRow>
-              ))}
+                  </TableRow>
+                ))}
+              </div>
+              <div id="staged-client-items">
+                {stagedClientItems.map((row, i) => (
+                  <TableRow
+                    key={i}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.formattedName}
+                    </TableCell>
+                    <TableCell align="left">{row.address}</TableCell>
+                    <TableCell align="left">{row.email}</TableCell>
+                    <TableCell align="left">
+                      <Grid item container>
+                        {customTheme.smallerScreen()
+                          ? row.mealPlanNumber
+                          : row.mealPlanName}
+                      </Grid>
+                      <div
+                        style={{
+                          marginTop: '10px',
+                          marginRight: 'auto',
+                          marginLeft: 'auto',
+                        }}
+                      >
+                        <EditClientMealPlanModal
+                          buttonIndex={i}
+                          clientItem={row}
+                          handleFinishEditingMealPlan={
+                            handleFinishEditingMealPlan
+                          }
+                          isStagedClient={row.isStagedClient}
+                          mealPlans={props.mealPlans.mealPlansArray}
+                        />
+                      </div>
+                    </TableCell>
+                    <TableCell align="left">{row.notes}</TableCell>
+                    <TableCell align="center">
+                      {row.accountCreated ? (
+                        <Icon sx={{ color: 'green' }}>check</Icon>
+                      ) : (
+                        <Icon
+                          sx={{
+                            color: 'red',
+                            transform: 'scale(1.3)',
+                          }}
+                        >
+                          clear_outlined
+                        </Icon>
+                      )}
+                    </TableCell>
+                    {!row.accountCreated ? (
+                      <TableCell>
+                        <Grid
+                          container
+                          alignItems="center"
+                          justifyContent={'center'}
+                        >
+                          <Grid item sx={{ cursor: 'pointer' }}>
+                            <BlackButton
+                              variant="contained"
+                              sx={{ fontSize: '.75rem' }}
+                              onClick={() => {
+                                setReminderLoading((prevReminderLoading) => {
+                                  const newReminderLoading = [
+                                    ...prevReminderLoading,
+                                  ];
+                                  newReminderLoading[i].isLoading = true;
+                                  return newReminderLoading;
+                                });
+                                APIClient.sendReminderEmail(row.client.id).then(
+                                  () => {
+                                    setReminderLoading(
+                                      (prevReminderLoading) => {
+                                        const newReminderLoading = [
+                                          ...prevReminderLoading,
+                                        ];
+                                        prevReminderLoading[
+                                          i
+                                        ].isLoading = false;
+                                        return newReminderLoading;
+                                      }
+                                    );
+                                  }
+                                );
+                              }}
+                            >
+                              {reminderLoading[i].isLoading ? (
+                                <CircularProgress
+                                  sx={{
+                                    color: customTheme.palette.white1.main,
+                                  }}
+                                  size={'1.2rem'}
+                                />
+                              ) : (
+                                'Email a Reminder'
+                              )}
+                            </BlackButton>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
+                    ) : (
+                      <TableCell></TableCell>
+                    )}
+                  </TableRow>
+                ))}
+              </div>
             </TableBody>
           </Table>
         </TableContainer>

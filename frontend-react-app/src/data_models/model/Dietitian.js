@@ -7,8 +7,11 @@ export default class Dietitian {
       this.password = dietitianObject.password;
       this.firstName = dietitianObject.firstName;
       this.lastName = dietitianObject.lastName;
-      this.clinicName = dietitianObject.clinicName;
-      this.clinicZipcode = dietitianObject.clinicZipcode;
+      this.dieteticRegistrationNumber =
+        dietitianObject.dieteticRegistrationNumber;
+      this.clinicCity = dietitianObject.clinicCity;
+      this.clinicState = dietitianObject.clinicState;
+      this.clinicUrl = dietitianObject.clinicUrl;
       this.datetime = dietitianObject.datetime;
       this.admin = dietitianObject.admin;
       this.active = dietitianObject.active;
@@ -17,8 +20,10 @@ export default class Dietitian {
       this.password = '';
       this.firstName = '';
       this.lastName = '';
-      this.clinicName = '';
-      this.clinicZipcode = '';
+      this.dieteticRegistrationNumber = '';
+      this.clinicCity = '';
+      this.clinicState = '';
+      this.clinicUrl = '';
       this.datetime = '';
       this.admin = false;
       this.active = true;

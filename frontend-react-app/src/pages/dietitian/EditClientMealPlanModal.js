@@ -22,6 +22,7 @@ import Client from '../../data_models/model/Client';
 import StagedClient from '../../data_models/model/StagedClient';
 import StagedClientDTO from '../../data_models/dto/StagedClientDTO';
 import ClientDTO from '../../data_models/dto/ClientDTO';
+import { FormControl } from '@mui/material';
 
 const EditClientMealPlanModal = (props) => {
   const customTheme = useTheme();
@@ -38,14 +39,15 @@ const EditClientMealPlanModal = (props) => {
   const handleButtonClick = async () => {
     if (!loading) {
       setLoading(true);
-      if (props.client.isStagedClient) {
-        const currentStagedClient = new StagedClient(props.client);
-        const currentStagedClientDTO = new StagedClientDTO(currentStagedClient);
+      if (props.isStagedClient) {
+        const currentStagedClient = new StagedClient(props.clientItem.client);
+        const currentStagedClientDTO =
+          StagedClientDTO.initializeFromStagedClient(currentStagedClient);
         currentStagedClientDTO.mealPlanId = mealPlanId;
-        APIClient.updateStagedClient(currentStagedClient);
+        APIClient.updateStagedClient(currentStagedClientDTO);
       } else {
-        const currentClient = new Client(props.client);
-        const currentClientDTO = new ClientDTO(currentClient);
+        const currentClient = new Client(props.clientItem.client);
+        const currentClientDTO = ClientDTO.initializeFromForm(currentClient);
         currentClientDTO.mealPlanId = mealPlanId;
         APIClient.updateClient(currentClientDTO);
       }
@@ -79,10 +81,20 @@ const EditClientMealPlanModal = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const editMealPlanButtonDomain = (() => {
+    if (props.isStagedClient) {
+      return 'StagedClient';
+    } else {
+      return 'Client';
+    }
+  })();
   return (
     <>
-      <BlackButton variant={'contained'} onClick={handleClickOpen}>
+      <BlackButton
+        id={`change${editMealPlanButtonDomain}MealPlan${props.buttonIndex}`}
+        variant={'contained'}
+        onClick={handleClickOpen}
+      >
         Edit
       </BlackButton>
       <Dialog
@@ -151,35 +163,38 @@ const EditClientMealPlanModal = (props) => {
 
                       <TextField
                         fullWidth
-                        label={'Email'}
                         id="id"
-                        value={props.client.id}
+                        value={props.clientItem.email}
                         disabled={true}
                       />
-
-                      <InputLabel
-                        key={uuid()}
-                        sx={{ color: customTheme.palette.black.main }}
-                      >
-                        Select New Meal Plan
-                      </InputLabel>
-                      <Select
-                        key={uuid()}
-                        label="Meal Plan"
-                        required
-                        id="mealPlanId"
-                        value={mealPlanId}
-                        onChange={handleInput}
-                      >
-                        {props.mealPlans.map((mealPlan) => (
-                          <MenuItem key={uuid()} value={mealPlan.id}>
-                            {`${capitalize(mealPlan.name)}: ${
-                              mealPlan.statedCaloricLowerBound
-                            }-${mealPlan.statedCaloricUpperBound} calories`}
-                          </MenuItem>
-                        ))}
-                      </Select>
+                      <FormControl>
+                        <InputLabel
+                          sx={{ color: customTheme.palette.black.main }}
+                        >
+                          Meal Plan
+                        </InputLabel>
+                        <Select
+                          label="Meal Plan"
+                          required
+                          id="editMealPlanId"
+                          value={mealPlanId}
+                          onChange={handleInput}
+                        >
+                          {props.mealPlans.map((mealPlan, i) => (
+                            <MenuItem
+                              key={`editMealPlan-${i}`}
+                              id={`editMealPlan-${i}`}
+                              value={mealPlan.id}
+                            >
+                              {`${capitalize(mealPlan.name)}: ${
+                                mealPlan.statedCaloricLowerBound
+                              }-${mealPlan.statedCaloricUpperBound} calories`}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
                       <BlackButton
+                        id={`submitMealPlanChange`}
                         type="submit"
                         variant="contained"
                         disabled={loading}

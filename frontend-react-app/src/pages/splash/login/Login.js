@@ -5,17 +5,18 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
-import BlackButton from '../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
-import APIClient from '../../helpers/APIClient';
-import LocalStorageManager from '../../helpers/LocalStorageManager';
-import Client from '../../data_models/model/Client';
-import ClientDTO from '../../data_models/dto/ClientDTO';
-import DietitianDTO from '../../data_models/dto/DietitianDTO';
-import Dietitian from '../../data_models/model/Dietitian';
-import BlueCircularProgress from '../../reusable_ui_components/BlueCircularProgress';
+import APIClient from '../../../helpers/APIClient';
+import LocalStorageManager from '../../../helpers/LocalStorageManager';
+import Client from '../../../data_models/model/Client';
+import ClientDTO from '../../../data_models/dto/ClientDTO';
+import DietitianDTO from '../../../data_models/dto/DietitianDTO';
+import Dietitian from '../../../data_models/model/Dietitian';
+import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
+
 const Login = (props) => {
   const customTheme = useTheme();
   const [formValue, setFormValue] = useReducer(
