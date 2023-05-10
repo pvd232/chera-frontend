@@ -649,15 +649,12 @@ class APIClient {
   }
 
   // Client methods
-  async createMealSubscription(mealSubscription, orderDiscount = false) {
+  async createMealSubscription(mealSubscription) {
     const requestUrl = this.baseUrl + '/meal_subscription';
-    const requestData = {
-      meal_subscription: mealSubscription,
-      order_discount: orderDiscount,
-    };
+
     const requestParams = {
       method: 'POST',
-      body: JSON.stringify(requestData),
+      body: JSON.stringify(mealSubscription),
       mode: this.mode,
       cache: 'default',
     };
@@ -667,7 +664,17 @@ class APIClient {
 
     return returnedMealSubscriptionData;
   }
+  async createOrderDiscount(orderDiscount) {
+    const requestUrl = this.baseUrl + '/order_discount';
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(orderDiscount),
+      mode: this.mode,
+      cache: 'default',
+    };
 
+    await this.fetchWrapper(requestUrl, requestParams);
+  }
   async updateClientPassword(formValues) {
     const requestUrl = this.baseUrl + '/client/password';
 
@@ -940,10 +947,20 @@ class APIClient {
     return;
   }
 
-  async createMealSubscriptionInvoice(mealSubscriptionInvoice) {
+  async createMealSubscriptionInvoice(
+    mealSubscriptionInvoice,
+    discountCode = false
+  ) {
+    const requestHeaders = new Headers();
+
+    if (discountCode) {
+      requestHeaders.set('discount-code', discountCode);
+    }
+
     const requestUrl = this.baseUrl + '/meal_subscription_invoice';
     const requestParams = {
       method: 'POST',
+      headers: requestHeaders,
       body: JSON.stringify(mealSubscriptionInvoice),
       mode: this.mode,
       cache: 'default',

@@ -66,7 +66,8 @@ const AccountRegistration = (props) => {
     setError(false);
     return form.checkValidity();
   };
-  // input handlers
+
+  // Input handlers
   const handleButtonClick = () => {
     if (!loading) {
       setLoading(true);
@@ -75,7 +76,6 @@ const AccountRegistration = (props) => {
           id: uuid(),
           clientId: formValue.id,
           shippingCost: props.shippingCost,
-          // this property will be updated when the meal subscription is created in the deliveryInfo page
           stripeSubscriptionId: '',
           dietitianId: props.dietitianId,
           stripePriceId: props.stripePriceId,

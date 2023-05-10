@@ -60,11 +60,13 @@ const SignUpPage = (props) => {
     const newMealSubscriptionDTO =
       MealSubscriptionDTO.initializeFromMealSubscription(newMealSubscription);
     const createdSubscription = await APIClient.createMealSubscription(
-      newMealSubscriptionDTO,
-      // Store discount in local storage because setting it in state is disruptive to the UI
-      LocalStorageManager.shared.orderDiscount
+      newMealSubscriptionDTO
     );
     LocalStorageManager.shared.clientMealSubscription = createdSubscription;
+
+    if (orderDiscount) {
+      await APIClient.createOrderDiscount(orderDiscount);
+    }
 
     const scheduleMealDTOs = scheduleMeals.map((scheduleMeal) =>
       ScheduleMealDTO.initializeFromScheduleMeal(scheduleMeal)
@@ -93,8 +95,8 @@ const SignUpPage = (props) => {
       );
       await APIClient.createScheduledOrderSnacks(scheduledOrderSnackDTOs);
     }
-    // Create first invoice
 
+    // Create first invoice
     const newMealSubscriptionInvoiceId = uuid();
     const newMealSubscriptionInvoice =
       MealSubscriptionInvoice.createInitialInvoice({
@@ -113,7 +115,11 @@ const SignUpPage = (props) => {
       MealSubscriptionInvoiceDTO.initializeFromMealSubscriptionInvoice(
         newMealSubscriptionInvoice
       );
-    await APIClient.createMealSubscriptionInvoice(mealSubscriptionInvoiceDTO);
+
+    await APIClient.createMealSubscriptionInvoice(
+      mealSubscriptionInvoiceDTO,
+      discountCode
+    );
 
     const orderMealDTOArray = [];
     for (const orderMeal of initialOrderMeals) {
