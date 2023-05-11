@@ -4,7 +4,6 @@ export default class MealSubscription {
     this.id = mealSubscriptionObject.id;
     this.clientId = mealSubscriptionObject.clientId;
     this.dietitianId = mealSubscriptionObject.dietitianId;
-    this.stripePriceId = mealSubscriptionObject.stripePriceId;
     this.stripeSubscriptionId = mealSubscriptionObject.stripeSubscriptionId;
     this.shippingCost = mealSubscriptionObject.shippingCost;
     this.datetime = mealSubscriptionObject.datetime;

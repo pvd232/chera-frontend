@@ -35,6 +35,8 @@ import StagedScheduleMeal from '../../../data_models/model/StagedScheduleMeal';
 import ExtendedStagedScheduleMeal from '../../../data_models/model/ExtendedStagedScheduleMeal';
 import StagedScheduleSnack from '../../../data_models/model/StagedScheduleSnack';
 import ExtendedStagedScheduleSnack from '../../../data_models/model/ExtendedStagedScheduleSnack';
+import checkOrderQuantity from './helpers/checkOrderQuantity';
+import checkMinimumMealQuantity from './helpers/checkMinimumMealQuantity';
 
 const ClientMenu = (props) => {
   const customTheme = useTheme();
@@ -229,7 +231,7 @@ const ClientMenu = (props) => {
   };
   const handleAddSnack = (snack) => {
     setChosenScheduleSnacks((prevChosenSnack) => {
-      const newScheduleSnack = (() => {
+      const firstNewScheduleSnack = (() => {
         const scheduleSnackId = uuid();
         if (props.dietitianChoosingClientMeals) {
           return new StagedScheduleSnack({
@@ -245,34 +247,84 @@ const ClientMenu = (props) => {
           );
         }
       })();
-      const newExtendedScheduleSnack = (() => {
+      const secondNewScheduleSnack = (() => {
+        const scheduleSnackId = uuid();
+        if (props.dietitianChoosingClientMeals) {
+          return new StagedScheduleSnack({
+            id: scheduleSnackId,
+            snackId: snack.id,
+            stagedClientId: props.stagedClientId,
+          });
+        } else {
+          return ScheduleSnack.initializeFromSnack(
+            uuid(),
+            snack.id,
+            props.mealSubscriptionId
+          );
+        }
+      })();
+      const firstNewExtendedScheduleSnack = (() => {
         if (props.dietitianChoosingClientMeals) {
           return ExtendedStagedScheduleSnack.constructFromStagedScheduleSnack(
-            newScheduleSnack,
+            firstNewScheduleSnack,
             snack,
             new SnackFactory()
           );
         } else {
           return ExtendedScheduleSnack.constructFromScheduleSnack(
-            newScheduleSnack,
+            firstNewScheduleSnack,
             snack,
             new SnackFactory()
           );
         }
       })();
-      return [...prevChosenSnack, newExtendedScheduleSnack];
+      const secondNewExtendedScheduleSnack = (() => {
+        if (props.dietitianChoosingClientMeals) {
+          return ExtendedStagedScheduleSnack.constructFromStagedScheduleSnack(
+            secondNewScheduleSnack,
+            snack,
+            new SnackFactory()
+          );
+        } else {
+          return ExtendedScheduleSnack.constructFromScheduleSnack(
+            secondNewScheduleSnack,
+            snack,
+            new SnackFactory()
+          );
+        }
+      })();
+      return [
+        ...prevChosenSnack,
+        firstNewExtendedScheduleSnack,
+        secondNewExtendedScheduleSnack,
+      ];
     });
   };
   const handleRemoveSnack = (scheduleSnack) => {
-    setChosenScheduleSnacks((prevChosenSnack) =>
-      prevChosenSnack.filter((prevScheduleSnack) => {
-        return prevScheduleSnack.id !== scheduleSnack.id;
-      })
-    );
+    setChosenScheduleSnacks((prevChosenSnack) => {
+      let removedScheduleSnacks = 0;
+      let prevChosenSnackCopy = [...prevChosenSnack];
+      let index = 0;
+      while (removedScheduleSnacks < 2 && index < prevChosenSnack.length) {
+        const prevScheduleSnack = prevChosenSnack[index];
+        if (prevScheduleSnack.snackId === scheduleSnack.snackId) {
+          prevChosenSnackCopy = prevChosenSnackCopy.filter(
+            (prev) => prev.id !== prevScheduleSnack.id
+          );
+          removedScheduleSnacks += 1;
+        }
+        index += 1;
+      }
+      return prevChosenSnackCopy;
+    });
   };
+
   const handleSubmit = async () => {
     setEditing(false);
-    if (chosenScheduleMeals.length < 6) {
+    if (
+      !checkOrderQuantity(false, chosenScheduleMeals, chosenScheduleSnacks) ||
+      !checkMinimumMealQuantity(false, chosenScheduleMeals)
+    ) {
       return false;
     }
     if (!loading) {
@@ -303,14 +355,15 @@ const ClientMenu = (props) => {
         await APIClient.deleteScheduledOrderMeals(
           LocalStorageManager.shared.clientMealSubscription.id
         );
-
-        // Delete snacks
-        await APIClient.deleteScheduleSnacks(
-          LocalStorageManager.shared.clientMealSubscription.id
-        );
-        await APIClient.deleteScheduledOrderSnacks(
-          LocalStorageManager.shared.clientMealSubscription.id
-        );
+        if (props.hasSnacks) {
+          // Delete snacks
+          await APIClient.deleteScheduleSnacks(
+            LocalStorageManager.shared.clientMealSubscription.id
+          );
+          await APIClient.deleteScheduledOrderSnacks(
+            LocalStorageManager.shared.clientMealSubscription.id
+          );
+        }
 
         // Create meals
         const scheduleMealDTOs = chosenScheduleMeals.map((scheduleMeal) =>
@@ -462,17 +515,29 @@ const ClientMenu = (props) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item lg={4} md={6} xs={8}>
+          <Grid item lg={5} md={8} xs={10} ml={2}>
             <FormHelperText
-              hidden={!editing && chosenScheduleMeals.length < 6 ? false : true}
+              hidden={
+                !checkMinimumMealQuantity(editing, chosenScheduleMeals)
+                  ? false
+                  : !checkOrderQuantity(
+                      editing,
+                      chosenScheduleMeals,
+                      chosenScheduleSnacks
+                    )
+                  ? false
+                  : true
+              }
               error={true}
               sx={{
                 fontSize: '1rem',
               }}
             >
-              {`You must select a minimum of 6 meals. Please add ${
-                6 - chosenScheduleMeals.length
-              } more`}
+              {!checkMinimumMealQuantity(editing, chosenScheduleMeals)
+                ? `You must select a minimum of 6 meals. Please add ${
+                    6 - chosenScheduleMeals.length
+                  } more`
+                : 'You must select an even number of meals + snacks. 2 snacks = 1 meal.'}
             </FormHelperText>
           </Grid>
         </Grid>

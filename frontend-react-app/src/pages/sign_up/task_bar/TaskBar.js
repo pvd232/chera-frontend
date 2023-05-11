@@ -11,10 +11,10 @@ import Snack from '../../../data_models/model/Snack';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import TaskBarItem from './TaskBarItem';
 import TaskBarLine from './TaskBarLine';
+
 const TaskBar = (props) => {
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [snacks, setSnacks] = useState(false);
-  const [stripePriceId, setStripePriceId] = useState(false);
   const [shippingCost, setShippingCost] = useState(false);
   const [stagedClient, setStagedClient] = useState(false);
   const [taskIndex, setTaskIndex] = useState(0);
@@ -22,11 +22,6 @@ const TaskBar = (props) => {
   useEffect(() => {
     let mounted = true;
 
-    APIClient.getStripePriceId().then((stripePriceId) => {
-      if (mounted) {
-        setStripePriceId(stripePriceId);
-      }
-    });
     APIClient.getShippingCost().then((shippingCost) => {
       if (mounted) {
         setShippingCost(shippingCost);
@@ -92,11 +87,10 @@ const TaskBar = (props) => {
     return () => (mounted = false);
   }, []);
 
-  if (stripePriceId && stagedClient && extendedMeals && snacks) {
+  if (stagedClient && extendedMeals && snacks) {
     const signupProps = {
       extendedMeals: extendedMeals,
       snacks: snacks,
-      stripePriceId: stripePriceId,
       stagedClient: stagedClient,
       shippingCost: shippingCost,
       stripePromise: props.stripePromise,

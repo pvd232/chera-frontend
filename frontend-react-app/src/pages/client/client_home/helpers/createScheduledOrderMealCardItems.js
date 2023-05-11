@@ -5,6 +5,8 @@ const createScheduledOrderMealCardItems = (
   extendedScheduledOrderMeals,
   deliveryDateIndex = false
 ) => {
+  console.log('deliveryDateIndex', deliveryDateIndex);
+  console.log('extendedScheduledOrderMeals', extendedScheduledOrderMeals);
   const sortedArray = extendedScheduledOrderMeals.sort(
     (a, b) => a.deliveryDate.getTime() - b.deliveryDate.getTime()
   );
@@ -55,10 +57,16 @@ const createScheduledOrderMealCardItems = (
   // If deliveryDateIndex is passed in, return the map for that deliveryDate (ClientHome.js uses this to display the meals for a specific deliveryDate)
   if (deliveryDateIndex !== false) {
     const deliverDatesArray = Array.from(uniqueDatesSet);
+    console.log('deliverDatesArray', deliverDatesArray);
     const deliveryDateTimeStamp = deliverDatesArray[deliveryDateIndex];
-
+    console.log('deliveryDateTimeStamp', deliveryDateTimeStamp);
+    console.log('clientScheduledOrderMealMap', clientScheduledOrderMealMap);
     const scheduledOrderMealsMapForDeliveryDate =
       clientScheduledOrderMealMap.get(deliveryDateTimeStamp);
+    console.log(
+      'scheduledOrderMealsMapForDeliveryDate',
+      scheduledOrderMealsMapForDeliveryDate
+    );
     return scheduledOrderMealsMapForDeliveryDate;
   }
   // Otherwise if no deliveryDateIndex is passed in, return the map for all deliveryDates (PreviousDeliveries.js uses this to display the meals for all deliveryDates)

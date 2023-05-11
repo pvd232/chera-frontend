@@ -1,12 +1,13 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import MealCard from './MealCard';
+import OtherMealCard from './OtherMealCard';
 import capitalize from '../../../helpers/capitalize';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
+
 const OtherMeals = (props) => {
   return (
     <Grid
@@ -36,7 +37,7 @@ const OtherMeals = (props) => {
             component="div"
             paddingBottom={'3vh'}
           >
-            Other delicious meals this week
+            Other meals to choose from
           </Typography>
         </Grid>
         <Grid
@@ -92,16 +93,16 @@ const OtherMeals = (props) => {
               marginRight: window.innerWidth < 450 ? 'auto' : '',
             }}
           >
-            <MealCard
-              key={`mealCard-${i}`}
-              protoMeal={otherMeal}
+            <OtherMealCard
+              key={`otherMealCard-${i}`}
+              meal={otherMeal}
               handleAddScheduledOrderMeal={(meal) =>
                 props.handleAddScheduledOrderMeal(meal)
               }
               handleRemoveScheduledOrderMeal={(meal) =>
                 props.handleRemoveScheduledOrderMeal(meal)
               }
-            ></MealCard>
+            />
           </Grid>
         ))}
       </Grid>

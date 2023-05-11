@@ -1,4 +1,3 @@
-import capitalize from '../../../helpers/capitalize';
 import logo from '../../../static/images/bendito-small.png';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -7,7 +6,8 @@ import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import GreenButton from './GreenButton';
-const MealCard = (props) => {
+
+const OtherSnackCard = (props) => {
   return (
     <Card
       sx={{
@@ -37,17 +37,10 @@ const MealCard = (props) => {
           fontWeight={'500'}
           component="div"
         >
-          {props.protoMeal.name}
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-            component="div"
-          >
-            {capitalize(props.protoMeal.mealTime)}
-          </Typography>
+          {props.snack.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {props.protoMeal.description}
+          {props.snack.description}
         </Typography>
       </CardContent>
       <CardActions>
@@ -63,11 +56,9 @@ const MealCard = (props) => {
             <Grid item>
               <GreenButton
                 variant={'outlined'}
-                onClick={() =>
-                  props.handleAddScheduledOrderMeal(props.protoMeal)
-                }
+                onClick={() => props.handleAddScheduledOrderSnack(props.snack)}
               >
-                Add meal
+                Add snack
               </GreenButton>
             </Grid>
           </Grid>
@@ -76,4 +67,4 @@ const MealCard = (props) => {
     </Card>
   );
 };
-export default MealCard;
+export default OtherSnackCard;

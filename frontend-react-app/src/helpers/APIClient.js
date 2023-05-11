@@ -1084,6 +1084,37 @@ class APIClient {
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
+  async deleteScheduledOrderSnacks(mealSubscriptionId) {
+    const requestUrl =
+      this.baseUrl +
+      `/scheduled_order_snack?meal_subscription_id=${mealSubscriptionId}`;
+
+    const requestHeaders = new Headers();
+
+    const requestParams = {
+      method: 'DELETE',
+      headers: requestHeaders,
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async deleteScheduleSnacks(mealSubscriptionId) {
+    const requestUrl =
+      this.baseUrl +
+      `/schedule_snack?meal_subscription_id=${mealSubscriptionId}`;
+
+    const requestParams = {
+      method: 'DELETE',
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
 
   async createOrderMeals(orderMeals) {
     const requestUrl = this.baseUrl + '/order_meal';
@@ -1232,14 +1263,6 @@ class APIClient {
     }
   }
 
-  async getStripePriceId() {
-    const requestUrl = this.baseUrl + '/stripe/price_id';
-    const response = await this.fetchWrapper(requestUrl);
-
-    const data = await response.json();
-    return data.stripe_price_id;
-  }
-
   async getClientExtendedOrderMeals(mealSubscriptionId) {
     const requestUrl =
       this.baseUrl +
@@ -1254,6 +1277,7 @@ class APIClient {
     const responseData = await response.json();
     return responseData;
   }
+
   async getClientOrderMeals(mealSubscriptionId) {
     const requestUrl = `${this.baseUrl}/order_meal?meal_subscription_id=${mealSubscriptionId}`;
 
@@ -1393,6 +1417,24 @@ class APIClient {
     const response = await this.fetchWrapper(request, requestParams);
     const paymentIntentDataJSON = await response.json();
     return paymentIntentDataJSON;
+  }
+  async checkDieteticRegistrationNumber(dieteticRegistrationNumber) {
+    const requestUrl = this.baseUrl + '/test_dietetic';
+    const request = new Request(requestUrl);
+
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(dieteticRegistrationNumber),
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+
+    if (response.status === 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
 

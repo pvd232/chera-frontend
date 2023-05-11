@@ -34,8 +34,8 @@ const EditDeliveryModal = (props) => {
     setOpen(false);
   };
 
-  const handleUpdateMeals = async (newMeals) => {
-    await props.handleChangeMeals(newMeals);
+  const handleUpdateFoodData = async () => {
+    await props.handleChangeFoodData();
     handleClose();
   };
   const handleSkipWeek = async () => {
@@ -285,10 +285,12 @@ const EditDeliveryModal = (props) => {
           </>
         ) : (
           <ClientMenu
+            hasSnacks={props.extendedScheduledOrderSnacks.length > 0}
+            snacks={props.snacks}
             extendedMeals={props.extendedMeals}
             editMeals={true}
             canChangeFirstWeek={canMakeChangesToCurrentWeek}
-            finishEditing={(newMeals) => handleUpdateMeals(newMeals)}
+            finishEditing={() => handleUpdateFoodData()}
             userId={props.mealSubscription.clientId}
             mealSubscriptionId={props.mealSubscription.id}
             dietitianChoosingClientMeals={false}

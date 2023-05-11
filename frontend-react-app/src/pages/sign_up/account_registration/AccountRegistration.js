@@ -78,7 +78,6 @@ const AccountRegistration = (props) => {
           shippingCost: props.shippingCost,
           stripeSubscriptionId: '',
           dietitianId: props.dietitianId,
-          stripePriceId: props.stripePriceId,
           datetime: Date.now(),
           paused: false,
           active: true,

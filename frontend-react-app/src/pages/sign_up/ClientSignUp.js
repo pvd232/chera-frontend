@@ -104,10 +104,16 @@ const SignUpPage = (props) => {
         mealSubscriptionId: createdSubscription.id,
         deliveryDate: scheduledOrderMealDTOs[0].deliveryDate,
       });
+
+    const firstWeekScheduledOrderMeals = scheduledOrderMealDTOs.filter(
+      (scheduledOrderMeal) =>
+        scheduledOrderMeal.deliveryDate ===
+        newMealSubscriptionInvoice.deliveryDate
+    );
     // Create first order meals
     const initialOrderMeals = createInitialOrderMeals(
       newMealSubscriptionInvoice.id,
-      scheduledOrderMeals
+      firstWeekScheduledOrderMeals
     );
 
     // Post first invoice to the backend
@@ -131,9 +137,14 @@ const SignUpPage = (props) => {
 
     // Create first order snacks
     if (scheduleSnacks.length > 0) {
+      const firstWeekScheduledOrderSnacks = scheduledOrderSnacks.filter(
+        (scheduledOrderSnack) =>
+          scheduledOrderSnack.deliveryDate ===
+          newMealSubscriptionInvoice.deliveryDate
+      );
       const initialOrderSnacks = createInitialOrderSnacks(
         newMealSubscriptionInvoice.id,
-        scheduledOrderSnacks
+        firstWeekScheduledOrderSnacks
       );
       const orderSnackDTOArray = [];
       for (const orderSnack of initialOrderSnacks) {
@@ -149,7 +160,6 @@ const SignUpPage = (props) => {
   const ContainerObject = {};
   ContainerObject['AccountRegistration'] = (
     <AccountRegistration
-      stripePriceId={props.stripePriceId}
       stagedClientId={props.stagedClient.id}
       dietitianId={props.stagedClient.dietitianId}
       shippingCost={props.shippingCost}

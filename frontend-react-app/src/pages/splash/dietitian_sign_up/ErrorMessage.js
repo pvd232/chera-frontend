@@ -9,7 +9,7 @@ const ErrorMessage = (props) => (
       fontWeight: 'bold',
     }}
   >
-    The id you entered is already taken.
+    The email you entered is already taken.
   </FormHelperText>
 );
 export default ErrorMessage;

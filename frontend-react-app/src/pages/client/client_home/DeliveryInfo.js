@@ -77,9 +77,11 @@ const DeliveryInfo = (props) => {
             handleFinishEditing={props.handleFinishEditing}
             selectedDeliveryIndex={props.selectedDeliveryIndex}
             extendedScheduledOrderMeals={props.extendedScheduledOrderMeals}
+            extendedScheduledOrderSnacks={props.extendedScheduledOrderSnacks}
             mealSubscription={props.mealSubscription}
             mealsPerWeek={props.extendedScheduledOrderMeals.length / 4}
             extendedMeals={props.extendedMeals}
+            snacks={props.snacks}
             skipWeek={(deliveryDateIndex) => handleSkipWeek(deliveryDateIndex)}
             unskipWeek={(deliveryDateIndex) =>
               handleUnskipWeek(deliveryDateIndex)

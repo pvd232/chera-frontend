@@ -4,7 +4,9 @@ import CardContent from '@mui/material/CardContent';
 import FormGroup from '@mui/material/FormGroup';
 import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
-
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useReducer, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
@@ -16,11 +18,14 @@ import DietitianDTO from '../../../data_models/dto/DietitianDTO';
 import Dietitian from '../../../data_models/model/Dietitian';
 import BlackButton from '../../../reusable_ui_components/BlackButton';
 import ErrorMessage from './ErrorMessage';
-import WhiteInput from './WhiteInput';
+import RegistrationErrorMessage from './RegistrationErrorMessage';
+import getStatesData from '../../sign_up/helpers/getStatesData';
+import { TextField } from '@mui/material';
 const DietitianSignUp = React.forwardRef((props, ref) => {
   const customTheme = useTheme();
 
   const [error, setError] = useState(false);
+  const [registrationError, setRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -28,6 +33,7 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
     setLoading(true);
 
     const form = event.target;
+
     const validated = await validate(form);
     if (validated) {
       const dietitianDTO = DietitianDTO.initializeFromForm(formValue);
@@ -67,6 +73,16 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
       return false;
     } else {
       setError(false);
+    }
+    const dieteticRegistrationNumber = form.dieteticRegistrationNumber.value;
+    const registrationStatus = await APIClient.checkDieteticRegistrationNumber(
+      dieteticRegistrationNumber
+    );
+    if (!registrationStatus) {
+      setRegistrationError(true);
+      return false;
+    } else {
+      setRegistrationError(false);
     }
     return form.checkValidity();
   };
@@ -125,86 +141,83 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
             >
               <FormControl variant="filled">
                 <ErrorMessage error={error} />
-                <WhiteInput
+                <TextField
                   required
                   fullWidth
-                  placeholder="Email"
+                  label="Email"
                   id="id"
                   type="email"
                   sx={{
-                    mx: 'auto',
+                    backgroundColor: '#fcfcfb',
                   }}
                   onChange={handleInput}
                   value={formValue.id}
                 />
               </FormControl>
               <FormControl variant="filled">
-                <WhiteInput
+                <TextField
                   required
-                  error
                   type="password"
                   autoComplete={'new-password'}
                   fullWidth
-                  placeholder="Choose a password"
+                  label="Choose a password"
                   id="password"
                   sx={{
-                    mx: 'auto',
+                    backgroundColor: '#fcfcfb',
                   }}
                   onChange={handleInput}
                   value={formValue.password}
                 />
               </FormControl>
               <FormControl variant="filled">
-                <WhiteInput
+                <TextField
                   required
-                  error
                   fullWidth
-                  placeholder="First name"
+                  label="First name"
                   id="firstName"
                   sx={{
-                    mx: 'auto',
+                    backgroundColor: '#fcfcfb',
                   }}
                   onChange={handleInput}
                   value={formValue.firstName}
                 />
               </FormControl>
               <FormControl variant="filled">
-                <WhiteInput
+                <TextField
                   required
-                  error
                   fullWidth
-                  placeholder="Last name"
+                  label="Last name"
                   id="lastName"
                   sx={{
-                    mx: 'auto',
+                    backgroundColor: '#fcfcfb',
                   }}
                   onChange={handleInput}
                   value={formValue.lastName}
                 />
               </FormControl>
               <FormControl variant="filled">
-                <WhiteInput
-                  required
-                  error
-                  fullWidth
-                  placeholder="Dietetic registration number"
-                  id="dieteticRegistrationNumber"
+                <RegistrationErrorMessage error={registrationError} />
+
+                <TextField
                   sx={{
-                    mx: 'auto',
+                    backgroundColor: '#fcfcfb',
                   }}
+                  required
+                  fullWidth
+                  label="Dietetic registration number"
+                  id="dieteticRegistrationNumber"
                   onChange={handleInput}
                   value={formValue.dieteticRegistrationNumber}
                 />
               </FormControl>
               <FormControl variant="filled">
-                <WhiteInput
+                <TextField
                   required
-                  error
                   fullWidth
-                  placeholder="Clinic website url"
+                  label="Clinic website url"
                   id="clinicUrl"
                   sx={{
-                    mx: 'auto',
+                    backgroundColor: '#fcfcfb',
                   }}
                   type="url"
                   onChange={handleInput}
@@ -213,34 +226,42 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
                 />
               </FormControl>
               <FormControl variant="filled">
-                <WhiteInput
-                  required
-                  error
-                  fullWidth
-                  placeholder="Clinic city"
-                  id="clinicCity"
+                <TextField
+                  label="Clinic City"
                   sx={{
-                    mx: 'auto',
+                    backgroundColor: '#fcfcfb',
                   }}
+                  required
+                  fullWidth
+                  id="clinicCity"
                   onChange={handleInput}
                   value={formValue.clinicCity}
                   autoComplete={'off'}
                 />
               </FormControl>
               <FormControl variant="filled">
-                <WhiteInput
-                  required
-                  error
-                  fullWidth
-                  placeholder="Clinic state"
-                  id="clinicState"
+                <InputLabel>Clinic state</InputLabel>
+                <Select
                   sx={{
-                    mx: 'auto',
+                    backgroundColor: '#fcfcfb',
                   }}
-                  onChange={handleInput}
-                  value={formValue.clinicState}
                   autoComplete={'off'}
-                />
+                  required
+                  id="state"
+                  value={formValue.state}
+                  label="Clinic State *"
+                  onChange={handleInput}
+                >
+                  {getStatesData().map((state) => (
+                    <MenuItem
+                      value={`${state.Code}`}
+                      key={`${state.Code}`}
+                      name={state.Code}
+                    >
+                      {state.State}
+                    </MenuItem>
+                  ))}
+                </Select>
               </FormControl>
               <BlackButton
                 id="dietRegSubmit"

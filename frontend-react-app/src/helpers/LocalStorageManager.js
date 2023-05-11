@@ -71,13 +71,6 @@ class LocalStorageManager {
   }
 
   // Client properties
-  get stripePriceId() {
-    return this.getItem('stripe_price_id');
-  }
-
-  set stripePriceId(stripePriceId) {
-    this.setItem('stripe_price_id', stripePriceId);
-  }
   get client() {
     if (this.getItem('client')) {
       return this.getItem('client');
