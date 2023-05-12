@@ -1084,37 +1084,6 @@ class APIClient {
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
-  async deleteScheduledOrderSnacks(mealSubscriptionId) {
-    const requestUrl =
-      this.baseUrl +
-      `/scheduled_order_snack?meal_subscription_id=${mealSubscriptionId}`;
-
-    const requestHeaders = new Headers();
-
-    const requestParams = {
-      method: 'DELETE',
-      headers: requestHeaders,
-      mode: this.mode,
-      cache: 'default',
-    };
-
-    await this.fetchWrapper(requestUrl, requestParams);
-    return;
-  }
-  async deleteScheduleSnacks(mealSubscriptionId) {
-    const requestUrl =
-      this.baseUrl +
-      `/schedule_snack?meal_subscription_id=${mealSubscriptionId}`;
-
-    const requestParams = {
-      method: 'DELETE',
-      mode: this.mode,
-      cache: 'default',
-    };
-
-    await this.fetchWrapper(requestUrl, requestParams);
-    return;
-  }
 
   async createOrderMeals(orderMeals) {
     const requestUrl = this.baseUrl + '/order_meal';
@@ -1228,7 +1197,91 @@ class APIClient {
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
+  async deleteScheduledOrderSnacks(mealSubscriptionId) {
+    const requestUrl =
+      this.baseUrl +
+      `/scheduled_order_snack?meal_subscription_id=${mealSubscriptionId}`;
 
+    const requestHeaders = new Headers();
+
+    const requestParams = {
+      method: 'DELETE',
+      headers: requestHeaders,
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  // Handle changes to scheduled order meals on home page
+  async updateScheduledOrderSnacks(updatedScheduledOrderSnacks) {
+    const requestUrl = this.baseUrl + '/scheduled_order_snack';
+    const requestHeaders = new Headers();
+
+    requestHeaders.set('deactivate', 'no');
+
+    const requestParams = {
+      method: 'PUT',
+      headers: requestHeaders,
+      body: JSON.stringify(updatedScheduledOrderSnacks),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async unpauseScheduledOrderSnacks(mealSubscriptionId) {
+    const requestUrl =
+      this.baseUrl +
+      `/scheduled_order_snack?meal_subscription_id=${mealSubscriptionId}`;
+
+    const requestHeaders = new Headers();
+    requestHeaders.set('update', 'unpause');
+    const requestParams = {
+      method: 'PUT',
+      headers: requestHeaders,
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+
+  async pauseScheduledOrderSnacks(mealSubscriptionId) {
+    const requestUrl =
+      this.baseUrl +
+      `/scheduled_order_snack?meal_subscription_id=${mealSubscriptionId}`;
+
+    const requestHeaders = new Headers();
+    requestHeaders.set('update', 'pause');
+
+    const requestParams = {
+      method: 'PUT',
+      headers: requestHeaders,
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async deleteScheduleSnacks(mealSubscriptionId) {
+    const requestUrl =
+      this.baseUrl +
+      `/schedule_snack?meal_subscription_id=${mealSubscriptionId}`;
+
+    const requestParams = {
+      method: 'DELETE',
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
   async getExtendedStagedScheduleSnacks(stagedClientId) {
     const requestUrl = `${this.baseUrl}/extended_staged_schedule_snack?staged_client_id=${stagedClientId}`;
 

@@ -54,6 +54,14 @@ const DeliveryInfo = (props) => {
               ? `Add ${props.netChangeInWeeklyMeals} meal${
                   Math.abs(props.netChangeInWeeklyMeals) > 1 ? 's' : ''
                 } to keep your changes`
+              : props.editing && props.netChangeInWeeklySnacks < 0
+              ? `Remove ${-1 * props.netChangeInWeeklySnacks} snack${
+                  Math.abs(props.netChangeInWeeklySnacks) > 1 ? 's' : ''
+                } to keep your changes`
+              : props.editing && props.netChangeInWeeklySnacks > 0
+              ? `Add ${props.netChangeInWeeklySnacks} snack${
+                  Math.abs(props.netChangeInWeeklySnacks) > 1 ? 's' : ''
+                } to keep your changes`
               : ''}
           </FormHelperText>
         </Grid>
@@ -88,7 +96,7 @@ const DeliveryInfo = (props) => {
             }
             pauseMealSubscription={() => props.pauseMealSubscription()}
             unpauseMealSubscription={() => props.unpauseMealSubscription()}
-            handleChangeMeals={props.handleChangeMeals}
+            handleUpdateFoodData={props.handleUpdateFoodData}
           ></EditDeliveryModal>
         </Grid>
         {props.editing === true ? (

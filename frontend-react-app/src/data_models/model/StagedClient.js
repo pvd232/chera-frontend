@@ -2,7 +2,6 @@ import checkProperties from '../../helpers/checkProperties';
 import capitalize from '../../helpers/capitalize';
 export default class StagedClient {
   constructor(stagedClient) {
-    console.log('stagedClient', stagedClient);
     this.id = stagedClient.id;
     this.firstName = stagedClient.firstName;
     this.dietitianId = stagedClient.dietitianId;

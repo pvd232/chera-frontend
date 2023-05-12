@@ -10,7 +10,6 @@ import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import IconButton from '@mui/material/IconButton';
 
 const ScheduledOrderSnackCard = (props) => {
-  console.log('props', props);
   return (
     <Card
       sx={{

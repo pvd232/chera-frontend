@@ -31,9 +31,11 @@ import getUniqueExtendedMealsMap from './helpers/getUniqueExtendedMealsMap';
 import getUniqueSnacksMap from './helpers/getUniqueSnacksMap';
 import checkIfWeekSkipped from './helpers/checkIfWeekSkipped';
 import refreshScheduledOrderMeals from './helpers/refreshScheduledOrderMeals';
+import refreshScheduledOrderSnacks from './helpers/refreshScheduledOrderSnacks';
 import getMealsByDietaryRestrictionMap from './helpers/mealsByDietaryRestrictionMap';
 import getMealsByMealTimeMap from './helpers/getMealsByTimeMap';
 import ScheduledOrderMealDTO from '../../../data_models/dto/ScheduledOrderMealDTO';
+import ScheduledOrderSnackDTO from '../../../data_models/dto/ScheduledOrderSnackDTO';
 import canMakeChanges from '../helpers/canMakeChanges';
 
 const ClientHome = (props) => {
@@ -185,41 +187,52 @@ const ClientHome = (props) => {
   const handleAddFromScheduledOrderSnackCard = (clientSnackCardData) => {
     setEditing(true);
 
-    const newExtendedScheduledOrderSnack =
+    const firstNewExtendedScheduledOrderSnack =
       ExtendedScheduledOrderSnack.constructNewInstanceFromExtendedScheduledOrderSnackDTO(
         uuid(),
         clientSnackCardData.extendedScheduledOrderSnack,
         new SnackFactory()
       );
-
+    const secondNewExtendedScheduledOrderSnack =
+      ExtendedScheduledOrderSnack.constructNewInstanceFromExtendedScheduledOrderSnackDTO(
+        uuid(),
+        clientSnackCardData.extendedScheduledOrderSnack,
+        new SnackFactory()
+      );
     setExtendedScheduledOrderSnacks((prevExtendedScheduledOrderSnacks) => {
-      setNetChangeInWeeklySnacks((prevNum) => (prevNum -= 1));
+      setNetChangeInWeeklySnacks((prevNum) => (prevNum -= 2));
       return [
         ...prevExtendedScheduledOrderSnacks,
-        newExtendedScheduledOrderSnack,
+        firstNewExtendedScheduledOrderSnack,
+        secondNewExtendedScheduledOrderSnack,
       ];
     });
   };
 
-  const handleRemoveScheduledOrderSnack = (clientMealCardData) => {
+  const handleRemoveScheduledOrderSnack = (clientSnackCardData) => {
     setEditing(true);
 
     setExtendedScheduledOrderSnacks((prevExtendedScheduledOrderSnacks) => {
-      const newExtendedScheduledOrderSnacks =
-        prevExtendedScheduledOrderSnacks.filter(
-          (extendedScheduledOrderSnack) =>
-            extendedScheduledOrderSnack.id !==
-            clientMealCardData.extendedScheduledOrderSnack.id
-        );
-      setOtherMeals(
-        getOtherMeals(
-          getUniqueExtendedMealsMap(newExtendedScheduledOrderSnacks),
-          props.extendedMeals
-        )
+      const firstPassNewSnacks = prevExtendedScheduledOrderSnacks.filter(
+        (prev) => prev.id !== clientSnackCardData.extendedScheduledOrderSnack.id
       );
-      return newExtendedScheduledOrderSnacks;
+      const otherSnackToRemove = firstPassNewSnacks.find(
+        (prev) =>
+          prev.snackId ===
+            clientSnackCardData.extendedScheduledOrderSnack.snackId &&
+          prev.deliveryDate.getTime() ===
+            clientSnackCardData.extendedScheduledOrderSnack.deliveryDate.getTime()
+      );
+      const secondPassNewSnacks = firstPassNewSnacks.filter(
+        (prev) => prev.id !== otherSnackToRemove.id
+      );
+
+      setOtherSnacks(
+        getOtherSnacks(getUniqueSnacksMap(secondPassNewSnacks), props.snacks)
+      );
+      return secondPassNewSnacks;
     });
-    setNetChangeInWeeklyMeals((prevNum) => (prevNum += 1));
+    setNetChangeInWeeklySnacks((prevNum) => (prevNum += 2));
   };
 
   const handleAddFromOtherMealCard = (extendedMeal) => {
@@ -257,8 +270,6 @@ const ClientHome = (props) => {
   };
 
   const handleAddFromOtherSnackCard = (snack) => {
-    console.log('snack', snack);
-    // ExtendedMeal parameter is an ExtendedMeal object
     setEditing(true);
 
     const newScheduledOrderSnack = ScheduledOrderSnack.initializeFromSnack(
@@ -332,6 +343,13 @@ const ClientHome = (props) => {
         )
       )
     );
+    await APIClient.updateScheduledOrderSnacks(
+      extendedScheduledOrderSnacks.map((extendedScheduledOrderSnack) =>
+        ScheduledOrderSnackDTO.initializeFromScheduledOrderSnack(
+          extendedScheduledOrderSnack
+        )
+      )
+    );
     setLoading(false);
     setEditing(false);
   };
@@ -342,6 +360,10 @@ const ClientHome = (props) => {
       props.mealSubscription.id
     );
     setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
+    const extendedScheduledOrderSnacks = await refreshScheduledOrderSnacks(
+      props.mealSubscription.id
+    );
+    setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
     setWeekSkipped(true);
   };
 
@@ -350,16 +372,23 @@ const ClientHome = (props) => {
       props.mealSubscription.id
     );
     setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
+    const extendedScheduledOrderSnacks = await refreshScheduledOrderSnacks(
+      props.mealSubscription.id
+    );
+    setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
     setWeekSkipped(false);
   };
 
-  const handleChangeFoodData = async () => {
+  const handleUpdateFoodData = async () => {
     const newScheduledOrderMeals = await refreshScheduledOrderMeals(
       props.mealSubscription.id
     );
     setExtendedScheduledOrderMeals(newScheduledOrderMeals);
 
-    // TODO - handle snacks
+    const extendedScheduledOrderSnacks = await refreshScheduledOrderSnacks(
+      props.mealSubscription.id
+    );
+    setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
   };
 
   const handleFilterChange = (event) => {
@@ -511,6 +540,7 @@ const ClientHome = (props) => {
               extendedScheduledOrderMeals={extendedScheduledOrderMeals}
               extendedScheduledOrderSnacks={extendedScheduledOrderSnacks}
               netChangeInWeeklyMeals={netChangeInWeeklyMeals}
+              netChangeInWeeklySnacks={netChangeInWeeklySnacks}
               editing={editing}
               selectedDeliveryIndex={selectedDeliveryIndex}
               handleFinishEditing={handleFinishEditing}
@@ -528,7 +558,7 @@ const ClientHome = (props) => {
                 props.unpauseMealSubscription();
                 setPaused(false);
               }}
-              handleChangeFoodData={handleChangeFoodData}
+              handleUpdateFoodData={handleUpdateFoodData}
             ></DeliveryInfo>
             <CurrentMeals
               customTheme={customTheme}

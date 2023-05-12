@@ -35,7 +35,7 @@ const EditDeliveryModal = (props) => {
   };
 
   const handleUpdateFoodData = async () => {
-    await props.handleChangeFoodData();
+    await props.handleUpdateFoodData();
     handleClose();
   };
   const handleSkipWeek = async () => {

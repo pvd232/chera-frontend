@@ -537,7 +537,7 @@ const ClientMenu = (props) => {
                 ? `You must select a minimum of 6 meals. Please add ${
                     6 - chosenScheduleMeals.length
                   } more`
-                : 'You must select an even number of meals + snacks. 2 snacks = 1 meal.'}
+                : 'You must select an even number of meals + snacks. 2 snacks are packed in 1 meal container. E.g. 6 meals + 2 snacks = 7 meal containers. Please add 1 more meal, or add 2 more snacks.'}
             </FormHelperText>
           </Grid>
         </Grid>
