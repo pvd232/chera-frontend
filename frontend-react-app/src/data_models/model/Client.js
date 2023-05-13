@@ -15,6 +15,7 @@ export default class Client {
       this.city = clientObject.city;
       this.state = clientObject.state;
       this.zipcode = clientObject.zipcode;
+      this.zipcodeExtension = clientObject.zipcodeExtension;
       this.address = clientObject.address;
       this.phoneNumber = clientObject.phoneNumber;
       this.notes = clientObject.notes;
@@ -33,6 +34,7 @@ export default class Client {
       this.city = '';
       this.state = '';
       this.zipcode = '';
+      this.zipcodeExtension = '';
       this.address = '';
       this.phoneNumber = '';
       this.notes = '';

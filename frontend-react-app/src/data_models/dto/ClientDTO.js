@@ -13,6 +13,7 @@ export default class ClientDTO {
     this.city = clientData.city;
     this.state = clientData.state;
     this.zipcode = clientData.zipcode;
+    this.zipcodeExtension = clientData.zipcodeExtension;
     this.address = clientData.address;
     this.phoneNumber = clientData.phone_number;
     this.notes = clientData.notes;
@@ -34,6 +35,7 @@ export default class ClientDTO {
       city: client.city,
       state: client.state,
       zipcode: client.zipcode,
+      zipcodeExtension: client.zipcodeExtension,
       address: client.address,
       phone_number: client.phoneNumber,
       notes: client.notes,
@@ -56,6 +58,7 @@ export default class ClientDTO {
       city: this.city,
       state: this.state,
       zipcode: this.zipcode,
+      zipcodeExtension: this.zipcodeExtension,
       address: this.address,
       phone_number: this.phoneNumber,
       notes: this.notes,

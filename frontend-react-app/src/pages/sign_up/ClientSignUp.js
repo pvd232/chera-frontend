@@ -105,10 +105,10 @@ const SignUpPage = (props) => {
         deliveryDate: scheduledOrderMealDTOs[0].deliveryDate,
       });
 
-    const firstWeekScheduledOrderMeals = scheduledOrderMealDTOs.filter(
+    const firstWeekScheduledOrderMeals = scheduledOrderMeals.filter(
       (scheduledOrderMeal) =>
-        scheduledOrderMeal.deliveryDate ===
-        newMealSubscriptionInvoice.deliveryDate
+        scheduledOrderMeal.deliveryDate.getTime() ===
+        newMealSubscriptionInvoice.deliveryDate.getTime()
     );
     // Create first order meals
     const initialOrderMeals = createInitialOrderMeals(
@@ -139,8 +139,8 @@ const SignUpPage = (props) => {
     if (scheduleSnacks.length > 0) {
       const firstWeekScheduledOrderSnacks = scheduledOrderSnacks.filter(
         (scheduledOrderSnack) =>
-          scheduledOrderSnack.deliveryDate ===
-          newMealSubscriptionInvoice.deliveryDate
+          scheduledOrderSnack.deliveryDate.getTime() ===
+          newMealSubscriptionInvoice.deliveryDate.getTime()
       );
       const initialOrderSnacks = createInitialOrderSnacks(
         newMealSubscriptionInvoice.id,

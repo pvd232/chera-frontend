@@ -4,9 +4,9 @@ import Grid from '@mui/material/Grid';
 const CalendarGrid = styled(Grid)(({ theme }) => ({
   cursor: 'pointer',
   '&:hover': {
-    borderBottom: `${`solid 2px ${theme.palette.olive.main}`}`,
+    borderBottom: `${`solid 2px ${theme.palette.orange.main}`}`,
     '&>div': {
-      color: theme.palette.olive.main,
+      color: theme.palette.orange.main,
       fontWeight: 'bold',
       letterSpacing: '0.03em',
       textAlign: 'center',

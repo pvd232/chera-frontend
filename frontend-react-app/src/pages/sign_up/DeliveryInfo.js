@@ -12,6 +12,7 @@ import Card from '@mui/material/Card';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import APIClient from '../../helpers/APIClient';
 import BlackButton from '../../reusable_ui_components/BlackButton';
 import capitalize from '../../helpers/capitalize';
 import getStatesData from './helpers/getStatesData';
@@ -41,6 +42,9 @@ const DeliveryInfo = (props) => {
       city: '',
       state: '',
       zipcode: '',
+      zipcodeExtension: '',
+      uspsFirstAddressLine: '',
+      uspsSecondAddressLine: '',
       phoneNumber: '',
       datetime: Date.now(),
       notes: '',
@@ -96,15 +100,17 @@ const DeliveryInfo = (props) => {
       if (Array.from(addressObject.zipcode)[0] !== '0') {
         addressObject.zipcode = numberZipcode;
       }
+
       addressObject.suite = formValue.suite;
 
       setFormValue(addressObject);
     } else {
+      setAddressValueError(true);
       return false;
     }
   };
 
-  const validate = (form) => {
+  const validate = async (form) => {
     const status = form.checkValidity();
     setZipcodeError(false);
     setPhoneError(false);
@@ -113,10 +119,6 @@ const DeliveryInfo = (props) => {
     if (status) {
       if (formValue.address === '' || formValue.street === '') {
         setAddressSelectError(true);
-        return false;
-      } else if (formValue.suite === '') {
-        // many ppl will forget suite and it is critical for NE deliveries, so this serves as an extra validation
-        setSuiteError(true);
         return false;
       } else if (
         isNaN(Number(formValue.zipcode)) ||
@@ -128,10 +130,17 @@ const DeliveryInfo = (props) => {
         setPhoneError(true);
         return false;
       } else {
-        return true;
+        const validAddress = await APIClient.validateAddress(formValue);
+        if (!validAddress) {
+          setSuiteError(true);
+          return false;
+        } else {
+          setFormValue({ zipcodeExtension: validAddress.zipcodeExtension });
+          return true;
+        }
       }
     } else {
-      // triggers form validation messages if the user is editing their delivery information
+      // Triggers form validation messages if the user is editing their delivery information
       return form.reportValidity();
     }
   };
@@ -140,13 +149,9 @@ const DeliveryInfo = (props) => {
     event.preventDefault();
     const form = event.target;
 
-    // // check that all required values have been populated before triggering button click
+    // Check that all required values have been populated before triggering button click
     if (validate(form)) {
       const newClient = new Client(formValue);
-      // if suite is none then reset it to be empty string
-      if (newClient.suite === 'None' || newClient.suite === 'none') {
-        newClient.suite = '';
-      }
       props.handleSubmit(newClient);
     } else {
       setLoading(false);
@@ -249,12 +254,12 @@ const DeliveryInfo = (props) => {
                     value={formValue.lastName}
                   />
                   <FormHelperText hidden={!suiteError} error={true}>
-                    Please enter your suite or enter "none"
+                    Please enter your APT, Suite, etc.
                   </FormHelperText>
                   <TextField
                     autoComplete="new-password"
                     fullWidth
-                    label={'Apt, Suite, or Unit Number'}
+                    label={'Apt, Suite, etc. (Ex: Apt 1B)'}
                     id="suite"
                     onChange={handleInput}
                     value={formValue.suite}

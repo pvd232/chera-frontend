@@ -22,6 +22,7 @@ class APIClient {
       this.frontEndBaseUrl = getBaseURL('frontend');
       this.mode = 'same-origin';
     }
+    this.googleMapsAPIKey = 'AIzaSyDEckd6s43C-VnYFY1sAwFtUKqeHJm1fw4';
   }
 
   get networkErrorMessage() {
@@ -1487,6 +1488,50 @@ class APIClient {
       return true;
     } else {
       return false;
+    }
+  }
+  async validateAddress(address) {
+    console.log('address', address);
+    const requestUrl = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${this.googleMapsAPIKey}`;
+    const request = new Request(requestUrl);
+    const requestHeaders = new Headers();
+    requestHeaders.set('Content-Type', 'application/json');
+    const addressLines = (() => {
+      if (address.suite) {
+        return address.street.split(' ').concat(address.suite).join(' ');
+      } else {
+        return address.street;
+      }
+    })();
+    const requestBody = {
+      address: {
+        regionCode: 'US',
+        locality: address.city,
+        administrativeArea: address.state,
+        postalCode: String(address.zipcode),
+        addressLines: [addressLines],
+      },
+      enableUspsCass: true,
+    };
+    const requestParams = {
+      method: 'POST',
+      headers: requestHeaders,
+      body: JSON.stringify(requestBody),
+      mode: 'cors',
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const responseJSON = await response.json();
+    console.log('responseJSON', responseJSON);
+
+    const addressIsValid = !responseJSON.result.address.hasOwnProperty(
+      'missingComponentTypes'
+    );
+    const uspsAddressObject = responseJSON.result.uspsData.standardizedAddress;
+    if (addressIsValid) {
+      return uspsAddressObject;
+    } else {
+      return addressIsValid;
     }
   }
 }

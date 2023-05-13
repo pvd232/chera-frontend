@@ -71,34 +71,34 @@ const MenuListComposition = (props) => {
         right: '0',
       }}
     >
-      {/* <Grid item sx={{ p: "0px !important" }}> */}
-      <Icon
-        sx={{
-          color: customTheme.palette.black.main,
-          fontSize: customTheme.fontSize.linkSymbol,
-        }}
-      >
-        person_outlined
-      </Icon>
-      {/* </Grid> */}
-      {/* <Grid item sx={{ p: "0px !important" }}> */}
-      <Typography
-        color={customTheme.palette.black.main}
-        fontSize={customTheme.fontSize.linkText}
-      >
-        {capitalize(props.firstName)}
-      </Typography>
-      {/* </Grid> */}
-      {/* <Grid item sx={{ p: "0px !important" }}> */}
-      <Icon
-        sx={{
-          color: customTheme.palette.black.main,
-          fontSize: customTheme.fontSize.linkSymbol,
-        }}
-      >
-        arrow_drop_down
-      </Icon>
-      {/* </Grid> */}
+      <Grid item id="account-details">
+        <Icon
+          sx={{
+            color: customTheme.palette.black.main,
+            fontSize: customTheme.fontSize.linkSymbol,
+          }}
+        >
+          person_outlined
+        </Icon>
+      </Grid>
+      <Grid item>
+        <Typography
+          color={customTheme.palette.black.main}
+          fontSize={customTheme.fontSize.linkText}
+        >
+          {capitalize(props.firstName)}
+        </Typography>
+      </Grid>
+      <Grid item>
+        <Icon
+          sx={{
+            color: customTheme.palette.black.main,
+            fontSize: customTheme.fontSize.linkSymbol,
+          }}
+        >
+          arrow_drop_down
+        </Icon>
+      </Grid>
       <Popper
         open={open}
         anchorEl={anchorRef.current}
@@ -125,6 +125,7 @@ const MenuListComposition = (props) => {
                   sx={customTheme.smallerScreen() ? { py: 0 } : {}}
                 >
                   <MenuItem
+                    id="log-out-button"
                     onClick={handleLogOut}
                     sx={customTheme.smallerScreen() ? { py: 0 } : {}}
                   >
