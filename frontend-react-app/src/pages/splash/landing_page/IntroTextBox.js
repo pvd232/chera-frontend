@@ -50,6 +50,7 @@ const IntroTextBox = (props) => {
             </Grid>
             <Grid item lg={12}>
               <Typography
+                textAlign={'center'}
                 fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
                 Chera is a community of dietitians, doctors, and engineers
