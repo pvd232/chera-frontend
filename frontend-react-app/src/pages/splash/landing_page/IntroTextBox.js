@@ -64,7 +64,7 @@ const IntroTextBox = (props) => {
               sx={{
                 fontSize: customTheme.pages.splash.fontSize.button,
                 marginTop: '5vh',
-                padding: '2.2vh 2.2vh',
+                padding: '1.8vh 2.2vh',
                 borderRadius: '30px',
               }}
             >
