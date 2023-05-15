@@ -45,7 +45,7 @@ const IntroTextBox = (props) => {
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
-                We make it a little bit easier.
+                We try to make it a little easier.
               </Typography>
             </Grid>
             <Grid item lg={12}>
