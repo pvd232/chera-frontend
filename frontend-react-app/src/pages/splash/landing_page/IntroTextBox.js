@@ -18,7 +18,7 @@ const IntroTextBox = (props) => {
         <div
           style={{
             boxShadow: customTheme.border.boxShadow.medium,
-            padding: '10vh 5vw',
+            padding: '15vh 5vw',
             boxSizing: 'border-box',
             borderRadius: '10px',
             backgroundColor: 'rgba(255, 255, 255, 0.375)',
@@ -38,8 +38,8 @@ const IntroTextBox = (props) => {
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
-                Simplifying daily regular eating and meal planning for eating
-                disorder recovery.
+                Simplifying regular eating and meal planning for eating disorder
+                recovery.
               </Typography>
             </Grid>
             <Grid item lg={12}>

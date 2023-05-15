@@ -25,6 +25,7 @@ const FNCEApproved = () => {
             fontSize: customTheme.pages.splash.fontSize.header,
             fontWeight: '500',
             textAlign: 'center',
+            marginBottom: customTheme.smallerScreen() ? '5vh' : '',
           }}
         >
           Dietitian Vetted & Approved
@@ -33,12 +34,13 @@ const FNCEApproved = () => {
       {customTheme.largerScreen() ? (
         <>
           <Grid item container justifyContent={'center'}>
-            <img src={cheraPlusFNCE} height="60vh" alt="chera plus fnce"></img>
+            <img src={cheraPlusFNCE} height="50vh" alt="chera plus fnce"></img>
           </Grid>
           <Grid
             item
             container
-            lg={8}
+            lg={6}
+            md={9}
             justifyContent={'space-evenly'}
             alignItems={'center'}
             rowSpacing={2}
@@ -56,9 +58,7 @@ const FNCEApproved = () => {
               </Typography>
             </Grid>
             <Grid item>
-              <Grid item>
-                <img src={FNCElogo} height={'80vh'} alt="" />
-              </Grid>
+              <img src={FNCElogo} height={'75vh'} alt="" />
             </Grid>
           </Grid>
         </>

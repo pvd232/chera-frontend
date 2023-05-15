@@ -130,7 +130,7 @@ const themeBase = createTheme({
   pages: {
     splash: {
       fontSize: {
-        header: fontEqualizer(36, false),
+        header: fontEqualizer(32, false),
         subHeader: fontEqualizer(20, false),
         button: fontEqualizer(18, false),
       },
