@@ -20,7 +20,7 @@ const HowItWorks = (props) => {
           }}
           mb={props.customTheme.largerScreen() ? 10 : 5}
         >
-          How Chera Works
+          How it works
         </Typography>
       </Grid>
       <Grid

@@ -14,6 +14,11 @@ import Meal from '../../data_models/model/Meal';
 const SplashMenu = () => {
   const customTheme = useTheme();
 
+  const [meals, setMeals] = useState([]);
+  const [filteredMeals, setFilteredMeals] = useState([]);
+  const [filterMealTime, setFilterMealTime] = useState('all');
+  const [filterMealPreferences, setFilterMealPreferences] = useState('all');
+
   useEffect(() => {
     let mounted = true;
     APIClient.getMeals().then((meals) => {
@@ -30,12 +35,6 @@ const SplashMenu = () => {
     });
     return () => (mounted = false);
   }, []);
-  const [meals, setMeals] = useState([]);
-  const [filteredMeals, setFilteredMeals] = useState(
-    []
-  );
-  const [filterMealTime, setFilterMealTime] = useState('all');
-  const [filterMealPreferences, setFilterMealPreferences] = useState('all');
 
   const newHandleFilterChange = (event) => {
     let timeFilter = false;

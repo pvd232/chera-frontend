@@ -21,7 +21,7 @@ const About = () => {
             color={customTheme.palette.black.main}
             fontWeight={'500'}
           >
-            Meet the Team
+            Meet the team
           </Typography>
         </CardContent>
       </Grid>
@@ -54,9 +54,9 @@ const About = () => {
                 paddingTop={'5vh'}
               >
                 Here at Chera, our clients are at the heart of everything we do.
-                Through a blend of personalized meal preparation, catered
+                Through a blend of personalized meal preparation, intentional
                 labeling and packaging, and high precision nutrition data, we
-                empower our clients to stay committed to their meal plans.
+                empower our clients to stay comitted to regular eating.
               </Typography>
             </Stack>
             <Stack
@@ -110,9 +110,10 @@ const About = () => {
                 textAlign={'center'}
               >
                 At Chera, we understand that there can be so many obstacles
-                between our clients and eating disorder recovery. In our work,
-                we hope to ease the burden by providing individualized, prepared
-                meals with the guidance of our client’s dietitians.
+                between our clients and eating disorder recovery. Through our
+                platform, we hope to ease the burden by providing
+                individualized, prepared meals with the guidance of our client’s
+                dietitians.
               </Typography>
 
               <Typography

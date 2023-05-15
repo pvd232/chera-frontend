@@ -28,7 +28,7 @@ const FNCEApproved = () => {
             marginBottom: customTheme.smallerScreen() ? '5vh' : '',
           }}
         >
-          Dietitian Vetted & Approved
+          Dietitian vetted & approved
         </Typography>
       </Grid>
       {customTheme.largerScreen() ? (

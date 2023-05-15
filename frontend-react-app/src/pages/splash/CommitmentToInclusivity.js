@@ -23,7 +23,7 @@ const CommitmentToInclusivity = (props) => (
         textAlign={'center'}
         mb={props.customTheme.pages.splash.spacing.header}
       >
-        Commitment to Inclusivity
+        Commitment to inclusivity
       </Typography>
       <Stack spacing={5}>
         <Typography
