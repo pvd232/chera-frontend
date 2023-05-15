@@ -1,7 +1,7 @@
 import LocalStorageManager from '../../helpers/LocalStorageManager.js';
 import Grid from '@mui/material/Grid';
 import { useState } from 'react';
-import DeliveryInfo from './DeliveryInfo';
+import DeliveryForm from './DeliveryForm';
 import APIClient from '../../helpers/APIClient';
 import DiscountOrderSummary from './discount_order_summary/DiscountOrderSummary';
 
@@ -46,7 +46,7 @@ const Checkout = (props) => {
         lg={props.stagedClient.mealsPrepaid ? '' : 5}
       >
         {/* Address and Phone Number */}
-        <DeliveryInfo
+        <DeliveryForm
           updateEditAddress={() => {
             setEditAddress((prevEditAddress) => !prevEditAddress);
           }}

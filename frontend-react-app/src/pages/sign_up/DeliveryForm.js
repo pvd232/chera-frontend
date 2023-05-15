@@ -12,7 +12,7 @@ import APIClient from '../../helpers/APIClient';
 import BlackButton from '../../reusable_ui_components/BlackButton';
 import capitalize from '../../helpers/capitalize';
 import BlueCircularProgress from '../../reusable_ui_components/BlueCircularProgress';
-const DeliveryInfo = (props) => {
+const DeliveryForm = (props) => {
   const customTheme = useTheme();
   const [addressSelectError, setAddressSelectError] = useState(false);
   const [addressValueError, setAddressValueError] = useState(false);
@@ -321,4 +321,4 @@ const DeliveryInfo = (props) => {
     </form>
   );
 };
-export default DeliveryInfo;
+export default DeliveryForm;

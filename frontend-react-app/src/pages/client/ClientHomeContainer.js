@@ -73,6 +73,7 @@ const ClientHomeContainer = () => {
   if (mealSubscription && extendedMeals && snacks) {
     return (
       <ClientHome
+        stripeCustomerId={LocalStorageManager.shared.client.stripe_id}
         clientId={LocalStorageManager.shared.client.id}
         mealSubscription={mealSubscription}
         snacks={snacks}

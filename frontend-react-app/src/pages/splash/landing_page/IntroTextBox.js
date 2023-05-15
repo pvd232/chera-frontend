@@ -38,14 +38,7 @@ const IntroTextBox = (props) => {
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
-                Eating disorder recovery is hard.
-              </Typography>
-              <Typography
-                fontSize={customTheme.pages.splash.fontSize.header}
-                textAlign={'center'}
-                fontWeight={'bold'}
-              >
-                We want to make it a little easier.
+                Simplifying meal planning for eating disorder recovery.
               </Typography>
             </Grid>
             <Grid item lg={12}>

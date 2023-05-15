@@ -752,6 +752,18 @@ class APIClient {
     await this.fetchWrapper(request, requestParams);
     return;
   }
+  async deleteStripeCustomer(stripeCustomerId) {
+    const requestUrl = this.baseUrl + `/stripe/customer/${stripeCustomerId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'DELETE',
+      mode: this.mode,
+      cache: 'default',
+    };
+    await this.fetchWrapper(request, requestParams);
+    return;
+  }
   async createStripeSubscription(
     numberOfMeals,
     numberOfSnacks,

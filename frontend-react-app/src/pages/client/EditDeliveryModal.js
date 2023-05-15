@@ -126,13 +126,19 @@ const EditDeliveryModal = (props) => {
                       APIClient.deleteStripeSubscription(
                         props.mealSubscription.stripeSubscriptionId
                       ).then(() => {
-                        APIClient.deactivateClient(props.clientId).then(() => {
-                          APIClient.deactivateMealSubscription(
-                            props.clientId
-                          ).then(() => {
-                            setLoadingDeleteSubscription(false);
-                            props.handleDeleteSubscription();
-                          });
+                        APIClient.deleteStripeCustomer(
+                          props.stripeCustomerId
+                        ).then(() => {
+                          APIClient.deactivateClient(props.clientId).then(
+                            () => {
+                              APIClient.deactivateMealSubscription(
+                                props.clientId
+                              ).then(() => {
+                                setLoadingDeleteSubscription(false);
+                                props.handleDeleteSubscription();
+                              });
+                            }
+                          );
                         });
                       });
                     });

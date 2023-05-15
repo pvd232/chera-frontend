@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import LocalStorageManager from '../../helpers/LocalStorageManager.js';
-import ClientMenu from './client_menu/ClientMenu';
-import AccountRegistration from './account_registration/AccountRegistration';
-import Checkout from './Checkout.js';
 import APIClient from '../../helpers/APIClient';
 import MealSubscription from '../../data_models/model/MealSubscription.js';
 import MealSubscriptionDTO from '../../data_models/dto/MealSubscriptionDTO.js';
@@ -16,11 +13,15 @@ import ClientDTO from '../../data_models/dto/ClientDTO';
 import ClientPreSelectedMenu from './client_menu/ClientPreSelectedMenu.js';
 import ScheduleMealDTO from '../../data_models/dto/ScheduleMealDTO.js';
 import ScheduledOrderMealDTO from '../../data_models/dto/ScheduledOrderMealDTO.js';
+import ScheduleSnackDTO from '../../data_models/dto/ScheduleSnackDTO.js';
+import ScheduledOrderSnackDTO from '../../data_models/dto/ScheduledOrderSnackDTO.js';
 import createInitialOrderMeals from './helpers/createInitialOrderMeals.js';
 import createInitialOrderSnacks from './helpers/createInitialOrderSnacks.js';
 import Payment from './Payment.js';
-import ScheduleSnackDTO from '../../data_models/dto/ScheduleSnackDTO.js';
-import ScheduledOrderSnackDTO from '../../data_models/dto/ScheduledOrderSnackDTO.js';
+import Checkout from './Checkout.js';
+import ClientMenu from './client_menu/ClientMenu';
+import AccountRegistration from './account_registration/AccountRegistration';
+
 const SignUpPage = (props) => {
   const [clientSecret, setClientSecret] = useState(false);
   const [stripeSubscriptionId, setStripeSubscriptionId] = useState(false);
