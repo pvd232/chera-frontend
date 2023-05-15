@@ -46,7 +46,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'Pick Weekly Meals'}
             bodyText={
-              'Client creates account and chooses their weekly meals. (Dietitian may also preselect meals for their client)'
+              'Client creates account and chooses their weekly meals. (Dietitian may also preselect meals)'
             }
             symbolName={'dinner_dining'}
           />
@@ -56,7 +56,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'We Cook and Ship Meals'}
             bodyText={
-              'Meals fined tuned to a meal plan are shipped with discreet packaging and delivered on Monday.'
+              'Personalized, dietitian approved meals are shipped with discreet packaging and delivered on Monday.'
             }
             symbolName={'delivery_dining_outlined'}
           />
