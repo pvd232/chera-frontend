@@ -37,13 +37,13 @@ const ContactUs = () => {
             <span>
               {' '}
               <a
-                href="mailto:contact@bendito.io"
+                href="mailto:contact@cherahealth.com"
                 style={{
                   color: `${customTheme.palette.black.main}`,
                   fontWeight: 'bold',
                 }}
               >
-                contact@bendito.io
+                contact@cherahealth.com
               </a>
             </span>{' '}
             and we will get back to you by end of day!

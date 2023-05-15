@@ -38,14 +38,14 @@ const IntroTextBox = (props) => {
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
-                Meal planning is hard.
+                Eating disorder recovery is hard.
               </Typography>
               <Typography
                 fontSize={customTheme.pages.splash.fontSize.header}
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
-                We make it easy.
+                We make it a little bit easier.
               </Typography>
             </Grid>
             <Grid item lg={12}>
