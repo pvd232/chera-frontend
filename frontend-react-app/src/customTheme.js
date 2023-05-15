@@ -132,7 +132,7 @@ const themeBase = createTheme({
       fontSize: {
         header: fontEqualizer(32, false),
         subHeader: fontEqualizer(20, false),
-        button: fontEqualizer(18, false),
+        button: fontEqualizer(16, false),
       },
       spacing: {
         pages: { padding: '12vh' },
