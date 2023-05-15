@@ -665,6 +665,22 @@ class APIClient {
 
     return returnedMealSubscriptionData;
   }
+  async deactivateMealSubscription(mealSubscriptionId) {
+    const requestUrl =
+      this.baseUrl + `/meal_subscription/${mealSubscriptionId}`;
+
+    const requestHeaders = new Headers();
+    requestHeaders.set('update', 'deactivate');
+
+    const requestParams = {
+      method: 'PUT',
+      headers: requestHeaders,
+      mode: this.mode,
+      cache: 'default',
+    };
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
   async createOrderDiscount(orderDiscount) {
     const requestUrl = this.baseUrl + '/order_discount';
     const requestParams = {
@@ -757,6 +773,21 @@ class APIClient {
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(requestBody),
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+
+    const stripeData = await response.json();
+    return stripeData;
+  }
+  async deleteStripeSubscription(stripeSubscriptionId) {
+    const requestUrl =
+      this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'DELETE',
       mode: this.mode,
       cache: 'default',
     };
@@ -873,6 +904,19 @@ class APIClient {
     const clientJSON = await response.json();
     return clientJSON;
   }
+  async deactivateClient(clientId) {
+    const requestUrl = this.baseUrl + `/client/${clientId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'PUT',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const clientJSON = await response.json();
+    return clientJSON;
+  }
   async updateClient(clientData) {
     const requestUrl = this.baseUrl + '/client';
 
@@ -921,22 +965,6 @@ class APIClient {
 
     const requestHeaders = new Headers();
     requestHeaders.set('update', 'unpause');
-
-    const requestParams = {
-      method: 'PUT',
-      headers: requestHeaders,
-      mode: this.mode,
-      cache: 'default',
-    };
-    await this.fetchWrapper(requestUrl, requestParams);
-    return;
-  }
-  // TODO implement this in UI and backend
-  async deactivateMealSubscription(mealSubscriptionId) {
-    const requestUrl = `${this.baseUrl}/meal_subscription/${mealSubscriptionId}`;
-
-    const requestHeaders = new Headers();
-    requestHeaders.set('update', 'deactivate');
 
     const requestParams = {
       method: 'PUT',
@@ -1524,14 +1552,18 @@ class APIClient {
     const responseJSON = await response.json();
     console.log('responseJSON', responseJSON);
 
-    const addressIsValid = !responseJSON.result.address.hasOwnProperty(
-      'missingComponentTypes'
+    const addressIsComplete =
+      responseJSON.result.verdict.hasOwnProperty('addressComplete');
+    const addressHasIncorrectSuite = responseJSON.result.verdict.hasOwnProperty(
+      'hasUnconfirmedComponents'
     );
     const uspsAddressObject = responseJSON.result.uspsData.standardizedAddress;
-    if (addressIsValid) {
+    console.log('addressIsComplete', addressIsComplete);
+    console.log('addressHasIncorrectSuite', addressHasIncorrectSuite);
+    if (addressIsComplete && !addressHasIncorrectSuite) {
       return uspsAddressObject;
     } else {
-      return addressIsValid;
+      return false;
     }
   }
 }

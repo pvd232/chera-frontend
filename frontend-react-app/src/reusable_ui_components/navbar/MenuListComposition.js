@@ -10,6 +10,7 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import { useTheme } from '@mui/material/styles';
+import logoutUser from '../../helpers/logoutUser';
 
 const MenuListComposition = (props) => {
   const customTheme = useTheme();
@@ -19,9 +20,8 @@ const MenuListComposition = (props) => {
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
-  const handleLogOut = async () => {
-    props.logoutUser();
-    window.location.assign('/');
+  const handleLogout = () => {
+    logoutUser();
   };
   const handleClose = (event) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
@@ -126,7 +126,7 @@ const MenuListComposition = (props) => {
                 >
                   <MenuItem
                     id="log-out-button"
-                    onClick={handleLogOut}
+                    onClick={handleLogout}
                     sx={customTheme.smallerScreen() ? { py: 0 } : {}}
                   >
                     <Typography fontSize={customTheme.linkText}>

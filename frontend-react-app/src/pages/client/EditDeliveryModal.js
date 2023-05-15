@@ -2,6 +2,7 @@ import { useTheme } from '@mui/material/styles';
 import { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -15,6 +16,7 @@ import ClientMenu from '../sign_up/client_menu/ClientMenu';
 import getNextDeliveryDate from './helpers/getNextDeliveryDate';
 import checkUpcomingDelivery from './helpers/checkUpcomingDelivery';
 import canMakeChanges from './helpers/canMakeChanges';
+import { FormControlLabel, FormGroup } from '@mui/material';
 const EditDeliveryModal = (props) => {
   const customTheme = useTheme();
 
@@ -22,6 +24,14 @@ const EditDeliveryModal = (props) => {
   const [loading, setLoading] = useState(false);
   const [loadingPauseSubscription, setLoadingPauseSubscription] =
     useState(false);
+  const [loadingDeleteSubscription, setLoadingDeleteSubscription] =
+    useState(false);
+  const [confirmDeleteSubscription, setConfirmDeleteSubscription] =
+    useState(false);
+  const [
+    confirmDeleteSubscriptionUsername,
+    setConfirmDeleteSubscriptionUsername,
+  ] = useState('');
   const [editMeals, setEditMeals] = useState(false);
   const [canMakeChangesToCurrentWeek, setCanMakeChangesToCurrentWeek] =
     useState(false);
@@ -30,6 +40,8 @@ const EditDeliveryModal = (props) => {
     setOpen(true);
   };
   const handleClose = () => {
+    setConfirmDeleteSubscription(false);
+    setConfirmDeleteSubscriptionUsername('');
     setEditMeals(false);
     setOpen(false);
   };
@@ -98,6 +110,40 @@ const EditDeliveryModal = (props) => {
       );
     });
   };
+
+  const handleDeleteSubscription = async () => {
+    confirmDeleteSubscriptionUsername === props.clientId
+      ? (() => {
+          setLoadingDeleteSubscription(true);
+          APIClient.deleteScheduleMeals(props.mealSubscription.id).then(() => {
+            APIClient.deleteScheduledOrderMeals(props.mealSubscription.id).then(
+              () => {
+                APIClient.deleteScheduleSnacks(props.mealSubscription.id).then(
+                  () => {
+                    APIClient.deleteScheduledOrderSnacks(
+                      props.mealSubscription.id
+                    ).then(() => {
+                      APIClient.deleteStripeSubscription(
+                        props.mealSubscription.stripeSubscriptionId
+                      ).then(() => {
+                        APIClient.deactivateClient(props.clientId).then(() => {
+                          APIClient.deactivateMealSubscription(
+                            props.clientId
+                          ).then(() => {
+                            setLoadingDeleteSubscription(false);
+                            props.handleDeleteSubscription();
+                          });
+                        });
+                      });
+                    });
+                  }
+                );
+              }
+            );
+          });
+        })()
+      : alert('Please enter your username to confirm deletion.');
+  };
   const handleChangeMeals = async () => {
     const ableToChangeCurrentWeek = canMakeChanges(props.selectedDeliveryIndex);
     const isFirstDelivery = await APIClient.checkIfFirstWeek(
@@ -133,7 +179,6 @@ const EditDeliveryModal = (props) => {
         {!editMeals ? (
           <>
             <Typography
-              fontFamily={'Inter'}
               fontSize={customTheme.fontEqualizer(24)}
               textAlign={'center'}
               marginTop={'40px'}
@@ -142,7 +187,6 @@ const EditDeliveryModal = (props) => {
             </Typography>
             <DialogContent>
               <Typography
-                fontFamily={'Inter'}
                 fontSize={customTheme.fontEqualizer(16)}
                 textAlign={'center'}
               >
@@ -153,7 +197,6 @@ const EditDeliveryModal = (props) => {
               </Typography>
               {checkUpcomingDelivery(props.extendedScheduledOrderMeals) && (
                 <Typography
-                  fontFamily={'Inter'}
                   fontSize={customTheme.fontEqualizer(16)}
                   paddingBottom={'20px'}
                   fontWeight={'bold'}
@@ -182,7 +225,6 @@ const EditDeliveryModal = (props) => {
               )}
 
               <Typography
-                fontFamily={'Inter'}
                 fontSize={customTheme.fontEqualizer(16)}
                 textAlign={'center'}
                 mt={2}
@@ -223,7 +265,6 @@ const EditDeliveryModal = (props) => {
             </DialogActions>
             <DialogContent>
               <Typography
-                fontFamily={'Inter'}
                 fontSize={customTheme.fontEqualizer(16)}
                 textAlign={'center'}
               >
@@ -245,7 +286,6 @@ const EditDeliveryModal = (props) => {
             </DialogActions>{' '}
             <DialogContent>
               <Typography
-                fontFamily={'Inter'}
                 fontSize={customTheme.fontEqualizer(16)}
                 textAlign={'center'}
               >
@@ -280,6 +320,46 @@ const EditDeliveryModal = (props) => {
                     )}
                   </OrangeButtonWhiteText>
                 )}
+              </Grid>
+            </DialogActions>{' '}
+            <DialogActions>
+              <Grid container justifyContent={'center'} marginBottom={'40px'}>
+                {confirmDeleteSubscription ? (
+                  <FormGroup>
+                    <FormControlLabel>
+                      <Typography
+                        fontSize={customTheme.fontEqualizer(16)}
+                        textAlign={'center'}
+                      >
+                        Deleting your subscription will delete your account and
+                        cancel all future deliveries. It cannot be undone.
+                        Please enter your username to confirm.
+                      </Typography>
+                    </FormControlLabel>
+
+                    <TextField
+                      id="confirm-delete-subscription"
+                      value={confirmDeleteSubscriptionUsername}
+                      onChange={(e) =>
+                        setConfirmDeleteSubscriptionUsername(e.target.value)
+                      }
+                    ></TextField>
+                  </FormGroup>
+                ) : null}
+                <OrangeButtonWhiteText
+                  id="deactivate-subscription-button"
+                  onClick={
+                    confirmDeleteSubscription
+                      ? () => handleDeleteSubscription()
+                      : () => setConfirmDeleteSubscription(true)
+                  }
+                >
+                  {loadingDeleteSubscription ? (
+                    <BlueCircularProgress />
+                  ) : (
+                    'Delete subscription'
+                  )}
+                </OrangeButtonWhiteText>
               </Grid>
             </DialogActions>{' '}
           </>

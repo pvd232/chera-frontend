@@ -16,6 +16,7 @@ import ExtendedMealFactory from '../../../data_models/factories/model/ExtendedMe
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
 import DeliveryDateUtility from '../../../helpers/DeliveryDateUtility';
 import APIClient from '../../../helpers/APIClient';
+import logoutUser from '../../../helpers/logoutUser';
 import DeliveryInfo from './DeliveryInfo';
 import CalendarSelector from './CalendarSelector';
 import PausedEditDelivery from './PausedEditDelivery';
@@ -150,6 +151,10 @@ const ClientHome = (props) => {
   const mealsByMealTimeMap = (() => {
     return getMealsByMealTimeMap(props.extendedMeals);
   })();
+
+  const handleDeleteSubscription = () => {
+    logoutUser();
+  };
 
   const handleFinishEditing = async () => {
     const refreshedMeals = await refreshScheduledOrderMeals(
@@ -531,6 +536,7 @@ const ClientHome = (props) => {
               }
             />
             <DeliveryInfo
+              clientId={props.clientId}
               loading={loading}
               customTheme={customTheme}
               mealSubscription={props.mealSubscription}
@@ -559,6 +565,7 @@ const ClientHome = (props) => {
                 setPaused(false);
               }}
               handleUpdateFoodData={handleUpdateFoodData}
+              handleDeleteSubscription={handleDeleteSubscription}
             ></DeliveryInfo>
             <CurrentMeals
               customTheme={customTheme}

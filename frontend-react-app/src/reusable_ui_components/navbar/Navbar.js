@@ -74,7 +74,10 @@ const Navbar = (props) => {
                   ) : props.domain === 'client' ? (
                     <ClientLinks
                       customTheme={customTheme}
-                      logoutUser={() => LocalStorageManager.shared.logoutUser()}
+                      logoutUser={() => {
+                        LocalStorageManager.shared.logoutUser();
+                        window.location.assign('/');
+                      }}
                       firstName={LocalStorageManager.shared.client.firstName}
                     />
                   ) : (

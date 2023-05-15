@@ -70,9 +70,10 @@ const ClientHomeContainer = () => {
     return () => (mounted = false);
   }, []);
 
-  if (mealSubscription && extendedMeals) {
+  if (mealSubscription && extendedMeals && snacks) {
     return (
       <ClientHome
+        clientId={LocalStorageManager.shared.client.id}
         mealSubscription={mealSubscription}
         snacks={snacks}
         extendedMeals={extendedMeals}

@@ -81,6 +81,7 @@ const DeliveryInfo = (props) => {
           marginBottom={props.customTheme.smallerScreen() ? '4vh' : ''}
         >
           <EditDeliveryModal
+            clientId={props.clientId}
             buttonText={'Edit delivery'}
             handleFinishEditing={props.handleFinishEditing}
             selectedDeliveryIndex={props.selectedDeliveryIndex}
@@ -97,6 +98,7 @@ const DeliveryInfo = (props) => {
             pauseMealSubscription={() => props.pauseMealSubscription()}
             unpauseMealSubscription={() => props.unpauseMealSubscription()}
             handleUpdateFoodData={props.handleUpdateFoodData}
+            handleDeleteSubscription={props.handleDeleteSubscription}
           ></EditDeliveryModal>
         </Grid>
         {props.editing === true ? (

@@ -5,24 +5,18 @@ import SearchLocationInput from './SearchLocationInput';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 import APIClient from '../../helpers/APIClient';
 import BlackButton from '../../reusable_ui_components/BlackButton';
 import capitalize from '../../helpers/capitalize';
-import getStatesData from './helpers/getStatesData';
 import BlueCircularProgress from '../../reusable_ui_components/BlueCircularProgress';
 const DeliveryInfo = (props) => {
   const customTheme = useTheme();
   const [addressSelectError, setAddressSelectError] = useState(false);
   const [addressValueError, setAddressValueError] = useState(false);
   const [suiteError, setSuiteError] = useState(false);
-  const [zipCodeError, setZipcodeError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -43,8 +37,6 @@ const DeliveryInfo = (props) => {
       state: '',
       zipcode: '',
       zipcodeExtension: '',
-      uspsFirstAddressLine: '',
-      uspsSecondAddressLine: '',
       phoneNumber: '',
       datetime: Date.now(),
       notes: '',
@@ -112,7 +104,6 @@ const DeliveryInfo = (props) => {
 
   const validate = async (form) => {
     const status = form.checkValidity();
-    setZipcodeError(false);
     setPhoneError(false);
     setAddressSelectError(false);
     setSuiteError(false);
@@ -120,17 +111,12 @@ const DeliveryInfo = (props) => {
       if (formValue.address === '' || formValue.street === '') {
         setAddressSelectError(true);
         return false;
-      } else if (
-        isNaN(Number(formValue.zipcode)) ||
-        String(formValue.zipcode).length < 5
-      ) {
-        setZipcodeError(true);
-        return false;
       } else if (isNaN(Number(formValue.phoneNumber !== 'number'))) {
         setPhoneError(true);
         return false;
       } else {
         const validAddress = await APIClient.validateAddress(formValue);
+        console.log('validAddress', validAddress);
         if (!validAddress) {
           setSuiteError(true);
           return false;
@@ -144,13 +130,14 @@ const DeliveryInfo = (props) => {
       return form.reportValidity();
     }
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
     const form = event.target;
 
+    const validated = await validate(form);
     // Check that all required values have been populated before triggering button click
-    if (validate(form)) {
+    if (validated) {
       const newClient = new Client(formValue);
       props.handleSubmit(newClient);
     } else {
@@ -211,35 +198,19 @@ const DeliveryInfo = (props) => {
                     }}
                   />
                   <TextField
-                    autoComplete="new-password"
-                    required
+                    disabled={true}
                     fullWidth
                     label={'City'}
                     id="city"
-                    onChange={handleInput}
                     value={formValue.city}
                   />
-                  <FormControl fullWidth>
-                    <InputLabel>State *</InputLabel>
-                    <Select
-                      autoComplete={'new-password'}
-                      required
-                      id="state"
-                      value={formValue.state}
-                      label="State *"
-                      onChange={handleInput}
-                    >
-                      {getStatesData().map((state) => (
-                        <MenuItem
-                          value={`${state.Code}`}
-                          key={`${state.Code}`}
-                          name={state.Code}
-                        >
-                          {state.State}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    disabled={true}
+                    fullWidth
+                    label={'State'}
+                    id="state"
+                    value={formValue.state}
+                  />
                 </Stack>
               </Grid>
               <Grid item xs={5.5}>
@@ -254,27 +225,26 @@ const DeliveryInfo = (props) => {
                     value={formValue.lastName}
                   />
                   <FormHelperText hidden={!suiteError} error={true}>
-                    Please enter your APT, Suite, etc.
+                    {formValue.suite === ''
+                      ? 'Please enter your APT, Suite, etc.'
+                      : 'Please enter a correct APT, Suite, etc.'}
                   </FormHelperText>
                   <TextField
                     autoComplete="new-password"
                     fullWidth
-                    label={'Apt, Suite, etc. (Ex: Apt 1B)'}
+                    label={'APT, Suite, etc. (Ex: APT 1B)'}
                     id="suite"
                     onChange={handleInput}
                     value={formValue.suite}
                   />
-                  <FormHelperText hidden={!zipCodeError} error={true}>
-                    Please enter a valid zipcode
-                  </FormHelperText>
+
                   <TextField
+                    disabled={true}
                     autoComplete="new-password"
-                    type="tel"
-                    required
+                    type="text"
                     fullWidth
                     label={'Zipcode'}
                     id="zipcode"
-                    onChange={handleInput}
                     value={formValue.zipcode}
                   />
                   <FormHelperText hidden={!phoneError} error={true}>
