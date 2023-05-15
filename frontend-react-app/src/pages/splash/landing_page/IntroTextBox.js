@@ -47,8 +47,8 @@ const IntroTextBox = (props) => {
                 textAlign={'center'}
                 fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
-                Chera is a community of dietitians, doctors, and engineers
-                dedicated to eating disorder recovery.
+                Chera is a team of dietitians, doctors, and engineers dedicated
+                to eating disorder recovery.
               </Typography>
             </Grid>
             <BlackButton
