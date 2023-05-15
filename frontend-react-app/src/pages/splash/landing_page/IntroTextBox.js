@@ -38,7 +38,8 @@ const IntroTextBox = (props) => {
                 textAlign={'center'}
                 fontWeight={'bold'}
               >
-                Simplifying meal planning for eating disorder recovery.
+                Simplifying regular eating and meal planning for eating disorder
+                recovery.
               </Typography>
             </Grid>
             <Grid item lg={12}>
