@@ -4,14 +4,11 @@ import CardContent from '@mui/material/CardContent';
 import FormGroup from '@mui/material/FormGroup';
 import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useReducer, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import React from 'react';
-
+import FormHelperText from '@mui/material/FormHelperText';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import APIClient from '../../../helpers/APIClient';
 import DietitianDTO from '../../../data_models/dto/DietitianDTO';
@@ -19,14 +16,35 @@ import Dietitian from '../../../data_models/model/Dietitian';
 import BlackButton from '../../../reusable_ui_components/BlackButton';
 import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
-import getStatesData from '../../sign_up/helpers/getStatesData';
-import { TextField } from '@mui/material';
-const DietitianSignUp = React.forwardRef((props, ref) => {
+import CustomTextField from './CustomTextField';
+import SearchLocationInput from '../../sign_up/SearchLocationInput';
+const DietitianSignUp = () => {
   const customTheme = useTheme();
 
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [addressValueError, setAddressValueError] = useState(false);
+  const [formValue, setFormValue] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      id: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      dieteticRegistrationNumber: '',
+      street: '',
+      suite: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      clinicUrl: '',
+      datetime: Date.now(),
+      clients: [],
+      active: true,
+      admin: false,
+    }
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -86,203 +104,194 @@ const DietitianSignUp = React.forwardRef((props, ref) => {
     }
     return form.checkValidity();
   };
+  const handleAddress = async (address) => {
+    setAddressValueError(false);
+    if (address.split(',').length === 4) {
+      const addressObject = {};
+      addressObject.address = address;
+      const addressArray = address.split(',');
+      addressObject.street = addressArray[0].trim();
+      addressObject.city = addressArray[1].trim();
+      const stateZipcodeArray = addressArray[2].split(' ');
+      addressObject.state = stateZipcodeArray[1];
+      addressObject.zipcode = stateZipcodeArray[2];
+      if (
+        !addressObject.address ||
+        !addressObject.city ||
+        !addressObject.state ||
+        !addressObject.street ||
+        !addressObject.zipcode
+      ) {
+        setAddressValueError(true);
+        return false;
+      }
+      const validAddress = await APIClient.validateAddress(addressObject);
+      if (!validAddress) {
+        setAddressValueError(true);
+        return false;
+      }
+      const suiteWasInputted = (() => {
+        // Get suite data from address components - too difficult to parse from address string
+        for (const addressComponent of validAddress.address.addressComponents) {
+          if (addressComponent.componentType === 'subpremise') {
+            addressObject.suite = addressComponent.componentName.text;
+            return true;
+          }
+        }
+      })();
 
-  const [formValue, setFormValue] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      id: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      dieteticRegistrationNumber: '',
-      clinicCity: '',
-      clinicState: '',
-      clinicUrl: '',
-      datetime: Date.now(),
-      clients: [],
-      active: true,
-      admin: false,
+      if (!suiteWasInputted) {
+        addressObject.suite = formValue.suite;
+      }
+      setFormValue(addressObject);
+    } else {
+      setAddressValueError(true);
+      return false;
     }
-  );
-
+  };
   return (
     <Grid
-      item
       container
-      xs={12}
-      alignItems="stretch"
       justifyContent={'center'}
       py={customTheme.pages.splash.spacing.pages}
-      px={0}
       sx={{
-        backgroundColor: customTheme.palette.lightGrey.secondary,
+        backgroundColor: customTheme.palette.fucia2.light,
       }}
-      ref={ref}
     >
-      <CardContent>
-        <Typography
-          fontSize={customTheme.pages.splash.fontSize.header}
-          color={customTheme.palette.black.main}
-          textAlign={'center'}
-          fontWeight={'500'}
-          sx={{
-            mb: customTheme.pages.splash.spacing.header.marginBottom,
-          }}
-        >
-          Dietitian Sign Up
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <FormGroup>
-            <Stack
-              direction={'column'}
-              rowGap={3.5}
-              width={'80%'}
-              sx={{ mx: 'auto' }}
-            >
-              <FormControl variant="filled">
-                <ErrorMessage error={error} />
-                <TextField
-                  required
-                  fullWidth
-                  label="Email"
-                  id="id"
-                  type="email"
-                  sx={{
-                    backgroundColor: '#fcfcfb',
-                  }}
-                  onChange={handleInput}
-                  value={formValue.id}
-                />
-              </FormControl>
-              <FormControl variant="filled">
-                <TextField
-                  required
-                  type="password"
-                  autoComplete={'new-password'}
-                  fullWidth
-                  label="Choose a password"
-                  id="password"
-                  sx={{
-                    backgroundColor: '#fcfcfb',
-                  }}
-                  onChange={handleInput}
-                  value={formValue.password}
-                />
-              </FormControl>
-              <FormControl variant="filled">
-                <TextField
-                  required
-                  fullWidth
-                  label="First name"
-                  id="firstName"
-                  sx={{
-                    backgroundColor: '#fcfcfb',
-                  }}
-                  onChange={handleInput}
-                  value={formValue.firstName}
-                />
-              </FormControl>
-              <FormControl variant="filled">
-                <TextField
-                  required
-                  fullWidth
-                  label="Last name"
-                  id="lastName"
-                  sx={{
-                    backgroundColor: '#fcfcfb',
-                  }}
-                  onChange={handleInput}
-                  value={formValue.lastName}
-                />
-              </FormControl>
-              <FormControl variant="filled">
-                <RegistrationErrorMessage error={registrationError} />
+      <Grid item lg={4} md={6} xs={10}>
+        <CardContent>
+          <Typography
+            className="splash-page-title"
+            fontSize={customTheme.pages.splash.fontSize.header}
+            marginBottom={customTheme.pages.splash.spacing.header.marginBottom}
+          >
+            Dietitian sign up
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <FormGroup>
+              <Stack direction={'column'} rowGap={2}>
+                <FormControl variant="filled">
+                  <ErrorMessage error={error} />
+                  <CustomTextField
+                    required
+                    fullWidth
+                    label="Email"
+                    id="id"
+                    type="email"
+                    sx={{
+                      backgroundColor: '#fcfcfb',
+                    }}
+                    onChange={handleInput}
+                    value={formValue.id}
+                  />
+                </FormControl>
+                <FormControl variant="filled">
+                  <CustomTextField
+                    required
+                    type="password"
+                    autoComplete={'new-password'}
+                    fullWidth
+                    label="Choose a password"
+                    id="password"
+                    sx={{
+                      backgroundColor: '#fcfcfb',
+                    }}
+                    onChange={handleInput}
+                    value={formValue.password}
+                  />
+                </FormControl>
+                <FormControl variant="filled">
+                  <CustomTextField
+                    required
+                    fullWidth
+                    label="First name"
+                    id="firstName"
+                    sx={{
+                      backgroundColor: '#fcfcfb',
+                    }}
+                    onChange={handleInput}
+                    value={formValue.firstName}
+                  />
+                </FormControl>
+                <FormControl variant="filled">
+                  <CustomTextField
+                    required
+                    fullWidth
+                    label="Last name"
+                    id="lastName"
+                    sx={{
+                      backgroundColor: '#fcfcfb',
+                    }}
+                    onChange={handleInput}
+                    value={formValue.lastName}
+                  />
+                </FormControl>
+                <FormControl variant="filled">
+                  <RegistrationErrorMessage error={registrationError} />
 
-                <TextField
+                  <CustomTextField
+                    sx={{
+                      backgroundColor: '#fcfcfb',
+                    }}
+                    required
+                    fullWidth
+                    label="Dietetic registration number"
+                    id="dieteticRegistrationNumber"
+                    onChange={handleInput}
+                    value={formValue.dieteticRegistrationNumber}
+                  />
+                </FormControl>
+                <FormControl variant="filled">
+                  <CustomTextField
+                    required
+                    fullWidth
+                    label="Clinic website url"
+                    id="clinicUrl"
+                    sx={{
+                      backgroundColor: '#fcfcfb',
+                    }}
+                    type="url"
+                    onChange={handleInput}
+                    value={formValue.clinicUrl}
+                    autoComplete={'off'}
+                  />
+                </FormControl>
+                <FormControl variant="filled">
+                  <FormHelperText
+                    hidden={!addressValueError}
+                    error={true}
+                    sx={{ marginBottom: '2vh' }}
+                  >
+                    You chose an invalid address. Please choose another address
+                    from the dropdown.
+                  </FormHelperText>
+                  <SearchLocationInput
+                    dietitianInput={true}
+                    street={formValue.street}
+                    onUpdate={(address) => handleAddress(address)}
+                  />
+                </FormControl>
+                <BlackButton
+                  id="dietRegSubmit"
+                  disabled={loading}
+                  variant="contained"
+                  type={'submit'}
                   sx={{
-                    backgroundColor: '#fcfcfb',
+                    px: 2,
+                    py: 1,
+                    mt: 2,
+
+                    fontSize: customTheme.smallScreen() ? '.7rem' : '.9rem',
                   }}
-                  required
-                  fullWidth
-                  label="Dietetic registration number"
-                  id="dieteticRegistrationNumber"
-                  onChange={handleInput}
-                  value={formValue.dieteticRegistrationNumber}
-                />
-              </FormControl>
-              <FormControl variant="filled">
-                <TextField
-                  required
-                  fullWidth
-                  label="Clinic website url"
-                  id="clinicUrl"
-                  sx={{
-                    backgroundColor: '#fcfcfb',
-                  }}
-                  type="url"
-                  onChange={handleInput}
-                  value={formValue.clinicUrl}
-                  autoComplete={'off'}
-                />
-              </FormControl>
-              <FormControl variant="filled">
-                <TextField
-                  label="Clinic City"
-                  sx={{
-                    backgroundColor: '#fcfcfb',
-                  }}
-                  required
-                  fullWidth
-                  id="clinicCity"
-                  onChange={handleInput}
-                  value={formValue.clinicCity}
-                  autoComplete={'off'}
-                />
-              </FormControl>
-              <FormControl variant="filled">
-                <InputLabel>Clinic state</InputLabel>
-                <Select
-                  sx={{
-                    backgroundColor: '#fcfcfb',
-                  }}
-                  autoComplete={'off'}
-                  required
-                  id="state"
-                  value={formValue.state}
-                  label="Clinic State *"
-                  onChange={handleInput}
                 >
-                  {getStatesData().map((state) => (
-                    <MenuItem
-                      value={`${state.Code}`}
-                      key={`${state.Code}`}
-                      name={state.Code}
-                    >
-                      {state.State}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <BlackButton
-                id="dietRegSubmit"
-                disabled={loading}
-                variant="contained"
-                type={'submit'}
-                sx={{
-                  px: 2,
-                  py: 1,
-                  mt: 2,
-
-                  fontSize: customTheme.smallScreen() ? '.7rem' : '.9rem',
-                }}
-              >
-                {loading ? <CircularProgress size={24} /> : 'Submit'}
-              </BlackButton>
-            </Stack>
-          </FormGroup>
-        </form>
-      </CardContent>
+                  {loading ? <CircularProgress size={24} /> : 'Submit'}
+                </BlackButton>
+              </Stack>
+            </FormGroup>
+          </form>
+        </CardContent>
+      </Grid>
     </Grid>
   );
-});
+};
 export default DietitianSignUp;

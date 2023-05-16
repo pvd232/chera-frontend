@@ -1,0 +1,30 @@
+.splash-page-container {
+  padding-top: 10vh;
+  padding-bottom: 15vh;
+}
+p.splash-page-title {
+  font-family: 'Inter Bold';
+  line-height: 100%;
+  text-align: center;
+  color: #d4218d;
+}
+p.splash-secondary-text {
+  line-height: 100%;
+  color: #d4218d;
+}
+.splash-theme-text {
+  color: #d4218d;
+}
+.splash-theme-filled {
+  background-color: #d4218d;
+}
+button.splash-theme-filled {
+  background-color: #d4218d;
+}
+
+.splash-light-theme-text {
+  color: #ffedf8;
+}
+.splash-light-theme-filled {
+  background-color: #ffedf8;
+}

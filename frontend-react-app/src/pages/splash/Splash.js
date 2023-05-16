@@ -1,6 +1,5 @@
 import Grid from '@mui/material/Grid';
 
-import { useRef } from 'react';
 import { useTheme } from '@mui/material/styles';
 import HowItWorks from './how_it_works/HowItWorks';
 import About from './About';
@@ -12,14 +11,17 @@ import FNCEApproved from './FNCEApproved';
 import DietitianSignUp from './dietitian_sign_up/DietitianSignUp';
 const Splash = () => {
   const customTheme = useTheme();
-  const myRef = useRef();
-  const executeScroll = () =>
-    myRef.current.scrollIntoView({ behavior: 'smooth' });
-
   return (
-    <Grid container justifyContent={'center'} marginBottom={'20vh'}>
-      <Grid container item>
-        <LandingPage customTheme={customTheme} executeScroll={executeScroll} />
+    <Grid
+      container
+      justifyContent={'center'}
+      marginBottom={'20vh'}
+      sx={{
+        backgroundColor: customTheme.palette.fucia2.light,
+      }}
+    >
+      <Grid item>
+        <LandingPage customTheme={customTheme} />
       </Grid>
       <Grid container item>
         <HowItWorks customTheme={customTheme} />
@@ -31,12 +33,12 @@ const Splash = () => {
         <FNCEApproved customTheme={customTheme} />
       </Grid>
 
-      <Grid container item>
+      {/* <Grid container item>
         <DietitianSignUp customTheme={customTheme} ref={myRef} />
-      </Grid>
-      <Grid container item>
+      </Grid> */}
+      {/* <Grid container item>
         <FAQs customTheme={customTheme} />
-      </Grid>
+      </Grid> */}
       <Grid container item>
         <About customTheme={customTheme} />
       </Grid>

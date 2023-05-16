@@ -129,7 +129,14 @@ export default function SearchLocationInput(props) {
         setInputValue(newInputValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Address *" fullWidth />
+        <TextField
+          {...params}
+          label="Address *"
+          fullWidth
+          sx={{
+            backgroundColor: props.dietitianInput ? '#fcfcfb' : '',
+          }}
+        />
       )}
       renderOption={(props, option) => {
         const matches =

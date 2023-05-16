@@ -84,17 +84,24 @@ const DeliveryForm = (props) => {
         setAddressValueError(true);
         return false;
       }
-      const numberZipcode = Number(addressObject.zipcode);
-      if (isNaN(numberZipcode)) {
+      const validAddress = await APIClient.validateAddress(addressObject);
+      if (!validAddress) {
         setAddressValueError(true);
         return false;
       }
-      if (Array.from(addressObject.zipcode)[0] !== '0') {
-        addressObject.zipcode = numberZipcode;
+      const suiteWasInputted = (() => {
+        // Get suite data from address components - too difficult to parse from address string
+        for (const addressComponent of validAddress.address.addressComponents) {
+          if (addressComponent.componentType === 'subpremise') {
+            addressObject.suite = addressComponent.componentName.text;
+            return true;
+          }
+        }
+      })();
+
+      if (!suiteWasInputted) {
+        addressObject.suite = formValue.suite;
       }
-
-      addressObject.suite = formValue.suite;
-
       setFormValue(addressObject);
     } else {
       setAddressValueError(true);
@@ -116,12 +123,12 @@ const DeliveryForm = (props) => {
         return false;
       } else {
         const validAddress = await APIClient.validateAddress(formValue);
-        console.log('validAddress', validAddress);
         if (!validAddress) {
           setSuiteError(true);
           return false;
         } else {
-          setFormValue({ zipcodeExtension: validAddress.zipcodeExtension });
+          const uspsAddress = validAddress.uspsData.standardizedAddress;
+          setFormValue({ zipcodeExtension: uspsAddress.zipcodeExtension });
           return true;
         }
       }
@@ -189,13 +196,7 @@ const DeliveryForm = (props) => {
                   </FormHelperText>
                   <SearchLocationInput
                     street={formValue.street}
-                    onUpdate={(address, isStreet = false) => {
-                      if (isStreet) {
-                        setFormValue({ street: address.trim() });
-                      } else {
-                        handleAddress(address);
-                      }
-                    }}
+                    onUpdate={(address) => handleAddress(address)}
                   />
                   <TextField
                     disabled={true}

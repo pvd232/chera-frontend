@@ -1,0 +1,17 @@
+.logistics-step-icon-container {
+  border-radius: 50%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+span.logistics-step-icon {
+  font-size: 2.75rem;
+}
+p.logistics-step-header {
+  text-align: center;
+  font-family: 'Inter Bold';
+}
+p.logistics-step-body-text {
+  text-align: left;
+}

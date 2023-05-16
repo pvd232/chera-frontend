@@ -1,78 +1,66 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import CardContent from '@mui/material/CardContent';
 import { useTheme } from '@mui/material/styles';
 import BlackButton from '../../../reusable_ui_components/BlackButton';
-
+import '../css/Splash.css';
+import './css/IntroTextBox.css';
+import { useNavigate } from 'react-router-dom';
 const IntroTextBox = (props) => {
   const customTheme = useTheme();
+  const navigate = useNavigate();
   return (
     <Grid
       container
       item
-      lg={10}
-      justifyContent={'center'}
-      sx={{ position: 'absolute', top: '22%', bottom: '25%' }}
+      xs={10}
+      justifyContent={customTheme.smallerScreen() ? 'center' : 'flex-start'}
     >
-      <CardContent>
-        <div
-          style={{
-            boxShadow: customTheme.border.boxShadow.medium,
-            padding: '15vh 5vw',
-            boxSizing: 'border-box',
-            borderRadius: '10px',
-            backgroundColor: 'rgba(255, 255, 255, 0.375)',
-          }}
-        >
-          <Grid
-            item
-            container
-            xs={12}
-            justifyContent={'center'}
-            alignItems={'center'}
-            height={'100%'}
+      <Grid
+        container
+        item
+        className="intro-text-box-container splash-theme-text"
+      >
+        <Grid item order={0}>
+          <Typography
+            className="intro-text-box-header"
+            fontSize={customTheme.pages.splash.fontSize.header}
+            textAlign={customTheme.smallerScreen() ? 'center' : 'left'}
           >
-            <Grid item mb={5}>
-              <Typography
-                fontSize={customTheme.pages.splash.fontSize.header}
-                textAlign={'center'}
-                fontWeight={'bold'}
-              >
-                Simplifying regular eating and meal planning for
-              </Typography>
-              <Typography
-                fontSize={customTheme.pages.splash.fontSize.header}
-                textAlign={'center'}
-                fontWeight={'bold'}
-              >
-                eating disorder recovery.
-              </Typography>
-            </Grid>
-            <Grid item lg={12}>
-              <Typography
-                textAlign={'center'}
-                fontSize={customTheme.pages.splash.fontSize.subHeader}
-              >
-                Chera is a team of dietitians, doctors, and engineers dedicated
-                to eating disorder recovery.
-              </Typography>
-            </Grid>
-            <BlackButton
-              variant={'contained'}
-              onClick={props.executeScroll}
-              id="getStartedButton"
-              sx={{
-                fontSize: customTheme.pages.splash.fontSize.button,
-                marginTop: '5vh',
-                padding: '1.8vh 2.2vh',
-                borderRadius: '30px',
-              }}
-            >
-              Get started
-            </BlackButton>
-          </Grid>
-        </div>
-      </CardContent>
+            Simplifying meal planning for
+          </Typography>
+          <Typography
+            className="intro-text-box-header"
+            fontSize={customTheme.pages.splash.fontSize.header}
+            textAlign={customTheme.smallerScreen() ? 'center' : 'left'}
+          >
+            eating disorder recovery
+          </Typography>
+        </Grid>
+        <Grid item order={1}>
+          <Typography
+            fontSize={customTheme.pages.splash.fontSize.subHeader}
+            textAlign={customTheme.smallerScreen() ? 'center' : 'left'}
+          >
+            Chera seeks to enable faster, sustainable recovery by promoting
+            regular eating habits.
+          </Typography>
+        </Grid>
+        <Grid
+          item
+          container
+          order={2}
+          justifyContent={customTheme.smallerScreen() ? 'center' : 'flex-start'}
+        >
+          <BlackButton
+            variant={'contained'}
+            onClick={() => navigate('/dietitian-sign-up')}
+            id="getStartedButton"
+            className="splash-filled-button splash-theme-filled"
+          >
+            Get started
+          </BlackButton>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };

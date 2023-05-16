@@ -7,6 +7,8 @@ import { useTheme } from '@mui/material/styles';
 import splashImage2 from '../../../static/images/splash_image_2_blue.png';
 import ListOfReasons from './ListOfReasons';
 import CalendlyButton from './CalendlyButton';
+import '../css/Splash.css';
+
 const WhyUs = () => {
   const customTheme = useTheme();
   const [reasonOpen, setReasonOpen] = useReducer(
@@ -32,11 +34,12 @@ const WhyUs = () => {
     <>
       <Grid item xs={11}>
         <Typography
+          className="splash-page-title"
+          fontSize={customTheme.pages.splash.fontSize.header}
           sx={{
-            fontSize: customTheme.pages.splash.fontSize.header,
-
-            fontWeight: '500',
-            textAlign: customTheme.smallerScreen() ? 'center' : 'left',
+            textAlign: customTheme.smallerScreen()
+              ? 'center !important'
+              : 'left !important',
           }}
           color={customTheme.palette.black.main}
         >
@@ -79,9 +82,8 @@ const WhyUs = () => {
       item
       justifyContent={'space-around'}
       rowGap={5}
+      className="splash-page-container"
       sx={{
-        backgroundColor: customTheme.pages.splash.color.lightBlue,
-        py: customTheme.pages.splash.spacing.pages,
         paddingLeft: customTheme.smallerScreen()
           ? '0vw'
           : customTheme.extraLargeScreen()

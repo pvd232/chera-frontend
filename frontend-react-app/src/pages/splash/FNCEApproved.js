@@ -6,60 +6,34 @@ import cheraPlusFNCE from '../../static/images/chera_plus_fnce.png';
 import logo from '../../static/images/chera_logo.png';
 import academy2 from '../../static/images/eat_right_logo_5.png';
 import { useTheme } from '@mui/material/styles';
-
+import './css/FNCEApproved.css';
 const FNCEApproved = () => {
   const customTheme = useTheme();
   return (
     <Grid
       item
       container
-      justifyContent={'center'}
-      rowSpacing={customTheme.largerScreen() ? '10vh' : '5vh'}
-      columnSpacing={5}
-      py={customTheme.pages.splash.spacing.pages}
-      px={0}
+      className="fnce-approved-container splash-page-container"
     >
       <Grid item xs={10}>
         <Typography
-          sx={{
-            fontSize: customTheme.pages.splash.fontSize.header,
-            fontWeight: '500',
-            textAlign: 'center',
-            marginBottom: customTheme.smallerScreen() ? '5vh' : '',
-          }}
+          className="splash-page-title"
+          fontSize={customTheme.pages.splash.fontSize.header}
+          mb={customTheme.largerScreen() ? '10vh' : '5vh'}
         >
           Dietitian vetted & approved
         </Typography>
       </Grid>
       {customTheme.largerScreen() ? (
         <>
-          <Grid item container justifyContent={'center'}>
-            <img src={cheraPlusFNCE} height="50vh" alt="chera plus fnce"></img>
+          <Grid item>
+            <img src={cheraPlusFNCE} height="55vh" alt="chera plus fnce"></img>
           </Grid>
-          <Grid
-            item
-            container
-            lg={6}
-            md={9}
-            justifyContent={'space-evenly'}
-            alignItems={'center'}
-            rowSpacing={2}
-          >
-            <Grid item>
-              <Typography
-                sx={{
-                  fontSize: customTheme.fontEqualizer(22),
-
-                  fontWeight: '500',
-                  textAlign: 'center',
-                }}
-              >
-                Proud to have been chosen as an exhibitor at
-              </Typography>
-            </Grid>
-            <Grid item>
-              <img src={FNCElogo} height={'75vh'} alt="" />
-            </Grid>
+          <Grid item>
+            <Typography fontSize={'3rem'}>=</Typography>
+          </Grid>
+          <Grid item>
+            <img src={FNCElogo} height={'80vh'} alt="" />
           </Grid>
         </>
       ) : (

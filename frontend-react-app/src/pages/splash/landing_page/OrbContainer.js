@@ -45,11 +45,6 @@ const OrbContainer = () => {
           backgroundAlpha: 0,
         }}
         width={window.innerWidth}
-        height={
-          customTheme.smallerScreen()
-            ? window.innerHeight * 1.2
-            : window.innerHeight
-        }
       >
         <KawaseBlurFilterImpl
           blur={{ blur: 30, quality: 10 }}

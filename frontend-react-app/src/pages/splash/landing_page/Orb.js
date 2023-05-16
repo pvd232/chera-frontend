@@ -4,7 +4,6 @@ import { useTick } from '@pixi/react';
 import getOrbBounds from './helpers/getOrbBounds';
 import randomNum from './helpers/randomNum';
 import getOrbPosition from './helpers/getOrbPosition';
-import normalizeDimensions from './helpers/normalizeDimensions';
 import incrementOrbData from './helpers/incrementOrbData';
 import updateOrb from './helpers/updateOrb';
 const Orb = forwardRef((props, ref) => {
@@ -24,7 +23,7 @@ const Orb = forwardRef((props, ref) => {
         if (props.smallerScreen) {
           return randomNum(window.innerWidth / 7, window.innerWidth / 5);
         } else {
-          return randomNum(window.innerHeight / 9, window.innerHeight / 6);
+          return randomNum(window.innerHeight / 11, window.innerHeight / 8);
         }
       })();
 
@@ -39,10 +38,10 @@ const Orb = forwardRef((props, ref) => {
       g.drawCircle(
         props.smallerScreen
           ? 0
-          : randomNum(0.2 * (window.innerWidth / 4), window.innerWidth * 0.6),
+          : randomNum(2 * (window.innerWidth / 4), 3 * (window.innerWidth / 4)),
         props.smallerScreen
-          ? window.innerHeight * 0.75
-          : window.innerHeight * 0.65,
+          ? window.innerHeight * 0.45
+          : window.innerHeight * 0.55,
         radius
       );
       // Let graphics know we won't be filling in any more shapes
@@ -57,14 +56,8 @@ const Orb = forwardRef((props, ref) => {
     const updatedValues = (() => {
       // If the orb has moved to it's destination, update the destination
       if (
-        Math.abs(
-          orbRef.current.position.x -
-            normalizeDimensions(orbData.xPosition, false, bounds)
-        ) <= xDelta &&
-        Math.abs(
-          orbRef.current.position.y -
-            normalizeDimensions(false, orbData.yPosition, bounds)
-        ) <= yDelta &&
+        Math.abs(orbRef.current.position.x - orbData.xPosition) <= xDelta &&
+        Math.abs(orbRef.current.position.y - orbData.yPosition) <= yDelta &&
         Math.abs(orbRef.current.scale.x - orbData.scale) <= scaleDelta
       ) {
         const updatedValues = updateOrb(
@@ -81,9 +74,9 @@ const Orb = forwardRef((props, ref) => {
       }
     })();
     const newCoordinates = incrementOrbData(
-      normalizeDimensions(updatedValues.xPosition, false, bounds),
+      updatedValues.xPosition,
       orbRef.current.x,
-      normalizeDimensions(false, updatedValues.yPosition, bounds),
+      updatedValues.yPosition,
       orbRef.current.y,
       updatedValues.scale,
       orbRef.current.scale.x,

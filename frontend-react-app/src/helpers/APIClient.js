@@ -1569,11 +1569,9 @@ class APIClient {
     const addressHasIncorrectSuite = responseJSON.result.verdict.hasOwnProperty(
       'hasUnconfirmedComponents'
     );
-    const uspsAddressObject = responseJSON.result.uspsData.standardizedAddress;
-    console.log('addressIsComplete', addressIsComplete);
-    console.log('addressHasIncorrectSuite', addressHasIncorrectSuite);
+    const addressResult = responseJSON.result;
     if (addressIsComplete && !addressHasIncorrectSuite) {
-      return uspsAddressObject;
+      return addressResult;
     } else {
       return false;
     }

@@ -19,6 +19,10 @@ const themeBase = createTheme({
       main: '#ff3e56',
       secondary: '#ffd5da',
     },
+    fucia2: {
+      solid: '#D4218D',
+      light: '#FFEDF8',
+    },
     blue: {
       main: '#5AA9E6',
       secondary: '#7FC8F8',
@@ -130,8 +134,8 @@ const themeBase = createTheme({
   pages: {
     splash: {
       fontSize: {
-        header: fontEqualizer(32, false),
-        subHeader: fontEqualizer(20, false),
+        header: fontEqualizer(40, false),
+        subHeader: fontEqualizer(18, false),
         button: fontEqualizer(13, false),
       },
       spacing: {

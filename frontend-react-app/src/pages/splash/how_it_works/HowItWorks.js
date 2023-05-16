@@ -1,72 +1,68 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import LogisticsStep from './LogisticsStep';
+import '../css/Splash.css';
+import './css/HowItWorks.css';
 const HowItWorks = (props) => {
   return (
     <Grid
+      className="how-it-works-container splash-page-container"
       container
       item
-      justifyContent={'center'}
-      py={props.customTheme.pages.splash.spacing.pages}
-      px={0}
-      my={props.customTheme.largerScreen() ? '10vh' : '10vh'}
     >
-      <Grid item xs={12} lg={10} sx={{ padding: '0 !important' }}>
+      <Grid item xs={12} lg={10}>
         <Typography
-          sx={{
-            fontSize: props.customTheme.pages.splash.fontSize.header,
-            fontWeight: '500',
-            textAlign: 'center',
-          }}
-          mb={props.customTheme.largerScreen() ? 10 : 5}
+          fontSize={props.customTheme.pages.splash.fontSize.header}
+          className="splash-page-title"
+          mb={props.customTheme.largerScreen() ? '10vh' : '5vh'}
         >
-          How it works
+          How Chera works
         </Typography>
       </Grid>
       <Grid
         item
         container
+        xs={10.5}
         justifyContent={
           props.customTheme.largerScreen() ? 'space-evenly' : 'center'
         }
-        rowSpacing={5}
       >
-        <Grid item lg={2.5} md={5} xs={10}>
+        <Grid item lg={2.8} md={5} xs={10}>
           <LogisticsStep
             customTheme={props.customTheme}
-            headerText={'Dietitian Refers Client'}
+            headerText={'Dietitian refers client'}
             bodyText={
-              'Add clients via our dashboard and select which of our ten different meal plans best fit their needs.'
+              'Simple interface for adding clients and selecting a meal plan that best fits their needs.'
             }
             symbolName={'format_list_numbered'}
           />
         </Grid>
-        <Grid item lg={2.5} md={5} xs={10}>
+        <Grid item lg={2.8} md={5} xs={10}>
           <LogisticsStep
             customTheme={props.customTheme}
-            headerText={'Pick Weekly Meals'}
+            headerText={'Pick weekly meals'}
             bodyText={
-              'Client creates account and chooses their weekly meals. (Dietitian may also preselect meals)'
+              'Client creates account and chooses weekly meals and snacks. (Dietitian may also preselect meals)'
             }
             symbolName={'dinner_dining'}
           />
         </Grid>
-        <Grid item lg={2.5} md={5} xs={10}>
+        <Grid item lg={2.8} md={5} xs={10}>
           <LogisticsStep
             customTheme={props.customTheme}
-            headerText={'We Cook and Ship Meals'}
+            headerText={'We cook and ship meals'}
             bodyText={
-              'Personalized, dietitian approved meals are shipped with discreet packaging and delivered on Monday.'
+              'Personalized, dietitian approved meals thoughtfully labeled and home delivered.'
             }
             symbolName={'delivery_dining_outlined'}
           />
         </Grid>
-        <Grid item lg={2.5} md={5} xs={10}>
+        <Grid item lg={2.8} md={5} xs={10}>
           <LogisticsStep
             customTheme={props.customTheme}
-            headerText={'Heat, Sit Back and Enjoy'}
+            headerText={'Heat, sit back and enjoy'}
             bodyText={
-              'Simple instructions + microwave safe packaging = ready to go in minutes! Skip a week or cancel anytime.'
+              'Simple instructions + microwave safe = ready in minutes! Skip a week or pause deliveries anytime.'
             }
             symbolName={'sentiment_very_satisfied_outlined'}
           />

@@ -5,25 +5,42 @@ import Icon from '@mui/material/Icon';
 import { Stack } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-
+import './css/ReasonBullet.css';
+import '../css/Splash.css';
 const ReasonBullet = (props) => (
   <Grid
     item
     container
-    justifyContent={'flex-start'}
-    alignItems={'center'}
-    my={2}
-    mx={0}
-    px={1}
+    className="reason-bullet-container"
     onClick={props.setReasonOpen}
+    sx={{
+      backgroundColor: props.reasonOpen
+        ? `${props.customTheme.palette.fucia2.solid} !important`
+        : '',
+      borderTopLeftRadius: props.edgeBullet ? '15px' : '',
+      borderTopRightRadius: props.edgeBullet ? '15px' : '',
+    }}
   >
-    <Grid item justifyContent={'center'} alignContent={'center'}>
-      <Icon fontSize="large">{props.icon}</Icon>
+    <Grid item className="reason-bullet-icon-container">
+      <Icon
+        fontSize="large"
+        sx={{
+          color: props.reasonOpen
+            ? `${props.customTheme.palette.white1.main} !important`
+            : '',
+        }}
+      >
+        {props.icon}
+      </Icon>
     </Grid>
     <Grid item>
       <CardContent>
         <Typography
-          fontWeight={500}
+          className={
+            props.reasonOpen
+              ? 'reason-bullet-header-open'
+              : 'reason-bullet-header-closed'
+          }
           fontSize={props.customTheme.fontEqualizer(18)}
         >
           {props.bulletPrimaryText}
@@ -33,10 +50,8 @@ const ReasonBullet = (props) => (
     <Grid item container lg={1} xs={1} sx={{ marginLeft: 'auto' }}>
       <Stack>
         <div
+          className="arrow-container"
           style={{
-            padding: '0px',
-            display: 'flex',
-            borderRadius: '50%',
             backgroundColor: `${props.customTheme.palette.lightGrey.secondary}`,
           }}
         >
@@ -51,12 +66,21 @@ const ReasonBullet = (props) => (
     <Grid container item>
       <CardContent
         sx={{
+          paddingTop: '0px !important',
           paddingBottom: '16px !important',
           paddingLeft: '0px !important',
           display: props.reasonOpen ? 'block' : 'none',
         }}
       >
-        <Typography>{props.bulletSecondaryText}</Typography>
+        <Typography
+          className={
+            props.reasonOpen
+              ? 'reason-bullet-body-open'
+              : 'reason-bullet-body-closed'
+          }
+        >
+          {props.bulletSecondaryText}
+        </Typography>
       </CardContent>
     </Grid>
   </Grid>

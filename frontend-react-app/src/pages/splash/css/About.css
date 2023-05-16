@@ -1,0 +1,22 @@
+.about-page-container {
+  row-gap: 15vh;
+}
+.about-profile-container {
+  align-items: center;
+  justify-content: space-evenly;
+}
+.about-quote-text {
+  text-align: left;
+  font-style: italic;
+  color: black;
+}
+.about-quote-name-text {
+  text-align: left;
+  font-family: 'Inter Bold';
+  color: black;
+}
+.about-quote-job-title-text {
+  text-align: left;
+  font-style: italic;
+  color: black;
+}

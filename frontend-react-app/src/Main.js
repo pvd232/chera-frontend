@@ -24,6 +24,7 @@ import DietitianMenu from './pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './pages/splash/resources/Resources';
 import SignUpPage from './pages/sign_up/ClientSignUp';
 import SnackBuilder from './pages/admin/snack_builder/SnackBuilder';
+import DietitianSignUp from './pages/splash/dietitian_sign_up/DietitianSignUp';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -84,6 +85,12 @@ const Main = (props) => {
               }
               domain={'dietitian'}
             />
+          }
+        />
+        <Route
+          path="/dietitian-sign-up"
+          element={
+            <Navbar childComponent={<DietitianSignUp />} domain={'splash'} />
           }
         />
         <Route

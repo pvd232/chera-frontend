@@ -9,44 +9,35 @@ import LocalStorageManager from '../../helpers/LocalStorageManager';
 import SplashLinks from './SplashLinks';
 import ClientLinks from './ClientLinks';
 import DietitianLinks from './DietitianLinks';
-
+import './css/Navbar.css';
 const Navbar = (props) => {
   const customTheme = useTheme();
   return (
     <>
-      <Grid
-        container
-        sx={{
-          height: 'auto',
-        }}
-      >
+      <Grid container>
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar
-            position="static"
-            sx={{ backgroundColor: 'white', boxShadow: 0 }}
-          >
+          <AppBar position="static" className="appbar">
             <Toolbar
+              className="navbar"
               sx={{
-                minHeight: '50px',
-                py: 3,
+                backgroundColor: customTheme.palette.fucia2.light,
               }}
             >
               <Grid
                 container
-                alignItems="flex-end"
+                className="logo-container"
                 justifyContent={
                   customTheme.smallerScreen() ? 'center' : 'flex-start'
                 }
                 rowGap={customTheme.smallerScreen() ? 3 : 0}
-                mr={2}
-                ml={2}
+                px={2}
               >
                 <Grid item>
                   <RRLink to={LocalStorageManager.shared.homeUrl}>
                     <img
+                      className="logo-image"
                       src={logo}
                       alt="chera logo"
-                      style={{ height: '6vh' }}
                     ></img>
                   </RRLink>
                 </Grid>
