@@ -12,7 +12,7 @@
 
 # 1. Open your machine's terminal, and navigate to the directory called "frontend-react-app"
 
-# 2. Type "yarn add" and press enter -> Your console should begin installing the dependent Javascript libraries into a folder called "node_modules" in the frontend-react-app folder
+# 2. Type "yarn install" and press enter -> Your console should begin installing the dependent Javascript libraries into a folder called "node_modules" in the frontend-react-app folder
 
 # 3. When installation has completed, enter "yarn start" into your terminal, this will start the React application. To shut down the application, enter "ctrl" and "c" at the same time into the terminal, or close the terminal window. This is how you will start / shut down the application every time you begin working. It is best practice to start up and shut down the application each day.
 
