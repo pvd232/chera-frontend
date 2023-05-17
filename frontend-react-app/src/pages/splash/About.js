@@ -199,7 +199,7 @@ const About = () => {
                 className="about-quote-job-title-text"
                 fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
-                CEO
+                Chief Culinary Officer
               </Typography>
             </Grid>
           </Grid>
