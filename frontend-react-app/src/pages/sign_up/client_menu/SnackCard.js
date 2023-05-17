@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
-import logo from '../../../static/images/bendito-small.png';
+import logo from '../../../static/images/chera_logo.png';
 const SnackCard = (props) => {
   return (
     <Card

@@ -1,4 +1,4 @@
-import logo from '../../../static/images/bendito-small.png';
+import logo from '../../../static/images/chera_logo.png';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';

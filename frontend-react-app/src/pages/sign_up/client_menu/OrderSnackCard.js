@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
-import logo from '../../../static/images/bendito-small.png';
+import logo from '../../../static/images/chera_logo.png';
 
 const OrderSnackCard = (props) => (
   <Card
