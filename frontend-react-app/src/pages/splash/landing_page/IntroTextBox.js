@@ -41,8 +41,8 @@ const IntroTextBox = (props) => {
             fontSize={customTheme.pages.splash.fontSize.subHeader}
             textAlign={customTheme.smallerScreen() ? 'center' : 'left'}
           >
-            Chera seeks to enable faster, sustainable recovery by promoting
-            regular eating habits.
+            Chera enables faster, sustainable recovery by promoting regular
+            eating habits.
           </Typography>
         </Grid>
         <Grid

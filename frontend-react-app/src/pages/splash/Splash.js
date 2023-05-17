@@ -42,9 +42,9 @@ const Splash = () => {
       <Grid container item>
         <About customTheme={customTheme} />
       </Grid>
-      <Grid container item>
+      {/* <Grid container item>
         <CommitmentToInclusivity customTheme={customTheme} />
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 };

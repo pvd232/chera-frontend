@@ -3,10 +3,10 @@ import Stack from '@mui/material/Stack';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import fncePic from '../../static/images/me_at_fnce.jpg';
-import anyaPic from '../../static/images/anya.jpg';
+import anyaPic from '../../static/images/anya_circle.png';
 import zoePic from '../../static/images/zoe.jpg';
-import carolPic from '../../static/images/carol_greece.jpg';
-import titiPic from '../../static/images/titi.jpg';
+import carolPic from '../../static/images/carol_standing_circle.png';
+import titiPic from '../../static/images/titi_circle.png';
 import { useTheme } from '@mui/material/styles';
 import './css/Splash.css';
 import './css/About.css';
@@ -44,19 +44,47 @@ const About = () => {
               alt="me at FNCE"
             ></img>
           </Grid>
-          <Grid container item lg={5} flexDirection={'column'} rowSpacing={1.5}>
+          <Grid
+            container
+            item
+            lg={6.1}
+            flexDirection={'column'}
+            rowSpacing={'1vh'}
+          >
             <Grid item>
               <Typography
                 className="about-quote-text"
                 fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
-                "Here at Chera, our clients are at the heart of everything we
-                do. Through a blend of personalized meal preparation,
-                intentional labeling and packaging, and high precision nutrition
-                data, we empower our clients to stay comitted to regular
-                eating."
+                "For too long the technology, healthcare, and insurance
+                industries have neglected or outright dismissed the needs of
+                those among who us suffer from eating disorders. I founded Chera
+                to change that.
               </Typography>
             </Grid>
+            <Grid item></Grid>
+            <Grid item>
+              <Typography
+                className="about-quote-text"
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
+              >
+                Eating disorder recovery is at the heart of everything we do. We
+                are constantly innovating around ways we can help our clients
+                both recover faster and relapse less frequently.
+              </Typography>
+            </Grid>
+            <Grid item></Grid>
+
+            <Grid item>
+              <Typography
+                className="about-quote-text"
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
+              >
+                We believe in a better future for eating disorder recovery, and
+                we are so excited to be working towards it."
+              </Typography>
+            </Grid>
+            <Grid item></Grid>
             <Grid item>
               <Typography
                 className="about-quote-name-text"
@@ -86,7 +114,13 @@ const About = () => {
               alt="me at FNCE"
             ></img>
           </Grid>
-          <Grid container item lg={5} flexDirection={'column'} rowSpacing={1.5}>
+          <Grid
+            container
+            item
+            lg={6.1}
+            flexDirection={'column'}
+            rowSpacing={1.5}
+          >
             <Grid item>
               <Typography
                 className="about-quote-text"
@@ -95,20 +129,24 @@ const About = () => {
                 "At Chera, we understand that there can be so many obstacles
                 between our clients and eating disorder recovery. Through our
                 platform, we hope to ease the burden by providing
-                individualized, prepared meals with the guidance of our client’s
-                dietitians."
+                individualized, prepared meals with the guidance of our clients'
+                dietitians.
               </Typography>
             </Grid>
+            <Grid item></Grid>
+
             <Grid item>
               <Typography
                 className="about-quote-text"
                 fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
-                "The journey to recovery is not something you have to do alone,
+                The journey to recovery is not something you have to do alone,
                 and we at Chera hope to be a part of your support along the
                 way."
               </Typography>
             </Grid>
+            <Grid item></Grid>
+
             <Grid item>
               <Typography
                 className="about-quote-name-text"
@@ -128,197 +166,113 @@ const About = () => {
             </Grid>
           </Grid>
         </Grid>
-        {/* <Grid
-        item
-        xs={11}
-        sx={{
-          marginLeft: 'auto',
-          marginRight: customTheme.smallerScreen() ? '5vw' : '',
-        }}
-      >
-        <CardContent
-          sx={{ backgroundColor: customTheme.pages.splash.color.lightBlue }}
-        >
-          <Stack spacing={10} mt={'10vh'}>
-            <Grid container item justifyContent={'center'}>
+        {/* Rest of profiles */}
+        <Grid container item justifyContent={'space-around'}>
+          {/* Carol profile */}
+          <Grid
+            item
+            container
+            lg={4}
+            flexDirection={'column'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            rowSpacing={'1vh'}
+          >
+            <Grid item>
               <img
-                src={zoePic}
-                height={customTheme.smallerScreen() ? '250vh' : '600vh'}
+                src={carolPic}
+                height={customTheme.smallerScreen() ? '150vh' : '230vh'}
                 alt="me at FNCE"
               ></img>
             </Grid>
-            <Typography
-              fontFamily={'Inter'}
-              fontSize={customTheme.pages.about.fontSize.body}
-              paddingTop={'5vh'}
-              color={customTheme.palette.black.main}
-              textAlign={'center'}
-            >
-              At Chera, we understand that there can be so many obstacles
-              between our clients and eating disorder recovery. Through our
-              platform, we hope to ease the burden by providing individualized,
-              prepared meals with the guidance of our client’s dietitians.
-            </Typography>
-
-            <Typography
-              fontFamily={'Inter'}
-              fontSize={customTheme.pages.about.fontSize.body}
-              color={customTheme.palette.black.main}
-              textAlign={'center'}
-            >
-              The journey to recovery is not something you have to do alone, and
-              we at Chera hope to be a part of your support along the way.
-            </Typography>
-          </Stack>
-          <Stack
-            justifyContent={'center'}
-            sx={{ marginTop: '10vh', marginBottom: '5vh' }}
-          >
-            <Typography
-              fontFamily={'Inter'}
-              fontSize={customTheme.pages.about.fontSize.signature}
-              color={customTheme.palette.black.main}
-              textAlign={'center'}
-              fontWeight={'bold'}
-            >
-              Zoe Woloszko, MCN, RD, LD
-            </Typography>
-            <Typography
-              fontFamily={'Inter'}
-              fontSize={customTheme.pages.about.fontSize.signature}
-              color={customTheme.palette.black.main}
-              textAlign={'center'}
-            >
-              Chief Clinical Officer
-            </Typography>
-          </Stack>
-        </CardContent>
-      </Grid> */}
-        <Grid
-          item
-          xs={11}
-          marginLeft={customTheme.smallerScreen() ? '5vw' : ''}
-        >
-          <CardContent
-            sx={{
-              backgroundColor: customTheme.palette.lightGrey.secondary,
-            }}
-          >
-            <Stack spacing={10} mt={'10vh'}>
-              <Grid container item justifyContent={'center'}>
-                <img
-                  src={carolPic}
-                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
-                  alt="me at FNCE"
-                ></img>
-              </Grid>
-            </Stack>
-            <Stack
-              justifyContent={'center'}
-              sx={{ marginTop: '10vh', marginBottom: '5vh' }}
-            >
+            <Grid item>
               <Typography
-                fontFamily={'Inter'}
-                fontSize={customTheme.pages.about.fontSize.signature}
-                color={customTheme.palette.black.main}
-                textAlign={'center'}
-                fontWeight={'bold'}
+                className="about-quote-name-text"
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
                 Carol Spiliotis
               </Typography>
+            </Grid>
+
+            <Grid item>
               <Typography
-                fontFamily={'Inter'}
-                fontSize={customTheme.pages.about.fontSize.signature}
-                color={customTheme.palette.black.main}
-                textAlign={'center'}
+                className="about-quote-job-title-text"
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
-                Chief Culinary Officer
+                CEO
               </Typography>
-            </Stack>
-          </CardContent>
-        </Grid>
-        <Grid
-          item
-          xs={11}
-          marginRight={customTheme.smallerScreen() ? '5vw' : ''}
-          sx={{ marginLeft: 'auto' }}
-        >
-          <CardContent
-            sx={{
-              backgroundColor: customTheme.pages.splash.color.lightBlue,
-            }}
+            </Grid>
+          </Grid>
+          {/* Anya profile */}
+          <Grid
+            item
+            container
+            lg={4}
+            flexDirection={'column'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            rowSpacing={'1vh'}
           >
-            <Stack spacing={10} mt={'10vh'}>
-              <Grid container item justifyContent={'center'}>
-                <img
-                  src={anyaPic}
-                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
-                  alt="me at FNCE"
-                ></img>
-              </Grid>
-            </Stack>
-            <Stack
-              justifyContent={'center'}
-              sx={{ marginTop: '10vh', marginBottom: '5vh' }}
-            >
+            <Grid item>
+              <img
+                src={anyaPic}
+                height={customTheme.smallerScreen() ? '150vh' : '230vh'}
+                alt="me at FNCE"
+              ></img>
+            </Grid>
+            <Grid item>
               <Typography
-                fontFamily={'Inter'}
-                fontSize={customTheme.pages.about.fontSize.signature}
-                color={customTheme.palette.black.main}
-                textAlign={'center'}
-                fontWeight={'bold'}
+                className="about-quote-name-text"
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
                 Anya Zeng
               </Typography>
+            </Grid>
+
+            <Grid item>
               <Typography
-                fontFamily={'Inter'}
-                fontSize={customTheme.pages.about.fontSize.signature}
-                color={customTheme.palette.black.main}
-                textAlign={'center'}
+                className="about-quote-job-title-text"
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
                 Lead UX Designer
               </Typography>
-            </Stack>
-          </CardContent>
-        </Grid>
-        <Grid item xs={9} marginLeft={customTheme.smallerScreen() ? '5vw' : ''}>
-          <CardContent
-            sx={{
-              backgroundColor: customTheme.palette.lightGrey.secondary,
-            }}
+            </Grid>
+          </Grid>
+          {/* Titi profile */}
+          <Grid
+            item
+            container
+            lg={4}
+            flexDirection={'column'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            rowSpacing={'1vh'}
           >
-            <Stack spacing={10} mt={'10vh'}>
-              <Grid container item justifyContent={'center'}>
-                <img
-                  src={titiPic}
-                  height={customTheme.smallerScreen() ? '250vh' : '600vh'}
-                  alt="me at FNCE"
-                ></img>
-              </Grid>
-            </Stack>
-            <Stack
-              justifyContent={'center'}
-              sx={{ marginTop: '10vh', marginBottom: '5vh' }}
-            >
+            <Grid item>
+              <img
+                src={titiPic}
+                height={customTheme.smallerScreen() ? '150vh' : '230vh'}
+                alt="me at FNCE"
+              ></img>
+            </Grid>
+            <Grid item>
               <Typography
-                fontFamily={'Inter'}
-                fontSize={customTheme.pages.about.fontSize.signature}
-                color={customTheme.palette.black.main}
-                textAlign={'center'}
-                fontWeight={'bold'}
+                className="about-quote-name-text"
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
                 Ourania Rosettos, MD
               </Typography>
+            </Grid>
+
+            <Grid item>
               <Typography
-                fontFamily={'Inter'}
-                fontSize={customTheme.pages.about.fontSize.signature}
-                color={customTheme.palette.black.main}
-                textAlign={'center'}
+                className="about-quote-job-title-text"
+                fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
                 Advisor
               </Typography>
-            </Stack>
-          </CardContent>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

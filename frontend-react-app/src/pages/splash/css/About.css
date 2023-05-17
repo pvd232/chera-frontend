@@ -10,13 +10,12 @@
   font-style: italic;
   color: black;
 }
-.about-quote-name-text {
+p.about-quote-name-text {
   text-align: left;
   font-family: 'Inter Bold';
   color: black;
 }
 .about-quote-job-title-text {
   text-align: left;
-  font-style: italic;
   color: black;
 }

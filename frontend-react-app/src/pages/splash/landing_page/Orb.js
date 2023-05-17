@@ -23,7 +23,7 @@ const Orb = forwardRef((props, ref) => {
         if (props.smallerScreen) {
           return randomNum(window.innerWidth / 7, window.innerWidth / 5);
         } else {
-          return randomNum(window.innerHeight / 11, window.innerHeight / 8);
+          return randomNum(window.innerHeight / 10, window.innerHeight / 7);
         }
       })();
 
@@ -38,7 +38,10 @@ const Orb = forwardRef((props, ref) => {
       g.drawCircle(
         props.smallerScreen
           ? 0
-          : randomNum(2 * (window.innerWidth / 4), 3 * (window.innerWidth / 4)),
+          : randomNum(
+              1.5 * (window.innerWidth / 4),
+              2.5 * (window.innerWidth / 4)
+            ),
         props.smallerScreen
           ? window.innerHeight * 0.45
           : window.innerHeight * 0.55,
