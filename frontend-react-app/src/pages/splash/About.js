@@ -70,7 +70,7 @@ const About = () => {
               >
                 Eating disorder recovery is at the heart of everything we do. We
                 are constantly innovating around ways we can help our clients
-                both recover faster and relapse less frequently.
+                both recover more quickly and relapse less frequently.
               </Typography>
             </Grid>
             <Grid item></Grid>
