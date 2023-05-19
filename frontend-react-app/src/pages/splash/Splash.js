@@ -9,6 +9,7 @@ import WhyUs from './why_us/WhyUs';
 import LandingPage from './landing_page/LandingPage';
 import FNCEApproved from './FNCEApproved';
 import DietitianSignUp from './dietitian_sign_up/DietitianSignUp';
+import Footer from './Footer.js';
 const Splash = () => {
   const customTheme = useTheme();
   return (
@@ -45,6 +46,9 @@ const Splash = () => {
       {/* <Grid container item>
         <CommitmentToInclusivity customTheme={customTheme} />
       </Grid> */}
+      <Grid container item>
+        <Footer customTheme ={customTheme} />
+      </Grid>
     </Grid>
   );
 };

@@ -24,6 +24,7 @@ import DietitianMenu from './pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './pages/splash/resources/Resources';
 import SignUpPage from './pages/sign_up/ClientSignUp';
 import SnackBuilder from './pages/admin/snack_builder/SnackBuilder';
+import FAQs from './pages/splash/faqs/FAQs';
 import DietitianSignUp from './pages/splash/dietitian_sign_up/DietitianSignUp';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
@@ -93,6 +94,12 @@ const Main = (props) => {
             <Navbar childComponent={<DietitianSignUp />} domain={'splash'} />
           }
         />
+        <Route
+          path="/faqs"
+          element={
+            <Navbar childComponent={<FAQs />} domain={'splash'} />
+          }
+        />    
         <Route
           path="/client-sign-up"
           element={
