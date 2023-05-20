@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import '../../../static/css/Resources.css';
+import '../../../static/scss/Resources.scss';
 const BookToRead = (props) => (
   <Grid
     container
@@ -43,7 +43,9 @@ const BookToRead = (props) => (
         backgroundColor: props.customTheme.palette.fucia.secondary,
       }}
     >
-      <Typography fontSize={props.customTheme.pages.resources.fontSize.cardTitle}>
+      <Typography
+        fontSize={props.customTheme.pages.resources.fontSize.cardTitle}
+      >
         {props.resourceDescription}
       </Typography>
     </Grid>

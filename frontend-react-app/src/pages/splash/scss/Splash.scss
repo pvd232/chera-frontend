@@ -1,14 +1,20 @@
 .splash-page-container {
   padding-top: 10vh;
   padding-bottom: 15vh;
+  justify-content: center;
 }
-p.splash-page-title {
+.splash-page-header {
   font-family: 'Inter Bold';
   line-height: 100%;
   text-align: center;
   color: #d4218d;
+  font-size: 2rem;
 }
-p.splash-secondary-text {
+.splash-page-subheader {
+  font-size: 1.12rem;
+  color: #d4218d;
+}
+.splash-secondary-text {
   line-height: 100%;
   color: #d4218d;
 }
@@ -18,7 +24,7 @@ p.splash-secondary-text {
 .splash-theme-filled {
   background-color: #d4218d;
 }
-button.splash-theme-filled {
+.splash-theme-filled {
   background-color: #d4218d;
 }
 

@@ -1,0 +1,72 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-background-clip: padding-box;
+  -moz-background-clip: padding;
+  background-clip: padding-box;
+}
+
+@font-face {
+  font-family: 'Lilita One'; /*Can be any text*/
+  src: local('Lilita'), url('../fonts/LilitaOne-Regular.ttf') format('woff');
+}
+@font-face {
+  font-family: 'Inter Bold'; /*Can be any text*/
+  src: local('Inter-Bold'), url('../fonts/Inter-Bold.ttf') format('woff');
+}
+
+$fucia: #d4218d;
+$lightFucia: #ffedf8;
+
+$lightBlue: #bbddff;
+
+$xsScreen: 600px;
+$smScreen: 900px;
+$mdScreen: 1200px;
+$lgScreen: 1536px;
+$xlScreen: 1537px;
+
+@mixin xs {
+  @media screen and (max-width: $xsScreen) {
+    @content;
+  }
+}
+@mixin sm {
+  @media screen and (min-width: ($xsScreen + 1)) and (max-width: $smScreen) {
+    @content;
+  }
+}
+@mixin md {
+  @media screen and (min-width: ($smScreen + 1)) and (max-width: $mdScreen) {
+    @content;
+  }
+}
+@mixin lg {
+  @media screen and (min-width: ($mdScreen + 1)) and (max-width: $lgScreen) {
+    @content;
+  }
+}
+@mixin xl {
+  @media screen and (min-width: $xlScreen) {
+    @content;
+  }
+}
+
+@mixin largeScreen {
+  @media screen and (min-width: $mdScreen) {
+    @content;
+  }
+}
+
+@mixin smallScreen {
+  @media screen and (max-width: ($mdScreen - 1)) {
+    @content;
+  }
+}

@@ -1,15 +1,19 @@
-div.intro-text-box-container {
+.intro-text-box-container {
   flex-direction: column;
   position: absolute;
   top: 25%;
   bottom: 25%;
-  gap: 2.5vh;
+  row-gap: 2.5vh;
 }
-p.intro-text-box-header {
+.intro-text-box-header {
   font-family: 'Inter Bold';
   line-height: 150%;
+  font-size: 2rem;
 }
-button.splash-filled-button {
+.intro-text-box-subheader {
+  font-size: 1.12rem;
+}
+.splash-filled-button {
   font-size: medium;
   border-radius: 30px !important;
   letter-spacing: 0.1px;

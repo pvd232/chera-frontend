@@ -9,12 +9,12 @@ import LocalStorageManager from '../../helpers/LocalStorageManager';
 import SplashLinks from './SplashLinks';
 import ClientLinks from './ClientLinks';
 import DietitianLinks from './DietitianLinks';
-import './css/Navbar.css';
+import './scss/Navbar.scss';
 const Navbar = (props) => {
   const customTheme = useTheme();
   return (
     <>
-      <Grid container>
+      <Grid container maxWidth={'100vw'}>
         <Box sx={{ flexGrow: 1 }}>
           <AppBar position="static" className="appbar">
             <Toolbar

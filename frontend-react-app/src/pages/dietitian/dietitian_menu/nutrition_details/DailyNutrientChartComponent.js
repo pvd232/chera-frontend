@@ -1,4 +1,4 @@
-import '../../../../static/css/NutritionLabel.css';
+import '../../../../static/scss/NutritionLabel.scss';
 import { Series, Label, Legend, Font } from 'devextreme-react/pie-chart';
 import {
   ArgumentAxis,

@@ -1,6 +1,5 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import '../../../static/css/Resources.css';
 
 const AppToDownload = (props) => (
   <Grid

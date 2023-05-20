@@ -49,13 +49,18 @@ const ListOfReasons = (props) => {
         customTheme={customTheme}
         reasonOpen={props.reasonOpen.fourth}
         setReasonOpen={() => props.setReasonOpen('fourth')}
-        bulletPrimaryText={'Trusted Nutrition Credentials'}
+        bulletPrimaryText={
+          customTheme.smallerScreen()
+            ? 'Trusted Nutrition Creds'
+            : 'Trusted Nutrition Credentials'
+        }
         bulletSecondaryText={
           'All our meals are all dietitian approved, and were served to hundreds of nutritional experts at FNCE 2022.'
         }
         icon={'verified'}
       ></ReasonBullet>
       <ReasonBullet
+        bottomEdgeBullet={true}
         customTheme={customTheme}
         reasonOpen={props.reasonOpen.fifth}
         setReasonOpen={() => props.setReasonOpen('fifth')}

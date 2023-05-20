@@ -3,16 +3,13 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
 import eatRightLogo from '../../../static/images/eat_right_bookmark.png';
 import BookedmarkedSite from './BookmarkedSite';
-
+import resources from './scss/Resources.module.scss';
 const SitesWeKeepBookmarked = () => {
   const customTheme = useTheme();
   return (
     <>
       <Grid lg={8} md={8}>
-        <Typography
-          fontSize={customTheme.pages.resources.fontSize.header}
-          marginBottom={'2vh'}
-        >
+        <Typography className={resources.resourcesHeader}>
           Trusted Experts
         </Typography>
       </Grid>

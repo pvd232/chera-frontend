@@ -25,6 +25,7 @@ import Resources from './pages/splash/resources/Resources';
 import SignUpPage from './pages/sign_up/ClientSignUp';
 import SnackBuilder from './pages/admin/snack_builder/SnackBuilder';
 import DietitianSignUp from './pages/splash/dietitian_sign_up/DietitianSignUp';
+import FAQs from './pages/splash/faqs/FAQs';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -92,6 +93,10 @@ const Main = (props) => {
           element={
             <Navbar childComponent={<DietitianSignUp />} domain={'splash'} />
           }
+        />
+        <Route
+          path="/faqs"
+          element={<Navbar childComponent={<FAQs />} domain={'splash'} />}
         />
         <Route
           path="/client-sign-up"

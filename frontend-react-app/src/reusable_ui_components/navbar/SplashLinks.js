@@ -1,11 +1,11 @@
 import FormattedLink from './FormattedLink';
 const SplashLinks = (props) => (
   <>
-    {/* <FormattedLink
-      url={'/splash-menu'}
-      text={'Menu'}
+    <FormattedLink
+      url={'/FAQs'}
+      text={'faqs'}
       customTheme={props.customTheme}
-    /> */}
+    />
 
     <FormattedLink
       url={'/contact'}

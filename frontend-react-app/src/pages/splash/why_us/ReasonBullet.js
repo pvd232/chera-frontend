@@ -5,8 +5,8 @@ import Icon from '@mui/material/Icon';
 import { Stack } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import './css/ReasonBullet.css';
-import '../css/Splash.css';
+import './scss/ReasonBullet.scss';
+import '../scss/Splash.scss';
 const ReasonBullet = (props) => (
   <Grid
     item
@@ -19,6 +19,8 @@ const ReasonBullet = (props) => (
         : '',
       borderTopLeftRadius: props.edgeBullet ? '15px' : '',
       borderTopRightRadius: props.edgeBullet ? '15px' : '',
+      borderBottomLeftRadius: props.bottomEdgeBullet ? '15px' : '',
+      borderBottomRightRadius: props.bottomEdgeBullet ? '15px' : '',
     }}
   >
     <Grid item className="reason-bullet-icon-container">
@@ -41,7 +43,7 @@ const ReasonBullet = (props) => (
               ? 'reason-bullet-header-open'
               : 'reason-bullet-header-closed'
           }
-          fontSize={props.customTheme.fontEqualizer(18)}
+          fontSize={'1rem'}
         >
           {props.bulletPrimaryText}
         </Typography>

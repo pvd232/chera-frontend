@@ -1,4 +1,4 @@
-const fontEqualizer = (fontSize, isGoogleSlidesFont = false) => {
+export default function fontEqualizer(fontSize, isGoogleSlidesFont = false) {
   if (isGoogleSlidesFont === true) {
     fontSize = fontSize * 2.6667;
   }
@@ -20,5 +20,4 @@ const fontEqualizer = (fontSize, isGoogleSlidesFont = false) => {
   } else {
     return fontSize;
   }
-};
-export default fontEqualizer;
+}

@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import '../../../../static/css/NutritionLabel.css';
+import '../../../../static/scss/NutritionLabel.scss';
 import RowBorder from './RowBorder';
 import NutrientItem from '../../../../ui_data_containers/NutrientItem';
 

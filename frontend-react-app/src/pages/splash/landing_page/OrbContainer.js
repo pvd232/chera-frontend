@@ -4,7 +4,6 @@ import { Grid } from '@mui/material';
 import { Container, Stage, withFilters } from '@pixi/react';
 import { KawaseBlurFilter } from '@pixi/filter-kawase-blur';
 import Orb from './Orb';
-import '../../../static/css/Orb.css';
 import ColorPalette from './ColorPalette';
 class KawaseOverride extends KawaseBlurFilter {
   constructor(blur, quality, clamp) {
@@ -32,13 +31,7 @@ const OrbContainer = () => {
   });
 
   return (
-    <Grid
-      item
-      container
-      xs={12}
-      justifyContent={'center'}
-      className="orb-canvas"
-    >
+    <Grid container item>
       <Stage
         options={{
           autoDensity: true,

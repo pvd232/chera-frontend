@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import splashImage2 from '../../../static/images/splash_image_2_blue.png';
 import ListOfReasons from './ListOfReasons';
 import CalendlyButton from './CalendlyButton';
-import '../css/Splash.css';
+import '../scss/Splash.scss';
 
 const WhyUs = () => {
   const customTheme = useTheme();
@@ -34,19 +34,18 @@ const WhyUs = () => {
     <>
       <Grid item xs={11}>
         <Typography
-          className="splash-page-title"
-          fontSize={customTheme.pages.splash.fontSize.header}
-          sx={{
-            textAlign: customTheme.smallerScreen()
-              ? 'center !important'
-              : 'left !important',
+          className="splash-page-header"
+          textAlign={{
+            xs: 'center !important',
+            sm: 'center !important',
+            md: 'left !important',
+            lg: 'left !important',
           }}
-          color={customTheme.palette.black.main}
         >
           Why Chera?
         </Typography>
       </Grid>
-      <Grid item xs={11} sm={10} lg={6}>
+      <Grid item lg={6}>
         {ListOfReasons({
           reasonOpen: reasonOpen,
           setReasonOpen: (reason) => handleSetReasonOpen(reason),
@@ -55,7 +54,7 @@ const WhyUs = () => {
     </>
   );
   const RHS = () => (
-    <Grid item lg={4} sm={6} xs={8}>
+    <Grid item lg={4}>
       <CardMedia
         src={splashImage2}
         component="img"
@@ -77,32 +76,22 @@ const WhyUs = () => {
     </Grid>
   );
   return (
-    <Grid
-      container
-      item
-      justifyContent={'space-around'}
-      rowGap={5}
-      className="splash-page-container"
-      sx={{
-        paddingLeft: customTheme.smallerScreen()
-          ? '0vw'
-          : customTheme.extraLargeScreen()
-          ? '10vw'
-          : '5vw',
-        paddingRight: customTheme.smallerScreen()
-          ? '0vw'
-          : customTheme.extraLargeScreen()
-          ? '10vw'
-          : '5vw',
-      }}
-    >
-      {/* spacer */}
+    <Grid container item className="splash-page-container">
+      <Grid
+        container
+        item
+        justifyContent={'space-around'}
+        rowGap={'5vh'}
+        xs={10}
+      >
+        {/* spacer */}
 
-      {LHS()}
+        {LHS()}
 
-      {RHS()}
+        {RHS()}
 
-      {/* RHS: image of woman with tattoo on left */}
+        {/* RHS: image of woman with tattoo on left */}
+      </Grid>
     </Grid>
   );
 };

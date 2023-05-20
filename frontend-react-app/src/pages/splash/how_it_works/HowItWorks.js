@@ -1,8 +1,8 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import LogisticsStep from './LogisticsStep';
-import '../css/Splash.css';
-import './css/HowItWorks.css';
+import '../scss/Splash.scss';
+import './scss/HowItWorks.scss';
 const HowItWorks = (props) => {
   return (
     <Grid
@@ -10,22 +10,30 @@ const HowItWorks = (props) => {
       container
       item
     >
-      <Grid item xs={12} lg={10}>
+      <Grid item>
         <Typography
-          fontSize={props.customTheme.pages.splash.fontSize.header}
-          className="splash-page-title"
-          mb={props.customTheme.largerScreen() ? '10vh' : '5vh'}
+          className="splash-page-header"
+          mb={{
+            xs: '5vh',
+            sm: '5vh',
+            md: '10vh',
+            lg: '10vh',
+          }}
         >
           How Chera works
         </Typography>
       </Grid>
       <Grid
-        item
         container
-        xs={10.5}
-        justifyContent={
-          props.customTheme.largerScreen() ? 'space-evenly' : 'center'
-        }
+        item
+        xs={11}
+        justifyContent={{
+          xs: 'center',
+          sm: 'center',
+          md: 'space-evenly',
+          lg: 'space-evenly',
+        }}
+        rowSpacing={'5vh'}
       >
         <Grid item lg={2.8} md={5} xs={10}>
           <LogisticsStep
@@ -52,7 +60,7 @@ const HowItWorks = (props) => {
             customTheme={props.customTheme}
             headerText={'We cook and ship meals'}
             bodyText={
-              'Personalized, dietitian approved meals thoughtfully labeled and home delivered.'
+              'Personalized, dietitian approved meals, thoughtfully labeled and home delivered.'
             }
             symbolName={'delivery_dining_outlined'}
           />

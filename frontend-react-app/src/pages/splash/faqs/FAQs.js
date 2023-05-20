@@ -1,12 +1,12 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { useReducer } from 'react';
+import { useTheme } from '@mui/material/styles';
 import dietitianFAQsArray from './dietitian_faqs_array';
 import clientFAQsArray from './client_faqs_array';
 import ListOfClientFAQs from './ListOfClientFAQs';
 import ListOfDietitianFAQs from './ListOfDietitianFAQs';
-import { useTheme } from '@mui/material/styles';
-
+import '../scss/Splash.scss';
 const FAQs = () => {
   const customTheme = useTheme();
   const reasonOpenObject = {};
@@ -26,66 +26,68 @@ const FAQs = () => {
   };
 
   return (
-    <Grid
-      container
-      item
-      justifyContent={'center'}
-      rowSpacing={4}
-      py={customTheme.pages.splash.spacing.pages}
-      px={0}
-    >
-      <Grid item xs={12}>
-        <Typography
-          sx={{
-            fontSize: customTheme.pages.splash.fontSize.header,
+    <Grid container item className="splash-page-container" paddingTop={'20vh'}>
+      <Grid container item xs={10}>
+        <Grid container item flexDirection={'column'} lg={6} xs={10}>
+          <Grid item>
+            <Typography
+              className="splash-page-header"
+              textAlign={'left !important'}
+            >
+              Frequently Asked Questions
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography
+              className="splash-page-subheader"
+              color={customTheme.palette.black.main}
+            >
+              If you have more questions, you can always reach out to us!
+            </Typography>
+          </Grid>
+          <Typography color={customTheme.palette.black.main}>
+            contact@cherahealth.com
+          </Typography>
+        </Grid>
+        <Grid item xl={8} lg={6} xs={11} rowSpacing={'3vh'}>
+          <Typography
+            sx={{
+              fontSize: customTheme.fontEqualizer(28),
 
-            fontWeight: '500',
-            textAlign: 'center',
-            marginBottom: customTheme.pages.splash.spacing.header,
-          }}
-          color={customTheme.palette.black.main}
-        >
-          Frequently Asked Questions
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: customTheme.fontEqualizer(28),
+              textAlign: 'center',
+              fontStyle: 'italic',
+            }}
+            color={customTheme.palette.black.main}
+          >
+            For people seeking support
+          </Typography>
+          <ListOfClientFAQs
+            customTheme={customTheme}
+            reasonOpen={reasonOpen}
+            setReasonOpen={(reason) => handleSetReasonOpen(reason)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <Typography
+            sx={{
+              fontSize: customTheme.fontEqualizer(28),
 
-            textAlign: 'center',
-            fontStyle: 'italic',
-          }}
-          color={customTheme.palette.black.main}
-        >
-          (For Clients)
-        </Typography>
-      </Grid>
-      <Grid item xl={8} lg={6} xs={11}>
-        <ListOfClientFAQs
-          customTheme={customTheme}
-          reasonOpen={reasonOpen}
-          setReasonOpen={(reason) => handleSetReasonOpen(reason)}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <Typography
-          sx={{
-            fontSize: customTheme.fontEqualizer(28),
-
-            textAlign: 'center',
-            paddingTop: '2vh',
-            fontStyle: 'italic',
-          }}
-          color={customTheme.palette.black.main}
-        >
-          (For Dietitians)
-        </Typography>
-      </Grid>
-      <Grid item xl={8} lg={6} xs={11}>
-        <ListOfDietitianFAQs
-          customTheme={customTheme}
-          reasonOpen={reasonOpen}
-          setReasonOpen={(reason) => handleSetReasonOpen(reason)}
-        ></ListOfDietitianFAQs>
+              textAlign: 'center',
+              paddingTop: '2vh',
+              fontStyle: 'italic',
+            }}
+            color={customTheme.palette.black.main}
+          >
+            For dietitians interested in providing support
+          </Typography>
+        </Grid>
+        <Grid item xl={8} lg={6} xs={11}>
+          <ListOfDietitianFAQs
+            customTheme={customTheme}
+            reasonOpen={reasonOpen}
+            setReasonOpen={(reason) => handleSetReasonOpen(reason)}
+          ></ListOfDietitianFAQs>
+        </Grid>
       </Grid>
     </Grid>
   );

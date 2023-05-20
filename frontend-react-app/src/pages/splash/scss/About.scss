@@ -1,16 +1,20 @@
 .about-page-container {
-  row-gap: 15vh;
+  align-items: center;
+  flex-direction: column;
+  row-gap: 5vh;
 }
 .about-profile-container {
   align-items: center;
   justify-content: space-evenly;
+  row-gap: 5vh;
+  column-gap: 3vw;
 }
 .about-quote-text {
   text-align: left;
   font-style: italic;
   color: black;
 }
-p.about-quote-name-text {
+.about-quote-name-text {
   text-align: left;
   font-family: 'Inter Bold';
   color: black;

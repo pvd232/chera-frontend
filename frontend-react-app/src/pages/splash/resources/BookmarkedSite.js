@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import '../../../static/css/Resources.css';
+import '../../../static/scss/Resources.scss';
 const BookedmarkedSite = (props) => (
   <Grid
     container

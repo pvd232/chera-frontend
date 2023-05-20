@@ -5,7 +5,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import { Icon } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import '../../../../static/css/NutritionLabel.css';
+import '../../../../static/scss/NutritionLabel.scss';
 import OrangeButton from '../../../../reusable_ui_components/OrangeButton';
 import Transition from '../../../../reusable_ui_components/Transition';
 import NutritionLabel from './NutritionLabel';
@@ -32,7 +32,8 @@ const NutritionDetails = (props) => {
     .map(
       (extendedRecipeIngredientDTO) =>
         new NutrientItem(extendedRecipeIngredientDTO)
-    ).sort((a, b) => a.name.localeCompare(b.name));
+    )
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <>

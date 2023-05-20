@@ -2,8 +2,7 @@ import Icon from '@mui/material/Icon';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 import { useTheme } from '@mui/material/styles';
-import '../../../static/css/Resources.css';
-
+import styles from './scss/ResourceCategory.module.scss';
 const ResourceCategory = (props) => {
   const customTheme = useTheme();
   return (
@@ -12,28 +11,21 @@ const ResourceCategory = (props) => {
       lg={9}
       md={10}
       xs={11}
-      sx={{ backgroundColor: customTheme.palette.oliveCompliment.tertiary }}
-      alignItems={'center'}
-      paddingBottom="1vh"
-      paddingTop="1vh"
-      paddingLeft={customTheme.smallerScreen() ? '5vw' : '2vw'}
-      justifyContent={
-        customTheme.largerScreen() ? 'space-evenly' : 'flex-start'
-      }
+      className={styles.resourceCategoryContainer}
       onClick={props.executeScroll}
-      columnGap={customTheme.smallerScreen() ? '3vw' : ''}
-      className="hoverLink"
     >
-      <Grid>
-        <Icon
-          sx={{
-            fontSize: '2.5rem',
-          }}
-        >
-          {props.icon}
-        </Icon>
+      <Grid container justifySelf={'flexStart'}>
+        <Grid>
+          <Icon
+            sx={{
+              fontSize: '2.5rem',
+            }}
+          >
+            {props.icon}
+          </Icon>
+        </Grid>
       </Grid>
-      <Grid lg={9}>
+      <Grid>
         <Typography
           sx={{
             fontSize: customTheme.fontEqualizer(20),

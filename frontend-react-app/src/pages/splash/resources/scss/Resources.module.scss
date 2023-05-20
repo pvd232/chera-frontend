@@ -1,0 +1,13 @@
+$resourcesHeaderFontSize: 2rem;
+.resourcesHeader {
+  font-size: $resourcesHeaderFontSize;
+  text-align: center;
+  margin-bottom: 2vh;
+}
+.resourcesPageContainer {
+  justify-content: center;
+  padding-bottom: 5vh;
+  row-gap: 10vh;
+  background-color: #ffedf8;
+  align-items: flex-start;
+}

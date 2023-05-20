@@ -161,9 +161,13 @@ const DietitianSignUp = () => {
       <Grid item lg={4} md={6} xs={10}>
         <CardContent>
           <Typography
-            className="splash-page-title"
-            fontSize={customTheme.pages.splash.fontSize.header}
-            marginBottom={customTheme.pages.splash.spacing.header.marginBottom}
+            className="splash-page-header"
+            mb={{
+              xs: '5vh',
+              sm: '5vh',
+              md: '10vh',
+              lg: '10vh',
+            }}
           >
             Dietitian sign up
           </Typography>

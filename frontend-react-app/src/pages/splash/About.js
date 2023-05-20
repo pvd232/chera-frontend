@@ -1,6 +1,4 @@
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import fncePic from '../../static/images/me_at_fnce.jpg';
 import anyaPic from '../../static/images/anya_circle.png';
@@ -8,34 +6,28 @@ import zoePic from '../../static/images/zoe.jpg';
 import carolPic from '../../static/images/carol_standing_circle.png';
 import titiPic from '../../static/images/titi_circle.png';
 import { useTheme } from '@mui/material/styles';
-import './css/Splash.css';
-import './css/About.css';
+import './scss/Splash.scss';
+import './scss/About.scss';
 const About = () => {
   const customTheme = useTheme();
   return (
-    <Grid
-      className="splash-page-container"
-      container
-      item
-      justifyContent={'center'}
-    >
+    <Grid container item className="splash-page-container" xs={10}>
       <Grid item>
         <Typography
-          fontSize={customTheme.pages.splash.fontSize.header}
-          className="splash-page-title"
-          mb={customTheme.largerScreen() ? '15vh' : '10vh'}
+          className="splash-page-header"
+          mb={{
+            xs: '5vh',
+            sm: '5vh',
+            md: '10vh',
+            lg: '10vh',
+          }}
         >
           Meet the team
         </Typography>
       </Grid>
-      <Grid
-        className="about-page-container"
-        container
-        item
-        justifyContent={'center'}
-      >
+      <Grid className="about-page-container" container item>
         {/* Peter Profile */}
-        <Grid container className="about-profile-container" lg={10}>
+        <Grid container item className="about-profile-container">
           <Grid item lg={5}>
             <img
               src={fncePic}
@@ -47,7 +39,7 @@ const About = () => {
           <Grid
             container
             item
-            lg={6.1}
+            lg={6.3}
             flexDirection={'column'}
             rowSpacing={'1vh'}
           >
@@ -56,10 +48,12 @@ const About = () => {
                 className="about-quote-text"
                 fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
-                "For too long the technology, healthcare, and insurance
-                industries have neglected or outright dismissed the needs of
-                those among who us suffer from eating disorders. I founded Chera
-                to change that.
+                "For too long, the needs of those suffering from eating
+                disorders have gone overlooked. I founded Chera to change that.
+                We're building a platform that straddles a unique intersection
+                of technology, nutrition, and mental healthcare; drawing on the
+                expertise of our team of clinicians, dietitians, and engineers
+                to streamline the recovery process.
               </Typography>
             </Grid>
             <Grid item></Grid>
@@ -68,8 +62,8 @@ const About = () => {
                 className="about-quote-text"
                 fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
-                Eating disorder recovery is at the heart of everything we do. We
-                are constantly innovating around ways we can help our clients
+                Eating disorder recovery is at the heart of everything we do.
+                We're constantly innovating around ways we can help our clients
                 both recover more quickly and relapse less frequently.
               </Typography>
             </Grid>
@@ -81,7 +75,7 @@ const About = () => {
                 fontSize={customTheme.pages.splash.fontSize.subHeader}
               >
                 We believe in a better future for eating disorder recovery, and
-                we are so excited to be working towards it."
+                we're so excited to be working towards it."
               </Typography>
             </Grid>
             <Grid item></Grid>
@@ -106,7 +100,7 @@ const About = () => {
         </Grid>
         {/* Zoe Profile */}
 
-        <Grid container className="about-profile-container" lg={10}>
+        <Grid container item className="about-profile-container">
           <Grid item container lg={5} justifyContent={'center'}>
             <img
               src={zoePic}
@@ -117,7 +111,7 @@ const About = () => {
           <Grid
             container
             item
-            lg={6.1}
+            lg={6.3}
             flexDirection={'column'}
             rowSpacing={1.5}
           >
@@ -167,7 +161,19 @@ const About = () => {
           </Grid>
         </Grid>
         {/* Rest of profiles */}
-        <Grid container item justifyContent={'space-around'}>
+        <Grid
+          container
+          item
+          justifyContent={'space-around'}
+          rowSpacing={'5vh'}
+          sx={{
+            marginTop: {
+              xs: '0vh',
+              sm: '0vh',
+              md: '10vh',
+            },
+          }}
+        >
           {/* Carol profile */}
           <Grid
             item

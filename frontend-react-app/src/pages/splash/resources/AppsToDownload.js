@@ -5,21 +5,25 @@ import recoveryRecord from '../../../static/images/recovery_record_2.png';
 import riseUp from '../../../static/images/rise_up_recovery.png';
 import mindShift from '../../../static/images/mindshift_cbt.png';
 import AppToDownload from './AppToDownload';
+
 const AppsToDownload = () => {
   const customTheme = useTheme();
   return (
     <>
       <Grid lg={8} md={10} marginBottom={'2vh'}>
-        <Typography fontSize={customTheme.pages.resources.fontSize.header}>
-          Apps
-        </Typography>
+        <Typography>Apps</Typography>
       </Grid>
       <Grid
         container
         lg={8}
         md={10}
         rowGap={20}
-        justifyContent={customTheme.largerScreen() ? 'space-between' : 'center'}
+        justifyContent={{
+          xs: 'center',
+          sm: 'center',
+          md: 'space-between',
+          lg: 'space-between',
+        }}
       >
         <AppToDownload
           customTheme={customTheme}
