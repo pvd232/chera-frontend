@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { PopupModal } from 'react-calendly';
 import { useTheme } from '@mui/material/styles';
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 const CalendlyButton = () => {
   const customTheme = useTheme();
   const [open, setOpen] = useState(false);

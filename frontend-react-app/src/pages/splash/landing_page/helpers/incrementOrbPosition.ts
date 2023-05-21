@@ -1,16 +1,21 @@
-export default function incrementOrbData(
-  newX,
-  oldX,
-  newY,
-  oldY,
-  newScale,
-  oldScale,
-  xDelta,
-  yDelta,
-  scaleDelta
-) {
+import OrbPosition from '../types/OrbPosition';
+
+export default function incrementOrbPosition(
+  newX: number,
+  oldX: number,
+  newY: number,
+  oldY: number,
+  newScale: number,
+  oldScale: number,
+  xDelta: number,
+  yDelta: number,
+  scaleDelta: number
+): OrbPosition {
   let updatedXPosition = oldX;
+  console.log('updatedXPosition', updatedXPosition);
+  console.log('newX', newX);
   let updatedYPosition = oldY;
+  console.log('updatedYPosition', updatedYPosition);
   let updatedScale = oldScale;
   if (Math.abs(newX - oldX) > xDelta) {
     if (newX > oldX) {

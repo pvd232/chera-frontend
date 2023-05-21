@@ -15,7 +15,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import capitalize from '../../helpers/capitalize';
-import BlackButton from '../../reusable_ui_components/BlackButton';
+import BlackButton from '../../reusable_ui_components/BlackButton.ts';
 import Transition from '../../reusable_ui_components/Transition';
 import APIClient from '../../helpers/APIClient';
 import Client from '../../data_models/model/Client';

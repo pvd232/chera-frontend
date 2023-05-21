@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles';
 import HowItWorks from './how_it_works/HowItWorks';
 import About from './About';
 import WhyUs from './why_us/WhyUs';
-import LandingPage from './landing_page/LandingPage';
+import LandingPage from './landing_page/LandingPage.tsx';
 import FNCEApproved from './FNCEApproved';
 const Splash = () => {
   const customTheme = useTheme();

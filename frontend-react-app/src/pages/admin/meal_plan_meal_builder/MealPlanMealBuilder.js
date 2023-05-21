@@ -15,7 +15,7 @@ import ExtendedRecipeIngredientDTOFactory from '../../../data_models/factories/d
 import USDANutrientDailyValueDTOFactory from '../../../data_models/factories/dto/USDANutrientDailyValueDTOFactory';
 import ExtendedRecipeIngredientNutrientDTOFactory from '../../../data_models/factories/dto/ExtendedRecipeIngredientNutrientDTOFactory';
 import RowBorder from '../../dietitian/dietitian_menu/nutrition_details/RowBorder';
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import getFilteredMealPlanMeals from './helpers/getFilteredMealPlanMeals';
 import getMealPlanMealsByMeal from './helpers/getMealPlanMealsByMeal';
 import getMealPlanMealsByMealPlan from './helpers/getMealPlanMealsByMealPlan';

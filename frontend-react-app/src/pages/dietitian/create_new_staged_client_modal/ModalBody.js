@@ -11,7 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import capitalize from '../../../helpers/capitalize';
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
 
 const ModalBody = (props) => (

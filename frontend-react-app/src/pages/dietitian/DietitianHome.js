@@ -14,7 +14,7 @@ import Grid from '@mui/material/Grid';
 import ClientItem from '../../ui_data_containers/ClientItem';
 import EditClientMealPlanModal from './EditClientMealPlanModal';
 import CreateNewStagedClientModal from './create_new_staged_client_modal/CreateNewStagedClientModal';
-import BlackButton from '../../reusable_ui_components/BlackButton';
+import BlackButton from '../../reusable_ui_components/BlackButton.ts';
 import APIClient from '../../helpers/APIClient';
 import StagedClientPaymentConfirmed from './StagedClientPaymentConfirmed';
 import ExtendedStagedClient from '../../data_models/model/ExtendedStagedClient';

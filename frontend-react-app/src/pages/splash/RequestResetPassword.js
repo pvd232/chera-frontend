@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import BlackButton from '../../reusable_ui_components/BlackButton';
+import BlackButton from '../../reusable_ui_components/BlackButton.ts';
 import FormHelperText from '@mui/material/FormHelperText';
 import Stack from '@mui/material/Stack';
 import APIClient from '../../helpers/APIClient';

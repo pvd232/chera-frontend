@@ -13,19 +13,20 @@ body {
   background-clip: padding-box;
 }
 
-@font-face {
-  font-family: 'Lilita One'; /*Can be any text*/
-  src: local('Lilita'), url('../fonts/LilitaOne-Regular.ttf') format('woff');
-}
+// FONTS
+
 @font-face {
   font-family: 'Inter Bold'; /*Can be any text*/
   src: local('Inter-Bold'), url('../fonts/Inter-Bold.ttf') format('woff');
 }
 
+// COLORS
 $fucia: #d4218d;
 $lightFucia: #ffedf8;
 
 $lightBlue: #bbddff;
+
+$lightGrey: #f3f3f3;
 
 $xsScreen: 600px;
 $smScreen: 900px;
@@ -60,13 +61,13 @@ $xlScreen: 1537px;
 }
 
 @mixin largeScreen {
-  @media screen and (min-width: $mdScreen) {
+  @media screen and (min-width: $smScreen) {
     @content;
   }
 }
 
 @mixin smallScreen {
-  @media screen and (max-width: ($mdScreen - 1)) {
+  @media screen and (max-width: ($smScreen - 1)) {
     @content;
   }
 }

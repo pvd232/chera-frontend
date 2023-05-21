@@ -8,7 +8,7 @@ import Select from '@mui/material/Select';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import RowBorder from '../../dietitian/dietitian_menu/nutrition_details/RowBorder';
 import capitalize from '../../../helpers/capitalize';
 import IngredientRow from './IngredientRow';

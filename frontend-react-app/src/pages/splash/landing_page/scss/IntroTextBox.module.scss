@@ -1,0 +1,35 @@
+@use '../../../../static/scss/index.scss' as theme;
+
+.introTextBoxContainer {
+  flex-direction: column;
+  position: absolute;
+  top: 25%;
+  bottom: 25%;
+  row-gap: 2.5vh;
+  color: theme.$fucia;
+  @include theme.xs {
+    align-items: center;
+  }
+  .header {
+    font-family: 'Inter Bold';
+    line-height: 150%;
+    font-size: 2rem;
+    @include theme.xs {
+      text-align: center;
+    }
+  }
+  .subheader {
+    font-size: 1.12rem;
+  }
+}
+.signupButtonContainer {
+  @include theme.xs {
+    justify-content: center;
+  }
+  .button {
+    font-size: medium;
+    border-radius: 30px;
+    letter-spacing: 0.1px;
+    background-color: theme.$fucia;
+  }
+}

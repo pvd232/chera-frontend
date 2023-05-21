@@ -5,58 +5,36 @@ import Icon from '@mui/material/Icon';
 import { Stack } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
-import './scss/ReasonBullet.scss';
-import '../scss/Splash.scss';
+import styles from './scss/ReasonBullet.module.scss';
+
 const ReasonBullet = (props) => (
   <Grid
     item
     container
-    className="reason-bullet-container"
+    className={
+      props.reasonOpen
+        ? `${styles.reasonBulletContainer} ${styles.themeColored}`
+        : `${styles.reasonBulletContainer}`
+    }
     onClick={props.setReasonOpen}
-    sx={{
-      backgroundColor: props.reasonOpen
-        ? `${props.customTheme.palette.fucia2.solid} !important`
-        : '',
-      borderTopLeftRadius: props.edgeBullet ? '15px' : '',
-      borderTopRightRadius: props.edgeBullet ? '15px' : '',
-      borderBottomLeftRadius: props.bottomEdgeBullet ? '15px' : '',
-      borderBottomRightRadius: props.bottomEdgeBullet ? '15px' : '',
-    }}
   >
-    <Grid item className="reason-bullet-icon-container">
-      <Icon
-        fontSize="large"
-        sx={{
-          color: props.reasonOpen
-            ? `${props.customTheme.palette.white1.main} !important`
-            : '',
-        }}
-      >
+    <Grid item className={styles.iconContainer}>
+      <Icon className={props.reasonOpen ? styles.white : styles.black}>
         {props.icon}
       </Icon>
     </Grid>
     <Grid item>
       <CardContent>
         <Typography
-          className={
-            props.reasonOpen
-              ? 'reason-bullet-header-open'
-              : 'reason-bullet-header-closed'
-          }
-          fontSize={'1rem'}
+          className={props.reasonOpen ? styles.headerOpen : styles.headerClosed}
         >
           {props.bulletPrimaryText}
         </Typography>
       </CardContent>
     </Grid>
-    <Grid item container lg={1} xs={1} sx={{ marginLeft: 'auto' }}>
+    <Grid item container xs={1} className={styles.arrowContainer}>
       <Stack>
-        <div
-          className="arrow-container"
-          style={{
-            backgroundColor: `${props.customTheme.palette.lightGrey.secondary}`,
-          }}
-        >
+        <div className={styles.secondContainer}>
           {props.reasonOpen ? (
             <ArrowDropUpIcon fontSize="large" />
           ) : (
@@ -67,20 +45,12 @@ const ReasonBullet = (props) => (
     </Grid>
     <Grid container item>
       <CardContent
+        className={styles.subtitleContainer}
         sx={{
-          paddingTop: '0px !important',
-          paddingBottom: '16px !important',
-          paddingLeft: '0px !important',
           display: props.reasonOpen ? 'block' : 'none',
         }}
       >
-        <Typography
-          className={
-            props.reasonOpen
-              ? 'reason-bullet-body-open'
-              : 'reason-bullet-body-closed'
-          }
-        >
+        <Typography className={styles.text}>
           {props.bulletSecondaryText}
         </Typography>
       </CardContent>

@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Icon from '@mui/material/Icon';
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import DeliveryDateUtility from '../../../helpers/DeliveryDateUtility';
 import capitalize from '../../../helpers/capitalize';
 import getSnacksSubtotal from './helpers/getOrderSubtotal';
@@ -102,35 +102,32 @@ const SideBar = (props) => {
                         spacing={1}
                         key={`mealTimeObjectStack${i}${j}`}
                       >
-                        {
-                          !props.preSelectedMeals && !props.prepaidMeals && (
-                            <>
+                        {!props.preSelectedMeals && !props.prepaidMeals && (
+                          <>
                             <Icon
-                            key={`icon1${i}${j}`}
-                            onClick={() =>
-                              props.handleAddMeal(chosenMeal.associatedMeal)
-                            }
-                            sx={{
-                              color: `${props.customTheme.palette.olive.main}`,
-                              cursor: 'pointer',
-                            }}
-                          >
-                            add
-                          </Icon>
-                          <Icon
-                            key={`removeMealIcon${i}${j}`}
-                            onClick={() => props.handleRemoveMeal(chosenMeal)}
-                            sx={{
-                              color: `${props.customTheme.palette.darkGrey.secondary}`,
-                              cursor: 'pointer',
-                            }}
-                          >
-                            remove
-                          </Icon>
+                              key={`icon1${i}${j}`}
+                              onClick={() =>
+                                props.handleAddMeal(chosenMeal.associatedMeal)
+                              }
+                              sx={{
+                                color: `${props.customTheme.palette.olive.main}`,
+                                cursor: 'pointer',
+                              }}
+                            >
+                              add
+                            </Icon>
+                            <Icon
+                              key={`removeMealIcon${i}${j}`}
+                              onClick={() => props.handleRemoveMeal(chosenMeal)}
+                              sx={{
+                                color: `${props.customTheme.palette.darkGrey.secondary}`,
+                                cursor: 'pointer',
+                              }}
+                            >
+                              remove
+                            </Icon>
                           </>
-                          ) 
-                        }
-
+                        )}
                       </Stack>
                     </Grid>
                   </Grid>

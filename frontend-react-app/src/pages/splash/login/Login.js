@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import FormHelperText from '@mui/material/FormHelperText';
 import { Link } from 'react-router-dom';
 import Stack from '@mui/material/Stack';

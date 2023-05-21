@@ -12,7 +12,7 @@ import LocalStorageManager from '../../helpers/LocalStorageManager';
 import Client from '../../data_models/model/Client';
 import ClientDTO from '../../data_models/dto/ClientDTO';
 import BlueCircularProgress from '../../reusable_ui_components/BlueCircularProgress';
-import BlackButton from '../../reusable_ui_components/BlackButton';
+import BlackButton from '../../reusable_ui_components/BlackButton.ts';
 
 const ResetPassword = (props) => {
   const customTheme = useTheme();

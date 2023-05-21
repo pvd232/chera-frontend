@@ -7,7 +7,7 @@ import FormGroup from '@mui/material/FormGroup';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import BlackButton from '../../../reusable_ui_components/BlackButton.js';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import MealSubscription from '../../../data_models/model/MealSubscription.js';
 import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress.js';
 import HowItWorks from './HowItWorks.js';

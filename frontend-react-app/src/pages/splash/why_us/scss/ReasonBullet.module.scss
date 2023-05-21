@@ -1,0 +1,53 @@
+@use '../../../../static/scss/index.scss' as theme;
+
+.reasonBulletContainer {
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 0.8rem;
+  padding-right: 1.5rem;
+  row-gap: 0.5rem;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  .iconContainer {
+    justify-content: center;
+    align-items: center;
+    .white {
+      font-size: 2rem;
+      color: white;
+    }
+    .black {
+      font-size: 2rem;
+      color: black;
+    }
+  }
+  .headerOpen {
+    font-size: 1.2rem;
+    color: white;
+    font-family: 'Inter Bold';
+  }
+  .headerClosed {
+    font-size: 1.2rem;
+    color: black;
+  }
+  .arrowContainer {
+    margin-left: auto;
+    .secondContainer {
+      background-color: theme.$lightGrey;
+      padding: 0px;
+      display: flex;
+      border-radius: 50%;
+    }
+  }
+  .subtitleContainer {
+    padding-top: 0px;
+    padding-bottom: 16px;
+    padding-left: 0px;
+    padding-right: 0px;
+    .text {
+      color: white;
+    }
+  }
+}
+.themeColored {
+  background-color: theme.$fucia;
+}

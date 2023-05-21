@@ -35,20 +35,21 @@ module.exports = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           {
+            loader: 'resolve-url-loader',
+          },
+          {
             loader: 'sass-loader',
             options: {
-              sassOptions: {
-                modules: true,
-              },
+              sassOptions: { modules: true },
+              sourceMap: true,
             },
           },
         ],
       },
       {
-        test: /\.(js|jsx)$/i,
-        exclude: /(node_modules|bower_components)/,
+        test: /\.(js|jsx|tsx|ts)$/,
+        exclude: /(node_modules)/,
         loader: 'babel-loader',
-        options: { presets: ['@babel/env', '@babel/preset-react'] },
       },
 
       {
@@ -66,9 +67,11 @@ module.exports = {
           },
         },
       },
-      // Add your rules for custom modules here
-      // Learn more about loaders from https://webpack.js.org/loaders/
     ],
+  },
+  // Webpack will automatically resolve these extensions when they are imported without extension
+  resolve: {
+    extensions: ['*', '.js', '.jsx', '.tsx', '.ts', '.css', '.scss'],
   },
   plugins: [
     new webpack.ProvidePlugin({

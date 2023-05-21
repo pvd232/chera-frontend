@@ -1,4 +1,4 @@
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
 import { useState } from 'react';
 

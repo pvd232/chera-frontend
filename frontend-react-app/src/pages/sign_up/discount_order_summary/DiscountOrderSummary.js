@@ -6,7 +6,7 @@ import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
 import Stack from '@mui/material/Stack';
-import BlackButton from '../../../reusable_ui_components/BlackButton.js';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import APIClient from '../../../helpers/APIClient';
 import OrderDiscount from '../../../data_models/model/OrderDiscount.js';
 import getSubtotal from './getSubtotal.js';

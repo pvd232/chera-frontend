@@ -1,5 +1,9 @@
+import OrbBounds from '../types/OrbBounds';
 import randomNum from './randomNum';
-export default function getOrbPosition(axis, bounds) {
+export default function getOrbPosition(
+  axis: string,
+  bounds: OrbBounds
+): number {
   if (axis === 'x') {
     return randomNum(bounds['x'].min, bounds['x'].max);
   } else {

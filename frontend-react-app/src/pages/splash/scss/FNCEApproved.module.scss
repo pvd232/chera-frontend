@@ -1,0 +1,57 @@
+@use '../../../static/scss/index.scss' as theme;
+@use './Splash.scss' as splash;
+$chera-plus-fnce-img: url('../../../static/images/chera_plus_fnce.png');
+$chera-logo: url('../../../static/images/chera_plus_fnce.png');
+$eat-right-logo: url('../../../static/images/eat_right_logo_5.png');
+$FNCE-logo: url('../../../static/images/fnce_logo.png');
+
+.fnceApprovedPageContainer {
+  @include splash.splash-page-container;
+  background-color: white;
+  .childPageContainer {
+    flex-direction: column;
+    align-items: center;
+    column-gap: 5vh;
+    .header {
+      @include splash.splash-page-header;
+      margin-bottom: 10vh;
+      @include theme.xs {
+        margin-bottom: 5vh;
+      }
+    }
+    .contentContainer {
+      align-items: center;
+      justify-content: center;
+      column-gap: 5vh;
+      @include theme.xs {
+        flex-direction: column;
+        align-items: center;
+        row-gap: 2vh;
+      }
+      .firstImage {
+        width: 40vw;
+        @include theme.xs {
+          height: 55vh;
+        }
+      }
+      .secondImageContainer {
+        @include theme.xs {
+          justify-content: center;
+          padding-bottom: 0vh;
+        }
+        .secondImage {
+          width: 15vw;
+          @include theme.xs {
+            height: auto;
+          }
+        }
+      }
+      .content {
+        font-size: 3rem;
+        @include theme.xs {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+}

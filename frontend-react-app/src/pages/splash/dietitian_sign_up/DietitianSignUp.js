@@ -13,7 +13,7 @@ import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import APIClient from '../../../helpers/APIClient';
 import DietitianDTO from '../../../data_models/dto/DietitianDTO';
 import Dietitian from '../../../data_models/model/Dietitian';
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
 import CustomTextField from './CustomTextField';
