@@ -11,7 +11,7 @@ import getOrbInitialPosition from './helpers/getOrbInitialPosition';
 import orbPositionRequiresUpdate from './helpers/orbPositionRequiresUpdate';
 import PixiPosition from './types/PixiPosition';
 import { Graphics, PixiRef } from '@pixi/react';
-import { OrbProps } from './types/OrbProps';
+import OrbProps from './types/OrbProps';
 
 const Orb = (props: OrbProps) => {
   const inc = 0.08;

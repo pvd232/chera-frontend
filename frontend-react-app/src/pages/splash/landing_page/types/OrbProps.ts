@@ -1,3 +1,3 @@
-export type OrbProps = {
+export default interface OrbProps {
   fill: string;
-};
+}

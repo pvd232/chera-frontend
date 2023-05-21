@@ -35,7 +35,6 @@ const IntroTextBox = () => {
         </BlackButton>
       </Grid>
     </Grid>
-    // </Grid>
   );
 };
 export default IntroTextBox;
