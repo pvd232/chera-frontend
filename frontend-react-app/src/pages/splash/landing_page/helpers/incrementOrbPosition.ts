@@ -12,10 +12,7 @@ export default function incrementOrbPosition(
   scaleDelta: number
 ): OrbPosition {
   let updatedXPosition = oldX;
-  console.log('updatedXPosition', updatedXPosition);
-  console.log('newX', newX);
   let updatedYPosition = oldY;
-  console.log('updatedYPosition', updatedYPosition);
   let updatedScale = oldScale;
   if (Math.abs(newX - oldX) > xDelta) {
     if (newX > oldX) {

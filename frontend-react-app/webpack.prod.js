@@ -11,14 +11,13 @@ const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 module.exports = {
   mode: 'production',
   entry: './src/index.js',
-  devtool: 'source-map',
   output: {
-    filename: 'js/[name].[contenthash].bundle.js',
-    chunkFilename: 'js/[name].[contenthash].chunk.js',
-    assetModuleFilename: 'media/[name].[contenthash][ext]',
-    sourceMapFilename: 'js/[name].[contenthash].js.map',
+    filename: 'js/[name].bundle.js',
+    chunkFilename: 'js/[name].chunk.js',
+    assetModuleFilename: 'media/[name][ext]',
+    // sourceMapFilename: 'js/[name].[contenthash].js.map',
     path: path.resolve(__dirname, '..', 'build'),
-    clean: true,
+    // clean: true,
   },
   devServer: {
     static: [
@@ -115,6 +114,7 @@ module.exports = {
       threshold: 10240,
       minRatio: 0.8,
       exclude: /.map$/,
+      deleteOriginalAssets: true,
     }),
   ],
 

@@ -4,6 +4,9 @@
   "private": true,
   "homepage": "/",
   "dependencies": {
+    "mini-css-extract-plugin": "^2.7.5",
+    "resolve-url-loader": "^5.0.0",
+    "typescript": "^5.0.4",
     "@babel/core": "^7.21.4",
     "@babel/preset-env": "^7.21.4",
     "@babel/preset-typescript": "^7.21.5",
@@ -55,7 +58,7 @@
   "scripts": {
     "start-build": "webpack serve --config webpack.prod.js --host localhost --port 8080 --open",
     "start": "react-scripts start",
-    "build": "webpack --config webpack.prod.js",
+    "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --bail",
     "eject": "react-scripts eject"
   },
@@ -85,10 +88,7 @@
     "jest": "^29.5.0",
     "jest-cli": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
-    "mini-css-extract-plugin": "^2.7.5",
-    "prettier": "^2.8.7",
-    "resolve-url-loader": "^5.0.0",
-    "typescript": "^5.0.4"
+    "prettier": "^2.8.7"
   },
   "babel": {
     "presets": [

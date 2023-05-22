@@ -1531,7 +1531,6 @@ class APIClient {
     }
   }
   async validateAddress(address) {
-    console.log('address', address);
     const requestUrl = `https://addressvalidation.googleapis.com/v1:validateAddress?key=${this.googleMapsAPIKey}`;
     const request = new Request(requestUrl);
     const requestHeaders = new Headers();
@@ -1562,7 +1561,6 @@ class APIClient {
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseJSON = await response.json();
-    console.log('responseJSON', responseJSON);
 
     const addressIsComplete =
       responseJSON.result.verdict.hasOwnProperty('addressComplete');

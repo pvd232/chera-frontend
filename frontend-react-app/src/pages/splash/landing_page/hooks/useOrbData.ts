@@ -22,6 +22,5 @@ export default function useOrbData(bounds: OrbBounds): [
     yOffSet: randomNum(0, 1000),
     scale: 1,
   });
-  console.log('orbData', orbData);
   return [orbData, setOrbData];
 }

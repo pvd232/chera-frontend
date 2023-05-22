@@ -1,10 +1,13 @@
 # Build environment
 # Static React app
 FROM node:19.9.0-bullseye as react-build
+# Set working directory
 WORKDIR /app
+
+# Create folder for frontend app
 RUN mkdir -p /app/frontend-react-app
+# Copy frontend-react-app
 ADD /frontend-react-app ./frontend-react-app
-# Install dependencies 
 WORKDIR /app/frontend-react-app
 RUN yarn install --production
 # Build the app
@@ -15,7 +18,7 @@ FROM ghcr.io/zvonimirsun/nginx:stable-alpine-brotli
 COPY nginx.conf /etc/nginx/conf.d/configfile.template
 
 
-COPY --from=react-build /app/build /usr/share/nginx/html
+COPY --from=react-build /app/frontend-react-app/build /usr/share/nginx/html
 
 ENV PORT 8080
 ENV HOST 0.0.0.0
