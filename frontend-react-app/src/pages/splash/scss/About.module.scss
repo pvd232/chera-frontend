@@ -1,0 +1,89 @@
+@use '../../../static/scss/index.scss' as theme;
+@use './Splash.scss' as splash;
+
+@mixin quote {
+  @include splash.splash-page-body;
+}
+@mixin name {
+  @include splash.splash-page-body;
+  font-family: 'Inter Bold';
+}
+@mixin jobTitle {
+  @include splash.splash-page-body;
+}
+
+.aboutPageContainer {
+  @include splash.splash-page-container;
+  .header {
+    @include splash.splash-page-header;
+    margin-bottom: 10vh;
+    @include theme.xs {
+      margin-bottom: 5vh;
+    }
+  }
+  .contentContainer {
+    align-items: center;
+    flex-direction: column;
+    row-gap: 5vh;
+
+    .VIPprofileContainer {
+      align-items: center;
+      justify-content: space-evenly;
+      row-gap: 5vh;
+      column-gap: 3vw;
+      .quoteContainer {
+        flex-direction: column;
+        row-gap: 1vh;
+        text-align: left;
+        color: black;
+        .quote {
+          @include quote;
+        }
+        .name {
+          @include name;
+        }
+        .jobTitle {
+          @include jobTitle;
+        }
+      }
+      .peterImg {
+        max-width: 100%;
+      }
+      .zoeImgContainer {
+        justify-content: center;
+        .img {
+          max-height: 50vh;
+        }
+      }
+    }
+    .restOfProfilesContainer {
+      justify-content: space-around;
+      row-gap: 5vh;
+      margin-top: 10vh;
+      @include theme.xs {
+        margin-top: 0vh;
+      }
+      .profileContainer {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        row-gap: 1vh;
+        .quote {
+          @include quote;
+        }
+        .name {
+          @include name;
+        }
+        .jobTitle {
+          @include jobTitle;
+        }
+        .img {
+          height: 30vh;
+          @include theme.xs {
+            height: 230vh;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
-import FormattedLink from "./FormattedLink";
-import NewMenuListComposition from "./NewMenuListComposition";
+import FormattedLink from './FormattedLink';
+import NewMenuListComposition from './NewMenuListComposition';
 const SplashLinks = (props) => (
   <>
     <FormattedLink
@@ -9,25 +9,25 @@ const SplashLinks = (props) => (
     />
 
     <FormattedLink
-      url={"/d-home"}
-      text={"For Dieticians"}
+      url={'/d-home'}
+      text={'For Dieticians'}
       customTheme={props.customTheme}
     />
-    <FormattedLink
+    {/* <FormattedLink
       url={"/about-chera"}
       text={"About Chera"}
       customTheme={props.customTheme}
-    />
+    /> */}
     <FormattedLink
-      url={"/dietitian-login"}
-      text={"Dietician login"}
+      url={'/dietitian-login'}
+      text={'Dietician login'}
       customTheme={props.customTheme}
     />
-    <FormattedLink
+    {/* <FormattedLink
       url={"/dietitian-sign-up"}
       text={"Dietician sign up"}
       customTheme={props.customTheme}
-    />
+    /> */}
   </>
 );
 export default SplashLinks;

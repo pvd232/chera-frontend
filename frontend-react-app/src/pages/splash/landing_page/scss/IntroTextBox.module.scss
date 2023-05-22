@@ -1,4 +1,5 @@
 @use '../../../../static/scss/index.scss' as theme;
+@use '../../scss/Splash.scss' as splash;
 
 .introTextBoxContainer {
   flex-direction: column;
@@ -19,7 +20,7 @@
     }
   }
   .subheader {
-    font-size: 1.12rem;
+    @include splash.splash-page-body;
   }
 }
 .signupButtonContainer {

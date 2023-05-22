@@ -5,6 +5,7 @@ import About from './About';
 import WhyUs from './why_us/WhyUs';
 import LandingPage from './landing_page/LandingPage.tsx';
 import FNCEApproved from './FNCEApproved';
+import Footer from './Footer';
 const Splash = () => {
   const customTheme = useTheme();
   return (
@@ -23,6 +24,7 @@ const Splash = () => {
       <WhyUs customTheme={customTheme} />
       <FNCEApproved customTheme={customTheme} />
       <About customTheme={customTheme} />
+      <Footer customTheme={customTheme} />
     </Grid>
   );
 };

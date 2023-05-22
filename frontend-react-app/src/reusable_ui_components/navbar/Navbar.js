@@ -9,7 +9,7 @@ import LocalStorageManager from '../../helpers/LocalStorageManager';
 import SplashLinks from './SplashLinks';
 import ClientLinks from './ClientLinks';
 import DietitianLinks from './DietitianLinks';
-import './css/Navbar.css';
+import './scss/Navbar.scss';
 
 function dummyFunction() {
   return;
@@ -68,7 +68,7 @@ const Navbar = (props) => {
                     <SplashLinks
                       customTheme={customTheme}
                       logoutUser={dummyFunction}
-                      firstName={"admin"}
+                      firstName={'admin'}
                     />
                   ) : props.domain === 'client' ? (
                     <ClientLinks

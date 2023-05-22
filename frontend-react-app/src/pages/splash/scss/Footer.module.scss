@@ -1,0 +1,23 @@
+@use '../../../static/scss/index.scss' as theme;
+
+.footerContainer {
+  justify-content: center;
+  align-items: center;
+  background-color: theme.$darkFucia;
+  padding: 5vh;
+  .footerColumn {
+    flex-direction: column;
+    justify-content: space-between;
+    .header {
+      color: white;
+      font-weight: bold;
+    }
+    .socialMediaIcons {
+      column-gap: 5vh;
+      a {
+        color: white;
+        font-size: 2rem;
+      }
+    }
+  }
+}
