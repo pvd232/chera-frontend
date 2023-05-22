@@ -129,9 +129,11 @@ const AccountRegistration = (props) => {
                   <HowItWorks customTheme={customTheme} />
                   <Grid item lg={6} xs={12} sx={{ marginTop: '4vh' }}>
                     <Stack direction={'column'} rowGap={3}>
+                      {/* AUTH */}
+                      {/* This is where we initialize the client's username and password. We store them temporarily in the state of the React component until the client completes the entire sign up flow. */}
+                      {/* Here we capture the client's username */}
                       <TextField
                         required
-                        autoComplete="new-password"
                         fullWidth
                         label={'Email'}
                         id="id"
@@ -148,6 +150,9 @@ const AccountRegistration = (props) => {
                       />
 
                       <>
+                        {/* AUTH */}
+                        {/* Here we capture the client's password */}
+
                         <TextField
                           autoComplete="new-password"
                           required

@@ -123,6 +123,8 @@ class LocalStorageManager {
   deleteSavedMealBuilderSnack() {
     this.removeItem('saved_meal_builder_snack');
   }
+  // AUTH
+  // Clear the browser's local storage, which will remove all information about the user
   logoutUser = () => {
     localStorage.clear();
   };

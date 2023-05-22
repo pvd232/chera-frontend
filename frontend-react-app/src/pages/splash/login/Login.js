@@ -19,6 +19,8 @@ import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularPr
 
 const Login = (props) => {
   const customTheme = useTheme();
+  // AUTH
+  // This is where we set the state of the React component to the dietitian and client's username and password. The state is updated as they type in their credentials
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -43,33 +45,41 @@ const Login = (props) => {
     const id = event.target.id;
     const value = event.target.value;
 
-    // state value
+    // State value
     setFormValue({ [id]: value });
   };
   const validate = (form) => {
     return form.checkValidity();
   };
-  // input handlers
+  // Input handlers
   const handleButtonClick = () => {
+    // AUTH
+    // Here we check if the user is a dietitian or client and then call the appropriate API endpoint to authenticate them
     if (props.domain === 'dietitian') {
       APIClient.authenticateDietitian(formValue).then((dietitianData) => {
+        // If the credentials were correct, the backend returns the dietitians's information and the value of dietitianData (which is the value returned by the server) above is JSON data
         if (dietitianData) {
           const dietitianDTO = new DietitianDTO(dietitianData);
-          const verifiedDietitian = new Dietitian(dietitianDTO);
-          LocalStorageManager.shared.dietitian = verifiedDietitian;
+          const dietitianModel = new Dietitian(dietitianDTO);
+          LocalStorageManager.shared.dietitian = dietitianModel;
+          // We set the homeUrl property of the LocalStorageManager to the dietitian's home page
           LocalStorageManager.shared.homeUrl = '/d-home';
+          // We set the redirect state to the dietitian's home page, which triggers the useEffect above to redirect the user to the dietitian's home page
           setRedirect('/d-home');
         } else {
+          // Otherwise, the value of dietitianData and we set the loginError state to true to show an error message
           setLoginError(true);
           setLoading(false);
         }
       });
     } else {
+      // AUTH
+      // The process is idential for the client
       APIClient.authenticateClient(formValue).then((clientData) => {
         if (clientData) {
           const clientDTO = new ClientDTO(clientData);
-          const returnedClient = new Client(clientDTO);
-          LocalStorageManager.shared.client = returnedClient;
+          const clientModel = new Client(clientDTO);
+          LocalStorageManager.shared.client = clientModel;
           LocalStorageManager.shared.homeUrl = '/home';
           setRedirect('/home');
         } else {
@@ -84,7 +94,7 @@ const Login = (props) => {
     event.preventDefault();
     const form = event.target;
 
-    // check that all required values have been populated before triggering button click
+    // Check that all required values have been populated before triggering button click
     if (validate(form)) {
       handleButtonClick();
     } else {
