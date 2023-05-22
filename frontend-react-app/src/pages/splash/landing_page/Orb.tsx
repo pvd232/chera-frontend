@@ -41,14 +41,13 @@ const Orb = (props: OrbProps) => {
       const radius = (() => {
         return getOrbRadius(smallerScreen, windowWidth, windowHeight);
       })();
-      // Draw a circle at right bottom of screen with it's size set by this.radius
       const initialOrbPosition = getOrbInitialPosition(
         smallerScreen,
         windowWidth,
         windowHeight,
         radius
       );
-
+      // Set relative position of Orb's bounding box to the initial position
       g.x = initialOrbPosition.xPosition;
       g.y = initialOrbPosition.yPosition;
       g.scale.set(1);
@@ -58,7 +57,7 @@ const Orb = (props: OrbProps) => {
 
       // Tell graphics to fill any shapes drawn after this with the orb's fill color
       g.beginFill(props.fill);
-
+      // Draw a circle with the given radius at the origin relative to the orb's bounding box
       g.drawCircle(0, 0, radius);
       // Let graphics know we won't be filling in any more shapes
       g.endFill();
