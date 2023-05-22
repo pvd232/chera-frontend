@@ -1,23 +1,26 @@
-import FormattedLink from './FormattedLink';
-import MenuListComposition from './MenuListComposition';
+import FormattedLink from "./FormattedLink";
+import NewMenuListComposition from "./NewMenuListComposition";
 
+function dummyFunction() {
+  return;
+}
 const ClientLinks = (props) => (
   <>
     <FormattedLink
-      id={'client-home-link'}
-      url={'/home'}
-      text={'My Schedule'}
+      id={"client-home-link"}
+      url={"/home"}
+      text={"My Schedule"}
       customTheme={props.customTheme}
     />
     <FormattedLink
-      id={'client-prev-deliveries-link'}
-      url={'/previous-deliveries'}
-      text={'Previous Deliveries'}
+      id={"client-prev-deliveries-link"}
+      url={"/previous-deliveries"}
+      text={"Previous Deliveries"}
       customTheme={props.customTheme}
     />
-    <MenuListComposition
-      firstName={props.firstName}
-      logoutUser={props.logoutUser}
+    <NewMenuListComposition
+      firstName={"admin"}
+      logoutUser={dummyFunction}
     />
   </>
 );

@@ -9,7 +9,11 @@ import LocalStorageManager from '../../helpers/LocalStorageManager';
 import SplashLinks from './SplashLinks';
 import ClientLinks from './ClientLinks';
 import DietitianLinks from './DietitianLinks';
-import './scss/Navbar.scss';
+import './css/Navbar.css';
+
+function dummyFunction() {
+  return;
+}
 const Navbar = (props) => {
   const customTheme = useTheme();
   return (
@@ -61,7 +65,11 @@ const Navbar = (props) => {
                   }
                 >
                   {props.domain === 'splash' ? (
-                    <SplashLinks customTheme={customTheme} />
+                    <SplashLinks
+                      customTheme={customTheme}
+                      logoutUser={dummyFunction}
+                      firstName={"admin"}
+                    />
                   ) : props.domain === 'client' ? (
                     <ClientLinks
                       customTheme={customTheme}
