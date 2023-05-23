@@ -6,6 +6,9 @@ import WhyUs from './why_us/WhyUs';
 import LandingPage from './landing_page/LandingPage.tsx';
 import FNCEApproved from './FNCEApproved';
 import Footer from './Footer';
+import { LoginButton } from '../../components/buttons/login-button';
+import { LogoutButton } from '../../components/buttons/logout-button';
+
 const Splash = () => {
   const customTheme = useTheme();
   return (

@@ -6,6 +6,9 @@ import { CssBaseline } from '@mui/material';
 import { loadStripe } from '@stripe/stripe-js';
 import { StyledEngineProvider } from '@mui/material/styles';
 import customTheme from './customTheme';
+import React from "react";
+import * as ReactDOM from 'react-dom';
+import {Auth0Provider} from "@auth0/auth0-react";
 
 const stripePromise = (() => {
   if (window.location.host === 'localhost:3000') {
@@ -26,7 +29,7 @@ const App = () => {
         <CssBaseline />
         <Main stripePromise={stripePromise} />
       </ThemeProvider>
-    </StyledEngineProvider>
+        </StyledEngineProvider>
   );
 };
 export default App;
