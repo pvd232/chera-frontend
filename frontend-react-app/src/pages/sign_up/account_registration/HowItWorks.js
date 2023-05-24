@@ -20,7 +20,6 @@ const HowItWorks = (props) => (
         fontSize={'0.8rem'}
         textAlign={props.customTheme.smallerScreen() ? 'center' : 'start'}
         margin={'0 auto'}
-        fontFamily={'Inter'}
         fontWeight={'bold'}
         color={props.customTheme.palette.olive.secondary}
       >

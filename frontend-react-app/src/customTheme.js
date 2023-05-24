@@ -1,6 +1,7 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import Inter from './static/fonts/Inter-Regular.ttf';
+import OpenSans from './static/fonts/OpenSans-Regular.ttf';
 import fontEqualizer from './helpers/fontEqualizer';
+import ScreenSize from './types/enums/ScreenSize';
 const themeBase = createTheme({
   palette: {
     olive: {
@@ -72,7 +73,7 @@ const themeBase = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Inter',
+    fontFamily: 'OpenSans',
     color: '#000000',
   },
   border: {
@@ -89,17 +90,23 @@ const themeBase = createTheme({
   },
   // 1920 is the screen size of my monitor
   // 1200 is the size of my laptop
-  extraLargeScreen: () => window.innerWidth > 1536,
-  largeScreen: () => window.innerWidth >= 1200 && window.innerWidth <= 1536,
-  mediumScreen: () => window.innerWidth <= 1200 && window.innerWidth > 900,
-  smallScreen: () => window.innerWidth <= 900 && window.innerWidth > 600,
-  extraSmallScreen: () => window.innerWidth <= 600 && window.innerHeight >= 800,
+  extraLargeScreen: () => window.innerWidth > ScreenSize.lg,
+  largeScreen: () =>
+    window.innerWidth >= ScreenSize.md && window.innerWidth <= ScreenSize.xl,
+  mediumScreen: () =>
+    window.innerWidth <= ScreenOrientation.lg &&
+    window.innerWidth > ScreenOrientation.sm,
+  smallScreen: () =>
+    window.innerWidth <= ScreenOrientation.md &&
+    window.innerWidth > ScreenOrientation.xs,
+  extraSmallScreen: () =>
+    window.innerWidth <= ScreenOrientation.sm && window.innerHeight >= 800,
   extraExtraSmallScreen: () =>
-    window.innerWidth <= 600 && window.innerHeight < 800,
+    window.innerWidth <= ScreenOrientation.xs && window.innerHeight < 800,
 
-  largerScreen: () => window.innerWidth >= 900,
-  smallerScreen: () => window.innerWidth <= 900,
-  extraSmallerScreen: () => window.innerWidth <= 600,
+  largerScreen: () => window.innerWidth >= ScreenOrientation.sm,
+  smallerScreen: () => window.innerWidth <= ScreenOrientation.md,
+  extraSmallerScreen: () => window.innerWidth <= ScreenOrientation.sm,
   tablet: () =>
     window.innerWidth > 700 &&
     window.innerWidth < 1000 &&
@@ -182,10 +189,10 @@ const themeBase = createTheme({
       // These fonts can support more unicode ranges (character sets associated with different alphabets) but i dont see a need to import them now. the raleway import was in the MUI documentation, also unicode range is optional
       styleOverrides: `
         @font-face {
-            font-family: 'Inter';
+            font-family: 'OpenSans';
             font-style: normal;
             font-weight: 400;
-            src: local('Inter'), local('Inter-Regular'), url("${Inter}") format('woff2');
+            src: local('OpenSans'), local('OpenSans-Regular'), url("${OpenSans}") format('woff2');
         },
       `,
     },

@@ -2,15 +2,16 @@
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/material/Icon';
 import Typography from '@mui/material/Typography';
+import ScreenSize from '../../types/enums/ScreenSize';
 import styles from './scss/FNCEApproved.module.scss';
-import useWindowWidth from './landing_page/hooks/useWindowWidth.ts';
+import { useWindowWidth } from '../../hooks/useWindowWidth';
 import FNCElogo from '../../static/images/fnce_logo.png';
 import cheraPlusFNCE from '../../static/images/chera_plus_fnce.png';
 import cheraLogo from '../../static/images/chera_logo.png';
 import eatRightLogo from '../../static/images/eat_right_logo_5.png';
 const FNCEApproved = () => {
   const windowWidth = useWindowWidth();
-  const smallScreen = windowWidth < 600;
+  const xsScreen = windowWidth <= ScreenSize.xs;
   return (
     <Grid container item className={styles.fnceApprovedPageContainer}>
       <Grid container item className={styles.childPageContainer} xs={10}>
@@ -20,7 +21,7 @@ const FNCEApproved = () => {
           </Typography>
         </Grid>
         <Grid container item className={styles.contentContainer}>
-          {!smallScreen ? (
+          {!xsScreen ? (
             <>
               <Grid item>
                 <img
@@ -44,7 +45,7 @@ const FNCEApproved = () => {
             </>
           ) : (
             <>
-              <Grid item lg={4} xs={10}>
+              <Grid item xs={6}>
                 <img
                   id="image1"
                   src={cheraLogo}
@@ -52,15 +53,16 @@ const FNCEApproved = () => {
                   alt="chera logo"
                 ></img>
               </Grid>
-              <Grid item>
-                <Icon className={styles.content}>add</Icon>
+              <Grid item container className={styles.plusSignContainer}>
+                <Grid item>
+                  <Icon className={styles.content}>add</Icon>
+                </Grid>
               </Grid>
               <Grid
                 container
                 item
-                xs={8}
-                lg={4}
-                className={styles.contentContainer}
+                xs={6}
+                className={styles.secondImageContainer}
               >
                 <img
                   id="image2"

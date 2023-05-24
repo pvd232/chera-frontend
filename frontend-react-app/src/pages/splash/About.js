@@ -100,7 +100,7 @@ const About = () => (
       {/* Rest of profiles */}
       <Grid container item className={styles.restOfProfilesContainer}>
         {/* Carol profile */}
-        <Grid item container lg={4} className={styles.profileContainer}>
+        <Grid item container lg={4} xs={8} className={styles.profileContainer}>
           <img src={carolPic} alt="carol standing" className={styles.img}></img>
           <Grid item>
             <Typography className={styles.name}>Carol Spiliotis</Typography>
@@ -113,7 +113,7 @@ const About = () => (
           </Grid>
         </Grid>
         {/* Anya profile */}
-        <Grid item container lg={4} className={styles.profileContainer}>
+        <Grid item container lg={4} xs={8} className={styles.profileContainer}>
           <Grid item>
             <img src={anyaPic} alt="anya headshot" className={styles.img}></img>
           </Grid>
@@ -128,7 +128,7 @@ const About = () => (
           </Grid>
         </Grid>
         {/* Titi profile */}
-        <Grid item container lg={4} className={styles.profileContainer}>
+        <Grid item container lg={4} xs={8} className={styles.profileContainer}>
           <Grid item>
             <img src={titiPic} alt="titi headshot" className={styles.img}></img>
           </Grid>

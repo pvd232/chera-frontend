@@ -221,7 +221,6 @@ const AccountRegistration = (props) => {
                         {loading ? <BlueCircularProgress /> : 'Select meals'}
                       </BlackButton>
                       <Typography
-                        fontFamily={'Inter'}
                         fontSize={customTheme.fontEqualizer(12)}
                         color={customTheme.palette.secondaryText.main}
                         sx={{

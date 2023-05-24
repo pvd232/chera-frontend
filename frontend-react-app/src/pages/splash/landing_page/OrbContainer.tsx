@@ -1,6 +1,6 @@
 import { Grid } from '@mui/material';
 import { Container, Stage, withFilters } from '@pixi/react';
-import useWindowWidth from './hooks/useWindowWidth';
+import { useWindowWidth } from '../../../hooks/useWindowWidth';
 import KawaseBlurFilterOverride from './helpers/KawaseBlurFilterOverride';
 import useOrbs from './hooks/useOrbs';
 const OrbContainer = () => {
@@ -20,7 +20,6 @@ const OrbContainer = () => {
         width={windowWidth}
       >
         <KawaseBlurFilterImpl blur={{ blur: 30, quality: 10 }}>
-          {/* Create the graphics component here */}
           {orbs.map((orb) => {
             return orb;
           })}

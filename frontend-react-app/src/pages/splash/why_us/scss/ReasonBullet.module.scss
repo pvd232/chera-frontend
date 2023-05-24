@@ -1,5 +1,5 @@
 @use '../../../../static/scss/index.scss' as theme;
-
+@use '../../scss/Splash.module.scss' as splash;
 .reasonBulletContainer {
   justify-content: flex-start;
   align-items: center;
@@ -21,9 +21,8 @@
     }
   }
   .headerOpen {
-    font-size: 1.2rem;
+    @include splash.splash-page-subheader;
     color: white;
-    font-family: 'Inter Bold';
   }
   .headerClosed {
     font-size: 1.2rem;

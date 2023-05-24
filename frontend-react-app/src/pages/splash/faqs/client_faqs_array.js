@@ -1,4 +1,4 @@
-const clientFAQsArray = () => [
+const clientFAQsArray = [
   {
     question: 'How much is Chera?',
     answer: 'Each meal is $12. Shipping is $14.',
@@ -11,7 +11,7 @@ const clientFAQsArray = () => [
   {
     question: 'Can I skip my delivery for a particular week?',
     answer:
-      'Yes. You can skip any delivery until your order is processed (Monday).',
+      'Yes. You can skip any delivery until your order is processed on Wednesday at 10 CST.',
   },
   {
     question: 'How will I know if my meals has been delivered?',

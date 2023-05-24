@@ -32,10 +32,7 @@ const DeliveryInfo = (props) => {
         alignItems={'flex-start'}
       >
         <Grid item>
-          <Typography
-            fontFamily={'Inter'}
-            fontSize={props.customTheme.fontEqualizer(18)}
-          >
+          <Typography fontSize={props.customTheme.fontEqualizer(18)}>
             Modify this week's delivery by{' '}
             {DeliveryDateUtility.getDeliveryDateForDisplay(
               DeliveryDateUtility.getCutoffDateFromIndex(

@@ -1,5 +1,5 @@
 @use '../../../static/scss/index.scss' as theme;
-@use './Splash.scss' as splash;
+@use './Splash.module.scss' as splash;
 $chera-plus-fnce-img: url('../../../static/images/chera_plus_fnce.png');
 $chera-logo: url('../../../static/images/chera_plus_fnce.png');
 $eat-right-logo: url('../../../static/images/eat_right_logo_5.png');
@@ -24,14 +24,13 @@ $FNCE-logo: url('../../../static/images/fnce_logo.png');
       justify-content: center;
       column-gap: 5vh;
       @include theme.xs {
-        flex-direction: column;
-        align-items: center;
+        justify-content: center;
         row-gap: 2vh;
       }
       .firstImage {
         width: 40vw;
         @include theme.xs {
-          height: 55vh;
+          width: 100%;
         }
       }
       .secondImageContainer {
@@ -42,9 +41,12 @@ $FNCE-logo: url('../../../static/images/fnce_logo.png');
         .secondImage {
           width: 15vw;
           @include theme.xs {
-            height: auto;
+            width: 100%;
           }
         }
+      }
+      .plusSignContainer {
+        justify-content: center;
       }
       .content {
         font-size: 3rem;

@@ -1,0 +1,19 @@
+@use '../../../static/scss/index.scss' as theme;
+
+.splashLinksContainer {
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 2vh;
+  .dietitianSignupButton {
+    background-color: theme.$fucia;
+    color: white;
+    text-transform: none;
+    border-radius: theme.$buttonBorderRadius;
+  }
+  .loginButton {
+    border-color: theme.$fucia;
+    color: theme.$fucia;
+    text-transform: none;
+    border-radius: theme.$buttonBorderRadius;
+  }
+}

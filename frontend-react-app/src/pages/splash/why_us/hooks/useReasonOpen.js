@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-export default function useReasonOpen() {
+export const useReasonOpen = () => {
   const [reasonOpen, setReasonOpen] = useReducer(
     (state, name) => {
       const newState = { ...state };
@@ -19,4 +19,4 @@ export default function useReasonOpen() {
     setReasonOpen(reasonNumber);
   };
   return [reasonOpen, handleSetReasonOpen];
-}
+};

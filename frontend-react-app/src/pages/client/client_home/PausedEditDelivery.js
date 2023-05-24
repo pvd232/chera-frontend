@@ -15,7 +15,6 @@ const PausedEditDelivery = (props) => (
       {props.paused ? (
         <Typography
           id="paused-edit-delivery"
-          fontFamily={'Inter'}
           fontSize={props.customTheme.fontEqualizer(18)}
         >
           Your subscription is paused. To unpause it, click the edit delivery
@@ -24,7 +23,6 @@ const PausedEditDelivery = (props) => (
       ) : (
         <Typography
           id="skipped-edit-delivery"
-          fontFamily={'Inter'}
           fontSize={props.customTheme.fontEqualizer(18)}
         >
           You skipped your meals this week. To unskip the week, click the edit

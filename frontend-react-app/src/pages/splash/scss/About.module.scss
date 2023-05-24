@@ -1,12 +1,12 @@
 @use '../../../static/scss/index.scss' as theme;
-@use './Splash.scss' as splash;
+@use './Splash.module.scss' as splash;
 
 @mixin quote {
   @include splash.splash-page-body;
 }
 @mixin name {
   @include splash.splash-page-body;
-  font-family: 'Inter Bold';
+  font-family: theme.$defaultFontBold;
 }
 @mixin jobTitle {
   @include splash.splash-page-body;
@@ -61,7 +61,7 @@
       row-gap: 5vh;
       margin-top: 10vh;
       @include theme.xs {
-        margin-top: 0vh;
+        margin-top: 5vh;
       }
       .profileContainer {
         flex-direction: column;
@@ -80,7 +80,8 @@
         .img {
           height: 30vh;
           @include theme.xs {
-            height: 230vh;
+            height: auto;
+            width: 100%;
           }
         }
       }

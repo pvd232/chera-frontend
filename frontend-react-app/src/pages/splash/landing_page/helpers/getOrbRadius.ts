@@ -1,12 +1,11 @@
-import randomNum from './randomNum';
-export default function getOrbRadius(
+import { randomNum } from './randomNum';
+export const getOrbRadius = (
   smallerScreen: boolean,
-  windowWidth: number,
-  windowHeight: number
-): number {
+  windowWidth: number
+): number => {
   if (smallerScreen) {
-    return randomNum(windowWidth / 8, windowWidth / 6);
+    return randomNum(windowWidth / 10, windowWidth / 8);
   } else {
-    return randomNum(windowHeight / 10, windowHeight / 7);
+    return randomNum(windowWidth / 14, windowWidth / 16);
   }
-}
+};

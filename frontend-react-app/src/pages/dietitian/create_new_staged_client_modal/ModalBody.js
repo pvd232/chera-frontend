@@ -21,7 +21,6 @@ const ModalBody = (props) => (
         Add a New Client
       </Typography>
       <Typography
-        fontFamily={'Inter'}
         fontSize={props.customTheme.fontEqualizer(16)}
         textAlign={'center'}
       >
@@ -165,7 +164,6 @@ const ModalBody = (props) => (
                   )}
                 </BlackButton>
                 <Typography
-                  fontFamily={'Inter'}
                   fontSize={props.customTheme.fontEqualizer(12)}
                   color={props.customTheme.palette.secondaryText.main}
                 >

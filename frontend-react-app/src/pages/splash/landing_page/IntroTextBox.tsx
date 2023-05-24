@@ -1,8 +1,8 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import styles from './scss/IntroTextBox.module.scss';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 const IntroTextBox = () => {
   const navigate = useNavigate();
   return (
@@ -20,19 +20,19 @@ const IntroTextBox = () => {
       </Grid>
       <Grid item>
         <Typography className={styles.subheader}>
-          Chera enables faster, sustainable recovery by promoting regular eating
-          habits.
+          Chera is designed to enable faster, sustainable recovery by promoting
+          regular eating habits.
         </Typography>
       </Grid>
       <Grid item container className={styles.signupButtonContainer}>
-        <BlackButton
+        <Button
           id="getStartedButton"
           variant={'contained'}
           onClick={() => navigate('/dietitian-sign-up')}
           className={styles.button}
         >
           Get started
-        </BlackButton>
+        </Button>
       </Grid>
     </Grid>
   );

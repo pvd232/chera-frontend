@@ -1,4 +1,4 @@
-const dietitianFAQsArray = () => [
+const dietitianFAQsArray = [
   {
     question: 'Where can I view meal plans and nutrition data?',
     answer:

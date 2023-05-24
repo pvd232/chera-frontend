@@ -1,4 +1,4 @@
-export default function orbPositionRequiresUpdate(
+export const orbPositionRequiresUpdate = (
   currentX: number,
   currentY: number,
   currentScale: number,
@@ -8,7 +8,7 @@ export default function orbPositionRequiresUpdate(
   xDelta: number,
   yDelta: number,
   scaleDelta: number
-): boolean {
+): boolean => {
   if (
     Math.abs(currentX - targetX) <= xDelta &&
     Math.abs(currentY - targetY) <= yDelta &&
@@ -18,4 +18,4 @@ export default function orbPositionRequiresUpdate(
   } else {
     return false;
   }
-}
+};

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Orb from '../Orb';
-import randomColor from '../helpers/randomColor';
+import { randomColor } from '../helpers/randomColor';
 export default function useOrbs() {
   const [orbs, setOrbs] = useState<React.ReactElement[]>([]);
   useEffect(() => {

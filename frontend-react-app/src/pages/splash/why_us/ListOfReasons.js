@@ -34,7 +34,11 @@ const ListOfReasons = (props) => (
     <ReasonBullet
       reasonOpen={props.reasonOpen.fourth}
       setReasonOpen={() => props.setReasonOpen('fourth')}
-      bulletPrimaryText={'Trusted Nutrition Credentials'}
+      bulletPrimaryText={
+        props.xsScreen
+          ? 'Trusted Nutrition Creds'
+          : 'Trusted Nutrition Credentials'
+      }
       bulletSecondaryText={
         'All our meals are all dietitian approved, and were served to hundreds of nutritional experts at FNCE 2022.'
       }

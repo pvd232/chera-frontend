@@ -19,7 +19,6 @@ const MealPlans = (props) => {
         sx={{ marginBottom: '15vh', marginTop: '10vh' }}
       >
         <Typography
-          fontFamily={'Inter'}
           fontSize={customTheme.fontEqualizer(48)}
           textAlign={'center'}
           color={customTheme.palette.black.main}

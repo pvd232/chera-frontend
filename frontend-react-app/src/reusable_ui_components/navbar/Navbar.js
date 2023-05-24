@@ -6,68 +6,33 @@ import { useTheme } from '@mui/material/styles';
 import { Link as RRLink } from 'react-router-dom';
 import logo from '../../static/images/chera_logo.png';
 import LocalStorageManager from '../../helpers/LocalStorageManager';
-import SplashLinks from './SplashLinks';
-import ClientLinks from './ClientLinks';
-import DietitianLinks from './DietitianLinks';
-import './scss/Navbar.scss';
-
-function dummyFunction() {
-  return;
-}
+import SplashLinks from './links/LegacySplashLinks';
+import ClientLinks from './links/LegacyClientLinks';
+import DietitianLinks from './links/LegacyDietitianLinks';
+import styles from './scss/Navbar.module.scss';
 const Navbar = (props) => {
   const customTheme = useTheme();
   return (
     <>
-      <Grid container maxWidth={'100vw'}>
-        <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static" className="appbar">
-            <Toolbar
-              className="navbar"
-              sx={{
-                backgroundColor: customTheme.palette.fucia2.light,
-              }}
-            >
-              <Grid
-                container
-                className="logo-container"
-                justifyContent={
-                  customTheme.smallerScreen() ? 'center' : 'flex-start'
-                }
-                rowGap={customTheme.smallerScreen() ? 3 : 0}
-                px={2}
-              >
+      <Grid container className={styles.navbarContainer}>
+        <Box className={styles.box}>
+          <AppBar position="static" className={styles.appBar}>
+            <Toolbar className={styles.toolBar}>
+              <Grid container className={styles.contentContainer}>
                 <Grid item>
                   <RRLink to={LocalStorageManager.shared.homeUrl}>
                     <img
-                      className="logo-image"
+                      className={styles.logoImg}
                       src={logo}
                       alt="chera logo"
                     ></img>
                   </RRLink>
                 </Grid>
-                {/* navbar links */}
-                <Grid
-                  container
-                  item
-                  lg={5}
-                  md={props.domain !== 'splash' ? 7 : 10}
-                  xs={12}
-                  justifyContent={'space-around'}
-                  sx={{
-                    marginLeft: props.domain === 'splash' ? 'auto' : '',
-                  }}
-                  columnGap={
-                    customTheme.extraSmallScreen()
-                      ? 1.5
-                      : customTheme.extraExtraSmallScreen()
-                      ? 0
-                      : 3.5
-                  }
-                >
+                {/* Navbar links */}
+                <Grid container item lg={10} className={styles.linksContainer}>
                   {props.domain === 'splash' ? (
                     <SplashLinks
                       customTheme={customTheme}
-                      logoutUser={dummyFunction}
                       firstName={'admin'}
                     />
                   ) : props.domain === 'client' ? (

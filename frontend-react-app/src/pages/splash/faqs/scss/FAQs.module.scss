@@ -1,0 +1,47 @@
+@use '../../../../static/scss/index.scss' as theme;
+@use '../../scss/Splash.module.scss' as splash;
+.FAQsPageContainer {
+  @include splash.splash-page-container;
+  background-color: theme.$lightFucia;
+  padding-top: 20vh;
+  .LHS {
+    flex-direction: column;
+    align-items: flex-start;
+    color: theme.$fucia;
+    row-gap: 1.5vh;
+    .header {
+      @include splash.splash-page-header;
+    }
+    .subheader {
+      @include splash.splash-page-body;
+    }
+    .emailLink {
+      @include splash.splash-page-body;
+      color: theme.$fucia;
+      font-family: theme.$defaultFontBold;
+    }
+  }
+  .RHS {
+    row-gap: 5vh;
+    .header {
+      @include splash.splash-page-subheader;
+      color: theme.$fucia;
+      font-style: italic;
+    }
+  }
+  .segmentContainer {
+    row-gap: 3vh;
+    .listOfFAQsContainer {
+      background-color: white;
+      border-radius: theme.$borderRadiusDefault;
+      padding-left: 30px;
+      padding-right: 30px;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      .stack {
+        row-gap: 3vh;
+        flex-grow: 1;
+      }
+    }
+  }
+}

@@ -15,7 +15,6 @@ const MealPlanRow = (props) => (
   >
     <Grid item>
       <Typography
-        fontFamily={'Inter'}
         fontSize={props.customTheme.fontEqualizer(8, true)}
         fontWeight={'bold'}
         textAlign={'center'}
@@ -56,7 +55,6 @@ const MealPlanRow = (props) => (
           ></MealItem>
         </>
         <Typography
-          fontFamily={'Inter'}
           fontSize={props.customTheme.fontEqualizer(8, true)}
           textAlign={'left'}
           paddingBottom={'1.5vh'}

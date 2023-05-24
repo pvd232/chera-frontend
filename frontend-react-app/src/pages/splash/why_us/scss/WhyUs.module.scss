@@ -1,25 +1,29 @@
 @use '../../../../static/scss/index.scss' as theme;
-@use '../../scss/Splash.scss' as splash;
+@use '../../scss/Splash.module.scss' as splash;
 
 .whyUsFirstContainer {
   @include splash.splash-page-container;
   .secondContainer {
     justify-content: space-around;
     row-gap: 5vh;
-    .lhsHeader {
+    .header {
       @include splash.splash-page-header;
       text-align: left;
       @include theme.xs {
         text-align: center;
       }
     }
-    .listOfReasonsContainer {
-      background-color: white;
-      border-radius: 30px;
-      overflow: hidden;
+    .lhsContainer {
+      flex-direction: column;
+      .listOfReasonsContainer {
+        background-color: white;
+        border-radius: 30px;
+        overflow: hidden;
+      }
     }
     .rhsContainer {
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       row-gap: 2vh;
       .stack {
         flex-direction: row;

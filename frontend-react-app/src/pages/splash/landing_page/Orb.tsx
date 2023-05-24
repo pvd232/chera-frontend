@@ -1,18 +1,18 @@
 import { useCallback, useRef, ComponentProps } from 'react';
 import { useTick } from '@pixi/react';
-import getOrbBounds from './helpers/getOrbBounds';
-import incrementOrbPosition from './helpers/incrementOrbPosition';
-import updateOrb from './helpers/updateOrb';
-import useWindowWidth from './hooks/useWindowWidth';
-import useWindowHeight from './hooks/useWindowHeight';
+import { getOrbBounds } from './helpers/getOrbBounds';
+import { incrementOrbPosition } from './helpers/incrementOrbPosition';
+import { updateOrb } from './helpers/updateOrb';
+import { useWindowWidth } from '../../../hooks/useWindowWidth';
+import { useWindowHeight } from '../../../hooks/useWindowHeight';
 import useOrbData from './hooks/useOrbData';
-import getOrbRadius from './helpers/getOrbRadius';
-import getOrbInitialPosition from './helpers/getOrbInitialPosition';
-import orbPositionRequiresUpdate from './helpers/orbPositionRequiresUpdate';
+import { getOrbRadius } from './helpers/getOrbRadius';
+import { getOrbInitialPosition } from './helpers/getOrbInitialPosition';
+import { orbPositionRequiresUpdate } from './helpers/orbPositionRequiresUpdate';
 import PixiPosition from './types/PixiPosition';
 import { Graphics, PixiRef } from '@pixi/react';
 import OrbProps from './types/OrbProps';
-
+import ScreenSize from '../../../types/enums/ScreenSize';
 const Orb = (props: OrbProps) => {
   const inc = 0.08;
   const defaultPosition = {
@@ -29,20 +29,20 @@ const Orb = (props: OrbProps) => {
     defaultPosition as PixiRef<PixiPosition>
   );
   const windowWidth = useWindowWidth();
+
   const windowHeight = useWindowHeight();
-  const smallerScreen = windowWidth < 600;
-  const bounds = (() =>
-    getOrbBounds(smallerScreen, windowWidth, windowHeight))();
+  const xsScreen = windowWidth < ScreenSize.xs;
+  const bounds = (() => getOrbBounds(xsScreen, windowWidth, windowHeight))();
 
   const [orbData, setOrbData] = useOrbData(bounds);
   type Draw = NonNullable<ComponentProps<typeof Graphics>['draw']>;
   const draw = useCallback<Draw>(
     (g) => {
       const radius = (() => {
-        return getOrbRadius(smallerScreen, windowWidth, windowHeight);
+        return getOrbRadius(xsScreen, windowWidth);
       })();
       const initialOrbPosition = getOrbInitialPosition(
-        smallerScreen,
+        xsScreen,
         windowWidth,
         windowHeight,
         radius
@@ -62,7 +62,7 @@ const Orb = (props: OrbProps) => {
       // Let graphics know we won't be filling in any more shapes
       g.endFill();
     },
-    [smallerScreen, props.fill, windowHeight, windowWidth]
+    [xsScreen, props.fill, windowHeight, windowWidth]
   );
   useTick((delta) => {
     const yDelta = 0.5;

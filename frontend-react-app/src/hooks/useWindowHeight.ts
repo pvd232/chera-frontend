@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 
-export default function useWindowHeight(): number {
+export const useWindowHeight = (): number => {
   const [height, setHeight] = useState(window.innerHeight);
   useLayoutEffect(() => {
     function updateHeight() {
@@ -11,4 +11,4 @@ export default function useWindowHeight(): number {
     return () => window.removeEventListener('resize', updateHeight);
   }, []);
   return height;
-}
+};

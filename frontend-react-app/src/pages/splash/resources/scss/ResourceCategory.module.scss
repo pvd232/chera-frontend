@@ -14,12 +14,12 @@
     opacity: 0.5;
     cursor: pointer;
   }
-  @include theme.smallScreen {
+  @include theme.smaller {
     column-gap: 3vw;
     justify-content: flex-start;
   }
 
-  @include theme.largeScreen {
+  @include theme.larger {
     justify-content: space-evenly;
   }
 }

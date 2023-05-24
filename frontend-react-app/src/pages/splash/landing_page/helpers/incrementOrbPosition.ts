@@ -1,6 +1,6 @@
 import OrbPosition from '../types/OrbPosition';
 
-export default function incrementOrbPosition(
+export const incrementOrbPosition = (
   newX: number,
   oldX: number,
   newY: number,
@@ -10,7 +10,7 @@ export default function incrementOrbPosition(
   xDelta: number,
   yDelta: number,
   scaleDelta: number
-): OrbPosition {
+): OrbPosition => {
   let updatedXPosition = oldX;
   let updatedYPosition = oldY;
   let updatedScale = oldScale;
@@ -46,4 +46,4 @@ export default function incrementOrbPosition(
     yPosition: updatedYPosition,
     scale: updatedScale,
   };
-}
+};

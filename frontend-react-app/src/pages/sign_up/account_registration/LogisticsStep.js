@@ -50,7 +50,6 @@ const LogisticsStep = (props) => (
         <Grid container item lg={9} md={9} xs={12} spacing={1}>
           <Grid item xs={12}>
             <Typography
-              fontFamily={'Inter'}
               fontSize={props.customTheme.fontEqualizer(
                 `${props.primaryFontSize ?? 8}`,
                 true
@@ -63,7 +62,6 @@ const LogisticsStep = (props) => (
           </Grid>
           <Grid item xs={12}>
             <Typography
-              fontFamily={'Inter'}
               fontSize={props.customTheme.fontEqualizer(
                 `${props.secondaryFontSize ?? 7}`,
                 true

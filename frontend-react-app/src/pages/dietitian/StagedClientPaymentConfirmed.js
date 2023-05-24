@@ -50,7 +50,6 @@ const StagedClientPaymentConfirmed = (props) => {
             successfully created!
           </Typography>
           <Typography
-            fontFamily={'Inter'}
             fontSize={customTheme.fontEqualizer(16)}
             textAlign={'center'}
           >

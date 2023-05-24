@@ -8,11 +8,13 @@ import styles from './scss/WhyUs.module.scss';
 
 const RHS = () => (
   <Grid container item lg={4} className={styles.rhsContainer}>
-    <CardMedia
-      src={splashImage2}
-      component="img"
-      alt="smiling lady"
-    ></CardMedia>
+    <Grid item>
+      <CardMedia
+        src={splashImage2}
+        component="img"
+        alt="smiling lady"
+      ></CardMedia>
+    </Grid>
     <Grid item>
       <Stack className={styles.stack}>
         <Typography>Questions?</Typography>

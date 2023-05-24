@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 
-export default function useWindowWidth(): number {
+export const useWindowWidth = (): number => {
   const [width, setWidth] = useState(window.innerWidth);
   useLayoutEffect(() => {
     function updateWidth() {
@@ -11,4 +11,4 @@ export default function useWindowWidth(): number {
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
   return width;
-}
+};

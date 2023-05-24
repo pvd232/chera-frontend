@@ -1,6 +1,6 @@
-import randomNum from './randomNum';
+import { randomNum } from './randomNum';
 import * as hsl from 'hsl';
-export default function randomColor(): string {
+export const randomColor = (): string => {
   // pick a random hue somewhere between 270 and 340
   const hue = ~~randomNum(310, 370);
   // define a fixed saturation and lightness
@@ -14,4 +14,4 @@ export default function randomColor(): string {
 
   // Pick a random color from the colorChoices array
   return baseColor.replace('#', '0x');
-}
+};

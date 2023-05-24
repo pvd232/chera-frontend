@@ -22,7 +22,6 @@ const TaskBarItem = (props) => {
           {props.symbolName}
         </Icon>
         <Typography
-          fontFamily={'Inter'}
           fontSize={customTheme.fontEqualizer(6, true)}
           fontWeight={'bold'}
           color={

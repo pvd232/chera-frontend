@@ -8,13 +8,13 @@
 }
 .bannerTextItem {
   color: white;
-  @include theme.smallScreen {
+  @include theme.smaller {
     padding-top: 2vh;
     padding-bottom: 2vh;
     padding-right: 3vw;
     padding-left: 3vw;
   }
-  @include theme.largeScreen {
+  @include theme.larger {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -27,7 +27,7 @@
 }
 .bannerContainer {
   position: relative;
-  @include theme.smallScreen {
+  @include theme.smaller {
     margin-bottom: 2vh;
   }
 }
@@ -40,10 +40,10 @@
 }
 .categoriesContainer {
   z-index: 1;
-  @include theme.smallScreen {
+  @include theme.smaller {
     justify-self: center;
   }
-  @include theme.largeScreen {
+  @include theme.larger {
     position: relative;
     left: 35%;
     bottom: 5%;
@@ -53,15 +53,15 @@
     padding-left: 1vw;
     align-items: flex-end;
     margin-bottom: 2vh;
-    @include theme.smallScreen {
+    @include theme.smaller {
       justify-content: center;
     }
     .text {
       font-size: 1.25rem;
-      @include theme.largeScreen {
+      @include theme.larger {
         vertical-align: bottom;
       }
-      @include theme.smallScreen {
+      @include theme.smaller {
         text-align: center;
       }
     }

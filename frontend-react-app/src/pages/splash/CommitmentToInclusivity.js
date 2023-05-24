@@ -16,7 +16,6 @@ const CommitmentToInclusivity = (props) => (
   >
     <CardContent>
       <Typography
-        fontFamily={'Inter'}
         fontSize={props.customTheme.fontEqualizer(48)}
         color={props.customTheme.palette.black.main}
         fontWeight={'500'}
@@ -27,7 +26,6 @@ const CommitmentToInclusivity = (props) => (
       </Typography>
       <Stack spacing={5}>
         <Typography
-          fontFamily={'Inter'}
           fontSize={props.customTheme.fontEqualizer(20)}
           color={props.customTheme.palette.black.main}
           textAlign={'center'}
@@ -37,7 +35,6 @@ const CommitmentToInclusivity = (props) => (
           receive the care they need to recover from an eating disorder.
         </Typography>
         <Typography
-          fontFamily={'Inter'}
           fontSize={props.customTheme.fontEqualizer(20)}
           color={props.customTheme.palette.black.main}
           textAlign={'center'}

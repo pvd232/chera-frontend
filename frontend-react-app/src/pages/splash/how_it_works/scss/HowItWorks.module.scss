@@ -1,5 +1,5 @@
 @use '../../../../static/scss/index.scss' as theme;
-@use '../../scss/Splash.scss' as splash;
+@use '../../scss/Splash.module.scss' as splash;
 .howItWorksContainer {
   @include splash.splash-page-container;
   flex-direction: column;

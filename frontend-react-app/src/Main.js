@@ -20,6 +20,8 @@ import ResetPassword from './pages/splash/ResetPassword';
 import ReactGA from 'react-ga';
 import ContactUs from './pages/splash/ContactUs';
 import Navbar from './reusable_ui_components/navbar/Navbar';
+import NewNavbar from './reusable_ui_components/navbar/NewNavbar';
+import NewSplashLinks from './reusable_ui_components/navbar/links/NewSplashLinks';
 import DietitianMenu from './pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './pages/splash/resources/Resources';
 import SignUpPage from './pages/sign_up/ClientSignUp';
@@ -45,10 +47,11 @@ const Main = (props) => {
         <Route
           path="/"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={<Splash></Splash>}
-              domain={'splash'}
-            ></Navbar>
+              links={<NewSplashLinks />}
+              homeUrl={'/'}
+            ></NewNavbar>
           }
         />
 
@@ -96,11 +99,13 @@ const Main = (props) => {
         />
         <Route
           path="/faqs"
-          element={<Navbar childComponent={<FAQs />} domain={'splash'} />}
-        />
-        <Route
-          path="/faqs"
-          element={<Navbar childComponent={<FAQs />} domain={'splash'} />}
+          element={
+            <NewNavbar
+              childComponent={<FAQs />}
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
+          }
         />
         <Route
           path="/client-sign-up"

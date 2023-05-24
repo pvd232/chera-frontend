@@ -112,7 +112,6 @@ const PreviousDeliveries = () => {
         >
           <Typography
             id={'previous-deliveries-header'}
-            fontFamily={'Inter'}
             fontSize={customTheme.fontEqualizer(24)}
             textAlign={'center'}
             marginTop={'40px'}
@@ -126,7 +125,6 @@ const PreviousDeliveries = () => {
               <Grid item xs={12}>
                 <Stack direction={'row'} spacing={3}>
                   <Typography
-                    fontFamily={'inter'}
                     fontSize={'1.1rem'}
                     fontWeight={'bold'}
                     paddingBottom={'2vh'}
@@ -137,7 +135,6 @@ const PreviousDeliveries = () => {
                   } ${orderMealCardItem.deliveryDate.getDate()}`}</Typography>
                   <Typography
                     fontWeight={'bold'}
-                    fontFamily={'inter'}
                     fontSize={'1.1rem'}
                     color={customTheme.palette.darkGrey.secondary}
                   >

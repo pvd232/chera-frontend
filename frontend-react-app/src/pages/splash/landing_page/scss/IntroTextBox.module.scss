@@ -1,18 +1,18 @@
 @use '../../../../static/scss/index.scss' as theme;
-@use '../../scss/Splash.scss' as splash;
+@use '../../scss/Splash.module.scss' as splash;
 
 .introTextBoxContainer {
   flex-direction: column;
   position: absolute;
-  top: 25%;
-  bottom: 25%;
+  top: 20%;
   row-gap: 2.5vh;
   color: theme.$fucia;
   @include theme.xs {
+    top: 10%;
     align-items: center;
   }
   .header {
-    font-family: 'Inter Bold';
+    font-family: theme.$defaultFontBold;
     line-height: 150%;
     font-size: 2rem;
     @include theme.xs {
@@ -29,8 +29,9 @@
   }
   .button {
     font-size: medium;
-    border-radius: 30px;
+    border-radius: theme.$buttonBorderRadius;
     letter-spacing: 0.1px;
     background-color: theme.$fucia;
+    text-transform: none;
   }
 }

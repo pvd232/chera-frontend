@@ -1,13 +1,13 @@
 import { createNoise2D } from 'simplex-noise';
-import mapValues from './mapValues';
+import { mapValues } from './mapValues';
 import OrbBounds from '../types/OrbBounds';
 import ExtendedOrbPosition from '../types/RelativeOrbPosition';
-export default function updateOrb(
+export const updateOrb = (
   xOff: number,
   yOff: number,
   bounds: OrbBounds,
   inc: number
-): ExtendedOrbPosition {
+): ExtendedOrbPosition => {
   // self similar "psuedo-random" or noise values at a given point in "time"
   const createXNoise = createNoise2D();
   const createYNoise = createNoise2D();
@@ -32,4 +32,4 @@ export default function updateOrb(
     yOffSet,
     scale,
   };
-}
+};

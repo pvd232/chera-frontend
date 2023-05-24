@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import randomNum from '../helpers/randomNum';
-import getOrbPosition from '../helpers/getOrbPosition';
+import { randomNum } from '../helpers/randomNum';
+import { getOrbPosition } from '../helpers/getOrbPosition';
 import ExtendedOrbPosition from '../types/RelativeOrbPosition';
 import OrbBounds from '../types/OrbBounds';
 export default function useOrbData(bounds: OrbBounds): [

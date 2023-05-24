@@ -130,7 +130,6 @@ const EditClientMealPlanModal = (props) => {
               Update your client's meal plan
             </Typography>
             <Typography
-              fontFamily={'Inter'}
               fontSize={customTheme.fontEqualizer(16)}
               textAlign={'center'}
             >
@@ -207,7 +206,6 @@ const EditClientMealPlanModal = (props) => {
                         Submit
                       </BlackButton>
                       <Typography
-                        fontFamily={'Inter'}
                         fontSize={customTheme.fontEqualizer(12)}
                         color={customTheme.palette.secondaryText.main}
                       >

@@ -1,15 +1,15 @@
 import OrbGeometry from '../types/OrbGeometry';
-import randomNum from './randomNum';
-export default function getInitialOrbGeometry(
+import { randomNum } from './randomNum';
+export const getOrbInitialPosition = (
   smallerScreen: boolean,
   windowWidth: number,
   windowHeight: number,
   radius: number
-): OrbGeometry {
+): OrbGeometry => {
   if (smallerScreen) {
     return {
-      xPosition: randomNum(0, windowWidth / 4),
-      yPosition: randomNum(0, windowHeight * 0.5),
+      xPosition: randomNum(0 * (windowWidth / 4), 1 * (windowWidth / 4)),
+      yPosition: randomNum(windowHeight * 0.5, windowHeight * 0.7),
       radius: radius,
     };
   } else {
@@ -19,4 +19,4 @@ export default function getInitialOrbGeometry(
       radius,
     };
   }
-}
+};

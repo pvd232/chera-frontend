@@ -4,13 +4,12 @@ import { useReducer } from 'react';
 import { useTheme } from '@mui/material/styles';
 import dietitianFAQsArray from './dietitian_faqs_array';
 import clientFAQsArray from './client_faqs_array';
-import ListOfClientFAQs from './ListOfClientFAQs';
-import ListOfDietitianFAQs from './ListOfDietitianFAQs';
-import '../scss/Splash.scss';
+import ListOfFAQs from './ListOfFAQs';
+import styles from './scss/FAQs.module.scss';
 const FAQs = () => {
   const customTheme = useTheme();
   const reasonOpenObject = {};
-  const combinedListOfFAQS = [...clientFAQsArray(), ...dietitianFAQsArray()];
+  const combinedListOfFAQS = [...clientFAQsArray, ...dietitianFAQsArray];
   combinedListOfFAQS.forEach(
     (_, i) => (reasonOpenObject[`reason-${i}`] = false)
   );
@@ -26,67 +25,51 @@ const FAQs = () => {
   };
 
   return (
-    <Grid container item className="splash-page-container" paddingTop={'20vh'}>
+    <Grid container item className={styles.FAQsPageContainer}>
       <Grid container item xs={10}>
-        <Grid container item flexDirection={'column'} lg={6} xs={10}>
+        <Grid container item lg={6} xs={10} className={styles.LHS}>
           <Grid item>
-            <Typography
-              className="splash-page-header"
-              textAlign={'left !important'}
-            >
-              Frequently Asked Questions
-            </Typography>
+            <Typography className={styles.header}>FAQs</Typography>
           </Grid>
           <Grid item>
-            <Typography
-              className="splash-page-subheader"
-              color={customTheme.palette.black.main}
-            >
+            <Typography className={styles.subheader}>
               If you have more questions, you can always reach out to us!
             </Typography>
           </Grid>
-          <Typography color={customTheme.palette.black.main}>
+
+          <a className={styles.emailLink} href="mailto:contact@cherahealth.com">
             contact@cherahealth.com
-          </Typography>
+          </a>
         </Grid>
-        <Grid item xl={8} lg={6} xs={11} rowSpacing={'3vh'}>
-          <Typography
-            sx={{
-              fontSize: customTheme.fontEqualizer(28),
-
-              textAlign: 'center',
-              fontStyle: 'italic',
-            }}
-            color={customTheme.palette.black.main}
-          >
-            For people seeking support
-          </Typography>
-          <ListOfClientFAQs
-            customTheme={customTheme}
-            reasonOpen={reasonOpen}
-            setReasonOpen={(reason) => handleSetReasonOpen(reason)}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <Typography
-            sx={{
-              fontSize: customTheme.fontEqualizer(28),
-
-              textAlign: 'center',
-              paddingTop: '2vh',
-              fontStyle: 'italic',
-            }}
-            color={customTheme.palette.black.main}
-          >
-            For dietitians interested in providing support
-          </Typography>
-        </Grid>
-        <Grid item xl={8} lg={6} xs={11}>
-          <ListOfDietitianFAQs
-            customTheme={customTheme}
-            reasonOpen={reasonOpen}
-            setReasonOpen={(reason) => handleSetReasonOpen(reason)}
-          ></ListOfDietitianFAQs>
+        <Grid item container xl={8} lg={6} xs={11} className={styles.RHS}>
+          <Grid container item className={styles.segmentContainer}>
+            <Grid item>
+              <Typography className={styles.header}>
+                For people seeking support
+              </Typography>
+            </Grid>
+            <ListOfFAQs
+              faqs={clientFAQsArray}
+              customTheme={customTheme}
+              reasonOpen={reasonOpen}
+              setReasonOpen={(reason) => handleSetReasonOpen(reason)}
+              startingIndex={0}
+            />
+          </Grid>
+          <Grid container item className={styles.segmentContainer}>
+            <Grid item>
+              <Typography className={styles.header}>
+                For dietitians interested in providing support
+              </Typography>
+            </Grid>
+            <ListOfFAQs
+              faqs={dietitianFAQsArray}
+              customTheme={customTheme}
+              reasonOpen={reasonOpen}
+              setReasonOpen={(reason) => handleSetReasonOpen(reason)}
+              startingIndex={clientFAQsArray.length}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
