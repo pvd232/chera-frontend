@@ -6,7 +6,7 @@ export default function getBaseURL(service) {
       window.location.host === 'localhost'
     ) {
       return 'http://localhost:4000/api';
-    } else if (window.location.host === 'staging.bendito.io') {
+    } else if (window.location.host === 'staging.cherahealth.io') {
       return `https://${window.location.host}/api`;
     } else {
       return `https://${window.location.host}/api`;
@@ -17,7 +17,7 @@ export default function getBaseURL(service) {
       window.location.host === 'localhost'
     ) {
       return 'http://localhost:3000';
-    } else if (window.location.host === 'staging.bendito.io') {
+    } else if (window.location.host === 'staging.cherahealth.io') {
       return `https://${window.location.host}`;
     } else {
       return `https://${window.location.host}`;

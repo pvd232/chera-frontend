@@ -11,7 +11,7 @@ class APIClient {
       this.baseUrl = getBaseURL('api');
       this.frontEndBaseUrl = getBaseURL('frontend');
       this.mode = 'cors';
-    } else if (window.location.host === 'staging.bendito.io') {
+    } else if (window.location.host === 'staging.cherahealth.io') {
       this.env = 'staging-production';
       this.baseUrl = getBaseURL('api');
       this.frontEndBaseUrl = getBaseURL('frontend');
