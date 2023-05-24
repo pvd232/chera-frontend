@@ -4,7 +4,6 @@ import { getOrbBounds } from './helpers/getOrbBounds';
 import { incrementOrbPosition } from './helpers/incrementOrbPosition';
 import { updateOrb } from './helpers/updateOrb';
 import { useWindowWidth } from '../../../hooks/useWindowWidth';
-import { useWindowHeight } from '../../../hooks/useWindowHeight';
 import useOrbData from './hooks/useOrbData';
 import { getOrbRadius } from './helpers/getOrbRadius';
 import { getOrbInitialPosition } from './helpers/getOrbInitialPosition';
@@ -30,9 +29,9 @@ const Orb = (props: OrbProps) => {
   );
   const windowWidth = useWindowWidth();
 
-  const windowHeight = useWindowHeight();
   const xsScreen = windowWidth < ScreenSize.xs;
-  const bounds = (() => getOrbBounds(xsScreen, windowWidth, windowHeight))();
+  const bounds = (() =>
+    getOrbBounds(xsScreen, windowWidth, window.innerHeight))();
 
   const [orbData, setOrbData] = useOrbData(bounds);
   type Draw = NonNullable<ComponentProps<typeof Graphics>['draw']>;
@@ -44,7 +43,7 @@ const Orb = (props: OrbProps) => {
       const initialOrbPosition = getOrbInitialPosition(
         xsScreen,
         windowWidth,
-        windowHeight,
+        window.innerHeight,
         radius
       );
       // Set relative position of Orb's bounding box to the initial position
@@ -62,7 +61,7 @@ const Orb = (props: OrbProps) => {
       // Let graphics know we won't be filling in any more shapes
       g.endFill();
     },
-    [xsScreen, props.fill, windowHeight, windowWidth]
+    [xsScreen, props.fill, windowWidth]
   );
   useTick((delta) => {
     const yDelta = 0.5;

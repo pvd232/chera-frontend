@@ -8,11 +8,12 @@ import styles from './scss/WhyUs.module.scss';
 
 const RHS = () => (
   <Grid container item lg={4} className={styles.rhsContainer}>
-    <Grid item>
+    <Grid item lg={10} xs={9}>
       <CardMedia
         src={splashImage2}
         component="img"
         alt="smiling lady"
+        className={styles.img}
       ></CardMedia>
     </Grid>
     <Grid item>

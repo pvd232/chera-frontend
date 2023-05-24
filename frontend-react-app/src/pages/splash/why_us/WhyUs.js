@@ -17,7 +17,7 @@ const WhyUs = () => {
             <Typography className={styles.header}>Why Chera?</Typography>
           </Grid>
         </Grid>
-        <Grid container item justifyContent={'space-between'}>
+        <Grid container item className={styles.contentContainer}>
           <LHS
             reasonOpen={reasonOpen}
             setReasonOpen={setReasonOpen}
