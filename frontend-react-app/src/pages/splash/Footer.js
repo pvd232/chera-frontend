@@ -34,7 +34,7 @@ const Footer = () => (
             </Link>
           </Grid>
           <Grid item>
-            <Typography>contact@cherahealth.io</Typography>
+            <Typography>contact@cherahealth.com</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -59,7 +59,7 @@ const Footer = () => (
               </Link>
             </Grid>
             <Grid item>
-              <Typography>contact@cherahealth.io</Typography>
+              <Typography>contact@cherahealth.com</Typography>
             </Grid>
           </Grid>
         </Grid>

@@ -5,7 +5,6 @@ import styles from './scss/FAQs.module.scss';
 const ListOfFAQs = (props) => {
   return (
     <Grid container item className={styles.listOfFAQsContainer}>
-      {/* first reason bullet */}
       <Stack className={styles.stack}>
         {props.faqs.map((faq, i) => (
           <ReasonFAQ

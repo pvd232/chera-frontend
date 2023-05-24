@@ -1,27 +1,27 @@
 const dietitianFAQsArray = [
   {
-    question: 'Where can I view meal plans and nutrition data?',
+    question: 'Where can I access meal plans and nutrition data?',
     answer:
-      'Meal plans and nutrition data for all of our meals is available in your dashboard after signing up for a Benditio account.',
+      'After signing up for a Chera account, you can access meal plans and nutrition data for all of our meals in your dashboard.',
   },
   {
-    question: "Can I change my client's meal plan?",
+    question: "Can I update my client's meal plan?",
     answer:
-      "Yes, you can change a client's meal plan at any time according to their changing needs throughout their care.",
+      "Throughout a client's care, you have the flexibility to modify their meal plan at any time to accommodate their changing needs.",
   },
   {
-    question: 'How do I add clients?',
+    question: 'How do I invite my clients to join Chera?',
     answer:
-      'You can add a client through your dashboard upon logging in. Once you add a client, they will automatically receive an email with instructions on how to create an account.',
+      'Upon logging into your dashboard, you have the ability to add a client. Once a client is added, an email containing instructions on how to create an account will be sent to them automatically.',
   },
   {
-    question: 'Does Chera put nutrition labels on client meals?',
+    question: "Will my clients' meals have nutritional labels?",
 
-    answer: 'No, meals come free of any nutritional labeling.',
+    answer: 'No, meals do not have nutritional labeling.',
   },
   {
-    question: 'Is there a cost for dietitians?',
-    answer: 'No, there is no cost to sign up or invite your clients.',
+    question: 'Do I have to pay to create an account?',
+    answer: 'No, it is free to sign up and invite clients.',
   },
 ];
 export default dietitianFAQsArray;

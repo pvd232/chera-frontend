@@ -29,7 +29,7 @@ const PaymentForm = (props) => {
       // Elements instance that was used to create the Payment Element
       elements,
       confirmParams: {
-        return_url: props.returnUrl ?? 'https://cherahealth.io/',
+        return_url: props.returnUrl ?? 'https://cherahealth.com/',
       },
     });
     if (error) {

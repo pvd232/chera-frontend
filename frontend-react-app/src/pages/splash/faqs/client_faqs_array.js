@@ -1,7 +1,7 @@
 const clientFAQsArray = [
   {
     question: 'How much is Chera?',
-    answer: 'Each meal is $12. Shipping is $14.',
+    answer: 'Each meal is $12. Shipping is $16.',
   },
   {
     question: 'Is there a minimum number of meals?',
@@ -39,7 +39,7 @@ const clientFAQsArray = [
   {
     question: 'Does Chera offer allergy-friendly recipes?',
     answer:
-      'Our food may contain or come into contact with common allergens, such as dairy, eggs, wheat, soybeans, tree nuts, peanuts, fish, shellfish, or wheat. While we take steps to minimize risk and safely handle the foods that contain potential allergens, please be advised that cross-contamination may occur, as factors beyond our reasonable control may alter the formulations of the food we serve, or manufacturers may change their formulations without our knowledge. Customers with food allergies or other nutritional concerns are welcome to email contact@Chera.io for more information.',
+      'Our food may contain or come into contact with common allergens, such as dairy, eggs, wheat, soybeans, tree nuts, peanuts, fish, shellfish, or wheat. While we take steps to minimize risk and safely handle the foods that contain potential allergens, please be advised that cross-contamination may occur, as factors beyond our reasonable control may alter the formulations of the food we serve, or manufacturers may change their formulations without our knowledge. Customers with food allergies or other nutritional concerns are welcome to email contact@cherahealth.com for more information.',
   },
   {
     question: 'When are my meals delivered?',

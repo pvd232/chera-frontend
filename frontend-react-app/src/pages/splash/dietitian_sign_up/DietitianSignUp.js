@@ -82,7 +82,6 @@ const DietitianSignUp = () => {
     let id = event.target.id;
     let value = event.target.value;
     setFormValue({ [id]: value });
-    // setting the state unfocuses the user cursor in the form, and setting auto-focus to true fixes it, but autofocus can only be true for the input that is currently being typed in
   };
   const validate = async (form) => {
     const dietitianAlreadyExists = await APIClient.getDietitian(formValue.id);

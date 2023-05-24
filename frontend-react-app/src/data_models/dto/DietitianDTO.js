@@ -10,6 +10,7 @@ export default class DietitianDTO {
       dietitianObject.dietetic_registration_number;
     this.clinicCity = dietitianObject.clinic_city;
     this.clinicState = dietitianObject.clinic_state;
+    this.clinicAddress = dietitianObject.clinic_address;
     this.clinicUrl = dietitianObject.clinic_url;
     this.datetime = dietitianObject.datetime * 1000;
     this.active = dietitianObject.active;
@@ -26,6 +27,7 @@ export default class DietitianDTO {
       dietetic_registration_number: formData.dieteticRegistrationNumber,
       clinic_city: formData.clinicCity,
       clinic_state: formData.clinicState,
+      clinic_address: formData.clinicAddress,
       clinic_url: formData.clinicUrl,
       admin: formData.admin,
       notes: formData.notes,
@@ -43,6 +45,7 @@ export default class DietitianDTO {
       dietetic_registration_number: this.dieteticRegistrationNumber,
       clinic_city: this.clinicCity,
       clinic_state: this.clinicState,
+      clinic_address: this.clinicAddress,
       clinic_url: this.clinicUrl,
       datetime: this.datetime / 1000,
       active: this.active,
