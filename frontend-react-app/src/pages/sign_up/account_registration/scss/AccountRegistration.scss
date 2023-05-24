@@ -1,0 +1,27 @@
+@use '../../../../static/scss/index.scss' as theme;
+.accountRegistration {
+  justify-content: center;
+  .formFieldset {
+    box-shadow: theme.$medium;
+    padding: 4vh 5vw;
+    box-sizing: border-box;
+    margin: 0 10%;
+    height: fit-content;
+    border: none;
+    .header {
+      width: 80%;
+      font-size: 2rem;
+      text-align: center;
+      margin: 0 auto;
+      margin-bottom: 5vh;
+      margin-top: 2vh;
+      .stack {
+        .emailInput {
+          margin-left: auto;
+          margin-right: auto;
+          width: 80%;
+        }
+      }
+    }
+  }
+}

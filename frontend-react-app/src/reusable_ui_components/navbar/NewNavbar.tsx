@@ -26,7 +26,7 @@ const NewNavbar = (props: NavbarProps) => {
                     Chera
                   </Typography>
                 </Grid>
-                <Grid item className={styles.linksContainer}>
+                <Grid container item className={styles.linksContainer} xs={3}>
                   {props.links}
                 </Grid>
               </Grid>

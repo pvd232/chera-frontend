@@ -6,6 +6,12 @@
   @include theme.xs {
     column-gap: 0.3vh;
   }
+  .menuIcon {
+    color: theme.$fucia;
+    font-size: 3.5rem;
+    padding-right: 2vh;
+    padding-top: 1vh;
+  }
   .link {
     font-size: theme.$linkFontSize;
     color: theme.$fucia;

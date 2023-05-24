@@ -38,32 +38,50 @@
   font-size: 1.1rem;
   text-align: center;
 }
-.categoriesContainer {
-  z-index: 1;
-  @include theme.smaller {
-    justify-self: center;
-  }
-  @include theme.larger {
-    position: relative;
-    left: 35%;
-    bottom: 5%;
-  }
-  .header {
-    padding-right: 1vw;
-    padding-left: 1vw;
-    align-items: flex-end;
-    margin-bottom: 2vh;
+.pageContainer {
+  justify-content: center;
+
+  .categoriesContainer {
+    z-index: 1;
     @include theme.smaller {
-      justify-content: center;
+      justify-self: center;
     }
-    .text {
-      font-size: 1.25rem;
-      @include theme.larger {
-        vertical-align: bottom;
-      }
+    @include theme.larger {
+      position: relative;
+      left: 35%;
+      bottom: 5%;
+    }
+    .header {
+      padding-right: 1vw;
+      padding-left: 1vw;
+      align-items: flex-end;
+      margin-bottom: 2vh;
       @include theme.smaller {
-        text-align: center;
+        justify-content: center;
+      }
+      .text {
+        font-size: 1.25rem;
+        @include theme.larger {
+          vertical-align: bottom;
+        }
+        @include theme.smaller {
+          text-align: center;
+        }
       }
     }
+    .resourceCategoriesContainer {
+      row-gap: 3vh;
+      @include theme.xs {
+        justify-content: center;
+      }
+    }
+  }
+}
+.tableOfContentsImgContainer {
+  position: relative;
+  right: 6%;
+  .img {
+    object-fit: cover;
+    width: 100%;
   }
 }

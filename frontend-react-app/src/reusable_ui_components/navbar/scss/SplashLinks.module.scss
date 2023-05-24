@@ -4,6 +4,9 @@
   justify-content: flex-end;
   align-items: center;
   column-gap: 2vh;
+  @include theme.xs {
+    justify-content: flex-end;
+  }
   .dietitianSignupButton {
     background-color: theme.$fucia;
     color: white;

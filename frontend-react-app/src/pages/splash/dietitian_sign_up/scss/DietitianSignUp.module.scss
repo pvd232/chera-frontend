@@ -1,0 +1,21 @@
+@use '../../../../static/scss/index.scss' as theme;
+@use '../../../splash/scss/Splash.module.scss' as splash;
+.pageContainer {
+  justify-content: center;
+  background-color: theme.$lightFucia;
+  @include splash.splash-page-container;
+  .header {
+    margin-bottom: 10vh;
+
+    @include splash.splash-page-header;
+  }
+  .submitButton {
+    background-color: theme.$fucia;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-top: 2vh;
+    font-size: 1rem;
+  }
+}

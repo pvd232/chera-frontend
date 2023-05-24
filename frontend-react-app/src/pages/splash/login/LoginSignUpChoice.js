@@ -3,9 +3,9 @@ import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
 import Stack from '@mui/material/Stack';
-
+import { Button } from '@mui/material';
+import styles from './scss/LoginSignUpChoice.module.scss';
 const LoginSignUpChoice = () => {
   const customTheme = useTheme();
   const navigate = useNavigate();
@@ -27,7 +27,6 @@ const LoginSignUpChoice = () => {
             <Grid
               item
               container
-              xs={12}
               justifyContent={'center'}
               alignItems={'center'}
               height={'100%'}
@@ -42,39 +41,26 @@ const LoginSignUpChoice = () => {
                   Let's get started
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
-                <Stack direction={'column'} rowGap={3}>
-                  <BlackButton
+              <Grid item container>
+                <Stack rowGap={3} flexGrow={1}>
+                  <Button
                     variant="contained"
                     onClick={() =>
                       navigate('../client-login', { replace: true })
                     }
-                    sx={{
-                      marginLeft: 'auto',
-                      marginRight: 'auto',
-                      width: '80%',
-                      paddingTop: '1vh',
-                      paddingBottom: '1vh',
-                    }}
+                    className={styles.loginButton}
                   >
                     Client
-                  </BlackButton>
-                  <BlackButton
+                  </Button>
+                  <Button
                     variant="contained"
                     onClick={() =>
                       navigate('../dietitian-login', { replace: true })
                     }
-                    sx={{
-                      marginLeft: 'auto',
-                      marginRight: 'auto',
-                      width: '80%',
-                      paddingTop: '1vh',
-                      paddingBottom: '1vh',
-                      marginBottom: '5vh',
-                    }}
+                    className={styles.loginButton}
                   >
                     Dietitian
-                  </BlackButton>
+                  </Button>
                 </Stack>
               </Grid>
             </Grid>

@@ -6,7 +6,6 @@ import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useReducer, useState } from 'react';
-import { useTheme } from '@mui/material/styles';
 import React from 'react';
 import FormHelperText from '@mui/material/FormHelperText';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
@@ -18,9 +17,8 @@ import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
 import CustomTextField from './CustomTextField';
 import SearchLocationInput from '../../sign_up/SearchLocationInput';
+import styles from './scss/DietitianSignUp.module.scss';
 const DietitianSignUp = () => {
-  const customTheme = useTheme();
-
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -125,6 +123,7 @@ const DietitianSignUp = () => {
         return false;
       }
       const validAddress = await APIClient.validateAddress(addressObject);
+      console.log('validAddress', validAddress);
       if (!validAddress) {
         setAddressValueError(true);
         return false;
@@ -149,27 +148,10 @@ const DietitianSignUp = () => {
     }
   };
   return (
-    <Grid
-      container
-      justifyContent={'center'}
-      py={customTheme.pages.splash.spacing.pages}
-      sx={{
-        backgroundColor: customTheme.palette.fucia2.light,
-      }}
-    >
+    <Grid container className={styles.pageContainer}>
       <Grid item lg={4} md={6} xs={10}>
         <CardContent>
-          <Typography
-            className="splash-page-header"
-            mb={{
-              xs: '5vh',
-              sm: '5vh',
-              md: '10vh',
-              lg: '10vh',
-            }}
-          >
-            Dietitian sign up
-          </Typography>
+          <Typography className={styles.header}>Dietitian sign up</Typography>
           <form onSubmit={handleSubmit}>
             <FormGroup>
               <Stack direction={'column'} rowGap={2}>
@@ -279,13 +261,7 @@ const DietitianSignUp = () => {
                   disabled={loading}
                   variant="contained"
                   type={'submit'}
-                  sx={{
-                    px: 2,
-                    py: 1,
-                    mt: 2,
-
-                    fontSize: customTheme.smallScreen() ? '.7rem' : '.9rem',
-                  }}
+                  className={styles.submitButton}
                 >
                   {loading ? <CircularProgress size={24} /> : 'Submit'}
                 </BlackButton>

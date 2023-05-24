@@ -9,32 +9,24 @@ const clientFAQsArray = [
   },
 
   {
-    question: 'Can I skip my delivery for a particular week?',
+    question: 'Can I skip a week?',
     answer:
-      'Yes. You can skip any delivery until your order is processed on Wednesday at 10 CST.',
+      'Certainly! You have the option to skip any delivery until your order is processed every Wednesday at 10 PM CST.',
   },
   {
-    question: 'How will I know if my meals has been delivered?',
+    question: 'Is it required to order breakfast, lunch, and dinner?',
     answer:
-      'After ordering your first meals, you will receive an email with delivery information and a tracking link.',
+      "No, you're welcome to choose any combination of meals that suits your preference!",
   },
   {
-    question: 'Do I have to get breakfast, lunch, and dinner?',
-    answer: 'No, feel free to select any combination of meals you want!',
-  },
-  {
-    question: 'Can I change how many meals I get?',
+    question: 'Can I modify my order?',
     answer:
-      'Yes. You can adjust your order weekly and order as many meals as you want. There is a six meal/week minimum.',
+      'You can modify your order on a weekly basis. The deadline to modify your order is Wednesday at 10 PM CST.',
   },
   {
     question: 'Can I use Chera without a dietitian?',
     answer:
-      'No. To sign up, your dietitian must register you as a client. Once they do this, you will receive an email with instructions on how to get started.',
-  },
-  {
-    question: 'When is the deadline to change or skip my order?',
-    answer: 'The deadline to change or skip your order is Monday.',
+      'No, only dietitians can refer clients to the platform. Chera is designed to faciliate collaboration and oversight between dietitians and their clients.',
   },
   {
     question: 'Does Chera offer allergy-friendly recipes?',

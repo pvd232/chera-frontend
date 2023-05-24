@@ -1561,9 +1561,12 @@ class APIClient {
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseJSON = await response.json();
+    console.log('responseJSON', responseJSON);
 
     const addressIsComplete =
       responseJSON.result.verdict.hasOwnProperty('addressComplete');
+    console.log('addressIsComplete', addressIsComplete);
+
     const addressHasIncorrectSuite = responseJSON.result.verdict.hasOwnProperty(
       'hasUnconfirmedComponents'
     );

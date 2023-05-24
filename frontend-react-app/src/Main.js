@@ -58,25 +58,24 @@ const Main = (props) => {
         <Route
           path="/splash-menu"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={<SplashMenu></SplashMenu>}
-              domain={'splash'}
-            ></Navbar>
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
         <Route
           path="/contact"
           element={
-            <Navbar childComponent={<ContactUs />} domain={'splash'}></Navbar>
+            <NewNavbar
+              childComponent={<ContactUs />}
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
 
-        <Route
-          path="/splash-meal-plans"
-          element={
-            <Navbar childComponent={<MealPlans />} domain={'splash'}></Navbar>
-          }
-        />
         <Route
           path="/meal-plans"
           element={
@@ -94,7 +93,11 @@ const Main = (props) => {
         <Route
           path="/dietitian-sign-up"
           element={
-            <Navbar childComponent={<DietitianSignUp />} domain={'splash'} />
+            <NewNavbar
+              childComponent={<DietitianSignUp />}
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
         <Route
@@ -188,75 +191,80 @@ const Main = (props) => {
           }
         />
         <Route
-          path="/login-sign-up-choice"
+          path="/login"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={<LoginSignUpChoice />}
-              domain={'splash'}
-            ></Navbar>
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
 
         <Route
           path="/dietitian-login"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={<Login domain={'dietitian'} />}
-              domain={'splash'}
-            ></Navbar>
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
         <Route
           path="/client-login"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={<Login domain={'client'} />}
-              domain={'splash'}
-            ></Navbar>
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
         <Route
           exact
           path="/request-reset-client-password"
           element={
-            <Navbar
-              childComponent={
-                <RequestResetPassword domain={'client'}></RequestResetPassword>
-              }
-              domain={'splash'}
-            ></Navbar>
+            <NewNavbar
+              childComponent={<RequestResetPassword domain={'client'} />}
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
         <Route
           path="/request-reset-dietitian-password"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={
                 <RequestResetPassword
                   domain={'dietitian'}
                 ></RequestResetPassword>
               }
-              domain={'splash'}
-            ></Navbar>
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
         <Route
           exact
           path="/reset-client-password"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={<ResetPassword domain={'client'} />}
-              domain={'splash'}
-            ></Navbar>
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
         <Route
           path="/reset-dietitian-password"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={<ResetPassword domain={'dietitian'} />}
-              domain={'splash'}
-            ></Navbar>
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
         <Route
@@ -276,7 +284,11 @@ const Main = (props) => {
         <Route
           path="/resources"
           element={
-            <Navbar childComponent={<Resources />} domain={'splash'}></Navbar>
+            <NewNavbar
+              childComponent={<Resources />}
+              links={<NewSplashLinks />}
+              homeUrl="/"
+            />
           }
         />
       </Routes>
