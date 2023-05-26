@@ -29,6 +29,9 @@
       flex-direction: column;
       align-items: center;
       row-gap: 2vh;
+      .img {
+        max-width: 300px;
+      }
       @include theme.xs {
         justify-content: center;
       }

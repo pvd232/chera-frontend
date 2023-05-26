@@ -7,8 +7,8 @@ import CalendlyButton from './CalendlyButton.js';
 import styles from './scss/WhyUs.module.scss';
 
 const RHS = () => (
-  <Grid container item lg={4} className={styles.rhsContainer}>
-    <Grid item lg={10} xs={9}>
+  <Grid container item lg={6} className={styles.rhsContainer}>
+    <Grid item xs={9}>
       <CardMedia
         src={splashImage2}
         component="img"
