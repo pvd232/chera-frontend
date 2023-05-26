@@ -24,7 +24,7 @@ const Splash = () => {
       <WhyUs customTheme={customTheme} />
       <FNCEApproved customTheme={customTheme} />
       {/* <About customTheme={customTheme} /> */}
-      {/* <Footer customTheme={customTheme} /> */}
+      <Footer customTheme={customTheme} />
     </Grid>
   );
 };

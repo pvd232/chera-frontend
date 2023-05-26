@@ -39,7 +39,7 @@ const Footer = () => (
         </Grid>
       </Grid>
       {/*Column 2*/}
-      <Grid container item lg={3} justifyContent={'center'}>
+      {/* <Grid container item lg={3} justifyContent={'center'}>
         <Grid item></Grid>
         <Grid container item justifyContent={'center'}>
           <Grid
@@ -63,9 +63,9 @@ const Footer = () => (
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
       {/*Column 3*/}
-      <Grid container item lg={3} className={styles.footerColumn}>
+      {/* <Grid container item lg={3} className={styles.footerColumn}>
         <Grid item>
           <Typography className={styles.header}>
             Catch us on Social Media
@@ -88,7 +88,7 @@ const Footer = () => (
             </a>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Grid>
   </Grid>
 );
