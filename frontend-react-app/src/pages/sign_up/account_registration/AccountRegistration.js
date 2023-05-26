@@ -123,7 +123,7 @@ const AccountRegistration = (props) => {
                     marginBottom={'5vh'}
                     marginTop={'2vh'}
                   >
-                    Let's get started
+                    Sign up
                   </Typography>
 
                   <HowItWorks customTheme={customTheme} />

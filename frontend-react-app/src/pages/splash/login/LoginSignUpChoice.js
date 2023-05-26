@@ -38,7 +38,7 @@ const LoginSignUpChoice = () => {
                   margin={'0 auto'}
                   mb={10}
                 >
-                  Let's get started
+                  Log in to Chera
                 </Typography>
               </Grid>
               <Grid item container>
