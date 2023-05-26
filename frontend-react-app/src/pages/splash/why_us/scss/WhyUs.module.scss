@@ -46,6 +46,11 @@
         @include theme.xs {
           margin-bottom: 3vh;
         }
+        .button {
+          background-color: theme.$fucia;
+          color: white;
+          border-radius: theme.$borderRadiusDefault;
+        }
       }
     }
   }
