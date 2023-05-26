@@ -11,7 +11,7 @@ const SplashLinks = () => {
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < ScreenSize.xs;
   return (
-    <Grid container className={styles.splashLinksContainer}>
+    <Grid container item className={styles.splashLinksContainer}>
       {isMobile ? (
         <Grid item>
           <LoginDropDown />

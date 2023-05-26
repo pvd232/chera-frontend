@@ -23,8 +23,8 @@ const Splash = () => {
       <HowItWorks customTheme={customTheme} />
       <WhyUs customTheme={customTheme} />
       <FNCEApproved customTheme={customTheme} />
-      <About customTheme={customTheme} />
-      <Footer customTheme={customTheme} />
+      {/* <About customTheme={customTheme} /> */}
+      {/* <Footer customTheme={customTheme} /> */}
     </Grid>
   );
 };
