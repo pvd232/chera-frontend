@@ -14,7 +14,7 @@ const Splash = () => {
       item
       flexDirection={'column'}
       alignItems={'center'}
-      marginBottom={'20vh'}
+      // marginBottom={'20vh'}
       sx={{
         backgroundColor: customTheme.palette.fucia2.light,
       }}
