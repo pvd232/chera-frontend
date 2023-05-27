@@ -2,11 +2,7 @@ import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faFacebook,
-  faInstagram,
-  faTwitter,
-} from '@fortawesome/free-brands-svg-icons';
+import { faLinkedin, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import styles from './scss/Footer.module.scss';
 
 const Footer = () => (
@@ -38,57 +34,30 @@ const Footer = () => (
           </Grid>
         </Grid>
       </Grid>
-      {/*Column 2*/}
-      {/* <Grid container item lg={3} justifyContent={'center'}>
-        <Grid item></Grid>
-        <Grid container item justifyContent={'center'}>
-          <Grid
-            container
-            flexDirection={'column'}
-            alignItems={'left'}
-            justifyContent={'space-around'}
-            rowSpacing={'1vh'}
-            color={'white'}
-          >
-            <Grid item>
-              <Typography fontWeight={'bold'}>Get Started</Typography>
-            </Grid>
-            <Grid item>
-              <Link to="/FAQs">
-                <Typography>FAQs</Typography>
-              </Link>
-            </Grid>
-            <Grid item>
-              <Typography>contact@cherahealth.com</Typography>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid> */}
-      {/*Column 3*/}
-      {/* <Grid container item lg={3} className={styles.footerColumn}>
+      <Grid container item lg={3} className={styles.footerColumn}>
         <Grid item>
           <Typography className={styles.header}>
             Catch us on Social Media
           </Typography>
         </Grid>
         <Grid container item className={styles.socialMediaIcons}>
-          <Grid item>
+          {/* <Grid item>
             <a href="https://www.facebook.com">
               <FontAwesomeIcon icon={faFacebook} />
             </a>
+          </Grid> */}
+          <Grid item>
+            <a href="https://www.linkedin.com/company/91413752">
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
           </Grid>
           <Grid item>
-            <a href="https://www.instagram.com">
+            <a href="https://www.instagram.com/chera_health/">
               <FontAwesomeIcon icon={faInstagram} />
             </a>
           </Grid>
-          <Grid item>
-            <a href="https://www.twitter.com">
-              <FontAwesomeIcon icon={faTwitter} />
-            </a>
-          </Grid>
         </Grid>
-      </Grid> */}
+      </Grid>
     </Grid>
   </Grid>
 );

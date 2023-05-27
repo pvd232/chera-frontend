@@ -14,7 +14,6 @@ const Splash = () => {
       item
       flexDirection={'column'}
       alignItems={'center'}
-      // marginBottom={'20vh'}
       sx={{
         backgroundColor: customTheme.palette.fucia2.light,
       }}
@@ -23,7 +22,7 @@ const Splash = () => {
       <HowItWorks customTheme={customTheme} />
       <WhyUs customTheme={customTheme} />
       <FNCEApproved customTheme={customTheme} />
-      {/* <About customTheme={customTheme} /> */}
+      <About customTheme={customTheme} />
       <Footer customTheme={customTheme} />
     </Grid>
   );
