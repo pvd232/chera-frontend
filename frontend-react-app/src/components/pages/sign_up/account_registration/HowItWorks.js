@@ -30,7 +30,7 @@ const HowItWorks = (props) => (
     <Stack direction={'column'} rowGap={0}>
       <LogisticsStep
         customTheme={props.customTheme}
-        headerText={'Get a Referral'}
+        headerText={'Get a referral'}
         bodyText={
           'Your dietitian has already referred you and selected a meal program catered to your nutritional needs!'
         }
@@ -40,7 +40,7 @@ const HowItWorks = (props) => (
       ></LogisticsStep>
       <LogisticsStep
         customTheme={props.customTheme}
-        headerText={'Select Your Meals'}
+        headerText={'Select your meals'}
         bodyText={
           "Choose meals from your program's menu, or have them pre-selected by your dietitian. All our meals come pre-cooked and ready to go."
         }
@@ -50,7 +50,7 @@ const HowItWorks = (props) => (
       ></LogisticsStep>
       <LogisticsStep
         customTheme={props.customTheme}
-        headerText={'We Cook and Ship Meals'}
+        headerText={'We cook and deliver meals'}
         bodyText={'Meals are shipped directly to your doorstep on Sundays.'}
         symbolName={'delivery_dining_outlined'}
         primaryFontSize={6.5}
@@ -58,7 +58,7 @@ const HowItWorks = (props) => (
       ></LogisticsStep>
       <LogisticsStep
         customTheme={props.customTheme}
-        headerText={'Heat Up, Sit Back and Enjoy'}
+        headerText={'Heat up, sit back and enjoy'}
         bodyText={
           'Easy-to-follow instructions + microwave safe packaging = ready to go in minutes! Skip a week or cancel anytime.'
         }

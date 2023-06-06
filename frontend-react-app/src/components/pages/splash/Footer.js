@@ -44,7 +44,7 @@ const Footer = () => (
             </Typography>
           </Grid>
           <Grid item>
-            <Link to="/FAQs">
+            <Link to="/FAQs" className={styles.link}>
               <Typography>FAQs</Typography>
             </Link>
           </Grid>

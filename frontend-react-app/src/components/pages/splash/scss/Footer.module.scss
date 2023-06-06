@@ -18,14 +18,18 @@
         justify-content: space-around;
         row-gap: 1vh;
         color: white;
+        font-size: 1rem;
         .header {
           font-weight: bold;
         }
         .body {
-          @include splash.splash-page-body;
           @include theme.xs {
             font-size: 0.8rem;
           }
+        }
+        .link {
+          text-decoration: none;
+          color: white;
         }
       }
     }

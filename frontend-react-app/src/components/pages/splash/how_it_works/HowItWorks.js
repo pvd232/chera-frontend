@@ -32,7 +32,7 @@ const HowItWorks = (props) => (
       <Grid item lg={2.8} md={5} xs={10}>
         <LogisticsStep
           customTheme={props.customTheme}
-          headerText={'We cook and ship meals'}
+          headerText={'We cook and deliver meals'}
           bodyText={
             'Personalized, dietitian approved meals, thoughtfully labeled and home delivered.'
           }
