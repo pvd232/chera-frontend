@@ -14,18 +14,27 @@
     .white {
       font-size: 2rem;
       color: white;
+      @include theme.xs {
+        font-size: 1.7rem;
+      }
     }
     .black {
       font-size: 2rem;
       color: black;
+      @include theme.xs {
+        font-size: 1.7rem;
+      }
     }
   }
   .headerOpen {
     @include splash.splash-page-subheader;
     color: white;
+    @include theme.xs {
+      font-size: 1.1rem;
+    }
   }
   .headerClosed {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     color: black;
   }
   .arrowContainer {

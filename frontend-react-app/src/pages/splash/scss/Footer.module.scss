@@ -1,34 +1,47 @@
 @use '../../../static/scss/index.scss' as theme;
+@use '../scss/Splash.module.scss' as splash;
 
 .footerContainer {
   justify-content: center;
   align-items: center;
   background-color: theme.$darkFucia;
   padding: 5vh;
-  .footerSubContainer {
-    justify-content: center;
-    .questionsColumn {
-      flex-direction: column;
-      justify-content: space-around;
-      row-gap: 1vh;
-      color: white;
-      .header {
-        font-weight: bold;
+  .footerPaddingContainer {
+    @include theme.xs {
+      justify-content: space-evenly;
+    }
+    .footerQuestionsContainer {
+      justify-content: center;
+
+      .questionsColumn {
+        flex-direction: column;
+        justify-content: space-around;
+        row-gap: 1vh;
+        color: white;
+        .header {
+          font-weight: bold;
+        }
+        .body {
+          @include splash.splash-page-body;
+          @include theme.xs {
+            font-size: 0.8rem;
+          }
+        }
       }
     }
-  }
-  .socialsColumn {
-    flex-direction: column;
-    justify-content: space-between;
-    .header {
-      color: white;
-      font-weight: bold;
-    }
-    .socialMediaIcons {
-      column-gap: 5vh;
-      a {
+    .socialsColumn {
+      flex-direction: column;
+      justify-content: space-between;
+      .header {
         color: white;
-        font-size: 2rem;
+        font-weight: bold;
+      }
+      .socialMediaIcons {
+        column-gap: 5vh;
+        a {
+          color: white;
+          font-size: 2rem;
+        }
       }
     }
   }

@@ -7,29 +7,10 @@ import styles from './scss/Footer.module.scss';
 
 const Footer = () => (
   <Grid container item className={styles.footerContainer}>
-    <Grid container item lg={10}>
-      <Grid container item lg={3} xs={5} className={styles.footerSubContainer}>
-        <Grid container item className={styles.questionsColumn}>
-          <Grid item>
-            <Typography id="footerTextLeft" className={styles.header}>
-              Questions?
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Link to="/FAQs">
-              <Typography>FAQs</Typography>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Typography>contact@cherahealth.com</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid container item lg={3} xs={5} className={styles.socialsColumn}>
+    <Grid container item lg={10} className={styles.footerPaddingContainer}>
+      <Grid container item lg={3} xs={6.5} className={styles.socialsColumn}>
         <Grid item>
-          <Typography className={styles.header}>
-            Catch us on Social Media
-          </Typography>
+          <Typography className={styles.header}>Connect with us</Typography>
         </Grid>
         <Grid container item className={styles.socialMediaIcons}>
           {/* <Grid item>
@@ -46,6 +27,31 @@ const Footer = () => (
             <a href="https://www.instagram.com/chera_health/">
               <FontAwesomeIcon icon={faInstagram} />
             </a>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        item
+        lg={3}
+        xs={4.5}
+        className={styles.footerQuestionsContainer}
+      >
+        <Grid container item className={styles.questionsColumn}>
+          <Grid item>
+            <Typography id="footerTextLeft" className={styles.header}>
+              Questions?
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Link to="/FAQs">
+              <Typography>FAQs</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Typography className={styles.body}>
+              contact@cherahealth.com
+            </Typography>
           </Grid>
         </Grid>
       </Grid>

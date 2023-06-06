@@ -16,7 +16,8 @@
     line-height: 150%;
     font-size: 3.7rem;
     @include theme.xs {
-      text-align: center;
+      @include splash.splash-page-header;
+      line-height: 150%;
     }
   }
   .subheader {

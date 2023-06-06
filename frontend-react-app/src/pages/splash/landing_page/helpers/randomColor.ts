@@ -6,7 +6,7 @@ export const randomColor = (): string => {
   // define a fixed saturation and lightness
   const saturation = 95;
   const lightness = 50;
-  const opacity = 0.15;
+  const opacity = 0.1;
   // define a base color
   const baseColor: string = hsl(hue, saturation, lightness, opacity);
 

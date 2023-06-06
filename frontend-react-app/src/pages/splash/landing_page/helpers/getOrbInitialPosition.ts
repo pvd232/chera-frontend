@@ -8,7 +8,7 @@ export const getOrbInitialPosition = (
 ): OrbGeometry => {
   if (smallerScreen) {
     return {
-      xPosition: randomNum(0 * (windowWidth / 4), 1 * (windowWidth / 4)),
+      xPosition: randomNum(0 * (windowWidth / 4), 4 * (windowWidth / 4)),
       yPosition: randomNum(windowHeight * 0.5, windowHeight * 0.7),
       radius: radius,
     };
