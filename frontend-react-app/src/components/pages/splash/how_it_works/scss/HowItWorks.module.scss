@@ -2,12 +2,14 @@
 @use '../../scss/Splash.module.scss' as splash;
 .howItWorksContainer {
   @include splash.splash-page-container;
-  flex-direction: column;
   align-items: center;
   background-color: white;
   .header {
     @include splash.splash-page-header;
     margin-bottom: 10vh;
+    @include theme.xs {
+      margin-bottom: 5vh;
+    }
   }
   .illustrationContainer {
     row-gap: 5vh;

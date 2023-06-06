@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 export interface NavbarProps {
-  childComponent: React.FC;
+  childComponent: ReactNode;
   links: ReactElement;
   homeUrl: string;
 }

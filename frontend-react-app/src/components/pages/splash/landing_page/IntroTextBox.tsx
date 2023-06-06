@@ -27,10 +27,24 @@ const IntroTextBox = () => {
         </Typography>
       </Grid>
       <Grid item>
-        <Typography className={styles.subheader}>
-          Chera designed to enable faster recovery, sustained by regular eating
-          habits.
-        </Typography>
+        {!isMobile ? (
+          <Typography className={styles.subheader}>
+            Chera is designed to enable faster recovery, sustained by regular
+            eating habits
+          </Typography>
+        ) : (
+          <>
+            <Typography className={styles.subheader}>
+              Chera is designed
+            </Typography>
+            <Typography className={styles.subheader}>
+              to enable faster recovery,
+            </Typography>
+            <Typography className={styles.subheader}>
+              sustained by regular eating habits.
+            </Typography>
+          </>
+        )}
       </Grid>
       <Grid item container className={styles.signupButtonContainer}>
         <Button

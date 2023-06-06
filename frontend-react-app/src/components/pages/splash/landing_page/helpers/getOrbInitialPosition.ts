@@ -9,7 +9,7 @@ export const getOrbInitialPosition = (
   if (smallerScreen) {
     return {
       xPosition: randomNum(0 * (windowWidth / 4), 4 * (windowWidth / 4)),
-      yPosition: randomNum(windowHeight * 0.5, windowHeight * 0.7),
+      yPosition: randomNum(windowHeight * 0.45, windowHeight * 0.7),
       radius: radius,
     };
   } else {

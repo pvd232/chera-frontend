@@ -1,17 +1,17 @@
 import { useCallback, useRef, ComponentProps } from 'react';
 import { useTick } from '@pixi/react';
+import { Graphics, PixiRef } from '@pixi/react';
+import ScreenSize from '../../../../types/enums/ScreenSize';
+import { useWindowWidth } from '../../../hooks/useWindowWidth';
+import PixiPosition from './types/PixiPosition';
+import OrbProps from './types/OrbProps';
 import { getOrbBounds } from './helpers/getOrbBounds';
 import { incrementOrbPosition } from './helpers/incrementOrbPosition';
 import { updateOrb } from './helpers/updateOrb';
-import { useWindowWidth } from '../../../hooks/useWindowWidth';
-import useOrbData from './hooks/useOrbData';
 import { getOrbRadius } from './helpers/getOrbRadius';
 import { getOrbInitialPosition } from './helpers/getOrbInitialPosition';
 import { orbPositionRequiresUpdate } from './helpers/orbPositionRequiresUpdate';
-import PixiPosition from './types/PixiPosition';
-import { Graphics, PixiRef } from '@pixi/react';
-import OrbProps from './types/OrbProps';
-import ScreenSize from '../../../../types/enums/ScreenSize';
+import useOrbData from './hooks/useOrbData';
 const Orb = (props: OrbProps) => {
   const inc = 0.08;
   const defaultPosition = {

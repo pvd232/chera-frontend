@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import ReactGA from 'react-ga';
 import Splash from './components/pages/splash/Splash';
-import SplashMenu from './components/pages/splash/SplashMenu';
 import MealPlans from './components/pages/dietitian/meal_plans/MealPlans';
 import TaskBar from './components/pages/sign_up/task_bar/TaskBar';
 import MealBuilder from './components/pages/admin/meal_builder/MealBuilder';
@@ -9,16 +9,16 @@ import MealPlanMealBuilder from './components/pages/admin/meal_plan_meal_builder
 import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilderContainer';
 import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
 import Login from './components/pages/splash/login/Login';
+import NewLogin from './components/pages/splash/login/NewLogin';
+
 import LoginSignUpChoice from './components/pages/splash/login/LoginSignUpChoice';
 import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
 import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
 import DietitianHomeContainer from './components/pages/dietitian/DietitianHomeContainer';
 import DietitianMenuContainer from './components/pages/dietitian/dietitian_menu/DietitianMenuContainer';
 import DietititanHome from './components/pages/dietitian/DietitianHome';
-import RequestResetPassword from './components/pages/splash/RequestResetPassword';
-import ResetPassword from './components/pages/splash/ResetPassword';
-import ReactGA from 'react-ga';
-import ContactUs from './components/pages/splash/ContactUs';
+import RequestResetPassword from './components/pages/splash/login/RequestResetPassword';
+import ResetPassword from './components/pages/splash/login/ResetPassword';
 import Navbar from './components/reusable_ui_components/navbar/Navbar';
 import NewNavbar from './components/reusable_ui_components/navbar/NewNavbar';
 import NewSplashLinks from './components/reusable_ui_components/navbar/links/NewSplashLinks';
@@ -53,27 +53,6 @@ const Main = (props) => {
               links={<NewSplashLinks />}
               homeUrl={'/'}
             ></NewNavbar>
-          }
-        />
-
-        <Route
-          path="/splash-menu"
-          element={
-            <NewNavbar
-              childComponent={<SplashMenu></SplashMenu>}
-              links={<NewSplashLinks />}
-              homeUrl="/"
-            />
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <NewNavbar
-              childComponent={<ContactUs />}
-              links={<NewSplashLinks />}
-              homeUrl="/"
-            />
           }
         />
 
@@ -208,7 +187,7 @@ const Main = (props) => {
           path="/dietitian-login"
           element={
             <NewNavbar
-              childComponent={<Login domain={'dietitian'} />}
+              childComponent={<NewLogin domain={'dietitian'} />}
               links={<NewSplashLinks />}
               homeUrl="/"
             />
@@ -218,7 +197,7 @@ const Main = (props) => {
           path="/client-login"
           element={
             <NewNavbar
-              childComponent={<Login domain={'client'} />}
+              childComponent={<NewLogin domain={'client'} />}
               links={<NewSplashLinks />}
               homeUrl="/"
             />

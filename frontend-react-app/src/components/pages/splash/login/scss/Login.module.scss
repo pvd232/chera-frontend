@@ -8,6 +8,9 @@
     margin-bottom: 10vh;
     @include splash.splash-page-header;
   }
+  .formRow {
+    background-color: theme.$antiqueWhite;
+  }
   .submitButton {
     background-color: theme.$fucia;
     padding-left: 2vh;

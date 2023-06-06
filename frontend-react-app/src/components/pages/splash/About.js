@@ -28,17 +28,16 @@ const About = () => (
               "For too long, the needs of those suffering from eating disorders
               have gone overlooked. I founded Chera to change that. We're
               building a platform that straddles a unique intersection of
-              technology, nutrition, and mental healthcare; drawing on the
-              expertise of our team of clinicians, dietitians, and engineers to
-              streamline the recovery process.
+              technology, nutrition, and mental health; drawing on the expertise
+              of our diverse team of clinicians, dietitians, and engineers to
+              streamline and expedite the recovery process.
             </Typography>
           </Grid>
           <Grid item></Grid>
           <Grid item>
             <Typography className={styles.quote}>
-              Eating disorder recovery is at the heart of everything we do.
-              We're constantly innovating around ways we can help our clients
-              both recover more quickly and relapse less frequently.
+              Recovery is at the heart of everything we do. We're constantly
+              innovating around ways we can improve access and quality of care.
             </Typography>
           </Grid>
           <Grid item></Grid>
@@ -100,7 +99,7 @@ const About = () => (
       {/* Rest of profiles */}
       <Grid container item className={styles.restOfProfilesContainer}>
         {/* Carol profile */}
-        <Grid item container lg={4} xs={8} className={styles.profileContainer}>
+        <Grid item container lg={4} xs={7} className={styles.profileContainer}>
           <img src={carolPic} alt="carol standing" className={styles.img}></img>
           <Grid item>
             <Typography className={styles.name}>Carol Spiliotis</Typography>
@@ -113,7 +112,7 @@ const About = () => (
           </Grid>
         </Grid>
         {/* Anya profile */}
-        <Grid item container lg={4} xs={8} className={styles.profileContainer}>
+        <Grid item container lg={4} xs={7} className={styles.profileContainer}>
           <Grid item>
             <img src={anyaPic} alt="anya headshot" className={styles.img}></img>
           </Grid>
@@ -128,7 +127,7 @@ const About = () => (
           </Grid>
         </Grid>
         {/* Titi profile */}
-        <Grid item container lg={4} xs={8} className={styles.profileContainer}>
+        <Grid item container lg={4} xs={7} className={styles.profileContainer}>
           <Grid item>
             <img src={titiPic} alt="titi headshot" className={styles.img}></img>
           </Grid>

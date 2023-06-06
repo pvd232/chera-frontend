@@ -12,40 +12,44 @@ const NewNavbar = (props: NavbarProps) => {
     navigate(props.homeUrl);
   };
   return (
-    <>
-      <Grid container className={styles.navbarContainer}>
-        <Box className={styles.box}>
-          <AppBar className={styles.appBar}>
-            <Toolbar className={styles.toolBar}>
-              <Grid container className={styles.contentTopContainer}>
-                <Grid container className={styles.contentContainer} xs={11.3}>
-                  <Grid item>
-                    <Typography
-                      className={styles.logoText}
-                      onClick={handleClickLogo}
+    <Grid container className={styles.pageContainer}>
+      <Grid container className={styles.childContentContainer}>
+        <Grid container className={styles.navbarContainer}>
+          <Box className={styles.box}>
+            <AppBar className={styles.appBar}>
+              <Toolbar className={styles.toolBar}>
+                <Grid container className={styles.contentTopContainer}>
+                  <Grid container className={styles.contentContainer} xs={11.2}>
+                    <Grid item>
+                      <Typography
+                        className={styles.logoText}
+                        onClick={handleClickLogo}
+                      >
+                        Chera
+                      </Typography>
+                    </Grid>
+                    <Grid
+                      container
+                      item
+                      className={styles.linksContainer}
+                      xs={3}
+                      sm={9}
+                      md={8}
+                      lg={6}
                     >
-                      Chera
-                    </Typography>
-                  </Grid>
-                  <Grid
-                    container
-                    item
-                    className={styles.linksContainer}
-                    xs={3}
-                    sm={9}
-                    md={8}
-                    lg={6}
-                  >
-                    {props.links}
+                      {props.links}
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Toolbar>
-          </AppBar>
-        </Box>
+              </Toolbar>
+            </AppBar>
+          </Box>
+        </Grid>
+        <Grid item className={styles.pageContentContainer}>
+          {props.childComponent}
+        </Grid>
       </Grid>
-      {props.childComponent}
-    </>
+    </Grid>
   );
 };
 export default NewNavbar;

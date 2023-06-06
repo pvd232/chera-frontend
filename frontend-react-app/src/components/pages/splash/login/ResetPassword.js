@@ -7,12 +7,12 @@ import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
 import Stack from '@mui/material/Stack';
-import APIClient from '../../../helpers/APIClient';
-import LocalStorageManager from '../../../helpers/LocalStorageManager';
-import Client from '../../../data_models/model/Client';
-import ClientDTO from '../../../data_models/dto/ClientDTO';
-import BlueCircularProgress from '../../reusable_ui_components/BlueCircularProgress';
-import BlackButton from '../../reusable_ui_components/BlackButton.ts';
+import APIClient from '../../../../helpers/APIClient';
+import LocalStorageManager from '../../../../helpers/LocalStorageManager';
+import Client from '../../../../data_models/model/Client';
+import ClientDTO from '../../../../data_models/dto/ClientDTO';
+import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
+import BlackButton from '../../../reusable_ui_components/BlackButton';
 
 const ResetPassword = (props) => {
   const customTheme = useTheme();

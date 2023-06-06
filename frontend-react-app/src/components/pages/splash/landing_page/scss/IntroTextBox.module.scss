@@ -18,7 +18,10 @@
     }
   }
   .subheader {
-    @include splash.splash-page-body;
+    font-size: 1.35rem;
+    @include theme.xs {
+      font-size: 1.25rem;
+    }
   }
 }
 .signupButtonContainer {

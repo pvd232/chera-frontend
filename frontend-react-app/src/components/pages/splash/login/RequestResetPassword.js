@@ -8,17 +8,15 @@ import Typography from '@mui/material/Typography';
 import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import BlackButton from '../../reusable_ui_components/BlackButton.ts';
-import APIClient from '../../../helpers/APIClient';
+import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
+import APIClient from '../../../../helpers/APIClient.js';
 
 const RequestResetPassword = (props) => {
   const customTheme = useTheme();
 
   const [email, setEmail] = useState('');
-
   const [loading, setLoading] = useState(false);
   const [resetpasswordError, setResetPasswordError] = useState(false);
-
   const [showText, setShowText] = useState(false);
 
   const validate = (form) => {
