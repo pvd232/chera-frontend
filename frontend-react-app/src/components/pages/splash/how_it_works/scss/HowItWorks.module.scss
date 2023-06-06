@@ -1,0 +1,19 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/Splash.module.scss' as splash;
+.howItWorksContainer {
+  @include splash.splash-page-container;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  .header {
+    @include splash.splash-page-header;
+    margin-bottom: 10vh;
+  }
+  .illustrationContainer {
+    row-gap: 5vh;
+    justify-content: space-evenly;
+    @include theme.xs {
+      justify-content: center;
+    }
+  }
+}

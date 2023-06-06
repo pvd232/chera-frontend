@@ -1,0 +1,12 @@
+@use '../../../../static/scss/index.scss' as theme;
+
+.clientLinksContainer {
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 3vh;
+  .link {
+    font-size: theme.$linkFontSize;
+    color: theme.$fucia;
+    cursor: pointer;
+  }
+}

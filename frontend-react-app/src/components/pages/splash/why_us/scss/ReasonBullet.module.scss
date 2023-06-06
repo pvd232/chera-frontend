@@ -1,0 +1,61 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/Splash.module.scss' as splash;
+.reasonBulletContainer {
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 0.8rem;
+  padding-right: 1.5rem;
+  row-gap: 0.5rem;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  .iconContainer {
+    justify-content: center;
+    align-items: center;
+    .white {
+      font-size: 2rem;
+      color: white;
+      @include theme.xs {
+        font-size: 1.7rem;
+      }
+    }
+    .black {
+      font-size: 2rem;
+      color: black;
+      @include theme.xs {
+        font-size: 1.7rem;
+      }
+    }
+  }
+  .headerOpen {
+    @include splash.splash-page-subheader;
+    color: white;
+    @include theme.xs {
+      font-size: 1.1rem;
+    }
+  }
+  .headerClosed {
+    font-size: 1.1rem;
+    color: black;
+  }
+  .arrowContainer {
+    margin-left: auto;
+    .secondContainer {
+      background-color: theme.$lightGrey;
+      padding: 0px;
+      display: flex;
+      border-radius: 50%;
+    }
+  }
+  .subtitleContainer {
+    padding-top: 0px;
+    padding-bottom: 16px;
+    padding-left: 0px;
+    padding-right: 0px;
+    .text {
+      color: white;
+    }
+  }
+}
+.themeColored {
+  background-color: theme.$fucia;
+}

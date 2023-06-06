@@ -1,0 +1,24 @@
+@use '../../../../static/scss/index.scss' as theme;
+@mixin splash-page-container {
+  padding-top: 10vh;
+  padding-bottom: 15vh;
+  justify-content: center;
+}
+@mixin splash-page-header {
+  font-family: theme.$defaultFontBold;
+  line-height: 100%;
+  text-align: center;
+  color: #d4218d;
+  font-size: 2rem;
+}
+@mixin splash-page-subheader {
+  font-family: theme.$defaultFontBold;
+  line-height: 100%;
+  font-size: 1.2rem;
+}
+@mixin splash-page-body {
+  font-size: 1.5rem;
+  @include theme.xs {
+    font-size: 0.95rem;
+  }
+}

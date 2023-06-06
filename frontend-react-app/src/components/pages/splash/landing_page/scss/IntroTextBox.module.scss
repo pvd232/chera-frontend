@@ -1,0 +1,35 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/Splash.module.scss' as splash;
+
+.introTextBoxContainer {
+  flex-direction: column;
+  position: absolute;
+  top: 10%;
+  row-gap: 2.75vh;
+  color: theme.$fucia;
+  .header {
+    font-family: theme.$defaultFontBold;
+    line-height: 150%;
+    font-size: 3.7rem;
+    @include theme.xs {
+      @include splash.splash-page-header;
+      text-align: left;
+      line-height: 150%;
+    }
+  }
+  .subheader {
+    @include splash.splash-page-body;
+  }
+}
+.signupButtonContainer {
+  @include theme.xs {
+    justify-content: center;
+  }
+  .button {
+    font-size: medium;
+    border-radius: theme.$buttonBorderRadius;
+    letter-spacing: 0.1px;
+    background-color: theme.$fucia;
+    text-transform: none;
+  }
+}

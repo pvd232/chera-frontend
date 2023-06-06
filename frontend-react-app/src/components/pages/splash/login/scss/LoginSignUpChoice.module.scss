@@ -1,0 +1,8 @@
+@use '../../../../../static/scss/index.scss' as theme;
+.loginButton {
+  margin: 0 auto;
+  width: 80%;
+  padding-top: 1vh;
+  padding-bottom: 1vh;
+  background-color: theme.$fucia;
+}

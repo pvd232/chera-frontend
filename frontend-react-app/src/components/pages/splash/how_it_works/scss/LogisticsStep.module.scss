@@ -1,0 +1,26 @@
+@use '../../../../../static/scss/index.scss' as theme;
+.logisticsStepContainer {
+  flex-direction: column;
+  row-gap: 3vh;
+  align-items: center;
+  color: theme.$fucia;
+  .iconContainer {
+    border-radius: 50%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: theme.$lightFucia;
+    .icon {
+      font-size: 2.75rem;
+    }
+  }
+  .header {
+    font-size: 1rem;
+    text-align: center;
+    font-family: theme.$defaultFontBold;
+  }
+  .bodyText {
+    text-align: left;
+  }
+}

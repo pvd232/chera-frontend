@@ -1,0 +1,62 @@
+@use '../../../../static/scss/index.scss' as theme;
+.aboutDropDownContainer {
+  align-items: center;
+  column-gap: 1vh;
+  cursor: pointer;
+  @include theme.xs {
+    column-gap: 0.1vh;
+  }
+}
+.clientDropDownContainer {
+  align-items: center;
+  column-gap: 3vh;
+  cursor: pointer;
+  @include theme.xs {
+    column-gap: 0.3vh;
+  }
+}
+.menuIcon {
+  color: theme.$fucia;
+  font-size: 3.5rem;
+  padding-right: 2vh;
+  padding-top: 1vh;
+}
+.personIconContainer {
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  .personIcon {
+    font-size: 1.5rem;
+    color: theme.$fucia;
+  }
+}
+.link {
+  font-size: theme.$linkFontSize;
+  color: theme.$fucia;
+}
+.arrow {
+  color: theme.$fucia;
+  font-size: large;
+}
+
+.aboutPopper {
+  @include theme.xs {
+    padding: 0px;
+  }
+  .dropDownContent {
+    margin-top: 0.7vh;
+    transform-origin: bottom;
+    .menuItem {
+      &:hover {
+        background-color: theme.$fuciaHover;
+      }
+      .text {
+        font-size: 12px;
+      }
+    }
+  }
+}

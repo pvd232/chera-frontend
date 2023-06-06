@@ -1,0 +1,87 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use './Resources.module.scss' as resources;
+.bannerImage {
+  height: auto;
+  max-height: 50vh;
+  width: 100%;
+  object-fit: cover;
+}
+.bannerTextItem {
+  color: white;
+  @include theme.smaller {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-right: 3vw;
+    padding-left: 3vw;
+  }
+  @include theme.larger {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 2%;
+    padding-right: 3vw;
+    padding-left: 3vw;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+  }
+}
+.bannerContainer {
+  position: relative;
+  @include theme.smaller {
+    margin-bottom: 2vh;
+  }
+}
+.bannerHeader {
+  font-size: resources.$resourcesHeaderFontSize;
+}
+.bannerSubHeader {
+  font-size: 1.1rem;
+  text-align: center;
+}
+.pageContainer {
+  justify-content: center;
+
+  .categoriesContainer {
+    z-index: 1;
+    @include theme.smaller {
+      justify-self: center;
+    }
+    @include theme.larger {
+      position: relative;
+      left: 35%;
+      bottom: 5%;
+    }
+    .header {
+      padding-right: 1vw;
+      padding-left: 1vw;
+      align-items: flex-end;
+      margin-bottom: 2vh;
+      @include theme.smaller {
+        justify-content: center;
+      }
+      .text {
+        font-size: 1.25rem;
+        @include theme.larger {
+          vertical-align: bottom;
+        }
+        @include theme.smaller {
+          text-align: center;
+        }
+      }
+    }
+    .resourceCategoriesContainer {
+      row-gap: 3vh;
+      @include theme.xs {
+        justify-content: center;
+      }
+    }
+  }
+}
+.tableOfContentsImgContainer {
+  position: relative;
+  right: 6%;
+  .img {
+    object-fit: cover;
+    width: 100%;
+  }
+}
