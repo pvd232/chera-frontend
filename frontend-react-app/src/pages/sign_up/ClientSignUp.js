@@ -43,10 +43,11 @@ const SignUpPage = (props) => {
   ];
 
   const handleSubmit = async () => {
+    console.log('client', client);
     const rehydratedClientDTO = ClientDTO.initializeFromForm(client);
 
-                      // AUTH
-                      // This is where we create the client in the backend. The username and password are properties of the client, and will be stored as a row in the client table. The password will be hashed.
+    // AUTH
+    // This is where we create the client in the backend. The username and password are properties of the client, and will be stored as a row in the client table. The password will be hashed.
     const returnedClientData = await APIClient.createClient(
       rehydratedClientDTO
     );

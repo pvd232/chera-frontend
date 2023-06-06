@@ -4,7 +4,7 @@
 
 # Pre-installation Requirements
 
-# 1. NodeJs version 19.9.0 must be installed on your machine and added as a PATH variable, you can test this by entering "which node" into your terminal, and it should print out the location of Node on your machine
+# 1. NodeJs version 19.9.0 must be installed on your machine and added as a PATH variable (find an online article to do this), you can test successful installation by entering "which node" into your terminal, and it should print out the location of Node on your machine
 
 # 2. You must have Github integrated with your Editor, and must be logged in. Git must also be added as a path variable. To test this, enter "which git" into your terminal. Same thing as Node.
 

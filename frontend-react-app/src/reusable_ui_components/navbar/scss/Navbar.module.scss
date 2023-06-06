@@ -13,25 +13,29 @@
         min-height: 50px;
         padding-top: 3vh;
         padding-bottom: 3vh;
-        .contentContainer {
-          justify-content: space-between;
-          align-items: center;
-          padding-left: 2vh;
-          padding-right: 2vh;
-          @include theme.xs {
-            align-items: flex-end;
-          }
-          .logoText {
-            color: theme.$fucia;
-            font-size: 2.5rem;
-            font-family: 'OpenSans Bold';
-            cursor: pointer;
-          }
-          .linksContainer {
-            justify-content: space-around;
-            column-gap: 3.5vh;
+        .contentTopContainer {
+          justify-content: flex-end;
+
+          .contentContainer {
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 2vh;
+            padding-right: 2vh;
             @include theme.xs {
-              justify-content: space-between;
+              align-items: flex-end;
+            }
+            .logoText {
+              color: theme.$fucia;
+              font-size: 3rem;
+              font-family: 'Sansita Bold';
+              cursor: pointer;
+            }
+            .linksContainer {
+              justify-content: space-around;
+              column-gap: 3.5vh;
+              @include theme.xs {
+                justify-content: space-between;
+              }
             }
           }
         }

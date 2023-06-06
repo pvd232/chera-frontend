@@ -18,11 +18,13 @@ import RegistrationErrorMessage from './RegistrationErrorMessage';
 import CustomTextField from './CustomTextField';
 import SearchLocationInput from '../../sign_up/SearchLocationInput';
 import styles from './scss/DietitianSignUp.module.scss';
+import { getAddressObject } from '../../sign_up/helpers/getAddressObject';
 const DietitianSignUp = () => {
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [addressValueError, setAddressValueError] = useState(false);
+  const [suiteError, setSuiteError] = useState(false);
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -104,44 +106,24 @@ const DietitianSignUp = () => {
   const handleAddress = async (address) => {
     setAddressValueError(false);
     if (address.split(',').length === 4) {
-      const addressObject = {};
-      addressObject.address = address;
-      const addressArray = address.split(',');
-      addressObject.street = addressArray[0].trim();
-      addressObject.city = addressArray[1].trim();
-      const stateZipcodeArray = addressArray[2].split(' ');
-      addressObject.state = stateZipcodeArray[1];
-      addressObject.zipcode = stateZipcodeArray[2];
-      if (
-        !addressObject.address ||
-        !addressObject.city ||
-        !addressObject.state ||
-        !addressObject.street ||
-        !addressObject.zipcode
-      ) {
+      const addressObject = getAddressObject(address);
+      if (!addressObject) {
         setAddressValueError(true);
         return false;
       }
       const validAddress = await APIClient.validateAddress(addressObject);
-      console.log('validAddress', validAddress);
-      if (!validAddress) {
+      if (validAddress.addressStatus === 'invalid') {
         setAddressValueError(true);
         return false;
+      } else if (validAddress.addressStatus === 'missingSuite') {
+        setSuiteError('Please enter your APT, Suite, etc.');
+      } else if (validAddress.addressStatus === 'invalidSuite') {
+        setSuiteError('Please enter a valid suite number.');
+      } else {
+        setAddressValueError(false);
+        setSuiteError('');
+        setFormValue(addressObject);
       }
-      const suiteWasInputted = (() => {
-        // Get suite data from address components - too difficult to parse from address string
-        for (const addressComponent of validAddress.address.addressComponents) {
-          if (addressComponent.componentType === 'subpremise') {
-            addressObject.suite = addressComponent.componentName.text;
-            return true;
-          }
-        }
-      })();
-
-      if (!suiteWasInputted) {
-        addressObject.suite = formValue.suite;
-      }
-      setFormValue(addressObject);
     } else {
       setAddressValueError(true);
       return false;
@@ -154,7 +136,7 @@ const DietitianSignUp = () => {
           <Typography className={styles.header}>Dietitian sign up</Typography>
           <form onSubmit={handleSubmit}>
             <FormGroup>
-              <Stack direction={'column'} rowGap={2}>
+              <Stack direction={'column'} rowGap={3}>
                 <FormControl variant="filled">
                   <ErrorMessage error={error} />
                   <CustomTextField
@@ -212,6 +194,21 @@ const DietitianSignUp = () => {
                   />
                 </FormControl>
                 <FormControl variant="filled">
+                  <FormHelperText
+                    hidden={!addressValueError && suiteError === ''}
+                    error={true}
+                    sx={{ marginBottom: '1.5vh' }}
+                  >
+                    {addressValueError
+                      ? 'You chose an invalid address. Please choose another address from the dropdown.'
+                      : suiteError}
+                  </FormHelperText>
+                  <SearchLocationInput
+                    dietitianInput={true}
+                    onUpdate={(address) => handleAddress(address)}
+                  />
+                </FormControl>
+                <FormControl variant="filled">
                   <RegistrationErrorMessage error={registrationError} />
 
                   <CustomTextField
@@ -241,21 +238,7 @@ const DietitianSignUp = () => {
                     autoComplete={'off'}
                   />
                 </FormControl>
-                <FormControl variant="filled">
-                  <FormHelperText
-                    hidden={!addressValueError}
-                    error={true}
-                    sx={{ marginBottom: '2vh' }}
-                  >
-                    You chose an invalid address. Please choose another address
-                    from the dropdown.
-                  </FormHelperText>
-                  <SearchLocationInput
-                    dietitianInput={true}
-                    street={formValue.street}
-                    onUpdate={(address) => handleAddress(address)}
-                  />
-                </FormControl>
+
                 <BlackButton
                   id="dietRegSubmit"
                   disabled={loading}

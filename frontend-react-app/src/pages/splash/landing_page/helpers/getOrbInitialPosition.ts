@@ -14,8 +14,8 @@ export const getOrbInitialPosition = (
     };
   } else {
     return {
-      xPosition: randomNum(3 * (windowWidth / 4), 4 * (windowWidth / 4)),
-      yPosition: randomNum(windowHeight * 0.5, windowHeight * 0.575),
+      xPosition: randomNum(2 * (windowWidth / 4), 4 * (windowWidth / 4)),
+      yPosition: randomNum(windowHeight * 0.4, windowHeight * 0.575),
       radius,
     };
   }

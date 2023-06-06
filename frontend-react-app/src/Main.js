@@ -22,6 +22,7 @@ import ContactUs from './pages/splash/ContactUs';
 import Navbar from './reusable_ui_components/navbar/Navbar';
 import NewNavbar from './reusable_ui_components/navbar/NewNavbar';
 import NewSplashLinks from './reusable_ui_components/navbar/links/NewSplashLinks';
+import NewClientLinks from './reusable_ui_components/navbar/links/NewClientLinks';
 import DietitianMenu from './pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './pages/splash/resources/Resources';
 import SignUpPage from './pages/sign_up/ClientSignUp';
@@ -132,10 +133,12 @@ const Main = (props) => {
         <Route
           path="/home"
           element={
-            <Navbar
+            <NewNavbar
               childComponent={<ClientHomeContainer />}
-              domain={'client'}
-            ></Navbar>
+              links={<NewClientLinks />}
+              homeUrl="/home"
+            />
+            // <Navbar domain={'client'}></Navbar>
           }
         />
         <Route

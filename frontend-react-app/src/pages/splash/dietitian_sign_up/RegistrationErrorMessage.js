@@ -9,9 +9,8 @@ const RegistrationErrorMessage = (props) => (
       fontWeight: 'bold',
     }}
   >
-    The dietetic registration number you entered is invalid. Please double check
-    your dietetic registration number, or email us at contact@cherahealth.com
-    for assistance.
+    The dietetic registration number you entered is invalid. Please try again,
+    or email us at contact@cherahealth.com for assistance.
   </FormHelperText>
 );
 export default RegistrationErrorMessage;

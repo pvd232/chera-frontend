@@ -17,23 +17,27 @@ const NewNavbar = (props: NavbarProps) => {
         <Box className={styles.box}>
           <AppBar className={styles.appBar}>
             <Toolbar className={styles.toolBar}>
-              <Grid container className={styles.contentContainer}>
-                <Grid item>
-                  <Typography
-                    className={styles.logoText}
-                    onClick={handleClickLogo}
+              <Grid container className={styles.contentTopContainer}>
+                <Grid container className={styles.contentContainer} xs={11.3}>
+                  <Grid item>
+                    <Typography
+                      className={styles.logoText}
+                      onClick={handleClickLogo}
+                    >
+                      Chera
+                    </Typography>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    className={styles.linksContainer}
+                    xs={3}
+                    sm={9}
+                    md={8}
+                    lg={6}
                   >
-                    Chera
-                  </Typography>
-                </Grid>
-                <Grid
-                  container
-                  item
-                  className={styles.linksContainer}
-                  xs={3}
-                  lg={6}
-                >
-                  {props.links}
+                    {props.links}
+                  </Grid>
                 </Grid>
               </Grid>
             </Toolbar>

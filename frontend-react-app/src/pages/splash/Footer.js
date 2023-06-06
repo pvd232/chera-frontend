@@ -8,19 +8,10 @@ import styles from './scss/Footer.module.scss';
 const Footer = () => (
   <Grid container item className={styles.footerContainer}>
     <Grid container item lg={10}>
-      <Grid container item lg={3} justifyContent={'center'}>
-        <Grid item></Grid>
-        <Grid
-          container
-          item
-          flexDirection={'column'}
-          alignItems={'left'}
-          justifyContent={'space-around'}
-          rowSpacing={'1vh'}
-          color={'white'}
-        >
+      <Grid container item lg={3} xs={5} className={styles.footerSubContainer}>
+        <Grid container item className={styles.questionsColumn}>
           <Grid item>
-            <Typography id="footerTextLeft" fontWeight="bold">
+            <Typography id="footerTextLeft" className={styles.header}>
               Questions?
             </Typography>
           </Grid>
@@ -34,7 +25,7 @@ const Footer = () => (
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item lg={3} className={styles.footerColumn}>
+      <Grid container item lg={3} xs={5} className={styles.socialsColumn}>
         <Grid item>
           <Typography className={styles.header}>
             Catch us on Social Media

@@ -131,7 +131,7 @@ export default function SearchLocationInput(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Address *"
+          label="Address* (Ex: 123 Main St #1B, New York, NY 94111)"
           fullWidth
           sx={{
             backgroundColor: props.dietitianInput ? '#fcfcfb' : '',
@@ -158,7 +158,7 @@ export default function SearchLocationInput(props) {
               <Grid item xs>
                 {parts.map((part, index) => (
                   <span
-                    key={index}
+                    key={part.text + index}
                     style={{
                       fontWeight: part.highlight ? 700 : 400,
                     }}

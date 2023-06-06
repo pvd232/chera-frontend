@@ -5,7 +5,19 @@
   align-items: center;
   background-color: theme.$darkFucia;
   padding: 5vh;
-  .footerColumn {
+  .footerSubContainer {
+    justify-content: center;
+    .questionsColumn {
+      flex-direction: column;
+      justify-content: space-around;
+      row-gap: 1vh;
+      color: white;
+      .header {
+        font-weight: bold;
+      }
+    }
+  }
+  .socialsColumn {
     flex-direction: column;
     justify-content: space-between;
     .header {

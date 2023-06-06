@@ -2,36 +2,26 @@ import React from 'react';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
-import Icon from '@mui/material/Icon';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
-import { useOpen } from './hooks/useOpen.ts';
-import styles from './scss/AboutDropDown.module.scss';
+import { useOpen } from './hooks/useOpen';
 import { useNavigate } from 'react-router-dom';
-const AboutDropDown = () => {
+import styles from './scss/AboutDropDown.module.scss';
+import LocalStorageManager from '../../helpers/NewLocalStorageManager.ts';
+const ClientProfileDropDown = () => {
+  const userFirstName = LocalStorageManager.shared.client.firstName;
+  const navigate = useNavigate();
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
-  const navigate = useNavigate();
 
-  const handleNavigate = (event: React.MouseEvent<HTMLElement>) => {
-    const id = event.currentTarget.id;
-    switch (id) {
-      case 'our-mission':
-        navigate('/our-mission');
-        break;
-      case 'resources':
-        navigate('/resources');
-        break;
-      case 'faqs':
-        navigate('/faqs');
-        break;
-      default:
-        break;
-    }
+  const handleLogout = () => {
+    navigate('/');
+    LocalStorageManager.shared.logoutUser();
   };
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -67,12 +57,21 @@ const AboutDropDown = () => {
       aria-expanded={open ? 'true' : undefined}
       aria-haspopup="true"
       onClick={handleToggle}
-      className={styles.aboutDropDownContainer}
+      className={styles.clientDropDownContainer}
     >
+      {/* <Grid item>
+        <Typography className={styles.link}>
+          {LocalStorageManager.shared.client.firstName}
+        </Typography>
+      </Grid> */}
       <Grid item>
-        <Typography className={styles.link}>About Chera</Typography>
+        <div className={styles.personIconContainer}>
+          <Typography className={styles.personIcon}>
+            {userFirstName.charAt(0)}
+          </Typography>
+        </div>
       </Grid>
-      <Icon className={styles.arrow}>arrow_drop_down</Icon>
+
       <Grid item>
         <Popper
           open={open}
@@ -92,30 +91,12 @@ const AboutDropDown = () => {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    {/* <MenuItem
-                      id="our-mission"
-                      onClick={handleNavigate}
-                      className={styles.menuItem}
-                    >
-                      <Typography className={styles.text}>
-                        Our mission
-                      </Typography>
-                    </MenuItem> */}
                     <MenuItem
-                      id="resources"
-                      onClick={handleNavigate}
+                      id="logout"
+                      onClick={handleLogout}
                       className={styles.menuItem}
                     >
-                      <Typography className={styles.text}>Resources</Typography>
-                    </MenuItem>
-                    <MenuItem
-                      id="faqs"
-                      onClick={handleNavigate}
-                      className={styles.menuItem}
-                    >
-                      <Typography className={styles.text}>
-                        Contact / FAQs
-                      </Typography>
+                      <Typography className={styles.text}>Log out</Typography>
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
@@ -127,4 +108,4 @@ const AboutDropDown = () => {
     </Grid>
   );
 };
-export default AboutDropDown;
+export default ClientProfileDropDown;

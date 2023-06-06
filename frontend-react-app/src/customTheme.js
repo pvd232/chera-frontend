@@ -1,5 +1,5 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
-import OpenSans from './static/fonts/OpenSans-Regular.ttf';
+import LexendDeca from './static/fonts/LexendDeca-Regular.ttf';
 import fontEqualizer from './helpers/fontEqualizer';
 import ScreenSize from './types/enums/ScreenSize';
 const themeBase = createTheme({
@@ -73,7 +73,7 @@ const themeBase = createTheme({
     },
   },
   typography: {
-    fontFamily: 'OpenSans',
+    fontFamily: 'LexendDeca',
     color: '#000000',
   },
   border: {
@@ -189,10 +189,10 @@ const themeBase = createTheme({
       // These fonts can support more unicode ranges (character sets associated with different alphabets) but i dont see a need to import them now. the raleway import was in the MUI documentation, also unicode range is optional
       styleOverrides: `
         @font-face {
-            font-family: 'OpenSans';
+            font-family: 'LexendDeca';
             font-style: normal;
             font-weight: 400;
-            src: local('OpenSans'), local('OpenSans-Regular'), url("${OpenSans}") format('woff2');
+            src: local('LexendDeca'), local('LexendDeca-Regular'), url("${LexendDeca}") format('woff2');
         },
       `,
     },

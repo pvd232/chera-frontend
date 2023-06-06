@@ -1561,20 +1561,45 @@ class APIClient {
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseJSON = await response.json();
-    console.log('responseJSON', responseJSON);
-
+    const addressResult = responseJSON.result;
     const addressIsComplete =
       responseJSON.result.verdict.hasOwnProperty('addressComplete');
-    console.log('addressIsComplete', addressIsComplete);
 
-    const addressHasIncorrectSuite = responseJSON.result.verdict.hasOwnProperty(
+    const addressHasIncorrectData = addressResult.verdict.hasOwnProperty(
       'hasUnconfirmedComponents'
     );
-    const addressResult = responseJSON.result;
-    if (addressIsComplete && !addressHasIncorrectSuite) {
-      return addressResult;
-    } else {
-      return false;
+    const addressHasIncorrectSuite =
+      addressResult.address.unconfirmedComponentTypes?.includes('subpremise');
+    const addressRequiresSuite =
+      addressResult.address.missingComponentTypes?.includes('subpremise') ??
+      false;
+
+    if (addressIsComplete && !addressHasIncorrectData) {
+      return {
+        addressStatus: 'valid',
+        addressResult: addressResult,
+        uspsAddress: addressResult.uspsData,
+      };
+    } else if (addressHasIncorrectData) {
+      if (addressHasIncorrectSuite) {
+        return {
+          addressStatus: 'invalidSuite',
+          addressResult: addressResult,
+          uspsAddress: addressResult.uspsData,
+        };
+      } else {
+        return {
+          addressStatus: 'invalid',
+          addressResult: addressResult,
+          uspsAddress: addressResult.uspsData,
+        };
+      }
+    } else if (addressRequiresSuite) {
+      return {
+        addressStatus: 'missingSuite',
+        addressResult: addressResult,
+        uspsAddress: addressResult.uspsData,
+      };
     }
   }
 }

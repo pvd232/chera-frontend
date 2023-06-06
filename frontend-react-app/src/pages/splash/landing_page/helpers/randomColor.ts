@@ -2,7 +2,7 @@ import { randomNum } from './randomNum';
 import * as hsl from 'hsl';
 export const randomColor = (): string => {
   // pick a random hue somewhere between 270 and 340
-  const hue = ~~randomNum(310, 370);
+  const hue = ~~randomNum(270, 370);
   // define a fixed saturation and lightness
   const saturation = 95;
   const lightness = 50;

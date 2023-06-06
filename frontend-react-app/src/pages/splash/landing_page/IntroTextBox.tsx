@@ -14,14 +14,16 @@ const IntroTextBox = () => {
       xs={10}
     >
       <Grid item id="introTextBoxHeader">
+        <Typography className={styles.header}>Simplifying</Typography>
+        <Typography className={styles.header}>meal planning for</Typography>
         <Typography className={styles.header}>
-          Simplifying meal planning for eating disorder recovery
+          eating disorder recovery
         </Typography>
       </Grid>
       <Grid item>
         <Typography className={styles.subheader}>
-          Chera is designed to enable faster, sustainable recovery by promoting
-          regular eating habits.
+          Chera designed to enable faster recovery, sustained by regular eating
+          habits.
         </Typography>
       </Grid>
       <Grid item container className={styles.signupButtonContainer}>

@@ -25,6 +25,11 @@ body {
     url('../fonts/LexendDeca-Regular.ttf') format('woff');
 }
 @font-face {
+  font-family: 'LexendDeca SemiBold'; /*Can be any text*/
+  src: local('LexendDeca-SemiBold'),
+    url('../fonts/LexendDeca-SemiBold.ttf') format('woff');
+}
+@font-face {
   font-family: 'OpenSans Bold'; /*Can be any text*/
   src: local('OpenSans-Bold'), url('../fonts/OpenSans-Bold.ttf') format('woff');
 }
@@ -33,8 +38,22 @@ body {
   src: local('OpenSans-Regular'),
     url('../fonts/OpenSans-Regular.ttf') format('woff');
 }
+@font-face {
+  font-family: 'LilitaOne'; /*Can be any text*/
+  src: local('LilitaOne-Regular'),
+    url('../fonts/LilitaOne-Regular.ttf') format('woff');
+}
+@font-face {
+  font-family: 'Sansita'; /*Can be any text*/
+  src: local('Sansita-Regular'),
+    url('../fonts/Sansita-Regular.ttf') format('woff');
+}
+@font-face {
+  font-family: 'Sansita Bold'; /*Can be any text*/
+  src: local('Sansita-Bold'), url('../fonts/Sansita-Bold.ttf') format('woff');
+}
 
-$defaultFontBold: 'OpenSans Bold';
+$defaultFontBold: 'LexendDeca SemiBold';
 
 // COLORS
 $darkFucia: #8b0054;
@@ -42,6 +61,10 @@ $fucia: #d4218d;
 $lightFucia: #ffedf8;
 $fuciaHover: #ffceec;
 
+$peach: #f2c9d4;
+
+$lavender: #685edf;
+$lightLavender: #948de8;
 $lightBlue: #bbddff;
 
 $lightGrey: #f3f3f3;
