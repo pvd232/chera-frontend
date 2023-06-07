@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import IconButton from '@mui/material/IconButton';
-import logo from '../../../../static/images/chera_logo.png';
+import logo from '../../../../static/images/chera_logo_300x300.png';
 
 const ScheduledOrderSnackCard = (props) => {
   return (

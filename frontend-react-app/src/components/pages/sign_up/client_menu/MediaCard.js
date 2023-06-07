@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
-import logo from '../../../../static/images/chera_logo.png';
+import logo from '../../../../static/images/chera_logo_300x300.png';
 const MediaCard = (props) => {
   return (
     <Card

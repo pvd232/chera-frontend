@@ -11,6 +11,7 @@ $FNCE-logo: url('../../../static/images/fnce_logo.png');
   .childPageContainer {
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     column-gap: 5vh;
     .header {
       @include splash.splash-page-header;
@@ -25,10 +26,11 @@ $FNCE-logo: url('../../../static/images/fnce_logo.png');
       column-gap: 5vh;
       @include theme.xs {
         justify-content: center;
-        row-gap: 2vh;
+        row-gap: 5vh;
       }
+
       .firstImage {
-        width: 40vw;
+        width: 50vw;
         @include theme.xs {
           width: 100%;
         }
@@ -36,7 +38,6 @@ $FNCE-logo: url('../../../static/images/fnce_logo.png');
       .secondImageContainer {
         @include theme.xs {
           justify-content: center;
-          padding-bottom: 0vh;
         }
         .secondImage {
           width: 15vw;

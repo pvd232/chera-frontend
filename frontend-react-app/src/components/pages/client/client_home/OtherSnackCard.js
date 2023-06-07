@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
-import logo from '../../../../static/images/chera_logo.png';
+import logo from '../../../../static/images/chera_logo_300x300.png';
 import GreenButton from './GreenButton';
 
 const OtherSnackCard = (props) => {

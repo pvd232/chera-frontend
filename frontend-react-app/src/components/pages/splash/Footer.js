@@ -7,7 +7,7 @@ import styles from './scss/Footer.module.scss';
 
 const Footer = () => (
   <Grid container item className={styles.footerContainer}>
-    <Grid container item lg={10} className={styles.footerPaddingContainer}>
+    <Grid container item lg={11} className={styles.footerPaddingContainer}>
       <Grid container item lg={3} xs={6.5} className={styles.socialsColumn}>
         <Grid item>
           <Typography className={styles.header}>Connect with us</Typography>
@@ -34,7 +34,7 @@ const Footer = () => (
         container
         item
         lg={3}
-        xs={4.5}
+        xs={5}
         className={styles.footerQuestionsContainer}
       >
         <Grid container item className={styles.questionsColumn}>

@@ -12,7 +12,7 @@ const NewNavbar = (props: NavbarProps) => {
     navigate(props.homeUrl);
   };
   return (
-    <Grid container className={styles.pageContainer}>
+    <Grid container className={styles.navbarPageContainer}>
       <Grid container className={styles.childContentContainer}>
         <Grid container className={styles.navbarContainer}>
           <Box className={styles.box}>

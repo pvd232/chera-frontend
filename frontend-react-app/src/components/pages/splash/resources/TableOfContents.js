@@ -2,20 +2,33 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
 import tableOfContentsImage from '../../../../static/images/woman_browsing.jpg';
 import ResourceCategory from './ResourceCategory';
-import styles from './scss/TableOfContents.module.scss';
+import tableOfContents from './scss/TableOfContents.module.scss';
 
 const TableOfContents = (props) => (
-  <Grid container className={styles.pageContainer}>
-    <Grid container lg={4.5} md={6} xs={12} className={styles.pageContainer}>
-      <Grid container className={styles.categoriesContainer}>
-        <Grid container className={styles.header}>
-          <Typography className={styles.text}>Browse by category</Typography>
+  <Grid container className={tableOfContents.rootContainer}>
+    <Grid
+      container
+      lg={4.5}
+      md={6}
+      className={tableOfContents.childContainer}
+      id="child-container"
+    >
+      <Grid
+        container
+        className={tableOfContents.categoriesContainer}
+        id="categories-container"
+      >
+        <Grid container className={tableOfContents.headerContainer}>
+          <Typography className={tableOfContents.text}>
+            Browse by category
+          </Typography>
         </Grid>
         <Grid
           container
           lg={12}
+          md={12}
           xs={10}
-          className={styles.resourceCategoriesContainer}
+          className={tableOfContents.resourceCategoriesContainer}
         >
           <ResourceCategory
             text={'Sites We Keep Bookmarked'}
@@ -41,12 +54,12 @@ const TableOfContents = (props) => (
       lg={4}
       md={6}
       xs={10}
-      className={styles.tableOfContentsImgContainer}
+      className={tableOfContents.imgContainer}
     >
       <img
         src={tableOfContentsImage}
         alt="woman browsing on computer"
-        className={styles.img}
+        className={tableOfContents.img}
       />
     </Grid>
   </Grid>

@@ -1,10 +1,12 @@
 @use '../../../../static/scss/index.scss' as theme;
 
+$contentSubHeaderFontSize: 1.1rem;
 @mixin splash-page-container {
   padding-top: 10vh;
   padding-bottom: 15vh;
   justify-content: center;
   background-color: theme.$lightFucia;
+  width: 100%;
 }
 @mixin splash-page-header {
   font-family: theme.$defaultFontBold;
@@ -29,5 +31,5 @@
   background-color: theme.$lightFucia;
   position: absolute;
   min-height: 100%;
+  width: 100%;
 }
-$contentSubHeaderFontSize: 1.1rem;

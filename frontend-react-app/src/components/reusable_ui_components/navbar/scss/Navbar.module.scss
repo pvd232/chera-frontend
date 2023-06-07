@@ -1,14 +1,17 @@
 @use '../../../../static/scss/index.scss' as theme;
 
-.pageContainer {
+.navbarPageContainer {
   height: 100vh;
   position: relative;
+  width: 100%;
   .childContentContainer {
     position: absolute;
     min-height: 100%;
     flex-direction: column;
+    width: 100%;
+    align-items: center;
     .navbarContainer {
-      width: 100vw;
+      width: 100%;
       background-color: theme.$lightFucia;
       height: min-content;
       .box {
@@ -48,7 +51,9 @@
       }
     }
     .pageContentContainer {
+      width: 100%;
       flex-grow: 1;
+      justify-content: center;
     }
   }
 }

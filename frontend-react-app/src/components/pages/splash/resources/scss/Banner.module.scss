@@ -1,0 +1,43 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/Splash.module.scss' as splash;
+@use './Resources.module.scss' as resources;
+
+.bannerPageContainer {
+  position: relative;
+  max-width: 100vw;
+  .img {
+    height: auto;
+    max-height: 50vh;
+    width: 100vw;
+    object-fit: cover;
+  }
+  .textItem {
+    color: white;
+    @include theme.smaller {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 0%;
+      padding-top: 2vh;
+      padding-bottom: 2vh;
+      padding-right: 3vw;
+      padding-left: 3vw;
+    }
+    @include theme.larger {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 2%;
+      padding-right: 3vw;
+      padding-left: 3vw;
+      padding-top: 3vh;
+      padding-bottom: 3vh;
+    }
+    .header {
+      font-size: resources.$resourcesHeaderFontSize;
+      @include theme.smaller {
+        font-size: 1.75rem;
+      }
+    }
+  }
+}

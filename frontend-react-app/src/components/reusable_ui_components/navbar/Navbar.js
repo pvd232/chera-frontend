@@ -4,7 +4,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
-import logo from '../../../static/images/chera_logo.png';
+import logo from '../../../static/images/chera_logo_300x300.png';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import DietitianLinks from './links/LegacyDietitianLinks';
 import styles from './scss/Navbar.module.scss';

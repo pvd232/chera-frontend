@@ -90,7 +90,7 @@ const Login = (props) => {
     }
   };
   return (
-    <Grid container className={styles.pageContainer}>
+    <Grid container className={styles.loginPageContainer}>
       <Grid item lg={4} md={6} xs={10}>
         <CardContent>
           <Typography className={styles.header}>Log in</Typography>

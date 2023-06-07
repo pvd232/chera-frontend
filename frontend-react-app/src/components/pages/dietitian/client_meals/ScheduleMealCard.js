@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import capitalize from '../../../../helpers/capitalize';
-import logo from '../../../../static/images/chera_logo.png';
+import logo from '../../../../static/images/chera_logo_300x300.png';
 
 const ScheduleMealCard = (props) => {
   return (

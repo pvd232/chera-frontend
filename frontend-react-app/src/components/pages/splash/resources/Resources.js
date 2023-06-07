@@ -15,15 +15,16 @@ const Resources = () => {
   const bookRef = useRef();
   const executeBookRefScroll = () => bookRef.current.scrollIntoView();
   return (
-    <Grid container className={resources.resourcesPageContainer}>
-      <Banner />
+    <Grid container className={resources.pageContainer}>
+      <Grid container className={resources.childPageContainer}>
+        <Banner />
 
-      <TableOfContents
-        executeAppsRefScroll={executeAppsRefScroll}
-        executeBookmarkRefScroll={executeBookmarkRefScroll}
-        executeBookRefScroll={executeBookRefScroll}
-      />
-
+        <TableOfContents
+          executeAppsRefScroll={executeAppsRefScroll}
+          executeBookmarkRefScroll={executeBookmarkRefScroll}
+          executeBookRefScroll={executeBookRefScroll}
+        />
+      </Grid>
       <Grid container ref={bookmarkRef} justifyContent="center">
         <SitesWeKeepBookmarked></SitesWeKeepBookmarked>
       </Grid>

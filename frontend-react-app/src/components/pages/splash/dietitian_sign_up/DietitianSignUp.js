@@ -129,7 +129,7 @@ const DietitianSignUp = () => {
     }
   };
   return (
-    <Grid container className={styles.pageContainer}>
+    <Grid container className={styles.dSignUpPageContainer}>
       <Grid item lg={4} md={6} xs={10}>
         <CardContent>
           <Typography className={styles.header}>Dietitian sign up</Typography>

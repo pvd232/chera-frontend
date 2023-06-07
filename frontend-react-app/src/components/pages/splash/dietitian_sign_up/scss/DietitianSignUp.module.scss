@@ -1,6 +1,6 @@
 @use '../../../../../static/scss/index.scss' as theme;
 @use '../../../splash/scss/Splash.module.scss' as splash;
-.pageContainer {
+.dSignUpPageContainer {
   justify-content: center;
   background-color: theme.$lightFucia;
   @include splash.splash-page-container;

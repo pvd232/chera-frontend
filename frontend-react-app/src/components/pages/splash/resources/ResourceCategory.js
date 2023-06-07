@@ -14,16 +14,14 @@ const ResourceCategory = (props) => {
       className={styles.resourceCategoryContainer}
       onClick={props.executeScroll}
     >
-      <Grid container justifySelf={'flexStart'}>
-        <Grid>
-          <Icon
-            sx={{
-              fontSize: '2.5rem',
-            }}
-          >
-            {props.icon}
-          </Icon>
-        </Grid>
+      <Grid>
+        <Icon
+          sx={{
+            fontSize: '2.5rem',
+          }}
+        >
+          {props.icon}
+        </Icon>
       </Grid>
       <Grid>
         <Typography

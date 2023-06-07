@@ -1,12 +1,16 @@
+@use '../../../../../static/scss/index.scss' as theme;
 $resourcesHeaderFontSize: 2rem;
-.resourcesHeader {
-  text-align: left;
-  margin-bottom: 2vh;
-}
-.resourcesPageContainer {
-  justify-content: center;
+.pageContainer {
+  width: 100%;
+  align-items: flex-start;
   padding-bottom: 5vh;
   row-gap: 10vh;
   background-color: #ffedf8;
-  align-items: flex-start;
+  .childPageContainer {
+    row-gap: 5vh;
+    justify-content: center;
+    align-items: center;
+    @include theme.xs {
+    }
+  }
 }

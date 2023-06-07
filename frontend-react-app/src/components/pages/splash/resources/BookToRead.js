@@ -1,6 +1,5 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Unstable_Grid2';
-import '../../../../static/scss/Resources.scss';
 const BookToRead = (props) => (
   <Grid
     container
