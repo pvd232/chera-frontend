@@ -6,8 +6,6 @@ import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
 import logo from '../../../static/images/chera_logo.png';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
-import SplashLinks from './links/LegacySplashLinks';
-import ClientLinks from './links/LegacyClientLinks';
 import DietitianLinks from './links/LegacyDietitianLinks';
 import styles from './scss/Navbar.module.scss';
 const Navbar = (props) => {
@@ -30,27 +28,11 @@ const Navbar = (props) => {
                 </Grid>
                 {/* Navbar links */}
                 <Grid container item lg={10} className={styles.linksContainer}>
-                  {props.domain === 'splash' ? (
-                    <SplashLinks
-                      customTheme={customTheme}
-                      firstName={'admin'}
-                    />
-                  ) : props.domain === 'client' ? (
-                    <ClientLinks
-                      customTheme={customTheme}
-                      logoutUser={() => {
-                        LocalStorageManager.shared.logoutUser();
-                        window.location.assign('/');
-                      }}
-                      firstName={LocalStorageManager.shared.client.firstName}
-                    />
-                  ) : (
-                    <DietitianLinks
-                      customTheme={customTheme}
-                      logoutUser={() => LocalStorageManager.shared.logoutUser()}
-                      firstName={LocalStorageManager.shared.dietitian.firstName}
-                    />
-                  )}
+                  <DietitianLinks
+                    customTheme={customTheme}
+                    logoutUser={() => LocalStorageManager.shared.logoutUser()}
+                    firstName={LocalStorageManager.shared.dietitian.firstName}
+                  />
                 </Grid>
                 {/* navbar links */}
               </Grid>

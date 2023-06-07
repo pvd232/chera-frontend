@@ -28,8 +28,11 @@ const MobileDropDown = () => {
       case 'dietitian-sign-up':
         navigate('/dietitian-sign-up');
         break;
-      case 'login':
-        navigate('/login');
+      case 'client-log-in':
+        navigate('/client-log-in');
+        break;
+      case 'dietitian-log-in':
+        navigate('/dietitian-log-in');
         break;
       default:
         break;
@@ -95,18 +98,29 @@ const MobileDropDown = () => {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem
-                      id="login"
-                      onClick={handleNavigate}
-                      className={styles.menuItem}
-                    >
-                      <Typography className={styles.text}>Login</Typography>
-                    </MenuItem>
-                    <MenuItem
                       id="dietitian-sign-up"
                       onClick={handleNavigate}
                       className={styles.menuItem}
                     >
                       <Typography className={styles.text}>Sign up</Typography>
+                    </MenuItem>
+                    <MenuItem
+                      id="client-log-in"
+                      onClick={handleNavigate}
+                      className={styles.menuItem}
+                    >
+                      <Typography className={styles.text}>
+                        Client log in
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      id="dietitian-log-in"
+                      onClick={handleNavigate}
+                      className={styles.menuItem}
+                    >
+                      <Typography className={styles.text}>
+                        Dietitian log in
+                      </Typography>
                     </MenuItem>
                     <MenuItem
                       id="resources"

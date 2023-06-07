@@ -3,7 +3,7 @@ import { Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styles from '../scss/ClientLinks.module.scss';
 
-const NewClientLinks = () => {
+const ClientLinks = () => {
   const navigate = useNavigate();
   return (
     <Grid container item className={styles.clientLinksContainer}>
@@ -26,4 +26,4 @@ const NewClientLinks = () => {
     </Grid>
   );
 };
-export default NewClientLinks;
+export default ClientLinks;

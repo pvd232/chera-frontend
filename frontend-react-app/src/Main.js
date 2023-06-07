@@ -9,7 +9,6 @@ import MealPlanMealBuilder from './components/pages/admin/meal_plan_meal_builder
 import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilderContainer';
 import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
 import Login from './components/pages/splash/login/Login';
-import LoginSignUpChoice from './components/pages/splash/login/LoginSignUpChoice';
 import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
 import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
 import DietitianHomeContainer from './components/pages/dietitian/DietitianHomeContainer';
@@ -19,8 +18,8 @@ import RequestResetPassword from './components/pages/splash/login/RequestResetPa
 import ResetPassword from './components/pages/splash/login/ResetPassword';
 import Navbar from './components/reusable_ui_components/navbar/Navbar';
 import NewNavbar from './components/reusable_ui_components/navbar/NewNavbar';
-import NewSplashLinks from './components/reusable_ui_components/navbar/links/NewSplashLinks';
-import NewClientLinks from './components/reusable_ui_components/navbar/links/NewClientLinks';
+import SplashLinks from './components/reusable_ui_components/navbar/links/SplashLinks';
+import ClientLinks from './components/reusable_ui_components/navbar/links/ClientLinks';
 import DietitianMenu from './components/pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './components/pages/splash/resources/Resources';
 import SignUpPage from './components/pages/sign_up/ClientSignUp';
@@ -48,7 +47,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<Splash></Splash>}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl={'/'}
             ></NewNavbar>
           }
@@ -73,7 +72,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<DietitianSignUp />}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
@@ -83,7 +82,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<FAQs />}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
@@ -112,7 +111,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<ClientHomeContainer />}
-              links={<NewClientLinks />}
+              links={<ClientLinks />}
               homeUrl="/home"
             />
             // <Navbar domain={'client'}></Navbar>
@@ -171,22 +170,11 @@ const Main = (props) => {
           }
         />
         <Route
-          path="/login"
-          element={
-            <NewNavbar
-              childComponent={<LoginSignUpChoice />}
-              links={<NewSplashLinks />}
-              homeUrl="/"
-            />
-          }
-        />
-
-        <Route
           path="/dietitian-log-in"
           element={
             <NewNavbar
               childComponent={<Login domain={'dietitian'} />}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
@@ -196,7 +184,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<Login domain={'client'} />}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
@@ -207,7 +195,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<RequestResetPassword domain={'client'} />}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
@@ -221,7 +209,7 @@ const Main = (props) => {
                   domain={'dietitian'}
                 ></RequestResetPassword>
               }
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
@@ -232,7 +220,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<ResetPassword domain={'client'} />}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
@@ -242,7 +230,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<ResetPassword domain={'dietitian'} />}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
@@ -266,7 +254,7 @@ const Main = (props) => {
           element={
             <NewNavbar
               childComponent={<Resources />}
-              links={<NewSplashLinks />}
+              links={<SplashLinks />}
               homeUrl="/"
             />
           }
