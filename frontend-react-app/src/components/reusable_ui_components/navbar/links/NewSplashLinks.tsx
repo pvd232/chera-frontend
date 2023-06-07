@@ -1,7 +1,7 @@
 import Grid from '@mui/material/Grid';
 import { Button } from '@mui/material';
 import AboutDropDown from '../AboutDropDown';
-import LoginDropDown from '../LoginDropDown';
+import MobileDropDown from '../MobileDropDown';
 import styles from '../scss/SplashLinks.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { useWindowWidth } from '../../../hooks/useWindowWidth';
@@ -13,8 +13,8 @@ const SplashLinks = () => {
   return (
     <Grid container item className={styles.splashLinksContainer}>
       {isMobile ? (
-        <Grid item>
-          <LoginDropDown />
+        <Grid item id="mobile-dropdown-grid-item">
+          <MobileDropDown />
         </Grid>
       ) : (
         <>

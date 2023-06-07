@@ -25,13 +25,11 @@
             padding-bottom: 3vh;
             .contentTopContainer {
               justify-content: flex-end;
-
               .contentContainer {
                 justify-content: space-between;
                 align-items: center;
                 padding-right: 2vh;
                 @include theme.xs {
-                  align-items: flex-start;
                   padding: 0;
                 }
                 .logoText {

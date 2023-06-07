@@ -11,7 +11,7 @@ import { useOpen } from './hooks/useOpen';
 import styles from './scss/AboutDropDown.module.scss';
 import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-const LoginDropDown = () => {
+const MobileDropDown = () => {
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
   const navigate = useNavigate();
@@ -134,4 +134,4 @@ const LoginDropDown = () => {
     </Grid>
   );
 };
-export default LoginDropDown;
+export default MobileDropDown;
