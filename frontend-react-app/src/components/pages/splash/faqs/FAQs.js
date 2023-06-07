@@ -33,7 +33,7 @@ const FAQs = () => {
           </Grid>
           <Grid item>
             <Typography className={styles.subheader}>
-              If you have more questions, you can always reach out to us!
+              If you have more questions, please reach out to us!
             </Typography>
           </Grid>
 
