@@ -26,7 +26,7 @@ const FAQs = () => {
 
   return (
     <Grid container item className={styles.FAQsPageContainer}>
-      <Grid container item xs={10}>
+      <Grid container item xs={10} className={styles.childContainer}>
         <Grid container item lg={6} xs={10} className={styles.LHS}>
           <Grid item>
             <Typography className={styles.header}>FAQs</Typography>

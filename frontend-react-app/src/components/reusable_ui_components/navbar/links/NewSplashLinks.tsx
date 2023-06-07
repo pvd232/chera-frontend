@@ -1,11 +1,13 @@
 import Grid from '@mui/material/Grid';
-import { Button } from '@mui/material';
-import AboutDropDown from '../AboutDropDown';
-import MobileDropDown from '../MobileDropDown';
-import styles from '../scss/SplashLinks.module.scss';
+import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useWindowWidth } from '../../../hooks/useWindowWidth';
 import ScreenSize from '../../../../types/enums/ScreenSize';
+import styles from '../scss/SplashLinks.module.scss';
+import AboutDropDown from '../AboutDropDown';
+import MobileDropDown from '../MobileDropDown';
+import LogInDropDown from '../LogInDropDown';
+
 const SplashLinks = () => {
   const navigate = useNavigate();
   const windowWidth = useWindowWidth();
@@ -32,13 +34,14 @@ const SplashLinks = () => {
           </Grid>
 
           <Grid item>
-            <Button
+            <LogInDropDown />
+            {/* <Button
               variant="outlined"
               className={styles.loginButton}
               onClick={() => navigate('/login')}
             >
               Login
-            </Button>
+            </Button> */}
           </Grid>
         </>
       )}

@@ -78,7 +78,7 @@
           @include jobTitle;
         }
         .img {
-          height: 30vh;
+          height: 25vh;
           @include theme.xs {
             height: auto;
             width: 100%;

@@ -11,7 +11,9 @@ const AppsToDownload = () => {
   return (
     <>
       <Grid lg={8} md={10} marginBottom={'2vh'}>
-        <Typography>Apps</Typography>
+        <Typography fontSize={customTheme.pages.resources.fontSize.header}>
+          Apps
+        </Typography>
       </Grid>
       <Grid
         container

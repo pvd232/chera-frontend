@@ -9,7 +9,10 @@ const SitesWeKeepBookmarked = () => {
   return (
     <>
       <Grid lg={8} md={8}>
-        <Typography className={resources.resourcesHeader}>
+        <Typography
+          className={resources.resourcesHeader}
+          fontSize={customTheme.pages.resources.fontSize.header}
+        >
           Trusted Experts
         </Typography>
       </Grid>

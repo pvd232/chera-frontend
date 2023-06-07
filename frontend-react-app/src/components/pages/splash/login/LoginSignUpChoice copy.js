@@ -17,7 +17,7 @@ import BlackButton from '../../../reusable_ui_components/BlackButton';
 import CustomTextField from '../dietitian_sign_up/CustomTextField';
 import styles from './scss/Login.module.scss';
 
-const NewLogin = (props) => {
+const Login = (props) => {
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false);
 
@@ -142,4 +142,4 @@ const NewLogin = (props) => {
     </Grid>
   );
 };
-export default NewLogin;
+export default Login;

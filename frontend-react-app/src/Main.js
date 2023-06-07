@@ -9,8 +9,6 @@ import MealPlanMealBuilder from './components/pages/admin/meal_plan_meal_builder
 import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilderContainer';
 import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
 import Login from './components/pages/splash/login/Login';
-import NewLogin from './components/pages/splash/login/NewLogin';
-
 import LoginSignUpChoice from './components/pages/splash/login/LoginSignUpChoice';
 import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
 import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
@@ -184,20 +182,20 @@ const Main = (props) => {
         />
 
         <Route
-          path="/dietitian-login"
+          path="/dietitian-log-in"
           element={
             <NewNavbar
-              childComponent={<NewLogin domain={'dietitian'} />}
+              childComponent={<Login domain={'dietitian'} />}
               links={<NewSplashLinks />}
               homeUrl="/"
             />
           }
         />
         <Route
-          path="/client-login"
+          path="/client-log-in"
           element={
             <NewNavbar
-              childComponent={<NewLogin domain={'client'} />}
+              childComponent={<Login domain={'client'} />}
               links={<NewSplashLinks />}
               homeUrl="/"
             />

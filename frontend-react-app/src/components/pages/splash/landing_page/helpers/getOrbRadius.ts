@@ -6,6 +6,6 @@ export const getOrbRadius = (
   if (smallerScreen) {
     return randomNum(windowWidth / 10, windowWidth / 8);
   } else {
-    return randomNum(windowWidth / 14, windowWidth / 17);
+    return randomNum(windowWidth / 16, windowWidth / 19);
   }
 };

@@ -10,12 +10,8 @@ const BooksToRead = () => {
       lg={8}
       md={10}
       xs={10}
-      // border={"2px black solid"}
       columnGap={5}
       justifyContent="space-evenly"
-      sx={{
-        backgroundColor: customTheme.palette.olive.quaternary,
-      }}
     >
       <Grid lg={12} md={12} marginBottom="1vh">
         <Typography fontSize={customTheme.pages.resources.fontSize.header}>

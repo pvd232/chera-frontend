@@ -4,7 +4,7 @@ import '../../../../static/scss/Resources.scss';
 const BookedmarkedSite = (props) => (
   <Grid
     container
-    lg={3.7}
+    lg={4}
     md={5.5}
     xs={10}
     rowGap={2}

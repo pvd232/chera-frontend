@@ -30,11 +30,11 @@
     @include splash.splash-page-subheader;
     color: white;
     @include theme.xs {
-      font-size: 1.1rem;
+      font-size: splash.$contentSubHeaderFontSize;
     }
   }
   .headerClosed {
-    font-size: 1.1rem;
+    font-size: splash.$contentSubHeaderFontSize;
     color: black;
   }
   .arrowContainer {

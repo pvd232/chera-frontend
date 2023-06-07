@@ -21,7 +21,7 @@ const RHS = () => {
       </Grid>
       <Grid item>
         <Stack className={styles.stack}>
-          <Typography>Questions?</Typography>
+          <Typography className={styles.text}>Questions?</Typography>
           <Button onClick={() => navigate('/faqs')} className={styles.button}>
             Contact us
           </Button>

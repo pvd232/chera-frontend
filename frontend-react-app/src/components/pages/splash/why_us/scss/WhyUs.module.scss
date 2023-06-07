@@ -46,6 +46,9 @@
         @include theme.xs {
           margin-bottom: 3vh;
         }
+        .text {
+          font-size: splash.$contentSubHeaderFontSize;
+        }
         .button {
           background-color: theme.$fucia;
           color: white;
