@@ -122,7 +122,7 @@ const About = () => (
 
           <Grid item>
             <Typography className={styles.jobTitle}>
-              Lead UX Designer
+              Chief Design Officer
             </Typography>
           </Grid>
         </Grid>
