@@ -3,7 +3,7 @@ import FormHelperText from '@mui/material/FormHelperText';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
-import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
+import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import GreenFilledButton from './GreenFilledButton';
 const DeliveryInfo = (props) => {
   const handleSkipWeek = async (deliveryDate) => {

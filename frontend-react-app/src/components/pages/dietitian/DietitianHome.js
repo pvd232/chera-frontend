@@ -15,7 +15,7 @@ import APIClient from '../../../helpers/APIClient';
 import ExtendedStagedClient from '../../../data_models/model/ExtendedStagedClient';
 import MealPlanFactory from '../../../data_models/factories/model/MealPlanFactory';
 import ClientItem from '../../ui_data_containers/ClientItem';
-import BlackButton from '../../reusable_ui_components/BlackButton.ts';
+import BlackButton from '../../shared_components/BlackButton.ts';
 import StagedClientPaymentConfirmed from './StagedClientPaymentConfirmed';
 import EditClientMealPlanModal from './EditClientMealPlanModal';
 import CreateNewStagedClientModal from './create_new_staged_client_modal/CreateNewStagedClientModal';

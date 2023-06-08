@@ -14,9 +14,9 @@ import DeliveryDateUtility from '../../../helpers/DeliveryDateUtility';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import ExtendedOrderMealDTO from '../../../data_models/dto/ExtendedOrderMealDTO';
 import PreviousDeliveryItem from '../../ui_data_containers/PreviousDeliveryItem';
-import DietitianClientMealCard from '../../reusable_ui_components/DietitianClientMealCard';
+import DietitianClientMealCard from '../../shared_components/DietitianClientMealCard';
 import createScheduledOrderMealCardItems from './client_home/helpers/createScheduledOrderMealCardItems';
-import CircularProgressPage from '../../reusable_ui_components/CircularProgressPage';
+import CircularProgressPage from '../../shared_components/CircularProgressPage';
 
 const PreviousDeliveries = () => {
   const customTheme = useTheme();

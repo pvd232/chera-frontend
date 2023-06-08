@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import Grid from '@mui/material/Grid';
 import APIClient from '../../../helpers/APIClient';
-import CircularProgressPage from '../../reusable_ui_components/CircularProgressPage';
+import CircularProgressPage from '../../shared_components/CircularProgressPage';
 import PaymentForm from '../sign_up/payment_form/PaymentForm';
 import DiscountOrderSummary from '../sign_up/discount_order_summary/DiscountOrderSummary';
 

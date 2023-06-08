@@ -8,8 +8,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import MealSubscription from '../../../../data_models/model/MealSubscription.js';
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
-import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress.js';
+import BlackButton from '../../../shared_components/BlackButton.ts';
+import BlueCircularProgress from '../../../shared_components/BlueCircularProgress.js';
 import HowItWorks from './HowItWorks.js';
 const AccountRegistration = (props) => {
   const customTheme = useTheme();

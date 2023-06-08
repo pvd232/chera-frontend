@@ -11,8 +11,8 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import capitalize from '../../../../helpers/capitalize';
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
-import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
+import BlackButton from '../../../shared_components/BlackButton.ts';
+import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 
 const ModalBody = (props) => (
   <DialogContent sx={{ marginBottom: '8vh' }}>

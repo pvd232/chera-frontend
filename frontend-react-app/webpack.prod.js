@@ -125,7 +125,7 @@ module.exports = {
       chunks: 'all',
       cacheGroups: {
         common: {
-          test: /[\\/]src[\\/]reusable_ui_components[\\/]/,
+          test: /[\\/]src[\\/]shared_components[\\/]/,
           chunks: 'all',
           minSize: 0,
         },

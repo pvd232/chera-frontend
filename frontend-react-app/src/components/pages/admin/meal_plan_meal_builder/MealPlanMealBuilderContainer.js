@@ -6,7 +6,7 @@ import MealDietaryRestrictionDTOFactory from '../../../../data_models/factories/
 import ExtendedMealDTO from '../../../../data_models/dto/ExtendedMealDTO';
 import ExtendedMeal from '../../../../data_models/model/ExtendedMeal';
 import MealDietaryRestrictionFactory from '../../../../data_models/factories/model/MealDietaryRestrictionFactory';
-import CircularProgressPage from '../../../reusable_ui_components/CircularProgressPage';
+import CircularProgressPage from '../../../shared_components/CircularProgressPage';
 const MealPlanMealBuilderContainer = (props) => {
   const [mealPlans, setMealPlans] = useState(false);
   const [meals, setMeals] = useState(false);

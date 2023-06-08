@@ -4,9 +4,9 @@ import Stack from '@mui/material/Stack';
 import Icon from '@mui/material/Icon';
 import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
 import capitalize from '../../../../helpers/capitalize';
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
+import BlackButton from '../../../shared_components/BlackButton.ts';
 import getSnacksSubtotal from './helpers/getOrderSubtotal';
-import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
+import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 
 const SideBar = (props) => {
   const breakfastMeals = props.chosenScheduleMeals.filter(

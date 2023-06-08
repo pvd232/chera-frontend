@@ -4,7 +4,7 @@ import { useState, useReducer } from 'react';
 import Icon from '@mui/material/Icon';
 import Dialog from '@mui/material/Dialog';
 import APIClient from '../../../../helpers/APIClient';
-import Transition from '../../../reusable_ui_components/Transition';
+import Transition from '../../../shared_components/Transition';
 import StagedClient from '../../../../data_models/model/StagedClient';
 import StagedScheduleMealDTO from '../../../../data_models/dto/StagedScheduleMealDTO';
 import StagedScheduleSnackDTO from '../../../../data_models/dto/StagedScheduleSnackDTO';

@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import FormGroup from '@mui/material/FormGroup';
 import TextField from '@mui/material/TextField';
 import CircularProgress from '@mui/material/CircularProgress';
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
+import BlackButton from '../../../shared_components/BlackButton.ts';
 import APIClient from '../../../../helpers/APIClient.js';
 
 const RequestResetPassword = (props) => {

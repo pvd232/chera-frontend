@@ -1,5 +1,5 @@
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
-import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
+import BlackButton from '../../../shared_components/BlackButton.ts';
+import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import { useState } from 'react';
 
 const ButtonContainer = (props) => {

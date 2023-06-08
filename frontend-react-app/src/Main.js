@@ -16,16 +16,16 @@ import DietitianMenuContainer from './components/pages/dietitian/dietitian_menu/
 import DietititanHome from './components/pages/dietitian/DietitianHome';
 import RequestResetPassword from './components/pages/splash/login/RequestResetPassword';
 import ResetPassword from './components/pages/splash/login/ResetPassword';
-import Navbar from './components/reusable_ui_components/navbar/Navbar';
-import SplashLinks from './components/reusable_ui_components/navbar/links/SplashLinks';
-import ClientLinks from './components/reusable_ui_components/navbar/links/ClientLinks';
+import Navbar from './components/shared_components/navbar/Navbar';
+import SplashLinks from './components/shared_components/navbar/links/SplashLinks';
+import ClientLinks from './components/shared_components/navbar/links/ClientLinks';
 import DietitianMenu from './components/pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './components/pages/splash/resources/Resources';
 import SignUpPage from './components/pages/sign_up/ClientSignUp';
 import SnackBuilder from './components/pages/admin/snack_builder/SnackBuilder';
 import FAQs from './components/pages/splash/faqs/FAQs';
 import DietitianSignUp from './components/pages/splash/dietitian_sign_up/DietitianSignUp';
-import DietitianLinks from './components/reusable_ui_components/navbar/links/DietitianLinks';
+import DietitianLinks from './components/shared_components/navbar/links/DietitianLinks';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {

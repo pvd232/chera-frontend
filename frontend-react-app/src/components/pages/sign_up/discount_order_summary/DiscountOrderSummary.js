@@ -10,7 +10,7 @@ import APIClient from '../../../../helpers/APIClient.js';
 import OrderDiscount from '../../../../data_models/model/OrderDiscount.js';
 import DiscountDTO from '../../../../data_models/dto/DiscountDTO.js';
 import Discount from '../../../../data_models/model/Discount.js';
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
+import BlackButton from '../../../shared_components/BlackButton.ts';
 import getSubtotal from './getSubtotal.js';
 const DiscountOrderSummary = (props) => {
   const customTheme = useTheme();

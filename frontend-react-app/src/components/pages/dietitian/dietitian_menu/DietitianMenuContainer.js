@@ -13,7 +13,7 @@ import ExtendedMealPlanDTOFactory from '../../../../data_models/factories/dto/Ex
 import ExtendedRecipeIngredientDTOFactory from '../../../../data_models/factories/dto/ExtendedRecipeIngredientDTOFactory';
 import USDANutrientDailyValueDTOFactory from '../../../../data_models/factories/dto/USDANutrientDailyValueDTOFactory';
 import ExtendedRecipeIngredientNutrientDTOFactory from '../../../../data_models/factories/dto/ExtendedRecipeIngredientNutrientDTOFactory';
-import CircularProgressPage from '../../../reusable_ui_components/CircularProgressPage';
+import CircularProgressPage from '../../../shared_components/CircularProgressPage';
 
 const DietitianMenuContainer = (props) => {
   const [mealPlanMeals, setMealPlanMeals] = useState(false);

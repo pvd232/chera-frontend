@@ -9,9 +9,9 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Card from '@mui/material/Card';
 import APIClient from '../../../helpers/APIClient';
-import BlackButton from '../../reusable_ui_components/BlackButton';
+import BlackButton from '../../shared_components/BlackButton';
 import capitalize from '../../../helpers/capitalize';
-import BlueCircularProgress from '../../reusable_ui_components/BlueCircularProgress';
+import BlueCircularProgress from '../../shared_components/BlueCircularProgress';
 import { getAddressObject } from './helpers/getAddressObject';
 const DeliveryForm = (props) => {
   const customTheme = useTheme();

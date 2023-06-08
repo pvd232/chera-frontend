@@ -11,7 +11,7 @@ import LocalStorageManager from '../../../../helpers/LocalStorageManager';
 import APIClient from '../../../../helpers/APIClient';
 import DietitianDTO from '../../../../data_models/dto/DietitianDTO';
 import Dietitian from '../../../../data_models/model/Dietitian';
-import BlackButton from '../../../reusable_ui_components/BlackButton.ts';
+import BlackButton from '../../../shared_components/BlackButton.ts';
 import { getAddressObject } from '../../sign_up/helpers/getAddressObject';
 import SearchLocationInput from '../../sign_up/SearchLocationInput';
 import styles from './scss/DietitianSignUp.module.scss';

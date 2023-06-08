@@ -15,13 +15,13 @@ import ExtendedRecipeIngredientDTOFactory from '../../../../data_models/factorie
 import USDANutrientDailyValueDTOFactory from '../../../../data_models/factories/dto/USDANutrientDailyValueDTOFactory';
 import ExtendedRecipeIngredientNutrientDTOFactory from '../../../../data_models/factories/dto/ExtendedRecipeIngredientNutrientDTOFactory';
 import RowBorder from '../../dietitian/dietitian_menu/nutrition_details/RowBorder';
-import BlackButton from '../../../reusable_ui_components/BlackButton';
+import BlackButton from '../../../shared_components/BlackButton';
 import getFilteredMealPlanMeals from './helpers/getFilteredMealPlanMeals';
 import getMealPlanMealsByMeal from './helpers/getMealPlanMealsByMeal';
 import getMealPlanMealsByMealPlan from './helpers/getMealPlanMealsByMealPlan';
-import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
+import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import MealPlanMealRow from './MealPlanMealRow';
-import CircularProgressPage from '../../../reusable_ui_components/CircularProgressPage';
+import CircularProgressPage from '../../../shared_components/CircularProgressPage';
 const MealPlanMealBuilder = (props) => {
   const [mealPlanMeals, setMealPlanMeals] = useState([]);
   const [filterMealPlanId, setFilterMealPlanId] = useState('all');

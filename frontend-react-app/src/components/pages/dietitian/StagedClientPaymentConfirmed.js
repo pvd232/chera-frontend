@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import Transition from '../../reusable_ui_components/Transition';
+import Transition from '../../shared_components/Transition';
 import Icon from '@mui/material/Icon';
 import Stack from '@mui/material/Stack';
 import capitalize from '../../../helpers/capitalize';
