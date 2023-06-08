@@ -1,28 +1,29 @@
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Grid from '@mui/material/Grid';
-import styles from './scss/Navbar.module.scss';
-import { NavbarProps } from './types/NavbarProps.ts';
 import Typography from '@mui/material/Typography';
-import { useNavigate } from 'react-router-dom';
-const NewNavbar = (props: NavbarProps) => {
+import { NavbarProps } from './types/NavbarProps.ts';
+import navbar from './scss/Navbar.module.scss';
+
+const Navbar = (props: NavbarProps) => {
   const navigate = useNavigate();
   const handleClickLogo = () => {
     navigate(props.homeUrl);
   };
   return (
-    <Grid container className={styles.navbarPageContainer}>
-      <Grid container className={styles.childContentContainer}>
-        <Grid container className={styles.navbarContainer}>
-          <Box className={styles.box}>
-            <AppBar className={styles.appBar}>
-              <Toolbar className={styles.toolBar}>
-                <Grid container className={styles.contentTopContainer}>
-                  <Grid container className={styles.contentContainer} xs={11.2}>
+    <Grid container className={navbar.viewContainer}>
+      <Grid container className={navbar.childContentContainer}>
+        <Grid container item className={navbar.navbarContainer}>
+          <Box className={navbar.box}>
+            <AppBar className={navbar.appBar}>
+              <Toolbar className={navbar.toolBar}>
+                <Grid container className={navbar.contentTopContainer}>
+                  <Grid container className={navbar.contentContainer} xs={11.2}>
                     <Grid item>
                       <Typography
-                        className={styles.logoText}
+                        className={navbar.logoText}
                         onClick={handleClickLogo}
                       >
                         Chera
@@ -31,7 +32,7 @@ const NewNavbar = (props: NavbarProps) => {
                     <Grid
                       container
                       item
-                      className={styles.linksContainer}
+                      className={navbar.linksContainer}
                       xs={3}
                       sm={9}
                       md={8}
@@ -45,11 +46,11 @@ const NewNavbar = (props: NavbarProps) => {
             </AppBar>
           </Box>
         </Grid>
-        <Grid item className={styles.pageContentContainer}>
+        <Grid item className={navbar.pageContentContainer}>
           {props.childComponent}
         </Grid>
       </Grid>
     </Grid>
   );
 };
-export default NewNavbar;
+export default Navbar;

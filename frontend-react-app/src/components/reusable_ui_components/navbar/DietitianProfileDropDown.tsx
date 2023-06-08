@@ -11,8 +11,8 @@ import { useOpen } from './hooks/useOpen.ts';
 import { useNavigate } from 'react-router-dom';
 import styles from './scss/AboutDropDown.module.scss';
 import LocalStorageManager from '../../../helpers/NewLocalStorageManager.ts';
-const ClientProfileDropDown = () => {
-  const userFirstName = LocalStorageManager.shared.client.firstName;
+const DietitianProfileDropDown = () => {
+  const userFirstName = LocalStorageManager.shared.dietitian.firstName;
   const navigate = useNavigate();
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
@@ -103,4 +103,4 @@ const ClientProfileDropDown = () => {
     </Grid>
   );
 };
-export default ClientProfileDropDown;
+export default DietitianProfileDropDown;
