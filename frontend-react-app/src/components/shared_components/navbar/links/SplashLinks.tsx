@@ -35,13 +35,6 @@ const SplashLinks = () => {
 
           <Grid item>
             <LogInDropDown />
-            {/* <Button
-              variant="outlined"
-              className={styles.loginButton}
-              onClick={() => navigate('/login')}
-            >
-              Login
-            </Button> */}
           </Grid>
         </>
       )}

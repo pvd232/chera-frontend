@@ -10,8 +10,8 @@ const CurrentMeals = (props) => {
       container
       item
       lg={10}
-      spacing={3}
       marginBottom={'10vh'}
+      columnGap={'10vh'}
       justifyContent={'flex-start'}
     >
       <Grid item container justifyContent={'flex-start'}>
@@ -26,7 +26,7 @@ const CurrentMeals = (props) => {
         {props.cantMakeChanges && !props.isFirstDelivery ? (
           <Grid item>
             <Tooltip
-              title="It's too late to make changes to this order. All changes must be made by Wednesday at 10 PM"
+              title="It's too late to make changes to this order. All changes must be made by Wednesday at 10 PM CST"
               placement="right"
             >
               <IconButton>
@@ -37,7 +37,7 @@ const CurrentMeals = (props) => {
         ) : props.isFirstDelivery ? (
           <Grid item>
             <Tooltip
-              title="Beginning your second week, you can make changes to your order until Wednesday at 10 PM"
+              title="Beginning your second week, you can make changes to your order until Wednesday at 10 PM CST"
               placement="right"
             >
               <IconButton>

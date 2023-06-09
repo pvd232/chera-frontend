@@ -20,7 +20,12 @@ const Navbar = (props: NavbarProps) => {
             <AppBar className={navbar.appBar}>
               <Toolbar className={navbar.toolBar}>
                 <Grid container className={navbar.contentTopContainer}>
-                  <Grid container className={navbar.contentContainer} xs={11.2}>
+                  <Grid
+                    container
+                    item
+                    className={navbar.contentContainer}
+                    xs={11.2}
+                  >
                     <Grid item>
                       <Typography
                         className={navbar.logoText}

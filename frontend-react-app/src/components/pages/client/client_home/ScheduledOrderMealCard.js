@@ -14,11 +14,11 @@ const ScheduledOrderMealCard = (props) => {
   return (
     <Card
       sx={{
-        maxWidth: 350,
         height: '100%',
+        maxWidth: 350,
         maxHeight: 450,
         position: 'relative',
-        marginBottom: '8vh',
+        paddingBottom: '5vh',
       }}
     >
       <CardMedia
@@ -53,53 +53,52 @@ const ScheduledOrderMealCard = (props) => {
           {props.mealData.meal.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Grid
-          container
-          justifyContent={'space-around'}
-          sx={{
-            position: 'absolute',
-            bottom: '4vh',
-          }}
-        >
-          <Grid item>
-            <IconButton
-              id={`remove-${props.mealData.extendedScheduledOrderMeal.id}`}
-              onClick={() =>
-                props.handleRemoveScheduledOrderMeal(props.mealData)
-              }
-              disabled={props.cantMakeChanges}
-              sx={{
-                transform: 'scale(1.8)',
-                cursor: 'pointer',
-                color: 'rgba(0, 0, 0, 1)',
-              }}
-            >
-              <RemoveCircleIcon />
-            </IconButton>
-          </Grid>
+      <Grid item container sx={{ marginTop: '5vh', justifyContent: 'center' }}>
+        <Grid item sx={{ position: 'absolute', bottom: '3vh' }}>
+          <CardActions>
+            <Grid container columnGap={'2vh'} alignItems={'center'}>
+              <Grid item>
+                <IconButton
+                  id={`remove-${props.mealData.extendedScheduledOrderMeal.id}`}
+                  onClick={() =>
+                    props.handleRemoveScheduledOrderMeal(props.mealData)
+                  }
+                  disabled={props.cantMakeChanges}
+                  sx={{
+                    transform: 'scale(1.8)',
+                    cursor: 'pointer',
+                    color: 'rgba(0, 0, 0, 1)',
+                  }}
+                >
+                  <RemoveCircleIcon />
+                </IconButton>
+              </Grid>
 
-          <Grid item>
-            <Typography fontSize={'1rem'}>
-              {props.mealData.quantity} in your box
-            </Typography>
-          </Grid>
-          <Grid item>
-            <IconButton
-              id={`add-${props.mealData.extendedScheduledOrderMeal.id}`}
-              onClick={() => props.handleAddScheduledOrderMeal(props.mealData)}
-              disabled={props.cantMakeChanges}
-              sx={{
-                transform: 'scale(1.8)',
-                cursor: 'pointer',
-                color: 'rgba(0, 0, 0, 1)',
-              }}
-            >
-              <AddCircleIcon />
-            </IconButton>
-          </Grid>
+              <Grid item>
+                <Typography fontSize={'1rem'}>
+                  {props.mealData.quantity} in your box
+                </Typography>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  id={`add-${props.mealData.extendedScheduledOrderMeal.id}`}
+                  onClick={() =>
+                    props.handleAddScheduledOrderMeal(props.mealData)
+                  }
+                  disabled={props.cantMakeChanges}
+                  sx={{
+                    transform: 'scale(1.8)',
+                    cursor: 'pointer',
+                    color: 'rgba(0, 0, 0, 1)',
+                  }}
+                >
+                  <AddCircleIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
+          </CardActions>
         </Grid>
-      </CardActions>
+      </Grid>
     </Card>
   );
 };

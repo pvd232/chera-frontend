@@ -11,8 +11,8 @@ const CurrentSnacks = (props) => {
       container
       item
       lg={10}
-      spacing={3}
       marginBottom={'10vh'}
+      columnGap={'10vh'}
       justifyContent={'flex-start'}
     >
       <Grid item container justifyContent={'flex-start'}>

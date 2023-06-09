@@ -59,8 +59,8 @@ const ClientProfileDropDown = () => {
       onClick={handleToggle}
       className={styles.clientDropDownContainer}
     >
-      <Grid item>
-        <div className={styles.personIconContainer}>
+      <Grid>
+        <div className={styles.personIconContainer} id="test">
           <Typography className={styles.personIcon}>
             {userFirstName.charAt(0)}
           </Typography>

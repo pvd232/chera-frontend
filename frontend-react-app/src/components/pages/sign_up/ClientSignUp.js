@@ -43,7 +43,6 @@ const SignUpPage = (props) => {
   ];
 
   const handleSubmit = async () => {
-    console.log('client', client);
     const rehydratedClientDTO = ClientDTO.initializeFromForm(client);
 
     // AUTH
@@ -161,6 +160,18 @@ const SignUpPage = (props) => {
     }
     return;
   };
+  const handleUpdateMealsData = (
+    newScheduleMeals,
+    newScheduledOrderMeals,
+    newScheduleSnacks,
+    newScheduledOrderSnacks
+  ) => {
+    setScheduleMeals(newScheduleMeals);
+    setScheduledOrderMeals(newScheduledOrderMeals);
+    setScheduleSnacks(newScheduleSnacks);
+    setScheduledOrderSnacks(newScheduledOrderSnacks);
+    props.updateTaskIndex(2);
+  };
 
   const ContainerObject = {};
   ContainerObject['AccountRegistration'] = (
@@ -207,11 +218,12 @@ const SignUpPage = (props) => {
             newScheduleSnacks,
             newScheduledOrderSnacks
           ) => {
-            setScheduleMeals(newScheduleMeals);
-            setScheduledOrderMeals(newScheduledOrderMeals);
-            setScheduleSnacks(newScheduleSnacks);
-            setScheduledOrderSnacks(newScheduledOrderSnacks);
-            props.updateTaskIndex(2);
+            handleUpdateMealsData(
+              newScheduleMeals,
+              newScheduledOrderMeals,
+              newScheduleSnacks,
+              newScheduledOrderSnacks
+            );
           }}
         />
       );
