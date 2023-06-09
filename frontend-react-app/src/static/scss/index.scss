@@ -83,11 +83,15 @@ $xlScreen: 1537px;
 $linkFontSize: 1rem;
 
 // BOX SHADOWS
-$small: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
-$medium: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
-$large: 0px 0px 15px 0px rgba(0, 0, 0, 0.2);
+$boxShadowSmall: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+$boxShadowMedium: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+$boxShadowLarge: 0px 0px 15px 0px rgba(0, 0, 0, 0.2);
 
-// OTHER
+$boxShadowBorderRadiusSmall: 5px;
+$boxShadowBorderRadiusMedium: 5px;
+$boxShadowBorderRadiusLarge: 5px;
+
+// BORDER RADIUS
 $borderRadiusDefault: 30px;
 $buttonBorderRadius: 100px;
 

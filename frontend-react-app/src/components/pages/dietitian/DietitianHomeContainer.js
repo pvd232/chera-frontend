@@ -6,8 +6,6 @@ import MealPlanDTO from '../../../data_models/dto/MealPlanDTO';
 import MealPlan from '../../../data_models/model/MealPlan';
 import ExtendedScheduleMeal from '../../../data_models/model/ExtendedScheduleMeal';
 import ExtendedScheduleMealDTO from '../../../data_models/dto/ExtendedScheduleMealDTO';
-import ExtendedStagedClientDTO from '../../../data_models/dto/ExtendedStagedClientDTO';
-import ExtendedStagedClient from '../../../data_models/model/ExtendedStagedClient';
 import MealSubscriptionDTO from '../../../data_models/dto/MealSubscriptionDTO';
 import MealSubscription from '../../../data_models/model/MealSubscription';
 import ExtendedMeal from '../../../data_models/model/ExtendedMeal';
@@ -18,80 +16,19 @@ import ExtendedMealDTOFactory from '../../../data_models/factories/dto/ExtendedM
 import MealDietaryRestrictionDTOFactory from '../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
 import ExtendedMealFactory from '../../../data_models/factories/model/ExtendedMealFactory';
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
-import ExtendedClientDTO from '../../../data_models/dto/ExtendedClientDTO';
-import ExtendedClient from '../../../data_models/model/ExtendedClient';
-import MealPlanDTOFactory from '../../../data_models/factories/dto/MealPlanDTOFactory';
-import MealPlanFactory from '../../../data_models/factories/model/MealPlanFactory';
 
 const DietitianHomeContainer = (props) => {
-  const [extendedClients, setExtendedClients] = useState(false);
-  const [extendedStagedClients, setExtendedStagedClients] = useState(false);
   const [scheduleMeals, setScheduleMeals] = useState(false);
   const [mealSubscriptions, setMealSubscriptions] = useState(false);
   const [mealPlans, setMealPlans] = useState(false);
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [snacks, setSnacks] = useState(false);
 
-  // eslint-disable-next-line no-unused-vars
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = useSearchParams()[0];
   const [stagedClientId, setStagedClientId] = useState('');
 
   useEffect(() => {
     let mounted = true;
-    APIClient.getExtendedStagedClients(
-      LocalStorageManager.shared.dietitian.id
-    ).then((extendedStagedClientData) => {
-      if (extendedStagedClientData) {
-        const extendedStagedClientDTOs = extendedStagedClientData.map(
-          (extendedStagedClientJSON) =>
-            new ExtendedStagedClientDTO(
-              extendedStagedClientJSON,
-              new MealPlanDTOFactory()
-            )
-        );
-        // Initializer seperates out MealPlan to accomodate for creation of ExtendedStagedClients in DietitianHome
-        const extendedStagedClientItems = extendedStagedClientDTOs.map(
-          (extendedStagedClientDTO) =>
-            new ExtendedStagedClient(
-              extendedStagedClientDTO,
-              extendedStagedClientDTO.mealPlan,
-              new MealPlanFactory()
-            )
-        );
-        if (mounted) {
-          setExtendedStagedClients(extendedStagedClientItems);
-        }
-      } else {
-        setExtendedStagedClients([]);
-      }
-    });
-
-    APIClient.getExtendedClients(LocalStorageManager.shared.dietitian.id).then(
-      (clientData) => {
-        const clientArray = [];
-        const clientMap = new Map();
-        if (clientData) {
-          for (const client of clientData) {
-            const newClientDTO = new ExtendedClientDTO(
-              client,
-              new MealPlanDTOFactory()
-            );
-            const newClient = new ExtendedClient(
-              newClientDTO,
-              new MealPlanFactory()
-            );
-            clientArray.push(newClient);
-            clientMap.set(newClient.id, newClient);
-          }
-        }
-        if (mounted) {
-          setExtendedClients({
-            clientArray: clientArray,
-            clientMap: clientMap,
-          });
-        }
-      }
-    );
     APIClient.getDietitianExtendedScheduleMeals(
       LocalStorageManager.shared.dietitian.id
     ).then((extendedScheduleMealsData) => {
@@ -186,34 +123,14 @@ const DietitianHomeContainer = (props) => {
     return () => (mounted = false);
   }, [props, searchParams]);
 
-  if (
-    extendedClients &&
-    extendedStagedClients &&
-    scheduleMeals &&
-    mealSubscriptions &&
-    mealPlans
-  ) {
+  if (scheduleMeals && mealSubscriptions && mealPlans) {
     // Remove duplicative clients from stagedClients if they have already created their account
-    const filteredExtendedStagedClients = (() => {
-      if (extendedClients.clientArray) {
-        return extendedStagedClients.filter(
-          (stagedClient) =>
-            extendedClients.clientArray?.findIndex(
-              (client) => client.id === stagedClient.id
-            ) === -1
-        );
-      } else {
-        return extendedStagedClients;
-      }
-    })();
 
     const dataProps = {
       dietitianId: LocalStorageManager.shared.dietitian.id,
       stripePromise: props.stripePromise,
       paymentConfirmed: props.paymentConfirmed,
       paymentStagedClientId: stagedClientId,
-      clients: extendedClients,
-      stagedClients: filteredExtendedStagedClients,
       scheduleMeals: scheduleMeals,
       mealSubscriptions: mealSubscriptions,
       mealPlans: mealPlans,

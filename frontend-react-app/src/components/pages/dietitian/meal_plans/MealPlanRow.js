@@ -59,7 +59,7 @@ const MealPlanRow = (props) => (
           textAlign={'left'}
           paddingBottom={'1.5vh'}
         >
-          {`Snacks: ${props.mealPlan.formattedNumberOfSnacks} snacks with ${props.mealPlan.perSnackCaloricLowerBound}-${props.mealPlan.perSnackCaloricUpperBound} calories each (not included)`}
+          {`Snacks: ${props.mealPlan.formattedNumberOfSnacks} snacks with ${props.mealPlan.perSnackCaloricLowerBound}-${props.mealPlan.perSnackCaloricUpperBound} calories each`}
         </Typography>
       </CardContent>
     </Grid>

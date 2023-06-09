@@ -1,0 +1,7 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/DietitianHome.module.scss' as dietitianHome;
+
+.pageContainer {
+  padding-top: 10vh;
+  justify-content: center;
+}

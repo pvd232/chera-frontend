@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { useTheme } from '@mui/material/styles';
 import * as React from 'react';
 import { useState } from 'react';
-import { FormControl } from '@mui/material';
+import { Button, FormControl } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -22,7 +22,7 @@ import Client from '../../../data_models/model/Client';
 import StagedClient from '../../../data_models/model/StagedClient';
 import StagedClientDTO from '../../../data_models/dto/StagedClientDTO';
 import ClientDTO from '../../../data_models/dto/ClientDTO';
-
+import editClientMealPlanModal from './scss/EditClientMealPlanModal.module.scss';
 const EditClientMealPlanModal = (props) => {
   const customTheme = useTheme();
 
@@ -36,25 +36,23 @@ const EditClientMealPlanModal = (props) => {
 
   // input handlers
   const handleButtonClick = async () => {
-    if (!loading) {
-      setLoading(true);
-      if (props.isStagedClient) {
-        const currentStagedClient = new StagedClient(props.clientItem.client);
-        const currentStagedClientDTO =
-          StagedClientDTO.initializeFromStagedClient(currentStagedClient);
-        currentStagedClientDTO.mealPlanId = mealPlanId;
-        APIClient.updateStagedClient(currentStagedClientDTO);
-      } else {
-        const currentClient = new Client(props.clientItem.client);
-        const currentClientDTO = ClientDTO.initializeFromForm(currentClient);
-        currentClientDTO.mealPlanId = mealPlanId;
-        APIClient.updateClient(currentClientDTO);
-      }
-      props.handleFinishEditingMealPlan();
-
-      setLoading(false);
-      setOpen(false);
+    setLoading(true);
+    if (props.isStagedClient) {
+      const currentStagedClient = new StagedClient(props.clientItem.client);
+      const currentStagedClientDTO =
+        StagedClientDTO.initializeFromStagedClient(currentStagedClient);
+      currentStagedClientDTO.mealPlanId = mealPlanId;
+      await APIClient.updateStagedClient(currentStagedClientDTO);
+    } else {
+      const currentClient = new Client(props.clientItem.client);
+      const currentClientDTO = ClientDTO.initializeFromForm(currentClient);
+      currentClientDTO.mealPlanId = mealPlanId;
+      await APIClient.updateClient(currentClientDTO);
     }
+    props.handleFinishEditingMealPlan();
+
+    setLoading(false);
+    setOpen(false);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -88,14 +86,15 @@ const EditClientMealPlanModal = (props) => {
     }
   })();
   return (
-    <>
-      <BlackButton
+    <div id="edit-client-meal-plan-container">
+      <Button
         id={`change${editMealPlanButtonDomain}MealPlan${props.buttonIndex}`}
         variant={'contained'}
         onClick={handleClickOpen}
+        className={editClientMealPlanModal.button}
       >
         Edit
-      </BlackButton>
+      </Button>
       <Dialog
         open={open}
         TransitionComponent={Transition}
@@ -106,55 +105,40 @@ const EditClientMealPlanModal = (props) => {
       >
         <Grid
           container
-          justifyContent={'flex-end'}
-          paddingRight={'1vw'}
-          paddingTop={'1vw'}
+          className={editClientMealPlanModal.closeIconContainer}
+          id="close-icon-container"
         >
           <Grid item>
             <Icon
               onClick={handleClose}
-              sx={{ cursor: 'pointer', marginLeft: 'auto' }}
+              className={editClientMealPlanModal.closeIcon}
             >
               close
             </Icon>
           </Grid>
         </Grid>
-        <DialogContent sx={{ marginBottom: '8vh' }}>
-          <Stack spacing={2} paddingBottom={'3vh'}>
-            <Typography
-              fontSize={'2rem'}
-              textAlign={'center'}
-              margin={'0 auto'}
-            >
+        <DialogContent className={editClientMealPlanModal.dialog}>
+          <Stack className={editClientMealPlanModal.stack}>
+            <Typography className={editClientMealPlanModal.header}>
               Update your client's meal plan
             </Typography>
-            <Typography
-              fontSize={customTheme.fontEqualizer(16)}
-              textAlign={'center'}
-            >
+            <Typography className={editClientMealPlanModal.subHeader}>
               Your change will be reflected in your client's upcoming meal
               deliveries
             </Typography>
           </Stack>
           <form onSubmit={handleSubmit} autoComplete="new-password">
-            <fieldset
-              style={{
-                boxShadow: customTheme.border.boxShadow.medium,
-                padding: '4vh 5vw',
-                boxSizing: 'border-box',
-                margin: '0 10%',
-                height: 'fit-content',
-                border: 'none',
-                borderRadius: customTheme.border.radius.medium,
-              }}
-            >
+            <fieldset className={editClientMealPlanModal.fieldset}>
               <FormGroup>
                 <Grid container>
-                  <Grid item xs={12} sx={{ marginTop: '2vh' }}>
-                    <Stack direction={'column'} rowGap={3}>
+                  <Grid
+                    item
+                    xs={12}
+                    className={editClientMealPlanModal.content}
+                  >
+                    <Stack className={editClientMealPlanModal.stack}>
                       <InputLabel
-                        key={uuid()}
-                        sx={{ color: customTheme.palette.black.main }}
+                        className={editClientMealPlanModal.inputLabel}
                       >
                         Client Email
                       </InputLabel>
@@ -165,12 +149,13 @@ const EditClientMealPlanModal = (props) => {
                         value={props.clientItem.email}
                         disabled={true}
                       />
+                      <InputLabel
+                        className={editClientMealPlanModal.inputLabel}
+                      >
+                        Meal Plan
+                      </InputLabel>
                       <FormControl>
-                        <InputLabel
-                          sx={{ color: customTheme.palette.black.main }}
-                        >
-                          Meal Plan
-                        </InputLabel>
+                        <InputLabel>{props.clientItem.mealPlanName}</InputLabel>
                         <Select
                           label="Meal Plan"
                           required
@@ -191,27 +176,17 @@ const EditClientMealPlanModal = (props) => {
                           ))}
                         </Select>
                       </FormControl>
-                      <BlackButton
-                        id={`submitMealPlanChange`}
-                        type="submit"
-                        variant="contained"
-                        disabled={loading}
-                        sx={{
-                          marginLeft: 'auto',
-                          marginRight: 'auto',
-                          width: '100%',
-                        }}
-                      >
-                        Submit
-                      </BlackButton>
-                      <Typography
-                        fontSize={customTheme.fontEqualizer(12)}
-                        color={customTheme.palette.secondaryText.main}
-                      >
-                        By clicking above, you agree to our{' '}
-                        <a href="/">Terms of Use</a> and consent to our{' '}
-                        <a href="/">Privacy Policy</a>
-                      </Typography>
+                      <div className={editClientMealPlanModal.buttonContainer}>
+                        <BlackButton
+                          id={`submitMealPlanChange`}
+                          type="submit"
+                          variant="contained"
+                          disabled={loading}
+                          className={editClientMealPlanModal.submitButton}
+                        >
+                          Submit
+                        </BlackButton>
+                      </div>
                     </Stack>
                   </Grid>
                 </Grid>
@@ -220,7 +195,7 @@ const EditClientMealPlanModal = (props) => {
           </form>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 };
 export default EditClientMealPlanModal;

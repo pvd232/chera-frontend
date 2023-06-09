@@ -1,6 +1,6 @@
-import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import { useState, useReducer } from 'react';
+import Button from '@mui/material/Button';
 import Icon from '@mui/material/Icon';
 import Dialog from '@mui/material/Dialog';
 import APIClient from '../../../../helpers/APIClient';
@@ -12,10 +12,8 @@ import StagedClientDTO from '../../../../data_models/dto/StagedClientDTO';
 import ClientMenu from '../../sign_up/client_menu/ClientMenu';
 import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
-import ModalButton from './ModalButton';
-
+import createNewStagedClientModal from './scss/CreateNewStagedClientModal.module.scss';
 const CreateNewStagedClientModal = (props) => {
-  const customTheme = useTheme();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -226,7 +224,6 @@ const CreateNewStagedClientModal = (props) => {
   );
   UIContainer['SignUp'] = (
     <ModalBody
-      customTheme={customTheme}
       formValue={formValue}
       handleInput={handleInput}
       error={error}
@@ -236,58 +233,46 @@ const CreateNewStagedClientModal = (props) => {
     />
   );
   return (
-    <>
-      <div
-        style={{
-          paddingLeft: '2vw',
-          paddingBottom: '4vh',
-        }}
+    <div className={createNewStagedClientModal.rootDiv}>
+      <Button
+        id="add-staged-client-button"
+        variant="contained"
+        onClick={handleClickOpen}
+        className={createNewStagedClientModal.button}
       >
-        <ModalButton
-          id="add-staged-client-button"
-          variant="contained"
-          onClick={handleClickOpen}
-          fontSize={customTheme.fontEqualizer(14)}
-          sx={{
-            cursor: 'pointer',
-          }}
+        + Add New Client
+      </Button>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-describedby="alert-dialog-slide-description"
+        maxWidth={page === 'SignUp' ? 'md' : 'xl'}
+        fullWidth={true}
+      >
+        <Grid
+          container
+          className={createNewStagedClientModal.contentContainer}
+          // sx={{
+          //   backgroundColor:
+          //     showMenu && !showCheckout
+          //       ? customTheme.palette.olive.quaternary
+          //       : customTheme.palette.white1.main,
+          // }}
         >
-          + Add New Client
-        </ModalButton>
-        <Dialog
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={() => handleClose()}
-          aria-describedby="alert-dialog-slide-description"
-          maxWidth={page === 'SignUp' ? 'md' : 'xl'}
-          fullWidth={true}
-        >
-          <Grid
-            container
-            justifyContent={'flex-end'}
-            paddingRight={'1vw'}
-            paddingTop={'1vw'}
-            sx={{
-              backgroundColor:
-                showMenu && !showCheckout
-                  ? customTheme.palette.olive.quaternary
-                  : customTheme.palette.white1.main,
-            }}
-          >
-            <Grid item>
-              <Icon
-                onClick={() => handleClose()}
-                sx={{ cursor: 'pointer', marginLeft: 'auto' }}
-              >
-                close
-              </Icon>
-            </Grid>
+          <Grid item>
+            <Icon
+              onClick={handleClose}
+              className={createNewStagedClientModal.closeIcon}
+            >
+              close
+            </Icon>
           </Grid>
-          {UIContainer[page]}
-        </Dialog>
-      </div>
-    </>
+        </Grid>
+        {UIContainer[page]}
+      </Dialog>
+    </div>
   );
 };
 export default CreateNewStagedClientModal;

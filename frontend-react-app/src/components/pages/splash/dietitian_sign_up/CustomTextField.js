@@ -8,6 +8,7 @@ const CustomTextField = styled(TextField)(({ theme }) => ({
     '&.Mui-focused fieldset': {
       borderColor: theme.palette.fucia2.solid,
     },
+    backgroundColor: '#fcfcfb',
   },
 }));
 export default CustomTextField;

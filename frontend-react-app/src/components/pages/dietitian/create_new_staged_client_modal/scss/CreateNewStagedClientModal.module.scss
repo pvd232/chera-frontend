@@ -1,0 +1,21 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/DietitianHome.module.scss' as dietitianHome;
+
+.rootDiv {
+  .button {
+    background-color: theme.$fucia;
+    color: white;
+    border: none;
+    border-radius: theme.$buttonBorderRadius;
+  }
+}
+.contentContainer {
+  justify-content: flex-end;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  padding-top: 3vh;
+  .closeIcon {
+    cursor: pointer;
+    margin-left: auto;
+  }
+}

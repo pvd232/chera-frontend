@@ -1,0 +1,57 @@
+@use '../../../../static/scss/index.scss' as theme;
+$titleFontSize: 3rem;
+$headerFontSize: 2rem;
+$bodyFontSize: 1rem;
+
+.contentContainer {
+  padding-top: 10vh;
+  align-items: flex-start;
+  justify-content: center;
+  .contentSubContainer {
+    row-gap: 10vh;
+    justify-content: center;
+    .headerContainer {
+      justify-content: flex-end;
+      align-items: flex-end;
+      .headerItem {
+        margin-right: auto;
+        .header {
+          font-size: $headerFontSize;
+          color: theme.$fucia;
+        }
+      }
+      .addStagedClientItem {
+        margin-left: auto;
+      }
+    }
+    .table {
+      min-width: 750px;
+      .editMealPlanContainer {
+        margin-top: 2vh;
+        margin-bottom: 1vh;
+        margin-right: auto;
+        margin-left: auto;
+        padding: 0;
+      }
+      .accountCreatedIcon {
+        color: green;
+      }
+      .accountNotCreatedIcon {
+        color: red;
+        transform: scale(1.3);
+      }
+      .sendReminderContainer {
+        justify-content: center;
+        align-items: center;
+        .sendReminderButton {
+          font-size: 0.75rem;
+          background-color: theme.$fucia;
+          border-radius: theme.$buttonBorderRadius;
+          .loadingIcon {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

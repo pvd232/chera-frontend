@@ -144,7 +144,7 @@ const Main = (props) => {
                 />
               }
               links={<DietitianLinks />}
-              homeUrl={'d-home'}
+              homeUrl={'/d-home'}
             />
           }
         />
@@ -159,7 +159,7 @@ const Main = (props) => {
                 />
               }
               links={<DietitianLinks />}
-              homeUrl={'d-home'}
+              homeUrl={'/d-home'}
             />
           }
         />
@@ -240,7 +240,7 @@ const Main = (props) => {
           }
         />
         <Route
-          path="/dietitian-menu"
+          path="/menu"
           element={
             <Navbar
               childComponent={

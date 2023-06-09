@@ -13,39 +13,22 @@ import FormControl from '@mui/material/FormControl';
 import capitalize from '../../../../helpers/capitalize';
 import BlackButton from '../../../shared_components/BlackButton.ts';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
-
+import modalBody from './scss/ModalBody.module.scss';
 const ModalBody = (props) => (
-  <DialogContent sx={{ marginBottom: '8vh' }}>
-    <Stack spacing={2} paddingBottom={'3vh'}>
-      <Typography fontSize={'2rem'} textAlign={'center'} margin={'0 auto'}>
-        Add a New Client
-      </Typography>
-      <Typography
-        fontSize={props.customTheme.fontEqualizer(16)}
-        textAlign={'center'}
-      >
+  <DialogContent className={modalBody.dialog}>
+    <Stack className={modalBody.stack}>
+      <Typography className={modalBody.header}>Add a New Client</Typography>
+      <Typography className={modalBody.subHeader}>
         Your client will receive an email with a link to sign up
       </Typography>
     </Stack>
     <form onSubmit={props.handleSubmit} autoComplete="new-password">
-      <fieldset
-        style={{
-          boxShadow: props.customTheme.border.boxShadow.medium,
-          padding: '4vh 5vw',
-          boxSizing: 'border-box',
-          margin: '0 10%',
-          height: 'fit-content',
-          border: 'none',
-          borderRadius: props.customTheme.border.radius.medium,
-        }}
-      >
+      <fieldset className={modalBody.fieldset}>
         <FormGroup>
           <Grid container>
-            <Grid item xs={12} sx={{ marginTop: '2vh' }}>
-              <Stack direction={'column'} rowGap={3}>
-                <InputLabel
-                  sx={{ color: props.customTheme.palette.black.main }}
-                >
+            <Grid item xs={12} className={modalBody.content}>
+              <Stack className={modalBody.stack}>
+                <InputLabel className={modalBody.inputLabel}>
                   Client Email
                 </InputLabel>
 
@@ -60,9 +43,7 @@ const ModalBody = (props) => (
                   error={props.error}
                   helperText={props.error ? 'This email is already taken' : ''}
                 />
-                <InputLabel
-                  sx={{ color: props.customTheme.palette.black.main }}
-                >
+                <InputLabel className={modalBody.inputLabel}>
                   Client First Name
                 </InputLabel>
 
@@ -74,9 +55,7 @@ const ModalBody = (props) => (
                   value={props.formValue.firstName}
                   onChange={props.handleInput}
                 />
-                <InputLabel
-                  sx={{ color: props.customTheme.palette.black.main }}
-                >
+                <InputLabel className={modalBody.inputLabel}>
                   Client Notes
                 </InputLabel>
 
@@ -87,15 +66,11 @@ const ModalBody = (props) => (
                   value={props.formValue.notes}
                   onChange={props.handleInput}
                 />
-                <InputLabel
-                  sx={{ color: props.customTheme.palette.black.main }}
-                >
+                <InputLabel className={modalBody.inputLabel}>
                   Client Meal Plan
                 </InputLabel>
                 <FormControl>
-                  <InputLabel
-                    sx={{ color: props.customTheme.palette.black.main }}
-                  >
+                  <InputLabel className={modalBody.inputLabel}>
                     Meal Plan
                   </InputLabel>
                   <Select
@@ -149,11 +124,7 @@ const ModalBody = (props) => (
                   type="submit"
                   variant="contained"
                   disabled={props.loading}
-                  sx={{
-                    marginLeft: 'auto',
-                    marginRight: 'auto',
-                    width: '100%',
-                  }}
+                  className={modalBody.submitButton}
                 >
                   {props.loading ? (
                     <BlueCircularProgress />
@@ -163,14 +134,6 @@ const ModalBody = (props) => (
                     'Submit'
                   )}
                 </BlackButton>
-                <Typography
-                  fontSize={props.customTheme.fontEqualizer(12)}
-                  color={props.customTheme.palette.secondaryText.main}
-                >
-                  By clicking above, you agree to our{' '}
-                  <a href="/">Terms of Use</a> and consent to our{' '}
-                  <a href="/">Privacy Policy</a>
-                </Typography>
               </Stack>
             </Grid>
           </Grid>

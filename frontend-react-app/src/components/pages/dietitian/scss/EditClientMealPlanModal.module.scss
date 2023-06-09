@@ -1,0 +1,64 @@
+@use '../../../../static/scss/index.scss' as theme;
+@use '../scss/DietitianHome.module.scss' as dietitianHome;
+.button {
+  font-size: 0.75rem;
+  background-color: theme.$fucia;
+  border-radius: theme.$buttonBorderRadius;
+  color: white;
+}
+.closeIconContainer {
+  justify-content: flex-end;
+  padding-right: 1vw;
+  padding-top: 1vw;
+  .closeIcon {
+    cursor: pointer;
+    margin-left: auto;
+  }
+}
+.dialog {
+  margin-bottom: 8vh;
+  .stack {
+    row-gap: 2vh;
+    padding-bottom: 3vh;
+    .header {
+      font-size: dietitianHome.$headerFontSize;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .subHeader {
+      font-size: dietitianHome.$bodyFontSize;
+      text-align: center;
+    }
+  }
+  .fieldset {
+    box-shadow: theme.$boxShadowMedium;
+    padding: 4vh 5vw;
+    box-sizing: border-box;
+    margin: 0 10%;
+    height: fit-content;
+    border: none;
+    border-radius: theme.$boxShadowBorderRadiusMedium;
+    .content {
+      margin-top: 2vh;
+      .stack {
+        flex-direction: column;
+        row-gap: 3vh;
+        .inputLabel {
+          color: black;
+        }
+        .buttonContainer {
+          display: flex;
+          justify-content: center;
+          margin-top: 2vh;
+          .submitButton {
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+            background-color: theme.$fucia;
+            border-radius: theme.$buttonBorderRadius;
+          }
+        }
+      }
+    }
+  }
+}

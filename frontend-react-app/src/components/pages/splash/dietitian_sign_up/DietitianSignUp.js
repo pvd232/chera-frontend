@@ -37,6 +37,7 @@ const DietitianSignUp = () => {
       city: '',
       state: '',
       zipcode: '',
+      address: '',
       clinicUrl: '',
       datetime: Date.now(),
       clients: [],
@@ -82,6 +83,23 @@ const DietitianSignUp = () => {
     let value = event.target.value;
     setFormValue({ [id]: value });
   };
+  const validateAddress = async (addressObject) => {
+    const validAddress = await APIClient.validateAddress(addressObject);
+    if (validAddress.addressStatus === 'invalid') {
+      setAddressValueError(true);
+      return false;
+    } else if (validAddress.addressStatus === 'missingSuite') {
+      setSuiteError('Please enter your APT, Suite, etc.');
+      return validAddress;
+    } else if (validAddress.addressStatus === 'invalidSuite') {
+      setSuiteError('Please enter a valid suite number.');
+      return validAddress;
+    } else {
+      setAddressValueError(false);
+      setSuiteError('');
+      return validAddress;
+    }
+  };
   const validate = async (form) => {
     const dietitianAlreadyExists = await APIClient.getDietitian(formValue.id);
     if (dietitianAlreadyExists) {
@@ -100,28 +118,26 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
+    if (formValue.suite !== '') {
+      const addressParts = formValue.address.split(',');
+      const newStreet = addressParts[0] + ' ' + formValue.suite;
+      addressParts[0] = newStreet;
+      const newAddress = addressParts.join(',');
+      const validAddress = await validateAddress(getAddressObject(newAddress));
+
+      if (validAddress.addressStatus !== 'valid') {
+        return false;
+      }
+    }
     return form.checkValidity();
   };
   const handleAddress = async (address) => {
-    setAddressValueError(false);
+    console.log('formValue', formValue);
     if (address.split(',').length === 4) {
       const addressObject = getAddressObject(address);
-      if (!addressObject) {
-        setAddressValueError(true);
+      const validAddress = await validateAddress(addressObject);
+      if (!validAddress) {
         return false;
-      }
-      const validAddress = await APIClient.validateAddress(addressObject);
-      if (validAddress.addressStatus === 'invalid') {
-        setAddressValueError(true);
-        return false;
-      } else if (validAddress.addressStatus === 'missingSuite') {
-        setSuiteError('Please enter your APT, Suite, etc.');
-      } else if (validAddress.addressStatus === 'invalidSuite') {
-        setSuiteError('Please enter a valid suite number.');
-      } else {
-        setAddressValueError(false);
-        setSuiteError('');
-        setFormValue(addressObject);
       }
     } else {
       setAddressValueError(true);
@@ -144,9 +160,6 @@ const DietitianSignUp = () => {
                     label="Email"
                     id="id"
                     type="email"
-                    sx={{
-                      backgroundColor: '#fcfcfb',
-                    }}
                     onChange={handleInput}
                     value={formValue.id}
                   />
@@ -159,9 +172,6 @@ const DietitianSignUp = () => {
                     fullWidth
                     label="Choose a password"
                     id="password"
-                    sx={{
-                      backgroundColor: '#fcfcfb',
-                    }}
                     onChange={handleInput}
                     value={formValue.password}
                   />
@@ -172,9 +182,6 @@ const DietitianSignUp = () => {
                     fullWidth
                     label="First name"
                     id="firstName"
-                    sx={{
-                      backgroundColor: '#fcfcfb',
-                    }}
                     onChange={handleInput}
                     value={formValue.firstName}
                   />
@@ -185,22 +192,19 @@ const DietitianSignUp = () => {
                     fullWidth
                     label="Last name"
                     id="lastName"
-                    sx={{
-                      backgroundColor: '#fcfcfb',
-                    }}
                     onChange={handleInput}
                     value={formValue.lastName}
                   />
                 </FormControl>
                 <FormControl variant="filled">
                   <FormHelperText
-                    hidden={!addressValueError && suiteError === ''}
+                    hidden={!addressValueError}
                     error={true}
                     sx={{ marginBottom: '1.5vh' }}
                   >
-                    {addressValueError
-                      ? 'You chose an invalid address. Please choose another address from the dropdown.'
-                      : suiteError}
+                    {
+                      'You chose an invalid address. Please choose another address from the dropdown.'
+                    }
                   </FormHelperText>
                   <SearchLocationInput
                     dietitianInput={true}
@@ -208,12 +212,27 @@ const DietitianSignUp = () => {
                   />
                 </FormControl>
                 <FormControl variant="filled">
+                  <FormHelperText
+                    hidden={suiteError === ''}
+                    error={true}
+                    sx={{ marginBottom: '1.5vh' }}
+                  >
+                    {suiteError}
+                  </FormHelperText>
+                  <CustomTextField
+                    disabled={suiteError === ''}
+                    required
+                    fullWidth
+                    label="Suite"
+                    id="suite"
+                    onChange={handleInput}
+                    value={formValue.suite}
+                  />
+                </FormControl>
+                <FormControl variant="filled">
                   <RegistrationErrorMessage error={registrationError} />
 
                   <CustomTextField
-                    sx={{
-                      backgroundColor: '#fcfcfb',
-                    }}
                     required
                     fullWidth
                     label="Dietetic registration number"
@@ -228,9 +247,6 @@ const DietitianSignUp = () => {
                     fullWidth
                     label="Clinic website url"
                     id="clinicUrl"
-                    sx={{
-                      backgroundColor: '#fcfcfb',
-                    }}
                     type="url"
                     onChange={handleInput}
                     value={formValue.clinicUrl}

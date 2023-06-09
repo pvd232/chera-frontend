@@ -1,0 +1,27 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/DietitianHome.module.scss' as dietitianHome;
+.container {
+  padding-top: 10vh;
+  justify-content: center;
+  .headerContainer {
+    .header {
+      font-size: dietitianHome.$titleFontSize;
+      color: black;
+      text-align: center;
+    }
+    .emphasizedHeader {
+      font-size: dietitianHome.$titleFontSize;
+      color: theme.$fucia;
+      text-align: center;
+    }
+  }
+  .contentContainer {
+    justify-content: center;
+    margin-bottom: 10vh;
+    row-gap: 10vh;
+    column-gap: 10vh;
+    .subtext {
+      font-size: 1rem;
+    }
+  }
+}

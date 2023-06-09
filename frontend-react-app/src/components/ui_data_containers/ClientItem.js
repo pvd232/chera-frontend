@@ -11,6 +11,7 @@ export default class ClientItem {
     // StagedClient property only, default to true
     this.accountCreated = client.accountCreated ?? true;
     this.client = client;
+    this.isLoading = false;
     this.properlyInitialized = (() => checkProperties(this))();
   }
 }
