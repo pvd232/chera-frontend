@@ -19,39 +19,47 @@ body {
 @font-face {
   font-family: 'Inter Bold'; /*Can be any text*/
   src: local('Inter-Bold'), url('../fonts/Inter-Bold.ttf') format('woff');
+  font-display: fallback;
 }
 @font-face {
   font-family: 'LexendDeca'; /*Can be any text*/
   src: local('LexendDeca-Regular'),
     url('../fonts/LexendDeca-Regular.ttf') format('woff');
+  font-display: fallback;
 }
 @font-face {
   font-family: 'LexendDeca SemiBold'; /*Can be any text*/
   src: local('LexendDeca-SemiBold'),
     url('../fonts/LexendDeca-SemiBold.ttf') format('woff');
+  font-display: fallback;
 }
 @font-face {
   font-family: 'OpenSans Bold'; /*Can be any text*/
   src: local('OpenSans-Bold'), url('../fonts/OpenSans-Bold.ttf') format('woff');
+  font-display: fallback;
 }
 @font-face {
   font-family: 'OpenSans'; /*Can be any text*/
   src: local('OpenSans-Regular'),
     url('../fonts/OpenSans-Regular.ttf') format('woff');
+  font-display: fallback;
 }
 @font-face {
   font-family: 'LilitaOne'; /*Can be any text*/
   src: local('LilitaOne-Regular'),
     url('../fonts/LilitaOne-Regular.ttf') format('woff');
+  font-display: fallback;
 }
 @font-face {
   font-family: 'Sansita'; /*Can be any text*/
   src: local('Sansita-Regular'),
     url('../fonts/Sansita-Regular.ttf') format('woff');
+  font-display: fallback;
 }
 @font-face {
   font-family: 'Sansita Bold'; /*Can be any text*/
   src: local('Sansita-Bold'), url('../fonts/Sansita-Bold.ttf') format('woff');
+  font-display: fallback;
 }
 
 $defaultFontBold: 'LexendDeca SemiBold';
