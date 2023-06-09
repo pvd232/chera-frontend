@@ -1,9 +1,8 @@
 @use '../../../../static/scss/index.scss' as theme;
+@use './Links.module.scss' as links;
 
 .splashLinksContainer {
-  justify-content: flex-end;
-  align-items: center;
-  column-gap: 2vh;
+  @include links.container;
   @include theme.xs {
     justify-content: center;
   }

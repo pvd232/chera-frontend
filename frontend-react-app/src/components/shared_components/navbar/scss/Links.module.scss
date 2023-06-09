@@ -1,0 +1,12 @@
+@use '../../../../static/scss/index.scss' as theme;
+
+@mixin container {
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 10vh;
+  .link {
+    font-size: theme.$linkFontSize;
+    color: theme.$fucia;
+    cursor: pointer;
+  }
+}
