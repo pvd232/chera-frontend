@@ -72,7 +72,7 @@ const CreateNewStagedClientModal = (props) => {
       formValue.id
     );
 
-    if (clientIdExists || !clientIdExistsAsDietitian) {
+    if (clientIdExists || clientIdExistsAsDietitian) {
       setError(true);
       return false;
     }
@@ -155,14 +155,13 @@ const CreateNewStagedClientModal = (props) => {
   const handleInput = (event) => {
     const id = event.target.id;
     const value = event.target.value;
-    // state value
     if (id === 'confirm-password') {
       setFormValue({ confirmPassword: value });
     } else if (id === undefined) {
       setFormValue({ mealPlanId: value });
     } else if (id === 'mealsPreSelected') {
       const valueToSet = (() => {
-        // performing this operation: setState(!booleanValue)
+        // Performing this operation: setState(!booleanValue)
         if (value === 'true') {
           return false;
         } else if (value === 'false') {
@@ -172,7 +171,7 @@ const CreateNewStagedClientModal = (props) => {
       setFormValue({ mealsPreSelected: valueToSet });
     } else if (id === 'mealsPrepaid') {
       const valueToSet = (() => {
-        // performing this operation: setState(!booleanValue)
+        // Performing this operation: setState(!booleanValue)
         if (value === 'true') {
           return false;
         } else if (value === 'false') {
@@ -187,7 +186,6 @@ const CreateNewStagedClientModal = (props) => {
     } else {
       setFormValue({ [id]: value });
     }
-    // setting the state unfocuses the user cursor in the form, and setting auto-focus to true fixes it, but autofocus can only be true for the input that is currently being typed in
   };
   const handleClickOpen = () => {
     setPage('SignUp');

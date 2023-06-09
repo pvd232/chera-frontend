@@ -2,7 +2,7 @@ import { Buffer } from 'buffer';
 import getBaseURL from './getBaseURL';
 class APIClient {
   constructor() {
-    // Host name will be localhost will running async tests in jest
+    // Host name will be localhost when running async tests in jest
     if (
       window.location.host === 'localhost:3000' ||
       window.location.host === 'localhost'

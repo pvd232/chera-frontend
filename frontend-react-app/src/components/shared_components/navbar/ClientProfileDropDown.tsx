@@ -9,10 +9,11 @@ import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import { useOpen } from './hooks/useOpen.ts';
 import { useNavigate } from 'react-router-dom';
-import styles from './scss/AboutDropDown.module.scss';
+import aboutDropDown from './scss/AboutDropDown.module.scss';
 import LocalStorageManager from '../../../helpers/NewLocalStorageManager.ts';
 const ClientProfileDropDown = () => {
-  const userFirstName = LocalStorageManager.shared.client.firstName;
+  const userFirstName =
+    LocalStorageManager.shared.client.firstName.toUpperCase();
   const navigate = useNavigate();
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
@@ -57,11 +58,11 @@ const ClientProfileDropDown = () => {
       aria-expanded={open ? 'true' : undefined}
       aria-haspopup="true"
       onClick={handleToggle}
-      className={styles.clientDropDownContainer}
+      className={aboutDropDown.clientDropDownContainer}
     >
-      <Grid>
-        <div className={styles.personIconContainer} id="test">
-          <Typography className={styles.personIcon}>
+      <Grid item>
+        <div className={aboutDropDown.personIconContainer} id="test">
+          <Typography className={aboutDropDown.personIcon}>
             {userFirstName.charAt(0)}
           </Typography>
         </div>
@@ -75,10 +76,13 @@ const ClientProfileDropDown = () => {
           placement="bottom"
           transition
           disablePortal={false}
-          className={styles.aboutPopper}
+          className={aboutDropDown.aboutPopper}
         >
           {({ TransitionProps, placement }) => (
-            <Grow {...TransitionProps} className={styles.dropDownContent}>
+            <Grow
+              {...TransitionProps}
+              className={aboutDropDown.dropDownContent}
+            >
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList
@@ -89,9 +93,11 @@ const ClientProfileDropDown = () => {
                     <MenuItem
                       id="logout"
                       onClick={handleLogout}
-                      className={styles.menuItem}
+                      className={aboutDropDown.menuItem}
                     >
-                      <Typography className={styles.text}>Log out</Typography>
+                      <Typography className={aboutDropDown.text}>
+                        Log out
+                      </Typography>
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>

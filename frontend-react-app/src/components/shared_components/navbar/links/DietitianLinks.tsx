@@ -6,7 +6,7 @@ import dietitianLinks from '../scss/DietitianLinks.module.scss';
 const DietitianLinks = () => {
   const navigate = useNavigate();
   return (
-    <Grid container item className={dietitianLinks.clientLinksContainer}>
+    <Grid container item className={dietitianLinks.container}>
       <Grid item>
         <Typography
           className={dietitianLinks.link}

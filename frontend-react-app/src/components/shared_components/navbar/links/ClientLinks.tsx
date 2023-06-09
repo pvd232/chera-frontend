@@ -6,7 +6,7 @@ import styles from '../scss/ClientLinks.module.scss';
 const ClientLinks = () => {
   const navigate = useNavigate();
   return (
-    <Grid container item className={styles.clientLinksContainer}>
+    <Grid container item className={styles.container}>
       <Grid item>
         <Typography className={styles.link} onClick={() => navigate('/home')}>
           My schedule
