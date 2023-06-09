@@ -14,6 +14,7 @@ const ClientLinks = () => {
       </Grid>
       <Grid item>
         <Typography
+          id="client-previous-deliveries"
           className={styles.link}
           onClick={() => navigate('/previous-deliveries')}
         >
