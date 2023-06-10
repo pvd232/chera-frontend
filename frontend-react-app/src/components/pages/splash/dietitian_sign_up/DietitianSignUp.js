@@ -118,7 +118,6 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
-    console.log('formValue', formValue);
     if (formValue.suite !== '') {
       const addressParts = formValue.address.split(',');
       const newStreet = addressParts[0] + ' ' + formValue.suite;

@@ -44,7 +44,6 @@ const ClientMeals = (props) => {
       if (event.target.value !== 'all') {
         const client = clients.clientMap.get(event.target.value);
         const mealSubscription = mealSubscriptionsByClientIdMap.get(client.id);
-
         return createScheduleMealCardItems(
           scheduleMealsByMealSubscriptionMap.get(mealSubscription.id)
         );
