@@ -22,12 +22,14 @@
             min-height: 50px;
             padding-top: 3vh;
             padding-bottom: 3vh;
+            padding-left: 0;
+            padding-right: 0;
             .contentTopContainer {
-              justify-content: flex-end;
+              justify-content: center;
               .contentContainer {
                 justify-content: space-between;
                 align-items: center;
-                padding-right: 2vh;
+                // padding-right: 2vh;
                 @include theme.xs {
                   padding: 0;
                 }

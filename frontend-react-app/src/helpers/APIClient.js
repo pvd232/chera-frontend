@@ -1513,6 +1513,9 @@ class APIClient {
     return paymentIntentDataJSON;
   }
   async checkDieteticRegistrationNumber(dieteticRegistrationNumber) {
+    if (this.env === 'debug') {
+      return true;
+    }
     const requestUrl = this.baseUrl + '/test_dietetic';
     const request = new Request(requestUrl);
 

@@ -24,7 +24,7 @@ const Navbar = (props: NavbarProps) => {
                     container
                     item
                     className={navbar.contentContainer}
-                    xs={11.2}
+                    xs={10}
                   >
                     <Grid item>
                       <Typography

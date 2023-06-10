@@ -3,7 +3,7 @@
 @mixin container {
   align-items: center;
   justify-content: flex-end;
-  column-gap: 10vh;
+  column-gap: 5vh;
   .link {
     font-size: theme.$linkFontSize;
     color: theme.$fucia;

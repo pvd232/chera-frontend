@@ -118,6 +118,7 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
+    console.log('formValue', formValue);
     if (formValue.suite !== '') {
       const addressParts = formValue.address.split(',');
       const newStreet = addressParts[0] + ' ' + formValue.suite;
@@ -132,16 +133,14 @@ const DietitianSignUp = () => {
     return form.checkValidity();
   };
   const handleAddress = async (address) => {
-    console.log('formValue', formValue);
     if (address.split(',').length === 4) {
       const addressObject = getAddressObject(address);
       const validAddress = await validateAddress(addressObject);
-      if (!validAddress) {
-        return false;
+      if (validAddress) {
+        setFormValue(addressObject);
       }
     } else {
       setAddressValueError(true);
-      return false;
     }
   };
   return (
