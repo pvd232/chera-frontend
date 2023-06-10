@@ -10,7 +10,6 @@
 }
 .clientDropDownContainer {
   align-items: center;
-  // column-gap: 3vh;
   cursor: pointer;
   @include theme.xs {
     column-gap: 0.3vh;
@@ -43,6 +42,7 @@
 }
 
 .aboutPopper {
+  z-index: 100;
   @include theme.xs {
     padding: 0px;
   }
