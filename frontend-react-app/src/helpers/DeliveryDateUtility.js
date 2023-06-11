@@ -43,6 +43,13 @@ export default class DeliveryDateUtility {
     const dayOfWeek = this.weekdays[deliveryDate.getDay()];
     const month = this.months[deliveryDate.getMonth()];
     const date = deliveryDate.getDate();
-    return `${dayOfWeek}, ${month} ${date}`;
+    const hr = deliveryDate
+      .toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+      })
+      .replace(':00', '');
+    return `${hr} on ${dayOfWeek}, ${month} ${date}`;
   }
 }
