@@ -1,6 +1,12 @@
 @use '../../../../../static/scss/index.scss' as theme;
 @use '../../scss/DietitianHome.module.scss' as dietitianHome;
 
+@mixin createNewStagedClientModalBase {
+  justify-content: flex-end;
+  padding-left: 3vw;
+  padding-right: 3vw;
+  padding-top: 3vh;
+}
 .rootDiv {
   .button {
     background-color: theme.$fucia;
@@ -9,13 +15,14 @@
     border-radius: theme.$buttonBorderRadius;
   }
 }
-.contentContainer {
-  justify-content: flex-end;
-  padding-left: 3vw;
-  padding-right: 3vw;
-  padding-top: 3vh;
-  .closeIcon {
-    cursor: pointer;
-    margin-left: auto;
-  }
+.themeColoredContainer {
+  @include createNewStagedClientModalBase;
+  background-color: theme.$lightFucia;
+}
+.regularContainer {
+  @include createNewStagedClientModalBase;
+}
+.closeIcon {
+  cursor: pointer;
+  margin-left: auto;
 }

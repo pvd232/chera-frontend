@@ -1,46 +1,33 @@
 @use '../../../../../../static/scss/index.scss' as theme;
-.card {
-  height: 100%;
-  max-width: 350px;
-  max-height: 450px;
-  position: relative;
-  padding-bottom: 5vh;
-  .img {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  .actionsContainer {
+.actionsContainer {
+  justify-content: center;
+  margin-top: 5vh;
+  .childContainer {
+    position: absolute;
+    bottom: 4vh;
     justify-content: center;
-    margin-top: 5vh;
-    .childContainer {
-      position: absolute;
-      bottom: 3vh;
-      .iconButtonContainer {
-        column-gap: 2vh;
-        align-items: center;
-        .iconButton {
-          font-size: 3rem;
-          cursor: pointer;
-          color: rgba(0, 0, 0, 1);
-        }
-        .otherMealButton {
-          color: white;
-          background-color: theme.$fucia;
-          border-radius: theme.$buttonBorderRadius;
-          border: none;
-        }
+    .iconButtonContainer {
+      column-gap: 2vh;
+      align-items: center;
+      .iconButton {
+        font-size: 3rem;
+        cursor: pointer;
+        color: rgba(0, 0, 0, 1);
+      }
+      .otherMealButton {
+        color: white;
+        background-color: theme.$fucia;
+        border-radius: theme.$buttonBorderRadius;
+        border: none;
       }
     }
   }
-  .dietitianMealCardContainer {
-    justify-content: center;
-    align-items: flex-end;
-    margin-bottom: 3vh;
-    margin-top: 2vh;
-  }
+}
+.dietitianMealCardContainer {
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 3vh;
+  margin-top: 2vh;
 }
 // Class must be defined globally due to Mui-disabled override
 .icon {

@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import APIClient from '../../../helpers/APIClient';
 import BlackButton from '../../shared_components/BlackButton.ts';
+import { useWindowWidth } from '../../hooks/useWindowWidth';
+import ScreenSize from '../../../types/enums/ScreenSize';
 import StagedClientPaymentConfirmed from './StagedClientPaymentConfirmed';
 import EditClientMealPlanModal from './EditClientMealPlanModal';
 import CreateNewStagedClientModal from './create_new_staged_client_modal/CreateNewStagedClientModal';
@@ -23,7 +24,8 @@ import { getClientItems } from './helpers/getClientItems';
 import { getStagedClientItems } from './helpers/getStagedClientItems';
 import dietitianHome from './scss/DietitianHome.module.scss';
 const DietititanHome = (props) => {
-  const customTheme = useTheme();
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < ScreenSize.xs;
   const [clients, setClients] = useClients();
   const [stagedClients, setStagedClients] = useStagedClients();
 
@@ -42,7 +44,20 @@ const DietititanHome = (props) => {
     );
     setStagedClients(extendedStagedClients);
   };
-
+  const handleClickReminderButton = (i, row) => {
+    setStagedClients((prevStagedClients) => {
+      const newStagedClients = [...prevStagedClients];
+      newStagedClients[i].isLoading = true;
+      return newStagedClients;
+    });
+    APIClient.sendReminderEmail(row.client.id).then(() => {
+      setStagedClients((prevStagedClients) => {
+        const newStagedClients = [...prevStagedClients];
+        prevStagedClients[i].isLoading = false;
+        return newStagedClients;
+      });
+    });
+  };
   return (
     <Grid
       container
@@ -83,13 +98,10 @@ const DietititanHome = (props) => {
               <TableHead>
                 <TableRow>
                   <TableCell align="left">Name</TableCell>
-                  {/* <TableCell align="left">Address</TableCell> */}
                   <TableCell align="left">Email</TableCell>
-
                   <TableCell align="left">Meal Plan</TableCell>
                   <TableCell align="left">Notes</TableCell>
                   <TableCell align="center">Account Created</TableCell>
-                  {stagedClients.length > 0 ? <TableCell></TableCell> : <></>}
                 </TableRow>
               </TableHead>
               <TableBody id="client-items">
@@ -98,13 +110,10 @@ const DietititanHome = (props) => {
                     <TableCell component="th" scope="row">
                       {row.name}
                     </TableCell>
-                    {/* <TableCell align="left">{row.address}</TableCell> */}
                     <TableCell align="left">{row.email}</TableCell>
                     <TableCell align="left">
                       <Grid item container>
-                        {customTheme.smallerScreen()
-                          ? row.mealPlanNumber
-                          : row.mealPlanName}
+                        {isMobile ? row.mealPlanNumber : row.mealPlanName}
                       </Grid>
                       <div className={dietitianHome.editMealPlanContainer}>
                         <EditClientMealPlanModal
@@ -124,21 +133,17 @@ const DietititanHome = (props) => {
                         check
                       </Icon>
                     </TableCell>
-                    <TableCell></TableCell>
                   </TableRow>
                 ))}
                 {getStagedClientItems(stagedClients).map((row, i) => (
                   <TableRow key={i} id="staged-client-items">
                     <TableCell component="th" scope="row">
-                      {row.formattedName}
+                      {row.name}
                     </TableCell>
-                    {/* <TableCell align="left">{row.address}</TableCell> */}
                     <TableCell align="left">{row.email}</TableCell>
                     <TableCell align="left">
                       <Grid item container>
-                        {customTheme.smallerScreen()
-                          ? row.mealPlanNumber
-                          : row.mealPlanName}
+                        {isMobile ? row.mealPlanNumber : row.mealPlanName}
                       </Grid>
                       <div className={dietitianHome.editMealPlanContainer}>
                         <EditClientMealPlanModal
@@ -159,13 +164,6 @@ const DietititanHome = (props) => {
                           check
                         </Icon>
                       ) : (
-                        <Icon className={dietitianHome.accountNotCreatedIcon}>
-                          clear_outlined
-                        </Icon>
-                      )}
-                    </TableCell>
-                    {!row.accountCreated ? (
-                      <TableCell>
                         <Grid
                           container
                           className={dietitianHome.sendReminderContainer}
@@ -174,26 +172,7 @@ const DietititanHome = (props) => {
                             <BlackButton
                               variant="contained"
                               className={dietitianHome.sendReminderButton}
-                              onClick={() => {
-                                setStagedClients((prevStagedClients) => {
-                                  const newStagedClients = [
-                                    ...prevStagedClients,
-                                  ];
-                                  newStagedClients[i].isLoading = true;
-                                  return newStagedClients;
-                                });
-                                APIClient.sendReminderEmail(row.client.id).then(
-                                  () => {
-                                    setStagedClients((prevStagedClients) => {
-                                      const newStagedClients = [
-                                        ...prevStagedClients,
-                                      ];
-                                      prevStagedClients[i].isLoading = false;
-                                      return newStagedClients;
-                                    });
-                                  }
-                                );
-                              }}
+                              onClick={() => handleClickReminderButton(i, row)}
                             >
                               {stagedClients[i]?.isLoading ? (
                                 <CircularProgress
@@ -206,10 +185,8 @@ const DietititanHome = (props) => {
                             </BlackButton>
                           </Grid>
                         </Grid>
-                      </TableCell>
-                    ) : (
-                      <TableCell></TableCell>
-                    )}
+                      )}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>

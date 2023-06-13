@@ -1,30 +1,21 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import IconButton from '@mui/material/IconButton';
 import logo from '../../../../../static/images/chera_logo_300x300.png';
 import scheduledOrderMealCard from '../current_meals/scss/ScheduledOrderMealCard.module.scss';
+import { FoodCard } from '../../../../shared_components/FoodCard';
 
-const ScheduledOrderSnackCard = (props) => {
-  return (
-    <Card className={scheduledOrderMealCard.card}>
-      <CardMedia
-        component="img"
-        src={logo}
-        alt="snack image"
-        className={scheduledOrderMealCard.img}
-      />
-      <CardContent>
-        <Typography gutterBottom>{props.snackData.snack.name}</Typography>
-        <Typography variant="body2" color="text.secondary" gutterBottom>
-          {props.snackData.snack.description}
-        </Typography>
-      </CardContent>
+const ScheduledOrderSnackCard = (props) => (
+  <FoodCard
+    mealName={props.snackData.snack.name}
+    mealTime={props.snackData.snack.mealTime}
+    mealDescription={props.snackData.snack.description}
+    isSnackCard={true}
+    logo={logo}
+    childComponent={
       <Grid item container className={scheduledOrderMealCard.actionsContainer}>
         <Grid item className={scheduledOrderMealCard.childContainer}>
           <CardActions>
@@ -72,7 +63,7 @@ const ScheduledOrderSnackCard = (props) => {
           </CardActions>
         </Grid>
       </Grid>
-    </Card>
-  );
-};
+    }
+  />
+);
 export default ScheduledOrderSnackCard;

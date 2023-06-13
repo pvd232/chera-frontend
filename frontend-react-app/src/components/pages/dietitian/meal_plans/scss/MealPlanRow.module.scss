@@ -1,0 +1,20 @@
+.container {
+  flex-direction: column;
+  margin-left: 2vw;
+  margin-right: 2vw;
+  row-gap: 1vh;
+  .headerText {
+    font-size: 1.2rem;
+    color: black;
+    text-align: center;
+  }
+  .bodyText {
+    font-size: 1.2rem;
+  }
+  .contentContainer {
+    justify-content: flex-start;
+    border: solid 2px black;
+    // makes columns take up equal height
+    flex: 1;
+  }
+}

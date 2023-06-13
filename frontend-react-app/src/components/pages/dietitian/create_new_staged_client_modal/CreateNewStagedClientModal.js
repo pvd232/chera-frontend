@@ -253,13 +253,11 @@ const CreateNewStagedClientModal = (props) => {
       >
         <Grid
           container
-          className={createNewStagedClientModal.contentContainer}
-          // sx={{
-          //   backgroundColor:
-          //     showMenu && !showCheckout
-          //       ? customTheme.palette.olive.quaternary
-          //       : customTheme.palette.white1.main,
-          // }}
+          className={
+            showMenu && !showCheckout
+              ? createNewStagedClientModal.themeColoredContainer
+              : createNewStagedClientModal.regularContainer
+          }
         >
           <Grid item>
             <Icon

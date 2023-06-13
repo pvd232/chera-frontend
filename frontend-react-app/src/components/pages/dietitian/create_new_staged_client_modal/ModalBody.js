@@ -11,9 +11,9 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import capitalize from '../../../../helpers/capitalize';
-import BlackButton from '../../../shared_components/BlackButton.ts';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import modalBody from './scss/ModalBody.module.scss';
+import { Button } from '@mui/material';
 const ModalBody = (props) => (
   <DialogContent className={modalBody.dialog}>
     <Stack className={modalBody.stack}>
@@ -119,7 +119,7 @@ const ModalBody = (props) => (
                     label="Pay for First Week Meals"
                   />
                 </FormGroup>
-                <BlackButton
+                <Button
                   id="staged-client-submit"
                   type="submit"
                   variant="contained"
@@ -133,7 +133,7 @@ const ModalBody = (props) => (
                   ) : (
                     'Submit'
                   )}
-                </BlackButton>
+                </Button>
               </Stack>
             </Grid>
           </Grid>
