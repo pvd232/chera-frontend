@@ -19,14 +19,14 @@ import APIClient from '../../../../helpers/APIClient';
 import logoutUser from '../../../../helpers/logoutUser';
 import ScheduledOrderMealDTO from '../../../../data_models/dto/ScheduledOrderMealDTO';
 import ScheduledOrderSnackDTO from '../../../../data_models/dto/ScheduledOrderSnackDTO';
-import canMakeChanges from '../helpers/canMakeChanges';
+import { pastCutoffDate } from './helpers/pastCutoffDate';
 import DeliveryInfo from './DeliveryInfo';
-import CalendarSelector from './CalendarSelector';
+import CalendarSelector from './calendar/CalendarSelector';
 import PausedEditDelivery from './PausedEditDelivery';
-import CurrentSnacks from './CurrentSnacks';
-import CurrentMeals from './CurrentMeals';
-import OtherMeals from './OtherMeals';
-import OtherSnacks from './OtherSnacks';
+import CurrentSnacks from './current_snacks/CurrentSnacks';
+import CurrentMeals from './current_meals/CurrentMeals';
+import OtherMeals from './other_meals/OtherMeals';
+import OtherSnacks from './other_snacks/OtherSnacks';
 import getOtherMeals from './helpers/getOtherMeals';
 import getOtherSnacks from './helpers/getOtherSnacks';
 import createScheduledOrderMealCardItems from './helpers/createScheduledOrderMealCardItems';
@@ -38,7 +38,7 @@ import refreshScheduledOrderMeals from './helpers/refreshScheduledOrderMeals';
 import refreshScheduledOrderSnacks from './helpers/refreshScheduledOrderSnacks';
 import getMealsByDietaryRestrictionMap from './helpers/mealsByDietaryRestrictionMap';
 import getMealsByMealTimeMap from './helpers/getMealsByTimeMap';
-
+import clientHome from './scss/ClientHome.module.scss';
 const ClientHome = (props) => {
   const customTheme = useTheme();
   const [netChangeInWeeklyMeals, setNetChangeInWeeklyMeals] = useState(0);
@@ -484,153 +484,189 @@ const ClientHome = (props) => {
       }
     }
   };
+  console.log(
+    'extendedScheduledOrderMeals.length',
+    extendedScheduledOrderMeals.length
+  );
   return (
     extendedScheduledOrderMeals.length > 0 && (
-      <Grid container justifyContent={'center'} py={3}>
+      <Grid container className={clientHome.pageContainer}>
         {paused || weekSkipped ? (
-          <>
-            <CalendarSelector
-              selectedDeliveryIndex={
-                !paused ? selectedDeliveryIndex : undefined
-              }
-              customTheme={customTheme}
-              handleChangeDeliveryIndex={(deliveryIndex) =>
-                handleChangeDeliveryIndex(deliveryIndex)
-              }
-            />
-            <PausedEditDelivery
-              customTheme={customTheme}
-              extendedScheduledOrderMeals={extendedScheduledOrderMeals}
-              mealSubscription={props.mealSubscription}
-              mealsPerWeek={extendedScheduledOrderMeals.length / 4}
-              selectedDeliveryIndex={selectedDeliveryIndex}
-              // Paused state must be passed directly as a prop to trigger a re-render
-              paused={paused}
-              weekSkipped={weekSkipped}
-              skipWeek={handleSkipWeek}
-              unskipWeek={() => {
-                handleUnskipWeek(
-                  DeliveryDateUtility.getDeliveryDateFromIndex(
-                    selectedDeliveryIndex
-                  ).getTime() / 1000
-                );
-              }}
-              pauseMealSubscription={() => {
-                props.pauseMealSubscription();
-                // Update the state to trigger a re-render
-                setPaused(props.mealSubscription.paused);
-              }}
-              unpauseMealSubscription={() => {
-                props.unpauseMealSubscription();
-                setPaused(props.mealSubscription.paused);
-              }}
-            ></PausedEditDelivery>
-          </>
+          <Grid
+            container
+            item
+            xs={10}
+            className={clientHome.primaryContentContainer}
+          >
+            <Grid container item className={clientHome.calendarContainer}>
+              <CalendarSelector
+                selectedDeliveryIndex={
+                  !paused ? selectedDeliveryIndex : undefined
+                }
+                customTheme={customTheme}
+                handleChangeDeliveryIndex={(deliveryIndex) =>
+                  handleChangeDeliveryIndex(deliveryIndex)
+                }
+              />
+            </Grid>
+            <Grid container item>
+              <PausedEditDelivery
+                customTheme={customTheme}
+                extendedScheduledOrderMeals={extendedScheduledOrderMeals}
+                mealSubscription={props.mealSubscription}
+                mealsPerWeek={extendedScheduledOrderMeals.length / 4}
+                selectedDeliveryIndex={selectedDeliveryIndex}
+                // Paused state must be passed directly as a prop to trigger a re-render
+                paused={paused}
+                weekSkipped={weekSkipped}
+                skipWeek={handleSkipWeek}
+                unskipWeek={() => {
+                  handleUnskipWeek(
+                    DeliveryDateUtility.getDeliveryDateFromIndex(
+                      selectedDeliveryIndex
+                    ).getTime() / 1000
+                  );
+                }}
+                pauseMealSubscription={() => {
+                  props.pauseMealSubscription();
+                  // Update the state to trigger a re-render
+                  setPaused(props.mealSubscription.paused);
+                }}
+                unpauseMealSubscription={() => {
+                  props.unpauseMealSubscription();
+                  setPaused(props.mealSubscription.paused);
+                }}
+              />
+            </Grid>
+          </Grid>
         ) : (
-          <>
-            <CalendarSelector
-              selectedDeliveryIndex={selectedDeliveryIndex}
-              customTheme={customTheme}
-              handleChangeDeliveryIndex={(deliveryIndex) =>
-                handleChangeDeliveryIndex(deliveryIndex)
-              }
-            />
-            <DeliveryInfo
-              clientId={props.clientId}
-              loading={loading}
-              customTheme={customTheme}
-              mealSubscription={props.mealSubscription}
-              extendedMeals={props.extendedMeals}
-              snacks={props.snacks}
-              weekSkipped={weekSkipped}
-              extendedScheduledOrderMeals={extendedScheduledOrderMeals}
-              extendedScheduledOrderSnacks={extendedScheduledOrderSnacks}
-              netChangeInWeeklyMeals={netChangeInWeeklyMeals}
-              netChangeInWeeklySnacks={netChangeInWeeklySnacks}
-              editing={editing}
-              selectedDeliveryIndex={selectedDeliveryIndex}
-              handleFinishEditing={handleFinishEditing}
-              handleSaveChanges={handleSaveChanges}
-              handleChangeDeliveryIndex={(deliveryIndex) =>
-                handleChangeDeliveryIndex(deliveryIndex)
-              }
-              skipWeek={handleSkipWeek}
-              unskipWeek={handleUnskipWeek}
-              pauseMealSubscription={() => {
-                props.pauseMealSubscription();
-                setPaused(true);
-              }}
-              unpauseMealSubscription={() => {
-                props.unpauseMealSubscription();
-                setPaused(false);
-              }}
-              handleUpdateFoodData={handleUpdateFoodData}
-              handleDeleteSubscription={handleDeleteSubscription}
-            ></DeliveryInfo>
-            <CurrentMeals
-              customTheme={customTheme}
-              currentScheduledOrderMeals={Array.from(
-                createScheduledOrderMealCardItems(
-                  extendedScheduledOrderMeals,
-                  selectedDeliveryIndex
-                ).values()
+          <Grid container item className={clientHome.contentContainer}>
+            <Grid
+              container
+              item
+              xs={10}
+              className={clientHome.primaryContentContainer}
+            >
+              <Grid container item className={clientHome.calendarContainer}>
+                <CalendarSelector
+                  selectedDeliveryIndex={selectedDeliveryIndex}
+                  customTheme={customTheme}
+                  handleChangeDeliveryIndex={(deliveryIndex) =>
+                    handleChangeDeliveryIndex(deliveryIndex)
+                  }
+                />
+              </Grid>
+              <Grid container item className={clientHome.deliveryInfoContainer}>
+                <DeliveryInfo
+                  clientId={props.clientId}
+                  loading={loading}
+                  customTheme={customTheme}
+                  mealSubscription={props.mealSubscription}
+                  extendedMeals={props.extendedMeals}
+                  snacks={props.snacks}
+                  weekSkipped={weekSkipped}
+                  extendedScheduledOrderMeals={extendedScheduledOrderMeals}
+                  extendedScheduledOrderSnacks={extendedScheduledOrderSnacks}
+                  netChangeInWeeklyMeals={netChangeInWeeklyMeals}
+                  netChangeInWeeklySnacks={netChangeInWeeklySnacks}
+                  editing={editing}
+                  selectedDeliveryIndex={selectedDeliveryIndex}
+                  handleFinishEditing={handleFinishEditing}
+                  handleSaveChanges={handleSaveChanges}
+                  handleChangeDeliveryIndex={(deliveryIndex) =>
+                    handleChangeDeliveryIndex(deliveryIndex)
+                  }
+                  skipWeek={handleSkipWeek}
+                  unskipWeek={handleUnskipWeek}
+                  pauseMealSubscription={() => {
+                    props.pauseMealSubscription();
+                    setPaused(true);
+                  }}
+                  unpauseMealSubscription={() => {
+                    props.unpauseMealSubscription();
+                    setPaused(false);
+                  }}
+                  handleUpdateFoodData={handleUpdateFoodData}
+                  handleDeleteSubscription={handleDeleteSubscription}
+                />
+              </Grid>
+              <Grid container item>
+                <CurrentMeals
+                  currentScheduledOrderMeals={Array.from(
+                    createScheduledOrderMealCardItems(
+                      extendedScheduledOrderMeals,
+                      selectedDeliveryIndex
+                    ).values()
+                  )}
+                  handleAddScheduledOrderMeal={(item) =>
+                    handleAddFromScheduledOrderMealCard(item)
+                  }
+                  handleRemoveScheduledOrderMeal={(meal) =>
+                    handleRemoveScheduledOrderMeal(meal)
+                  }
+                  cantMakeChanges={
+                    selectedDeliveryIndex === 0 &&
+                    (isFirstDelivery || pastCutoffDate(selectedDeliveryIndex))
+                  }
+                  isFirstDelivery={isFirstDelivery}
+                />
+              </Grid>
+              {extendedScheduledOrderSnacks.length > 0 && (
+                <Grid container item>
+                  <CurrentSnacks
+                    currentScheduledOrderSnacks={Array.from(
+                      createScheduledOrderSnackCardItems(
+                        extendedScheduledOrderSnacks,
+                        selectedDeliveryIndex
+                      ).values()
+                    )}
+                    handleAddScheduledOrderSnack={(item) =>
+                      handleAddFromScheduledOrderSnackCard(item)
+                    }
+                    handleRemoveScheduledOrderSnack={(snack) =>
+                      handleRemoveScheduledOrderSnack(snack)
+                    }
+                    cantMakeChanges={
+                      selectedDeliveryIndex === 0 &&
+                      (isFirstDelivery || pastCutoffDate(selectedDeliveryIndex))
+                    }
+                    isFirstDelivery={isFirstDelivery}
+                  />
+                </Grid>
               )}
-              handleAddScheduledOrderMeal={(item) =>
-                handleAddFromScheduledOrderMealCard(item)
-              }
-              handleRemoveScheduledOrderMeal={(meal) =>
-                handleRemoveScheduledOrderMeal(meal)
-              }
-              cantMakeChanges={
-                selectedDeliveryIndex === 0 &&
-                (isFirstDelivery || !canMakeChanges(selectedDeliveryIndex))
-              }
-              isFirstDelivery={isFirstDelivery}
-            />
-            {extendedScheduledOrderSnacks.length > 0 && (
-              <CurrentSnacks
-                customTheme={customTheme}
-                currentScheduledOrderSnacks={Array.from(
-                  createScheduledOrderSnackCardItems(
-                    extendedScheduledOrderSnacks,
-                    selectedDeliveryIndex
-                  ).values()
-                )}
-                handleAddScheduledOrderSnack={(item) =>
-                  handleAddFromScheduledOrderSnackCard(item)
-                }
-                handleRemoveScheduledOrderSnack={(snack) =>
-                  handleRemoveScheduledOrderSnack(snack)
-                }
-                cantMakeChanges={
-                  selectedDeliveryIndex === 0 &&
-                  (isFirstDelivery || !canMakeChanges(selectedDeliveryIndex))
-                }
-                isFirstDelivery={isFirstDelivery}
-              />
-            )}
-            {otherMeals.length > 0 && (
-              <OtherMeals
-                customTheme={customTheme}
-                otherMeals={otherMeals}
-                filterMealTime={filterMealTime}
-                filterMealPreferences={filterMealPreferences}
-                handleFilterChange={handleFilterChange}
-                handleAddScheduledOrderMeal={(newScheduledOrderMeal) =>
-                  handleAddFromOtherMealCard(newScheduledOrderMeal)
-                }
-              />
-            )}
-            {otherSnacks.length > 0 && (
-              <OtherSnacks
-                customTheme={customTheme}
-                otherSnacks={otherSnacks}
-                handleAddScheduledOrderSnack={(newScheduledOrderSnack) =>
-                  handleAddFromOtherSnackCard(newScheduledOrderSnack)
-                }
-              />
-            )}
-          </>
+            </Grid>
+            <Grid
+              container
+              item
+              className={clientHome.secondaryContentContainer}
+            >
+              {otherMeals.length > 0 && (
+                <Grid container item xs={10}>
+                  <OtherMeals
+                    customTheme={customTheme}
+                    otherMeals={otherMeals}
+                    filterMealTime={filterMealTime}
+                    filterMealPreferences={filterMealPreferences}
+                    handleFilterChange={handleFilterChange}
+                    handleAddScheduledOrderMeal={(newScheduledOrderMeal) =>
+                      handleAddFromOtherMealCard(newScheduledOrderMeal)
+                    }
+                  />
+                </Grid>
+              )}
+              {otherSnacks.length > 0 && (
+                <Grid container item xs={10}>
+                  <OtherSnacks
+                    customTheme={customTheme}
+                    otherSnacks={otherSnacks}
+                    handleAddScheduledOrderSnack={(newScheduledOrderSnack) =>
+                      handleAddFromOtherSnackCard(newScheduledOrderSnack)
+                    }
+                  />
+                </Grid>
+              )}
+            </Grid>
+          </Grid>
         )}
       </Grid>
     )

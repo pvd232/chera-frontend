@@ -1,4 +1,4 @@
-import LocalStorageManager from './LocalStorageManager';
+import LocalStorageManager from './NewLocalStorageManager';
 export default class DeliveryDateUtility {
   static weekdays = [
     'Sunday',
@@ -25,21 +25,21 @@ export default class DeliveryDateUtility {
     'Dec',
   ];
 
-  static getDeliveryDateFromIndex(deliveryDayIndex) {
+  static getDeliveryDateFromIndex(deliveryDayIndex: number) {
     const deliveryDate = new Date(
       LocalStorageManager.shared.upcomingDeliveryDates[deliveryDayIndex]
     );
     return deliveryDate;
   }
 
-  static getCutoffDateFromIndex(deliveryDayIndex) {
+  static getCutoffDateFromIndex(deliveryDayIndex: number) {
     const cutoffDate = new Date(
       LocalStorageManager.shared.upcomingCutoffDates[deliveryDayIndex]
     );
     return cutoffDate;
   }
 
-  static getDeliveryDateForDisplay(deliveryDate) {
+  static getDeliveryDateForDisplay(deliveryDate: Date) {
     const dayOfWeek = this.weekdays[deliveryDate.getDay()];
     const month = this.months[deliveryDate.getMonth()];
     const date = deliveryDate.getDate();

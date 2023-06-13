@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import EditDeliveryModal from '../EditDeliveryModal';
+import EditDeliveryModal from './EditDeliveryModal';
 const PausedEditDelivery = (props) => (
   <Grid
     container

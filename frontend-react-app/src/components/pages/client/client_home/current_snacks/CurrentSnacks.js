@@ -4,45 +4,33 @@ import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
-
+import currentMeals from '../current_meals/scss/CurrentMeals.module.scss';
 const CurrentSnacks = (props) => {
   return (
-    <Grid
-      container
-      item
-      lg={10}
-      marginBottom={'10vh'}
-      columnGap={'10vh'}
-      justifyContent={'flex-start'}
-    >
-      <Grid item container justifyContent={'flex-start'}>
-        <Typography
-          fontSize={'1.5rem'}
-          textAlign={'center'}
-          marginBottom={'5vh'}
-          marginTop={'2vh'}
-        >
-          Snacks
-        </Typography>
+    <Grid container item lg={10} className={currentMeals.container}>
+      <Grid item container className={currentMeals.headerContainer}>
+        <Grid item>
+          <Typography className={currentMeals.header}>Snacks</Typography>
+        </Grid>
         {props.cantMakeChanges && !props.isFirstDelivery ? (
           <Grid item>
             <Tooltip
-              title="It's too late to make changes to this order. All changes must be made by Wednesday at 10 PM"
+              title="It's too late to make changes to this order. All changes must be made by Wednesday at 10 PM CST"
               placement="right"
             >
               <IconButton>
-                <InfoIcon />
+                <InfoIcon className={currentMeals.toolTip} />
               </IconButton>
             </Tooltip>
           </Grid>
         ) : props.isFirstDelivery ? (
           <Grid item>
             <Tooltip
-              title="Beginning your second week, you can make changes to your order until Wednesday at 10 PM"
+              title="Beginning your second week, you can make changes to your order until Wednesday at 10 PM CST"
               placement="right"
             >
               <IconButton>
-                <InfoIcon />
+                <InfoIcon className={currentMeals.toolTip} />
               </IconButton>
             </Tooltip>
           </Grid>
@@ -55,10 +43,7 @@ const CurrentSnacks = (props) => {
           <Grid
             item
             key={`gridChosenScheduledOrderSnack${i}`}
-            sx={{
-              marginLeft: window.innerWidth < 450 ? 'auto' : '',
-              marginRight: window.innerWidth < 450 ? 'auto' : '',
-            }}
+            className={currentMeals.cardContainer}
           >
             <ScheduledOrderSnackCard
               snackData={scheduledOrderSnackCardData}

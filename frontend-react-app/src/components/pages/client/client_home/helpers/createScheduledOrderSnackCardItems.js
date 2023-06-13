@@ -1,4 +1,4 @@
-import ScheduledOrderSnackCardItem from '../ScheduledOrderSnackCardItem';
+import ScheduledOrderSnackCardItem from '../current_snacks/ScheduledOrderSnackCardItem';
 // This function is called in src/client/ClientHome/ClientHome.js
 // This function groups the client's ScheduledOrderSnacks by snackId and deliveryDate and creates a ClientSnackCardData object for each snack
 const createScheduledOrderSnackCardItems = (

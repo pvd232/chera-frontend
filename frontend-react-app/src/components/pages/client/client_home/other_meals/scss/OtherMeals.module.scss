@@ -1,0 +1,21 @@
+@use '../../../../../../static/scss/index.scss' as theme;
+@use '../../../scss/Client.module.scss' as client;
+.container {
+  row-gap: 5vh;
+  .header {
+    font-size: client.$headerFontSize;
+  }
+  .filterContainer {
+    column-gap: 3vh;
+  }
+  .mealCardsContainer {
+    column-gap: 10vh;
+    row-gap: 5vh;
+    .cardContainer {
+      @include theme.xs {
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
+}

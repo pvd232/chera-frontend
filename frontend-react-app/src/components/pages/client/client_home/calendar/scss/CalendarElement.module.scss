@@ -1,0 +1,50 @@
+@use '../../../../../../static/scss/index.scss' as theme;
+@use '../../../scss/Client.module.scss' as client;
+@mixin themeGrid {
+  color: theme.$fucia;
+  font-weight: bold;
+}
+
+@mixin gridBase {
+  cursor: pointer;
+  &:hover {
+    & > div {
+      @include themeGrid;
+    }
+  }
+}
+@mixin monthContainerBase {
+  font-size: client.$subHeaderFontSize;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.gridRegular {
+  @include gridBase;
+  & > div {
+    letter-spacing: '.03em';
+    color: black;
+  }
+}
+.gridColored {
+  @include gridBase;
+  & > div {
+    letter-spacing: '.03em';
+    @include themeGrid;
+  }
+}
+.contentContainer {
+  flex-direction: column;
+  align-items: center;
+  row-gap: 0.5vh;
+  .dateHeader {
+    font-size: client.$subHeaderFontSize;
+  }
+
+  .monthContainerColored {
+    @include monthContainerBase;
+    border-bottom: solid 2px theme.$fucia;
+  }
+  .monthContainerRegular {
+    @include monthContainerBase;
+  }
+}

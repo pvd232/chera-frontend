@@ -1,4 +1,4 @@
-import ScheduledOrderMealCardItem from '../ScheduledOrderMealCardItem';
+import ScheduledOrderMealCardItem from '../current_meals/ScheduledOrderMealCardItem';
 // This function is called in src/client/ClientHome/ClientHome.js
 // This function groups the client's ScheduledOrderMeals by mealId and deliveryDate and creates a ClientMealCardData object for each meal
 const createScheduledOrderMealCardItems = (

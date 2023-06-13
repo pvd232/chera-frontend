@@ -96,9 +96,13 @@ const Login = (props) => {
           <Typography className={styles.header}>Log in</Typography>
           <form onSubmit={handleSubmit}>
             <FormGroup>
-              <Stack direction={'column'} rowGap={3}>
+              <Stack className={styles.stack}>
                 <FormControl variant="filled">
-                  <FormHelperText hidden={!loginError} error={true}>
+                  <FormHelperText
+                    hidden={!loginError}
+                    error={true}
+                    className={styles.formError}
+                  >
                     Your email or password were incorrect
                   </FormHelperText>
                   <CustomTextField

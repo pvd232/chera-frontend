@@ -5,37 +5,19 @@ import CardMedia from '@mui/material/CardMedia';
 import Card from '@mui/material/Card';
 import capitalize from '../../helpers/capitalize';
 import logo from '../../static/images/chera_logo_300x300.png';
+import scheduledOrderMealCard from '../pages/client/client_home/current_meals/scss/ScheduledOrderMealCard.module.scss';
 
 const DietitianClientMealCard = (props) => {
   return (
-    <Card
-      sx={{
-        maxWidth: 350,
-        height: '100%',
-        maxHeight: 450,
-        position: 'relative',
-        marginBottom: '2vh',
-      }}
-    >
+    <Card className={scheduledOrderMealCard.card}>
       <CardMedia
         component="img"
         src={logo}
-        alt="green iguana"
-        sx={{
-          width: '50%',
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: '20px',
-          marginBottom: '20px',
-        }}
+        alt="meal image"
+        className={scheduledOrderMealCard.img}
       />
       <CardContent>
-        <Typography
-          gutterBottom
-          fontSize={'1rem'}
-          fontWeight={'500'}
-          component="div"
-        >
+        <Typography gutterBottom>
           {props.mealData.meal.name}
           <Typography
             variant="subtitle1"
@@ -50,11 +32,12 @@ const DietitianClientMealCard = (props) => {
         </Typography>
       </CardContent>
 
-      <Grid container justifyContent={'center'} alignItems={'flex-end'}>
+      <Grid
+        container
+        className={scheduledOrderMealCard.dietitianMealCardContainer}
+      >
         <Grid item>
-          <Typography fontSize={'1rem'}>
-            {props.mealData.quantity} meals
-          </Typography>
+          <Typography>{props.mealData.quantity} meals</Typography>
         </Grid>
       </Grid>
     </Card>

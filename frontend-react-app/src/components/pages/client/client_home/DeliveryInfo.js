@@ -1,10 +1,11 @@
-import EditDeliveryModal from '../EditDeliveryModal';
+import EditDeliveryModal from './EditDeliveryModal';
 import FormHelperText from '@mui/material/FormHelperText';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
-import GreenFilledButton from './GreenFilledButton';
+import deliveryInfo from './scss/DeliveryInfo.module.scss';
 const DeliveryInfo = (props) => {
   const handleSkipWeek = async (deliveryDate) => {
     await props.skipWeek(deliveryDate);
@@ -16,23 +17,10 @@ const DeliveryInfo = (props) => {
   };
 
   return (
-    <Grid
-      container
-      item
-      lg={10}
-      justifyContent={'space-between'}
-      alignItems={'center'}
-      py={3}
-    >
-      <Grid
-        container
-        item
-        xs={6}
-        direction={'column'}
-        alignItems={'flex-start'}
-      >
+    <Grid container item className={deliveryInfo.rootContainer}>
+      <Grid container item xs={6} className={deliveryInfo.headerContainer}>
         <Grid item>
-          <Typography fontSize={props.customTheme.fontEqualizer(18)}>
+          <Typography className={deliveryInfo.header}>
             Modify this week's delivery by{' '}
             {DeliveryDateUtility.getDeliveryDateForDisplay(
               DeliveryDateUtility.getCutoffDateFromIndex(
@@ -42,7 +30,11 @@ const DeliveryInfo = (props) => {
           </Typography>
         </Grid>
         <Grid item>
-          <FormHelperText hidden={!props.editing} error={true}>
+          <FormHelperText
+            hidden={!props.editing}
+            error={true}
+            className={deliveryInfo.errorText}
+          >
             {props.editing && props.netChangeInWeeklyMeals < 0
               ? `Remove ${-1 * props.netChangeInWeeklyMeals} meal${
                   Math.abs(props.netChangeInWeeklyMeals) > 1 ? 's' : ''
@@ -63,55 +55,37 @@ const DeliveryInfo = (props) => {
           </FormHelperText>
         </Grid>
       </Grid>
-      <Grid
-        container
-        item
-        xs={6}
-        direction={'column'}
-        alignItems={'flex-end'}
-        marginBottom={props.customTheme.smallerScreen() ? '2vh' : '4vh'}
-        marginTop={props.customTheme.smallerScreen() ? '2vh' : '2vh'}
-      >
-        <Grid
-          item
-          marginTop={props.customTheme.smallerScreen() ? '4vh' : ''}
-          marginBottom={props.customTheme.smallerScreen() ? '4vh' : ''}
-        >
-          <EditDeliveryModal
-            clientId={props.clientId}
-            buttonText={'Edit delivery'}
-            handleFinishEditing={props.handleFinishEditing}
-            selectedDeliveryIndex={props.selectedDeliveryIndex}
-            extendedScheduledOrderMeals={props.extendedScheduledOrderMeals}
-            extendedScheduledOrderSnacks={props.extendedScheduledOrderSnacks}
-            mealSubscription={props.mealSubscription}
-            mealsPerWeek={props.extendedScheduledOrderMeals.length / 4}
-            extendedMeals={props.extendedMeals}
-            snacks={props.snacks}
-            skipWeek={(deliveryDateIndex) => handleSkipWeek(deliveryDateIndex)}
-            unskipWeek={(deliveryDateIndex) =>
-              handleUnskipWeek(deliveryDateIndex)
-            }
-            pauseMealSubscription={() => props.pauseMealSubscription()}
-            unpauseMealSubscription={() => props.unpauseMealSubscription()}
-            handleUpdateFoodData={props.handleUpdateFoodData}
-            handleDeleteSubscription={props.handleDeleteSubscription}
-          ></EditDeliveryModal>
-        </Grid>
+      <Grid container item xs={6} className={deliveryInfo.modalButtonContainer}>
+        <EditDeliveryModal
+          clientId={props.clientId}
+          buttonText={'Edit delivery'}
+          handleFinishEditing={props.handleFinishEditing}
+          selectedDeliveryIndex={props.selectedDeliveryIndex}
+          extendedScheduledOrderMeals={props.extendedScheduledOrderMeals}
+          extendedScheduledOrderSnacks={props.extendedScheduledOrderSnacks}
+          mealSubscription={props.mealSubscription}
+          mealsPerWeek={props.extendedScheduledOrderMeals.length / 4}
+          extendedMeals={props.extendedMeals}
+          snacks={props.snacks}
+          skipWeek={(deliveryDateIndex) => handleSkipWeek(deliveryDateIndex)}
+          unskipWeek={(deliveryDateIndex) =>
+            handleUnskipWeek(deliveryDateIndex)
+          }
+          pauseMealSubscription={() => props.pauseMealSubscription()}
+          unpauseMealSubscription={() => props.unpauseMealSubscription()}
+          handleUpdateFoodData={props.handleUpdateFoodData}
+          handleDeleteSubscription={props.handleDeleteSubscription}
+        />
         {props.editing === true ? (
           <Grid item>
-            <GreenFilledButton
+            <Button
               id={'save-changes-button'}
               variant={'filled'}
-              sx={{ marginTop: '2vh' }}
+              className={deliveryInfo.saveChangesButton}
               onClick={props.handleSaveChanges}
             >
-              {props.loading ? (
-                <BlueCircularProgress />
-              ) : (
-                'Save Changes for this Week'
-              )}
-            </GreenFilledButton>
+              {props.loading ? <BlueCircularProgress /> : 'Save changes'}
+            </Button>
           </Grid>
         ) : (
           <></>

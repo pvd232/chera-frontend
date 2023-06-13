@@ -1,0 +1,29 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/Client.module.scss' as client;
+.rootContainer {
+  row-gap: 2vh;
+  justify-content: center;
+  .headerContainer {
+    flex-direction: column;
+    justify-content: space-between;
+    .header {
+      font-size: client.$subHeaderFontSize;
+    }
+    .errorText {
+      font-size: 1rem;
+    }
+  }
+  .modalButtonContainer {
+    row-gap: 2vh;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    .saveChangesButton {
+      background-color: theme.$fucia;
+      color: white;
+      border-radius: theme.$buttonBorderRadius;
+      border: none;
+      text-transform: none;
+    }
+  }
+}

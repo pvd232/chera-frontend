@@ -1,0 +1,33 @@
+@use '../../../../../static/scss/index.scss' as theme;
+.pageContainer {
+  padding-top: 10vh;
+  justify-content: center;
+  align-items: flex-start;
+  .contentContainer {
+    justify-content: center;
+    row-gap: 10vh;
+  }
+  .primaryContentContainer {
+    row-gap: 5vh;
+    .calendarContainer {
+      justify-content: center;
+    }
+    .deliveryInfoContainer {
+      justify-content: center;
+      margin-top: 5vh;
+    }
+  }
+  .secondaryContentContainer {
+    justify-content: center;
+    row-gap: 10vh;
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+    background-color: theme.$lightGrey;
+    .currentMealsContainer {
+      justify-content: center;
+    }
+    .mealPlanContainer {
+      justify-content: center;
+    }
+  }
+}
