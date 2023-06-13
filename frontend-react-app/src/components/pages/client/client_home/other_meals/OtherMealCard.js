@@ -21,9 +21,14 @@ const OtherMealCard = (props) => (
               className={scheduledOrderMealCard.iconButtonContainer}
             >
               <Button
-                variant={'outlined'}
+                variant={'contained'}
                 onClick={() => props.handleAddScheduledOrderMeal(props.meal)}
-                className={scheduledOrderMealCard.otherMealButton}
+                disabled={props.cantMakeChanges}
+                className={
+                  props.cantMakeChanges
+                    ? scheduledOrderMealCard.otherMealButtonDisabled
+                    : scheduledOrderMealCard.otherMealButton
+                }
               >
                 Add meal
               </Button>

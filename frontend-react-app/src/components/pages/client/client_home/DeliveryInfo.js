@@ -15,18 +15,19 @@ const DeliveryInfo = (props) => {
     await props.unskipWeek(deliveryDate);
     return;
   };
-
   return (
     <Grid container item className={deliveryInfo.rootContainer}>
       <Grid container item xs={6} className={deliveryInfo.headerContainer}>
         <Grid item>
           <Typography className={deliveryInfo.header}>
-            Modify this week's delivery by{' '}
-            {DeliveryDateUtility.getDeliveryDateForDisplay(
-              DeliveryDateUtility.getCutoffDateFromIndex(
-                props.selectedDeliveryIndex
-              )
-            )}
+            {props.isFirstDelivery
+              ? 'Welcome to Chera! This is where you can view your upcoming deliveries and make changes to your subscription.'
+              : "Modify this week's delivery by " +
+                DeliveryDateUtility.getDateForDisplay(
+                  DeliveryDateUtility.getCutoffDateFromIndex(
+                    props.selectedDeliveryIndex
+                  )
+                )}
           </Typography>
         </Grid>
         <Grid item>
@@ -57,6 +58,8 @@ const DeliveryInfo = (props) => {
       </Grid>
       <Grid container item xs={6} className={deliveryInfo.modalButtonContainer}>
         <EditDeliveryModal
+          isFirstDelivery={props.isFirstDelivery}
+          paused={props.paused}
           clientId={props.clientId}
           buttonText={'Edit delivery'}
           handleFinishEditing={props.handleFinishEditing}

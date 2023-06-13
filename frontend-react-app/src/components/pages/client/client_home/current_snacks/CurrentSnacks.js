@@ -4,6 +4,7 @@ import Typography from '@mui/material/Typography';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
+import DeliveryDateUtility from '../../../../../helpers/DeliveryDateUtility';
 import currentMeals from '../current_meals/scss/CurrentMeals.module.scss';
 const CurrentSnacks = (props) => {
   return (
@@ -15,7 +16,20 @@ const CurrentSnacks = (props) => {
         {props.cantMakeChanges && !props.isFirstDelivery ? (
           <Grid item>
             <Tooltip
-              title="It's too late to make changes to this order. All changes must be made by Wednesday at 10 PM CST"
+              title={
+                "It's too late to make changes to this order. All changes must be made by " +
+                DeliveryDateUtility.weekdays[
+                  DeliveryDateUtility.getCutoffDateFromIndex(
+                    props.currentDeliveryDateIndex
+                  ).getDay()
+                ] +
+                ' at ' +
+                DeliveryDateUtility.getFormattedTime(
+                  DeliveryDateUtility.getCutoffDateFromIndex(
+                    props.currentDeliveryDateIndex
+                  )
+                )
+              }
               placement="right"
             >
               <IconButton>
@@ -26,7 +40,20 @@ const CurrentSnacks = (props) => {
         ) : props.isFirstDelivery ? (
           <Grid item>
             <Tooltip
-              title="Beginning your second week, you can make changes to your order until Wednesday at 10 PM CST"
+              title={
+                'Beginning your second week, you can make changes to your order until ' +
+                DeliveryDateUtility.weekdays[
+                  DeliveryDateUtility.getCutoffDateFromIndex(
+                    props.currentDeliveryDateIndex
+                  ).getDay()
+                ] +
+                ' at ' +
+                DeliveryDateUtility.getFormattedTime(
+                  DeliveryDateUtility.getCutoffDateFromIndex(
+                    props.currentDeliveryDateIndex
+                  )
+                )
+              }
               placement="right"
             >
               <IconButton>
@@ -35,7 +62,27 @@ const CurrentSnacks = (props) => {
             </Tooltip>
           </Grid>
         ) : (
-          <></>
+          <Tooltip
+            title={
+              'You can make changes to your order until ' +
+              DeliveryDateUtility.weekdays[
+                DeliveryDateUtility.getCutoffDateFromIndex(
+                  props.currentDeliveryDateIndex
+                ).getDay()
+              ] +
+              ' at ' +
+              DeliveryDateUtility.getFormattedTime(
+                DeliveryDateUtility.getCutoffDateFromIndex(
+                  props.currentDeliveryDateIndex
+                )
+              )
+            }
+            placement="right"
+          >
+            <IconButton>
+              <InfoIcon className={currentMeals.toolTip} />
+            </IconButton>
+          </Tooltip>
         )}
       </Grid>
       {props.currentScheduledOrderSnacks.map(

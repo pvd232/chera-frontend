@@ -1,4 +1,10 @@
 @use '../../../../../../static/scss/index.scss' as theme;
+@mixin otherMealButtonBase {
+  color: white;
+  background-color: theme.$fucia;
+  border-radius: theme.$buttonBorderRadius;
+  border: none;
+}
 .actionsContainer {
   justify-content: center;
   margin-top: 5vh;
@@ -15,10 +21,13 @@
         color: rgba(0, 0, 0, 1);
       }
       .otherMealButton {
-        color: white;
-        background-color: theme.$fucia;
-        border-radius: theme.$buttonBorderRadius;
-        border: none;
+        @include otherMealButtonBase;
+      }
+      .otherMealButtonDisabled {
+        @include otherMealButtonBase;
+        background-color: rgba(0, 0, 0, 0.12);
+        color: rgba(0, 0, 0, 0.26);
+        cursor: not-allowed;
       }
     }
   }

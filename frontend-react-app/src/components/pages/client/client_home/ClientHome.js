@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import Grid from '@mui/material/Grid';
@@ -40,12 +39,10 @@ import getMealsByDietaryRestrictionMap from './helpers/mealsByDietaryRestriction
 import getMealsByMealTimeMap from './helpers/getMealsByTimeMap';
 import clientHome from './scss/ClientHome.module.scss';
 const ClientHome = (props) => {
-  const customTheme = useTheme();
   const [netChangeInWeeklyMeals, setNetChangeInWeeklyMeals] = useState(0);
   const [netChangeInWeeklySnacks, setNetChangeInWeeklySnacks] = useState(0);
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
-  // Paused state inherited from parent, but updated locally when the user pauses the subscription
   const [paused, setPaused] = useState(false);
   const [selectedDeliveryIndex, setSelectedDeliveryIndex] = useState(0);
 
@@ -55,8 +52,6 @@ const ClientHome = (props) => {
 
   const [extendedScheduledOrderSnacks, setExtendedScheduledOrderSnacks] =
     useState([]);
-
-  // WeekSkipped state inherited from parent, but updated locally when the user pauses the subscription
 
   const [weekSkipped, setWeekSkipped] = useState(
     checkIfWeekSkipped(selectedDeliveryIndex, extendedScheduledOrderMeals)
@@ -133,6 +128,7 @@ const ClientHome = (props) => {
     );
     APIClient.checkIfFirstWeek(props.mealSubscription.id).then(
       (isFirstWeek) => {
+        console.log('isFirstWeek', isFirstWeek);
         if (mounted) {
           setIsFirstDelivery(isFirstWeek);
         }
@@ -282,7 +278,14 @@ const ClientHome = (props) => {
       props.mealSubscription.id,
       DeliveryDateUtility.getDeliveryDateFromIndex(selectedDeliveryIndex)
     );
-    const newExtendedScheduledOrderSnack =
+    const firstNewExtendedScheduledOrderSnack =
+      ExtendedScheduledOrderSnack.constructNewInstanceFromScheduledOrderSnack(
+        uuid(),
+        newScheduledOrderSnack,
+        new SnackFactory(),
+        snack
+      );
+    const secondNewExtendedScheduledOrderSnack =
       ExtendedScheduledOrderSnack.constructNewInstanceFromScheduledOrderSnack(
         uuid(),
         newScheduledOrderSnack,
@@ -294,17 +297,18 @@ const ClientHome = (props) => {
         getOtherSnacks(
           getUniqueSnacksMap([
             ...prevExtendedScheduledOrderSnacks,
-            newExtendedScheduledOrderSnack,
+            firstNewExtendedScheduledOrderSnack,
           ]),
           props.snacks
         )
       );
       return [
         ...prevExtendedScheduledOrderSnacks,
-        newExtendedScheduledOrderSnack,
+        firstNewExtendedScheduledOrderSnack,
+        secondNewExtendedScheduledOrderSnack,
       ];
     });
-    setNetChangeInWeeklySnacks((prevNum) => (prevNum -= 1));
+    setNetChangeInWeeklySnacks((prevNum) => (prevNum -= 2));
   };
 
   const handleRemoveScheduledOrderMeal = (clientMealCardData) => {
@@ -411,10 +415,11 @@ const ClientHome = (props) => {
           setOtherMeals(originalOtherMeals);
         } else {
           // No meal time filter, dietary restriction filter
-          const filteredOtherMeals = originalOtherMeals.filter((otherMeal) =>
-            mealsByDietaryRestrictionMap
-              .get(filterMealPreferences)
-              .has(otherMeal.id)
+          const filteredOtherMeals = originalOtherMeals.filter(
+            (otherMeal) =>
+              mealsByDietaryRestrictionMap
+                .get(filterMealPreferences)
+                ?.has(otherMeal.id) ?? []
           );
           setOtherMeals(filteredOtherMeals);
         }
@@ -422,9 +427,10 @@ const ClientHome = (props) => {
         // Meal time filter
         if (filterMealPreferences === 'all') {
           // Meal time filter, no dietary restriction filter
-          const filteredOtherMeals = originalOtherMeals.filter((otherMeal) =>
-            mealsByMealTimeMap.get(event.target.value).has(otherMeal.id)
-          );
+          const filteredOtherMeals =
+            originalOtherMeals.filter((otherMeal) =>
+              mealsByMealTimeMap.get(event.target.value)?.has(otherMeal.id)
+            ) ?? [];
           setOtherMeals(filteredOtherMeals);
         } else {
           const timeFilteredOtherMeals = originalOtherMeals.filter(
@@ -435,7 +441,7 @@ const ClientHome = (props) => {
             (otherMeal) =>
               mealsByDietaryRestrictionMap
                 .get(filterMealPreferences)
-                .has(otherMeal.id)
+                ?.has(otherMeal.id) ?? []
           );
           // Meal time and dietary restriction filter
           setOtherMeals(filteredOtherMeals);
@@ -452,8 +458,9 @@ const ClientHome = (props) => {
           setOtherMeals(originalOtherMeals);
         } else {
           // No dietary restriction filter, meal time filter
-          const filteredOtherMeals = originalOtherMeals.filter((otherMeal) =>
-            mealsByMealTimeMap.get(filterMealTime).has(otherMeal.id)
+          const filteredOtherMeals = originalOtherMeals.filter(
+            (otherMeal) =>
+              mealsByMealTimeMap.get(filterMealTime)?.has(otherMeal.id) ?? []
           );
           setOtherMeals(filteredOtherMeals);
         }
@@ -461,10 +468,11 @@ const ClientHome = (props) => {
         // Dietary restriction filter
         if (filterMealTime === 'all') {
           // Dietary restriction filter and no meal time filter
-          const filteredOtherMeals = originalOtherMeals.filter((otherMeal) =>
-            mealsByDietaryRestrictionMap
-              .get(event.target.value)
-              .has(otherMeal.id)
+          const filteredOtherMeals = originalOtherMeals.filter(
+            (otherMeal) =>
+              mealsByDietaryRestrictionMap
+                .get(event.target.value)
+                ?.has(otherMeal.id) ?? []
           );
           setOtherMeals(filteredOtherMeals);
         } else {
@@ -477,17 +485,14 @@ const ClientHome = (props) => {
             (otherMeal) =>
               mealsByDietaryRestrictionMap
                 .get(event.target.value)
-                .has(otherMeal.id)
+                ?.has(otherMeal.id) ?? []
           );
           setOtherMeals(filteredOtherMeals);
         }
       }
     }
   };
-  console.log(
-    'extendedScheduledOrderMeals.length',
-    extendedScheduledOrderMeals.length
-  );
+
   return (
     extendedScheduledOrderMeals.length > 0 && (
       <Grid container className={clientHome.pageContainer}>
@@ -503,7 +508,6 @@ const ClientHome = (props) => {
                 selectedDeliveryIndex={
                   !paused ? selectedDeliveryIndex : undefined
                 }
-                customTheme={customTheme}
                 handleChangeDeliveryIndex={(deliveryIndex) =>
                   handleChangeDeliveryIndex(deliveryIndex)
                 }
@@ -511,7 +515,6 @@ const ClientHome = (props) => {
             </Grid>
             <Grid container item>
               <PausedEditDelivery
-                customTheme={customTheme}
                 extendedScheduledOrderMeals={extendedScheduledOrderMeals}
                 mealSubscription={props.mealSubscription}
                 mealsPerWeek={extendedScheduledOrderMeals.length / 4}
@@ -550,7 +553,6 @@ const ClientHome = (props) => {
               <Grid container item className={clientHome.calendarContainer}>
                 <CalendarSelector
                   selectedDeliveryIndex={selectedDeliveryIndex}
-                  customTheme={customTheme}
                   handleChangeDeliveryIndex={(deliveryIndex) =>
                     handleChangeDeliveryIndex(deliveryIndex)
                   }
@@ -560,7 +562,8 @@ const ClientHome = (props) => {
                 <DeliveryInfo
                   clientId={props.clientId}
                   loading={loading}
-                  customTheme={customTheme}
+                  paused={paused}
+                  isFirstDelivery={isFirstDelivery}
                   mealSubscription={props.mealSubscription}
                   extendedMeals={props.extendedMeals}
                   snacks={props.snacks}
@@ -609,6 +612,7 @@ const ClientHome = (props) => {
                     (isFirstDelivery || pastCutoffDate(selectedDeliveryIndex))
                   }
                   isFirstDelivery={isFirstDelivery}
+                  currentDeliveryDateIndex={selectedDeliveryIndex}
                 />
               </Grid>
               {extendedScheduledOrderSnacks.length > 0 && (
@@ -631,6 +635,7 @@ const ClientHome = (props) => {
                       (isFirstDelivery || pastCutoffDate(selectedDeliveryIndex))
                     }
                     isFirstDelivery={isFirstDelivery}
+                    currentDeliveryDateIndex={selectedDeliveryIndex}
                   />
                 </Grid>
               )}
@@ -640,27 +645,32 @@ const ClientHome = (props) => {
               item
               className={clientHome.secondaryContentContainer}
             >
-              {otherMeals.length > 0 && (
-                <Grid container item xs={10}>
-                  <OtherMeals
-                    customTheme={customTheme}
-                    otherMeals={otherMeals}
-                    filterMealTime={filterMealTime}
-                    filterMealPreferences={filterMealPreferences}
-                    handleFilterChange={handleFilterChange}
-                    handleAddScheduledOrderMeal={(newScheduledOrderMeal) =>
-                      handleAddFromOtherMealCard(newScheduledOrderMeal)
-                    }
-                  />
-                </Grid>
-              )}
+              <Grid container item xs={10}>
+                <OtherMeals
+                  otherMeals={otherMeals}
+                  filterMealTime={filterMealTime}
+                  filterMealPreferences={filterMealPreferences}
+                  handleFilterChange={handleFilterChange}
+                  handleAddScheduledOrderMeal={(newScheduledOrderMeal) =>
+                    handleAddFromOtherMealCard(newScheduledOrderMeal)
+                  }
+                  cantMakeChanges={
+                    selectedDeliveryIndex === 0 &&
+                    (isFirstDelivery || pastCutoffDate(selectedDeliveryIndex))
+                  }
+                />
+              </Grid>
+
               {otherSnacks.length > 0 && (
                 <Grid container item xs={10}>
                   <OtherSnacks
-                    customTheme={customTheme}
                     otherSnacks={otherSnacks}
                     handleAddScheduledOrderSnack={(newScheduledOrderSnack) =>
                       handleAddFromOtherSnackCard(newScheduledOrderSnack)
+                    }
+                    cantMakeChanges={
+                      selectedDeliveryIndex === 0 &&
+                      (isFirstDelivery || pastCutoffDate(selectedDeliveryIndex))
                     }
                   />
                 </Grid>

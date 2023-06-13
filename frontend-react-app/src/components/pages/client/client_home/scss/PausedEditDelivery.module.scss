@@ -1,0 +1,15 @@
+@use '../../scss/Client.module.scss' as client;
+.container {
+  justify-content: center;
+  align-items: center;
+  margin-top: 5vh;
+  .headerContainer {
+    justify-content: center;
+    .header {
+      font-size: client.$subHeaderFontSize;
+    }
+  }
+  .editDeliveryButtonContainer {
+    align-items: flex-end;
+  }
+}

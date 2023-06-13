@@ -29,7 +29,12 @@ const OtherSnackCard = (props) => {
                   onClick={() =>
                     props.handleAddScheduledOrderSnack(props.snack)
                   }
-                  className={scheduledOrderMealCard.otherMealButton}
+                  disabled={props.cantMakeChanges}
+                  className={
+                    props.cantMakeChanges
+                      ? scheduledOrderMealCard.otherMealButtonDisabled
+                      : scheduledOrderMealCard.otherMealButton
+                  }
                 >
                   Add snack
                 </Button>

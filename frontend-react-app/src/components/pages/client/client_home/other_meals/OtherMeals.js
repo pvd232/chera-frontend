@@ -63,6 +63,7 @@ const OtherMeals = (props) => {
               handleRemoveScheduledOrderMeal={(meal) =>
                 props.handleRemoveScheduledOrderMeal(meal)
               }
+              cantMakeChanges={props.cantMakeChanges}
             />
           </Grid>
         ))}

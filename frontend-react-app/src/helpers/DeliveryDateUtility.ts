@@ -39,7 +39,7 @@ export default class DeliveryDateUtility {
     return cutoffDate;
   }
 
-  static getDeliveryDateForDisplay(deliveryDate: Date) {
+  static getDateForDisplay(deliveryDate: Date) {
     const dayOfWeek = this.weekdays[deliveryDate.getDay()];
     const month = this.months[deliveryDate.getMonth()];
     const date = deliveryDate.getDate();
@@ -51,5 +51,14 @@ export default class DeliveryDateUtility {
       })
       .replace(':00', '');
     return `${hr} on ${dayOfWeek}, ${month} ${date}`;
+  }
+  static getFormattedTime(deliveryDate: Date) {
+    return deliveryDate
+      .toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+      })
+      .replace(':00', '');
   }
 }

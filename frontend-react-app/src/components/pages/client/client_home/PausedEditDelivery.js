@@ -1,21 +1,21 @@
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import EditDeliveryModal from './EditDeliveryModal';
+import pausedEditDelivery from './scss/PausedEditDelivery.module.scss';
 const PausedEditDelivery = (props) => (
-  <Grid
-    container
-    item
-    lg={10}
-    justifyContent={'space-around'}
-    alignItems={'center'}
-    paddingTop={'8vh'}
-  >
-    <Grid item></Grid>
-    <Grid container item lg={6} md={8} xs={8} justifyContent={'center'}>
+  <Grid container item className={pausedEditDelivery.container}>
+    <Grid
+      container
+      item
+      lg={6}
+      md={8}
+      xs={8}
+      className={pausedEditDelivery.headerContainer}
+    >
       {props.paused ? (
         <Typography
           id="paused-edit-delivery"
-          fontSize={props.customTheme.fontEqualizer(18)}
+          className={pausedEditDelivery.header}
         >
           Your subscription is paused. To unpause it, click the edit delivery
           button and select unpause subscription.
@@ -23,15 +23,15 @@ const PausedEditDelivery = (props) => (
       ) : (
         <Typography
           id="skipped-edit-delivery"
-          fontSize={props.customTheme.fontEqualizer(18)}
+          className={pausedEditDelivery.header}
         >
           You skipped your meals this week. To unskip the week, click the edit
           delivery button and select unskip week.
         </Typography>
       )}
     </Grid>
-    <Grid item alignItems={'flex-end'}>
-      <Grid item sx={{ marginTop: window.innerWidth < 450 ? '2vh' : '0vh' }}>
+    <Grid item>
+      <Grid item>
         <EditDeliveryModal
           buttonText={'Edit delivery'}
           handleFinishEditing={props.handleFinishEditing}
@@ -47,7 +47,7 @@ const PausedEditDelivery = (props) => (
           mealsPerWeek={props.mealsPerWeek}
           weekSkipped={props.weekSkipped}
           paused={props.paused}
-        ></EditDeliveryModal>
+        />
       </Grid>
     </Grid>
   </Grid>

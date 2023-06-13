@@ -5,6 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 import currentMeals from './scss/CurrentMeals.module.scss';
+import DeliveryDateUtility from '../../../../../helpers/DeliveryDateUtility';
 const CurrentMeals = (props) => (
   <Grid container item className={currentMeals.container}>
     <Grid item container className={currentMeals.headerContainer}>
@@ -14,7 +15,20 @@ const CurrentMeals = (props) => (
       {props.cantMakeChanges && !props.isFirstDelivery ? (
         <Grid item>
           <Tooltip
-            title="It's too late to make changes to this order. All changes must be made by Wednesday at 10 PM CST"
+            title={
+              "It's too late to make changes to this order. All changes must be made by " +
+              DeliveryDateUtility.weekdays[
+                DeliveryDateUtility.getCutoffDateFromIndex(
+                  props.currentDeliveryDateIndex
+                ).getDay()
+              ] +
+              ' at ' +
+              DeliveryDateUtility.getFormattedTime(
+                DeliveryDateUtility.getCutoffDateFromIndex(
+                  props.currentDeliveryDateIndex
+                )
+              )
+            }
             placement="right"
           >
             <IconButton>
@@ -25,7 +39,20 @@ const CurrentMeals = (props) => (
       ) : props.isFirstDelivery ? (
         <Grid item>
           <Tooltip
-            title="Beginning your second week, you can make changes to your order until Wednesday at 10 PM CST"
+            title={
+              'Beginning your second week, you can make changes to your order until ' +
+              DeliveryDateUtility.weekdays[
+                DeliveryDateUtility.getCutoffDateFromIndex(
+                  props.currentDeliveryDateIndex
+                ).getDay()
+              ] +
+              ' at ' +
+              DeliveryDateUtility.getFormattedTime(
+                DeliveryDateUtility.getCutoffDateFromIndex(
+                  props.currentDeliveryDateIndex
+                )
+              )
+            }
             placement="right"
           >
             <IconButton>
@@ -34,7 +61,27 @@ const CurrentMeals = (props) => (
           </Tooltip>
         </Grid>
       ) : (
-        <></>
+        <Tooltip
+          title={
+            'You can make changes to your order until ' +
+            DeliveryDateUtility.weekdays[
+              DeliveryDateUtility.getCutoffDateFromIndex(
+                props.currentDeliveryDateIndex
+              ).getDay()
+            ] +
+            ' at ' +
+            DeliveryDateUtility.getFormattedTime(
+              DeliveryDateUtility.getCutoffDateFromIndex(
+                props.currentDeliveryDateIndex
+              )
+            )
+          }
+          placement="right"
+        >
+          <IconButton>
+            <InfoIcon className={currentMeals.toolTip} />
+          </IconButton>
+        </Tooltip>
       )}
     </Grid>
     <Grid item container>

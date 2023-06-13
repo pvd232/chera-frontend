@@ -20,6 +20,7 @@ const OtherSnacks = (props) => {
               handleRemoveScheduledOrderSnack={(snack) =>
                 props.handleRemoveScheduledOrderSnack(snack)
               }
+              cantMakeChanges={props.cantMakeChanges}
             />
           </Grid>
         ))}

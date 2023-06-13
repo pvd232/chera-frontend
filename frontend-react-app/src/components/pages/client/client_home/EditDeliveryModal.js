@@ -30,7 +30,6 @@ const EditDeliveryModal = (props) => {
   const [editMeals, setEditMeals] = useState(false);
   const [canMakeChangesToCurrentWeek, setCanMakeChangesToCurrentWeek] =
     useState(false);
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -59,28 +58,16 @@ const EditDeliveryModal = (props) => {
       props.unskipWeek();
       setLoading(false);
     } else {
-      const isFirstDelivery = await APIClient.checkIfFirstWeek(
-        props.mealSubscription.id
+      await APIClient.skipWeek(
+        props.mealSubscription.id,
+        props.mealSubscription.stripeSubscriptionId,
+        DeliveryDateUtility.getDeliveryDateFromIndex(
+          props.selectedDeliveryIndex
+        ).getTime() / 1000
       );
-      if (!isFirstDelivery || props.selectedDeliveryIndex > 0) {
-        await APIClient.skipWeek(
-          props.mealSubscription.id,
-          props.mealSubscription.stripeSubscriptionId,
-          DeliveryDateUtility.getDeliveryDateFromIndex(
-            props.selectedDeliveryIndex
-          ).getTime() / 1000
-        );
-        props.skipWeek();
-        setLoading(false);
-      } else {
-        alert(
-          'You cannot skip your first week of delivery. Please contact us if you would like to cancel your subscription.'
-        );
-        setLoading(false);
-      }
+      props.skipWeek();
+      setLoading(false);
     }
-
-    return;
   };
 
   const handlePauseMealSubscription = async () => {
@@ -145,27 +132,21 @@ const EditDeliveryModal = (props) => {
         })()
       : alert('Please enter your username to confirm deletion.');
   };
-  const handleChangeMeals = async () => {
-    const ableToChangeCurrentWeek = !pastCutoffDate(
-      props.selectedDeliveryIndex
-    );
-    const isFirstDelivery = await APIClient.checkIfFirstWeek(
-      props.mealSubscription.id
-    );
-    if (!ableToChangeCurrentWeek || isFirstDelivery) {
-      alert('These changes will take effect next week and onwards.');
-    } else {
-      setCanMakeChangesToCurrentWeek(true);
-    }
+  const handleChangeMeals = () => {
+    setCanMakeChangesToCurrentWeek(true);
     setEditMeals(true);
   };
-  const buttonsDisabled = () => {
-    if (pastCutoffDate(props.selectedDeliveryIndex) || props.paused) {
+  const skipWeekButtonDisabled = (() => {
+    if (
+      pastCutoffDate(props.selectedDeliveryIndex) ||
+      props.paused ||
+      (props.isFirstDelivery && props.selectedDeliveryIndex === 0)
+    ) {
       return true;
     } else {
       return false;
     }
-  };
+  })();
   return (
     <Grid item className={editDeliveryModal.container}>
       <Button
@@ -205,7 +186,7 @@ const EditDeliveryModal = (props) => {
                     {props.paused &&
                     !checkUpcomingDelivery(props.extendedScheduledOrderMeals)
                       ? 'Your subscription is paused. You have no upcoming deliveries.'
-                      : 'Your next delivery is estimated to arrive on:'}
+                      : "This week's delivery is estimated to arrive on:"}
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -216,21 +197,21 @@ const EditDeliveryModal = (props) => {
                       >
                         {
                           DeliveryDateUtility.weekdays[
-                            getNextDeliveryDate(
-                              props.extendedScheduledOrderMeals
+                            DeliveryDateUtility.getDeliveryDateFromIndex(
+                              props.selectedDeliveryIndex
                             ).getDay()
                           ]
                         }
                         {', '}
                         {
                           DeliveryDateUtility.months[
-                            getNextDeliveryDate(
-                              props.extendedScheduledOrderMeals
+                            DeliveryDateUtility.getDeliveryDateFromIndex(
+                              props.selectedDeliveryIndex
                             ).getMonth()
                           ]
                         }{' '}
-                        {getNextDeliveryDate(
-                          props.extendedScheduledOrderMeals
+                        {DeliveryDateUtility.getDeliveryDateFromIndex(
+                          props.selectedDeliveryIndex
                         ).getDate()}
                         , 2PM - 8PM
                       </Typography>
@@ -247,7 +228,7 @@ const EditDeliveryModal = (props) => {
                       {!props.paused
                         ? !pastCutoffDate(props.selectedDeliveryIndex) &&
                           props.weekSkipped
-                          ? 'Want some meals this week?'
+                          ? 'Would you like to unskip your delivery for this week?'
                           : !pastCutoffDate(props.selectedDeliveryIndex) &&
                             !props.weekSkipped
                           ? "Can't make this week?"
@@ -257,14 +238,14 @@ const EditDeliveryModal = (props) => {
                             props.extendedScheduledOrderMeals
                           )
                             ? 'Your weekly meals will be skipped indefinitely after this week.'
-                            : 'Your weekly meals are already skipped.')}
+                            : 'Your delivery will be skipped this week.')}
                     </Typography>
                   </Grid>
 
                   <Grid item>
                     <Button
                       id="skip-week-button"
-                      disabled={() => buttonsDisabled()}
+                      disabled={skipWeekButtonDisabled}
                       variant={'contained'}
                       onClick={handleSkipWeek}
                       className={editDeliveryModal.dialogButton}
@@ -332,13 +313,13 @@ const EditDeliveryModal = (props) => {
                       </Button>
                     )}
                   </Grid>
-
-                  <Grid item>
+                  {/* Will enable these after testing */}
+                  {/* <Grid item>
                     <Typography className={editDeliveryModal.modalBodyText}>
                       Account deletion is permanent.
                     </Typography>
-                  </Grid>
-                  <Grid item>
+                  </Grid> */}
+                  {/* <Grid item>
                     {confirmDeleteSubscription ? (
                       <FormGroup>
                         <FormControlLabel>
@@ -377,7 +358,7 @@ const EditDeliveryModal = (props) => {
                         'Delete subscription'
                       )}
                     </Button>
-                  </Grid>
+                  </Grid> */}
                 </Grid>
               </Grid>
             </DialogContent>
