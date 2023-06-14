@@ -13,7 +13,7 @@ const OrbContainer = () => {
           autoDensity: true,
           backgroundAlpha: 0,
         }}
-        width={windowWidth}
+        width={windowWidth - 0.011 * windowWidth}
         height={window.innerHeight - 0.15 * window.innerHeight}
       >
         {orbs.map((orb) => {
