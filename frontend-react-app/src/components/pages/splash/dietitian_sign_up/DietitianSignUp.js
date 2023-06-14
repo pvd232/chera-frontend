@@ -17,7 +17,7 @@ import SearchLocationInput from '../../sign_up/SearchLocationInput';
 import styles from './scss/DietitianSignUp.module.scss';
 import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
-import CustomTextField from './CustomTextField';
+import CustomTextField from '../../../shared_components/CustomTextField';
 const DietitianSignUp = () => {
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);

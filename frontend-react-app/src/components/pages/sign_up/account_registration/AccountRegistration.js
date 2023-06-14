@@ -2,7 +2,6 @@ import { v4 as uuid } from 'uuid';
 import { useTheme } from '@mui/material/styles';
 import { useReducer, useState, useRef, useEffect } from 'react';
 import CardContent from '@mui/material/CardContent';
-import TextField from '@mui/material/TextField';
 import FormGroup from '@mui/material/FormGroup';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -11,6 +10,7 @@ import MealSubscription from '../../../../data_models/model/MealSubscription.js'
 import BlackButton from '../../../shared_components/BlackButton.ts';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress.js';
 import HowItWorks from './HowItWorks.js';
+import CustomTextField from '../../../shared_components/CustomTextField.js';
 const AccountRegistration = (props) => {
   const customTheme = useTheme();
 
@@ -22,16 +22,6 @@ const AccountRegistration = (props) => {
       id: props.stagedClientId,
       password: '',
       confirmPassword: '',
-      firstName: '',
-      lastName: '',
-      address: '',
-      street: '',
-      suite: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      phoneNumber: '',
-      datetime: Date.now(),
     }
   );
 
@@ -48,11 +38,7 @@ const AccountRegistration = (props) => {
   const handleInput = (event) => {
     const id = event.target.id;
     const value = event.target.value;
-    if (id === 'firstName' || id === 'lastName') {
-      setFormValue({ [id]: value.trim().toLowerCase() });
-    }
-    // state value
-    else if (id === 'confirm-password') {
+    if (id === 'confirm-password') {
       setFormValue({ confirmPassword: value });
     } else {
       setFormValue({ [id]: value });
@@ -100,43 +86,74 @@ const AccountRegistration = (props) => {
 
   return (
     <Grid container justifyContent={'center'}>
-      <CardContent>
-        <Grid item xs={12} margin={'0 auto'}>
-          <form onSubmit={handleSubmit} autoComplete="new-password">
-            <fieldset
-              style={{
-                boxShadow: customTheme.border.boxShadow.medium,
-                padding: '4vh 5vw',
-                boxSizing: 'border-box',
-                margin: '0 10%',
-                height: 'fit-content',
-                border: 'none',
-              }}
-            >
-              <FormGroup>
-                <Grid container>
-                  <Typography
-                    width={'80%'}
-                    fontSize={'2rem'}
-                    textAlign={'center'}
-                    margin={'0 auto'}
-                    marginBottom={'5vh'}
-                    marginTop={'2vh'}
-                  >
-                    Sign up
-                  </Typography>
+      {/* <CardContent> */}
+      <Grid item xs={12}>
+        <form onSubmit={handleSubmit} autoComplete="new-password">
+          <fieldset
+            style={{
+              boxShadow: customTheme.border.boxShadow.medium,
+              padding: '2vh 5vw',
+              boxSizing: 'border-box',
+              margin: '0 10%',
+              marginLeft: '10%',
+              marginRight: '10%',
+              marginBottom: '1%',
 
-                  <HowItWorks customTheme={customTheme} />
-                  <Grid item lg={6} xs={12} sx={{ marginTop: '4vh' }}>
-                    <Stack direction={'column'} rowGap={3}>
+              // height: 'fit-content',
+              maxHeight: '85vh',
+              border: 'none',
+            }}
+          >
+            <FormGroup>
+              <Grid container>
+                <Typography
+                  width={'80%'}
+                  fontSize={'2rem'}
+                  textAlign={'center'}
+                  margin={'0 auto'}
+                  marginBottom={'5vh'}
+                  marginTop={'2vh'}
+                  color={customTheme.palette.olive.main}
+                >
+                  Sign up
+                </Typography>
+
+                <HowItWorks customTheme={customTheme} />
+                <Grid item lg={6} xs={12} sx={{ marginTop: '4vh' }}>
+                  <Stack direction={'column'} rowGap={3}>
+                    {/* AUTH */}
+                    {/* This is where we initialize the client's username and password. We store them temporarily in the state of the React component until the client completes the entire sign up flow. */}
+                    {/* Here we capture the client's username */}
+                    <CustomTextField
+                      required
+                      fullWidth
+                      label={'Email'}
+                      id="id"
+                      sx={{
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        width: '80%',
+                      }}
+                      inputProps={{
+                        style: { fontSize: customTheme.fontEqualizer(14) },
+                      }} // font size of input text
+                      disabled={true}
+                      value={formValue.id}
+                    />
+
+                    <>
                       {/* AUTH */}
-                      {/* This is where we initialize the client's username and password. We store them temporarily in the state of the React component until the client completes the entire sign up flow. */}
-                      {/* Here we capture the client's username */}
-                      <TextField
+                      {/* Here we capture the client's password */}
+
+                      <CustomTextField
+                        autoComplete="new-password"
                         required
+                        type="password"
                         fullWidth
-                        label={'Email'}
-                        id="id"
+                        label={'Create a password'}
+                        // must set both name and autoComplete to 'new-password' this for autofill to stop
+                        name="new-password"
+                        id="password"
                         sx={{
                           marginLeft: 'auto',
                           marginRight: 'auto',
@@ -145,82 +162,58 @@ const AccountRegistration = (props) => {
                         inputProps={{
                           style: { fontSize: customTheme.fontEqualizer(14) },
                         }} // font size of input text
-                        disabled={true}
-                        value={formValue.id}
+                        InputLabelProps={{
+                          style: { fontSize: customTheme.fontEqualizer(14) },
+                        }}
+                        onChange={handleInput}
+                        value={formValue.password}
                       />
-
-                      <>
-                        {/* AUTH */}
-                        {/* Here we capture the client's password */}
-
-                        <TextField
-                          autoComplete="new-password"
-                          required
-                          type="password"
-                          fullWidth
-                          label={'Create a password'}
-                          // must set both name and autoComplete to 'new-password' this for autofill to stop
-                          name="new-password"
-                          id="password"
-                          sx={{
-                            marginLeft: 'auto',
-                            marginRight: 'auto',
-                            width: '80%',
-                          }}
-                          inputProps={{
-                            style: { fontSize: customTheme.fontEqualizer(14) },
-                          }} // font size of input text
-                          InputLabelProps={{
-                            style: { fontSize: customTheme.fontEqualizer(14) },
-                          }}
-                          onChange={handleInput}
-                          value={formValue.password}
-                        />
-                        <TextField
-                          autoComplete="new-password"
-                          required
-                          type="password"
-                          fullWidth
-                          label={'Confirm your password'}
-                          // must set both name and autoComplete to 'new-password' this for autofill to stop
-                          name="new-password"
-                          id="confirm-password"
-                          sx={{
-                            marginLeft: 'auto',
-                            marginRight: 'auto',
-                            width: '80%',
-                          }}
-                          inputProps={{
-                            style: { fontSize: customTheme.fontEqualizer(14) },
-                          }} // font size of input text
-                          InputLabelProps={{
-                            style: { fontSize: customTheme.fontEqualizer(14) },
-                          }}
-                          onChange={handleInput}
-                          value={formValue.confirmPassword}
-                          error={error}
-                          helperText={
-                            error ? 'Your passwords do not match' : ''
-                          }
-                        />
-                      </>
-
-                      <BlackButton
-                        id="password-button"
-                        type="submit"
-                        variant="contained"
-                        disabled={loading}
+                      <CustomTextField
+                        autoComplete="new-password"
+                        required
+                        type="password"
+                        fullWidth
+                        label={'Confirm your password'}
+                        // must set both name and autoComplete to 'new-password' this for autofill to stop
+                        name="new-password"
+                        id="confirm-password"
                         sx={{
                           marginLeft: 'auto',
                           marginRight: 'auto',
                           width: '80%',
-                          paddingTop: '1vh',
-                          paddingBottom: '1vh',
                         }}
-                      >
-                        {loading ? <BlueCircularProgress /> : 'Select meals'}
-                      </BlackButton>
-                      <Typography
+                        inputProps={{
+                          style: { fontSize: customTheme.fontEqualizer(14) },
+                        }} // font size of input text
+                        InputLabelProps={{
+                          style: { fontSize: customTheme.fontEqualizer(14) },
+                        }}
+                        onChange={handleInput}
+                        value={formValue.confirmPassword}
+                        error={error}
+                        helperText={error ? 'Your passwords do not match' : ''}
+                      />
+                    </>
+
+                    <BlackButton
+                      id="password-button"
+                      type="submit"
+                      variant="contained"
+                      disabled={loading}
+                      sx={{
+                        marginLeft: 'auto',
+                        marginRight: 'auto',
+                        width: '80%',
+                        paddingTop: '1vh',
+                        paddingBottom: '1vh',
+                        borderRadius: '30px',
+                        backgroundColor: customTheme.palette.olive.main,
+                        color: customTheme.palette.white1.main,
+                      }}
+                    >
+                      {loading ? <BlueCircularProgress /> : 'Select meals'}
+                    </BlackButton>
+                    {/* <Typography
                         fontFamily={'Inter'}
                         fontSize={customTheme.fontEqualizer(12)}
                         color={customTheme.palette.secondaryText.main}
@@ -233,15 +226,15 @@ const AccountRegistration = (props) => {
                         By clicking above, you agree to our{' '}
                         <a href="/">Terms of Use</a> and consent to our{' '}
                         <a href="/">Privacy Policy</a>
-                      </Typography>
-                    </Stack>
-                  </Grid>
+                      </Typography> */}
+                  </Stack>
                 </Grid>
-              </FormGroup>
-            </fieldset>
-          </form>
-        </Grid>
-      </CardContent>
+              </Grid>
+            </FormGroup>
+          </fieldset>
+        </form>
+      </Grid>
+      {/* </CardContent> */}
     </Grid>
   );
 };

@@ -6,7 +6,7 @@ $contentSubHeaderFontSize: 1.1rem;
   padding-bottom: 15vh;
   justify-content: center;
   background-color: theme.$lightFucia;
-  width: 100%;
+  // width: 100%;
 }
 @mixin splash-page-header {
   font-family: theme.$defaultFontBold;

@@ -3,7 +3,6 @@ import { useReducer, useState } from 'react';
 import Client from '../../../data_models/model/Client';
 import SearchLocationInput from './SearchLocationInput';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
 import FormHelperText from '@mui/material/FormHelperText';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -13,6 +12,7 @@ import BlackButton from '../../shared_components/BlackButton';
 import capitalize from '../../../helpers/capitalize';
 import BlueCircularProgress from '../../shared_components/BlueCircularProgress';
 import { getAddressObject } from './helpers/getAddressObject';
+import CustomTextField from '../../shared_components/CustomTextField';
 const DeliveryForm = (props) => {
   const customTheme = useTheme();
   const [addressValueError, setAddressValueError] = useState(false);
@@ -166,7 +166,7 @@ const DeliveryForm = (props) => {
             >
               <Grid container item justifyContent={'space-between'}>
                 <Grid item xs={5.8}>
-                  <TextField
+                  <CustomTextField
                     autoComplete="new-password"
                     required
                     fullWidth
@@ -177,7 +177,7 @@ const DeliveryForm = (props) => {
                   />
                 </Grid>
                 <Grid item xs={5.8}>
-                  <TextField
+                  <CustomTextField
                     autoComplete="new-password"
                     required
                     fullWidth
@@ -202,7 +202,7 @@ const DeliveryForm = (props) => {
               </Grid>
               <Grid container item justifyContent={'space-between'}>
                 <Grid item xs={5.8}>
-                  <TextField
+                  <CustomTextField
                     disabled={true}
                     fullWidth
                     label={'City'}
@@ -211,7 +211,7 @@ const DeliveryForm = (props) => {
                   />
                 </Grid>
                 <Grid item xs={5.8}>
-                  <TextField
+                  <CustomTextField
                     disabled={true}
                     fullWidth
                     label={'State'}
@@ -233,7 +233,7 @@ const DeliveryForm = (props) => {
                     </FormHelperText>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
+                    <CustomTextField
                       disabled={suiteError === ''}
                       fullWidth
                       label={suiteError !== '' ? 'Suite* (Ex: #1A)' : 'Suite'}
@@ -244,7 +244,7 @@ const DeliveryForm = (props) => {
                   </Grid>
                 </Grid>
                 <Grid item xs={5.8}>
-                  <TextField
+                  <CustomTextField
                     disabled={true}
                     autoComplete="new-password"
                     type="text"
@@ -260,7 +260,7 @@ const DeliveryForm = (props) => {
                   <FormHelperText hidden={!phoneError} error={true}>
                     Please enter a valid number
                   </FormHelperText>
-                  <TextField
+                  <CustomTextField
                     autoComplete="new-password"
                     type="tel"
                     required

@@ -98,57 +98,86 @@ const TaskBar = (props) => {
       taskIndex: taskIndex,
     };
     return (
-      <>
+      <Grid
+        container
+        sx={{
+          position: 'relative',
+        }}
+      >
         <Grid
           container
-          justifyContent={'center'}
-          alignItems={'center'}
-          paddingTop={'3vh'}
-          paddingBottom={'2vh'}
-          paddingLeft={'2vw'}
-          paddingRight={'2vw'}
-          height={'13vh'}
+          sx={{
+            minHeight: '100vh',
+            position: 'absolute',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+          }}
         >
           <Grid
             container
-            item
-            xs={10}
-            md={6}
-            lg={4}
-            justifyContent={'space-between'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            paddingTop={'3vh'}
+            paddingBottom={'2vh'}
+            // paddingLeft={'2vw'}
+            // paddingRight={'2vw'}
+            height={'13vh'}
           >
-            <TaskBarItem
-              symbolName={'person_outlined'}
-              text={'Register'}
-              index={0}
-              taskIndex={taskIndex}
-            />
-            <TaskBarLine index={0} taskIndex={taskIndex} />
-            <TaskBarItem
-              symbolName={'dinner_dining_outlined'}
-              text={'Pick meals'}
-              index={1}
-              taskIndex={taskIndex}
-            />
+            <Grid
+              container
+              item
+              xs={10}
+              md={6}
+              lg={4}
+              justifyContent={'space-between'}
+            >
+              <TaskBarItem
+                symbolName={'person_outlined'}
+                text={'Register'}
+                index={0}
+                taskIndex={taskIndex}
+              />
+              <TaskBarLine index={0} taskIndex={taskIndex} />
+              <TaskBarItem
+                symbolName={'dinner_dining_outlined'}
+                text={'Pick meals'}
+                index={1}
+                taskIndex={taskIndex}
+              />
 
-            <TaskBarLine index={1} taskIndex={taskIndex} />
-            <TaskBarItem
-              symbolName={'shopping_cart_outlined'}
-              text={'Checkout'}
-              index={2}
-              taskIndex={taskIndex}
-            />
-            <TaskBarLine index={2} taskIndex={taskIndex} />
-            <TaskBarItem
-              symbolName={'payment'}
-              text={'Payment'}
-              index={3}
-              taskIndex={taskIndex}
-            />
+              <TaskBarLine index={1} taskIndex={taskIndex} />
+              <TaskBarItem
+                symbolName={'shopping_cart_outlined'}
+                text={'Checkout'}
+                index={2}
+                taskIndex={taskIndex}
+              />
+              <TaskBarLine index={2} taskIndex={taskIndex} />
+              <TaskBarItem
+                symbolName={'payment'}
+                text={'Payment'}
+                index={3}
+                taskIndex={taskIndex}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid
+            container
+            item
+            sx={{
+              width: '100%',
+              flexGrow: 1,
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            {cloneElement(props.childComponent, { ...signupProps })}
           </Grid>
         </Grid>
-        {cloneElement(props.childComponent, { ...signupProps })}
-      </>
+      </Grid>
     );
   } else {
     return <></>;

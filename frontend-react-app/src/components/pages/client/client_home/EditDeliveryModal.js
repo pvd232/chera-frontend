@@ -92,7 +92,7 @@ const EditDeliveryModal = (props) => {
       );
     });
   };
-
+  // TODO: Test this function
   const handleDeleteSubscription = async () => {
     confirmDeleteSubscriptionUsername === props.clientId
       ? (() => {

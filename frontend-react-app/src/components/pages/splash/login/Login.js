@@ -14,7 +14,7 @@ import ClientDTO from '../../../../data_models/dto/ClientDTO';
 import DietitianDTO from '../../../../data_models/dto/DietitianDTO';
 import Dietitian from '../../../../data_models/model/Dietitian';
 import BlackButton from '../../../shared_components/BlackButton';
-import CustomTextField from '../dietitian_sign_up/CustomTextField';
+import CustomTextField from '../../../shared_components/CustomTextField';
 import styles from './scss/Login.module.scss';
 
 const Login = (props) => {

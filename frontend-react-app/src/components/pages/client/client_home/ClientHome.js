@@ -128,7 +128,6 @@ const ClientHome = (props) => {
     );
     APIClient.checkIfFirstWeek(props.mealSubscription.id).then(
       (isFirstWeek) => {
-        console.log('isFirstWeek', isFirstWeek);
         if (mounted) {
           setIsFirstDelivery(isFirstWeek);
         }

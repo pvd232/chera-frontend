@@ -109,7 +109,7 @@ const ClientMenu = (props) => {
             (extendedMeal) =>
               mealsByDietaryRestrictionMap
                 .get(filterMealPreferences)
-                .has(extendedMeal.id)
+                ?.has(extendedMeal.id)
           );
           setExtendedMeals(filteredExtendedMeals);
         }
@@ -119,19 +119,19 @@ const ClientMenu = (props) => {
           // Meal time filter, no dietary restriction filter
           const filteredExtendedMeals = props.extendedMeals.filter(
             (extendedMeal) =>
-              mealsByMealTimeMap.get(event.target.value).has(extendedMeal.id)
+              mealsByMealTimeMap.get(event.target.value)?.has(extendedMeal.id)
           );
           setExtendedMeals(filteredExtendedMeals);
         } else {
           const timeFilteredExtendedMeals = props.extendedMeals.filter(
             (extendedMeal) =>
-              mealsByMealTimeMap.get(event.target.value).has(extendedMeal.id)
+              mealsByMealTimeMap.get(event.target.value)?.has(extendedMeal.id)
           );
           const filteredExtendedMeals = timeFilteredExtendedMeals.filter(
             (extendedMeal) =>
               mealsByDietaryRestrictionMap
                 .get(filterMealPreferences)
-                .has(extendedMeal.id)
+                ?.has(extendedMeal.id)
           );
           // Meal time and dietary restriction filter
           setExtendedMeals(filteredExtendedMeals);
@@ -150,7 +150,7 @@ const ClientMenu = (props) => {
           // No dietary restriction filter, meal time filter
           const filteredExtendedMeals = props.extendedMeals.filter(
             (extendedMeal) =>
-              mealsByMealTimeMap.get(filterMealTime).has(extendedMeal.id)
+              mealsByMealTimeMap.get(filterMealTime)?.has(extendedMeal.id)
           );
           setExtendedMeals(filteredExtendedMeals);
         }
@@ -162,20 +162,20 @@ const ClientMenu = (props) => {
             (extendedMeal) =>
               mealsByDietaryRestrictionMap
                 .get(event.target.value)
-                .has(extendedMeal.id)
+                ?.has(extendedMeal.id)
           );
           setExtendedMeals(filteredExtendedMeals);
         } else {
           // Dietary restriction and meal time filter
           const timeFilteredExtendedMeals = props.extendedMeals.filter(
             (extendedMeal) =>
-              mealsByMealTimeMap.get(filterMealTime).has(extendedMeal.id)
+              mealsByMealTimeMap.get(filterMealTime)?.has(extendedMeal.id)
           );
           const filteredExtendedMeals = timeFilteredExtendedMeals.filter(
             (extendedMeal) =>
               mealsByDietaryRestrictionMap
                 .get(event.target.value)
-                .has(extendedMeal.id)
+                ?.has(extendedMeal.id)
           );
           setExtendedMeals(filteredExtendedMeals);
         }
@@ -431,13 +431,13 @@ const ClientMenu = (props) => {
   return (
     <Grid
       container
-      paddingLeft={'2vw'}
-      paddingRight={'2vw'}
+      paddingLeft={'4vw'}
+      paddingRight={'4vw'}
       paddingBottom={'10vh'}
       // Removes extra 'purple' space in view layout in chrome dev tools.
       alignItems="flex-start"
       paddingTop="5vh"
-      backgroundColor={customTheme.palette.olive.quaternary}
+      backgroundColor={customTheme.palette.olive.secondary}
     >
       {/* Meals Cards */}
       <Grid
@@ -446,23 +446,21 @@ const ClientMenu = (props) => {
         md={8.5}
         lg={9.5}
         xs={12}
-        columnSpacing={4}
         marginBottom={customTheme.smallerScreen() ? '6vh' : ''}
         justifyContent={'center'}
+        sx={{
+          paddingRight: '2vw',
+          borderRight: `solid 2px ${customTheme.palette.olive.main}`,
+        }}
       >
-        <Grid
-          item
-          container
-          spacing={2}
-          sx={{ height: 'min-content' }}
-          marginBottom="5vh"
-        >
+        <Grid item container spacing={2} marginBottom="5vh">
           <Grid item container justifyContent={'flex-start'}>
             <Typography
               fontSize={'1.5rem'}
               textAlign={'center'}
               marginBottom={'2vh'}
               marginTop={'2vh'}
+              color={customTheme.palette.olive.main}
             >
               Meals
             </Typography>
@@ -541,7 +539,7 @@ const ClientMenu = (props) => {
             </FormHelperText>
           </Grid>
         </Grid>
-        <Grid container item spacing={7} mb={'5vh'}>
+        <Grid container item spacing={4} mb={'5vh'}>
           {extendedMeals.map((extendedMeal, i) => (
             <Grid item key={`mealGridItem${i}`} md={4}>
               {MediaCard({
@@ -560,6 +558,7 @@ const ClientMenu = (props) => {
             textAlign={'center'}
             marginBottom={'5vh'}
             marginTop={'2vh'}
+            color={customTheme.palette.olive.main}
           >
             Snacks
           </Typography>
@@ -567,6 +566,9 @@ const ClientMenu = (props) => {
             <Tooltip
               title="Optional, ordered in quantities of 2"
               placement="right"
+              sx={{
+                color: customTheme.palette.olive.main,
+              }}
             >
               <IconButton>
                 <InfoIcon />

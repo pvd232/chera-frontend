@@ -32,9 +32,6 @@ const OrderMealCard = (props) => (
     <CardContent>
       <Typography
         gutterBottom
-        fontSize={'1rem'}
-        fontWeight={'500'}
-        component="div"
       >
         {props.mealData.name}
         <Typography variant="subtitle1" color="text.secondary" component="div">

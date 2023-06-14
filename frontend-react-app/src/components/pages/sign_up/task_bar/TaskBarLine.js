@@ -13,7 +13,7 @@ const TaskBarLine = (props) => {
             color: `${
               props.index === props.taskIndex ||
               (props.taskIndex === 3 && props.index === props.taskIndex - 1)
-                ? customTheme.palette.orange.main
+                ? customTheme.palette.fucia.main
                 : customTheme.palette.lightGrey.main
             }`,
           }}

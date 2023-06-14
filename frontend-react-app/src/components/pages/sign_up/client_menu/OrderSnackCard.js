@@ -29,14 +29,7 @@ const OrderSnackCard = (props) => (
       }}
     />
     <CardContent>
-      <Typography
-        gutterBottom
-        fontSize={'1rem'}
-        fontWeight={'500'}
-        component="div"
-      >
-        {props.snackData.name}
-      </Typography>
+      <Typography gutterBottom>{props.snackData.name}</Typography>
       <Typography variant="body2" color="text.secondary">
         {props.snackData.description}
       </Typography>

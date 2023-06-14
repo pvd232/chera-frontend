@@ -17,13 +17,13 @@ const HowItWorks = (props) => (
   >
     <Grid item xs={12} justifyContent={'flex-start'}>
       <Typography
-        fontSize={'0.8rem'}
+        fontSize={'1.1rem'}
         textAlign={props.customTheme.smallerScreen() ? 'center' : 'start'}
         margin={'0 auto'}
         fontWeight={'bold'}
-        color={props.customTheme.palette.olive.secondary}
+        color={props.customTheme.palette.olive.main}
       >
-        HOW IT WORKS
+        How it works
       </Typography>
     </Grid>
 
@@ -32,7 +32,7 @@ const HowItWorks = (props) => (
         customTheme={props.customTheme}
         headerText={'Get a referral'}
         bodyText={
-          'Your dietitian has already referred you and selected a meal program catered to your nutritional needs!'
+          "Your dietitian has already referred you and selected a meal program that's right for you!"
         }
         symbolName={'menu_book_outlined'}
         primaryFontSize={6.5}

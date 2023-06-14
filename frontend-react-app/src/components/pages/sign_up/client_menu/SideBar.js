@@ -33,13 +33,7 @@ const SideBar = (props) => {
     },
   ];
   return (
-    <Grid
-      container
-      sx={{
-        paddingLeft: '2vw',
-        borderLeft: `solid 2px ${props.customTheme.palette.lightGrey.main}`,
-      }}
-    >
+    <Grid container paddingLeft={'2vw'}>
       <Grid item xs={12}>
         <Typography
           fontSize={'1rem'}
@@ -65,7 +59,7 @@ const SideBar = (props) => {
             <div
               key={`mealsByTimeDiv${i}`}
               style={{
-                borderBottom: `solid 2px ${props.customTheme.palette.lightGrey.main}`,
+                borderBottom: `solid 2px ${props.customTheme.palette.olive.main}`,
                 marginBottom: '3vh',
               }}
             >
@@ -139,7 +133,7 @@ const SideBar = (props) => {
         <Grid item xs={12}>
           <div
             style={{
-              borderBottom: `solid 2px ${props.customTheme.palette.lightGrey.main}`,
+              borderBottom: `solid 2px ${props.customTheme.palette.olive.main}`,
               marginBottom: '3vh',
             }}
           >
@@ -256,6 +250,9 @@ const SideBar = (props) => {
               paddingTop: '1vh',
               paddingBottom: '1vh',
               marginTop: '3vh',
+              borderRadius: '30px',
+              backgroundColor: `${props.customTheme.palette.olive.main}`,
+              color: `${props.customTheme.palette.white1.main}`,
             }}
           >
             {props.loading ? (

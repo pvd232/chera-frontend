@@ -6,6 +6,7 @@ import Button from '@mui/material/Button';
 import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import deliveryInfo from './scss/DeliveryInfo.module.scss';
+import { Stack } from '@mui/material';
 const DeliveryInfo = (props) => {
   const handleSkipWeek = async (deliveryDate) => {
     await props.skipWeek(deliveryDate);
@@ -19,16 +20,33 @@ const DeliveryInfo = (props) => {
     <Grid container item className={deliveryInfo.rootContainer}>
       <Grid container item xs={6} className={deliveryInfo.headerContainer}>
         <Grid item>
-          <Typography className={deliveryInfo.header}>
-            {props.isFirstDelivery
-              ? 'Welcome to Chera! This is where you can view your upcoming deliveries and make changes to your subscription.'
-              : "Modify this week's delivery by " +
-                DeliveryDateUtility.getDateForDisplay(
-                  DeliveryDateUtility.getCutoffDateFromIndex(
-                    props.selectedDeliveryIndex
-                  )
-                )}
-          </Typography>
+          <Stack className={deliveryInfo.stack}>
+            {props.isFirstDelivery ? (
+              <>
+                <Typography className={deliveryInfo.themeHeader}>
+                  Welcome to Chera!
+                </Typography>
+                <Typography className={deliveryInfo.header}>
+                  This is your home page. Here you can view your upcoming
+                  deliveries and make changes to your subscription.
+                </Typography>
+              </>
+            ) : (
+              <>
+                <Typography className={deliveryInfo.themeHeader}>
+                  Welcome back!
+                </Typography>
+                <Typography className={deliveryInfo.header}>
+                  {"Modify this week's delivery by " +
+                    DeliveryDateUtility.getDateForDisplay(
+                      DeliveryDateUtility.getCutoffDateFromIndex(
+                        props.selectedDeliveryIndex
+                      )
+                    )}
+                </Typography>
+              </>
+            )}
+          </Stack>
         </Grid>
         <Grid item>
           <FormHelperText

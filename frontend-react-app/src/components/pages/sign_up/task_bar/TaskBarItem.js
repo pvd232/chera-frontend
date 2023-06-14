@@ -14,7 +14,7 @@ const TaskBarItem = (props) => {
             transform: `scale(1.7)`,
             color: `${
               props.index === props.taskIndex
-                ? customTheme.palette.orange.main
+                ? customTheme.palette.fucia.main
                 : customTheme.palette.lightGrey.main
             }`,
           }}
@@ -26,7 +26,7 @@ const TaskBarItem = (props) => {
           fontWeight={'bold'}
           color={
             props.index === props.taskIndex
-              ? customTheme.palette.orange.main
+              ? customTheme.palette.fucia.main
               : customTheme.palette.lightGrey.main
           }
         >

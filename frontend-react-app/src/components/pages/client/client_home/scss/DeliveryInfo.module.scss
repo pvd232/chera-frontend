@@ -6,8 +6,15 @@
   .headerContainer {
     flex-direction: column;
     justify-content: space-between;
+    .stack {
+      row-gap: 2vh;
+    }
     .header {
       font-size: client.$subHeaderFontSize;
+    }
+    .themeHeader {
+      font-size: client.$headerFontSize;
+      color: theme.$fucia;
     }
     .errorText {
       font-size: 1rem;

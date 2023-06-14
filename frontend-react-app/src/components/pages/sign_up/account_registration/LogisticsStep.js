@@ -30,17 +30,17 @@ const LogisticsStep = (props) => (
           <div
             style={{
               borderRadius: '50%',
-              padding: '1rem',
-              backgroundColor: `#ffd5da`,
+              padding: '1.3rem',
+              backgroundColor: props.customTheme.palette.olive.secondary,
               display: 'flex',
               justifyContent: 'center',
               alignItems: 'center',
             }}
           >
             <Icon
-              fontSize="large"
               sx={{
                 color: `${props.customTheme.palette.olive.main}`,
+                transform: 'scale(1.3)',
               }}
             >
               {props.symbolName}
