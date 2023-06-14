@@ -3,7 +3,6 @@
 .FAQsPageContainer {
   @include splash.splash-page-container;
   background-color: theme.$lightFucia;
-  padding-top: 20vh;
   @include theme.xs {
     padding-top: 10vh;
   }

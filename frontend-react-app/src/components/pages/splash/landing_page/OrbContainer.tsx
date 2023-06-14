@@ -14,6 +14,7 @@ const OrbContainer = () => {
           backgroundAlpha: 0,
         }}
         width={windowWidth}
+        height={window.innerHeight - 0.15 * window.innerHeight}
       >
         {orbs.map((orb) => {
           return orb;
