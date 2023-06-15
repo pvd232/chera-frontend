@@ -96,19 +96,17 @@ const themeBase = createTheme({
   largeScreen: () =>
     window.innerWidth >= ScreenSize.md && window.innerWidth <= ScreenSize.xl,
   mediumScreen: () =>
-    window.innerWidth <= ScreenOrientation.lg &&
-    window.innerWidth > ScreenOrientation.sm,
+    window.innerWidth <= ScreenSize.lg && window.innerWidth > ScreenSize.sm,
   smallScreen: () =>
-    window.innerWidth <= ScreenOrientation.md &&
-    window.innerWidth > ScreenOrientation.xs,
+    window.innerWidth <= ScreenSize.md && window.innerWidth > ScreenSize.xs,
   extraSmallScreen: () =>
-    window.innerWidth <= ScreenOrientation.sm && window.innerHeight >= 800,
+    window.innerWidth <= ScreenSize.sm && window.innerHeight >= 800,
   extraExtraSmallScreen: () =>
-    window.innerWidth <= ScreenOrientation.xs && window.innerHeight < 800,
+    window.innerWidth <= ScreenSize.xs && window.innerHeight < 800,
 
-  largerScreen: () => window.innerWidth >= ScreenOrientation.sm,
-  smallerScreen: () => window.innerWidth <= ScreenOrientation.md,
-  extraSmallerScreen: () => window.innerWidth <= ScreenOrientation.sm,
+  largerScreen: () => window.innerWidth >= ScreenSize.sm,
+  smallerScreen: () => window.innerWidth <= ScreenSize.md,
+  extraSmallerScreen: () => window.innerWidth <= ScreenSize.sm,
   tablet: () =>
     window.innerWidth > 700 &&
     window.innerWidth < 1000 &&

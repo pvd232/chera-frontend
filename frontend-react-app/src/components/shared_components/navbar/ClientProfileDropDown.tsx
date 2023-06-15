@@ -10,7 +10,7 @@ import MenuList from '@mui/material/MenuList';
 import { useOpen } from './hooks/useOpen.ts';
 import { useNavigate } from 'react-router-dom';
 import aboutDropDown from './scss/AboutDropDown.module.scss';
-import LocalStorageManager from '../../../helpers/NewLocalStorageManager.ts';
+import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
 const ClientProfileDropDown = () => {
   const userFirstName =
     LocalStorageManager.shared.client.firstName.toUpperCase();

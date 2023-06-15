@@ -1,4 +1,4 @@
-import LocalStorageManager from './NewLocalStorageManager';
+import LocalStorageManager from './LocalStorageManager';
 export default class DeliveryDateUtility {
   static weekdays = [
     'Sunday',

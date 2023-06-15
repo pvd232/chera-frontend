@@ -68,7 +68,7 @@ const MealBuilder = () => {
   const handleSubmit = async () => {
     setLoading(true);
     if (mealId) {
-      // Delete old meal first
+      // If the meal is already present in the database the delete it before creating a new one
       await APIClient.deleteMeal(mealId);
     }
 
@@ -132,8 +132,9 @@ const MealBuilder = () => {
       dietaryRestrictions: dietaryRestrictions,
       imageUrl: imageUrl,
       mealIngredients: mealIngredients,
+      isSavedMeal: true,
     };
-    LocalStorageManager.shared.savedMealBuilderMeal = mealBuilderMeal;
+    LocalStorageManager.shared.addSavedMealBuilderMeal(mealBuilderMeal);
     updateUSDAIngredients({
       mounted: true,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
@@ -216,15 +217,17 @@ const MealBuilder = () => {
                             {capitalize(meal.mealName)}
                           </MenuItem>
                         ))}
-                        {LocalStorageManager.shared.savedMealBuilderMeal && (
-                          <MenuItem value={mealPlanMeals.length + 1}>
-                            {'(Saved meal) ' +
-                              capitalize(
-                                LocalStorageManager.shared.savedMealBuilderMeal
-                                  .mealName
-                              )}
-                          </MenuItem>
-                        )}
+                        {LocalStorageManager.shared.savedMealBuilderMeals &&
+                          LocalStorageManager.shared.savedMealBuilderMeals.map(
+                            (meal, i) => (
+                              <MenuItem
+                                key={mealPlanMeals.length + 1 + i}
+                                value={mealPlanMeals.length + 1 + i}
+                              >
+                                {'(Saved meal) ' + capitalize(meal.mealName)}
+                              </MenuItem>
+                            )
+                          )}
                       </Select>
                     </FormControl>
                   </Grid>

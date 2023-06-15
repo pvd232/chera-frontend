@@ -1,6 +1,8 @@
 class LocalStorageManager {
+  private static instance: LocalStorageManager;
+  private storage: Storage;
   static shared = (() => {
-    if (LocalStorageManager._instance) {
+    if (LocalStorageManager.instance) {
       return LocalStorageManager.instance;
     } else {
       return new LocalStorageManager();
@@ -10,28 +12,28 @@ class LocalStorageManager {
     this.storage = window.localStorage;
   }
 
-  getRawItem(key) {
+  getRawItem(key: string) {
     return this.storage.getItem(key);
   }
-  setRawItem(key, object) {
+  setRawItem(key: string, object: string) {
     this.storage.setItem(key, object);
   }
 
-  getItem(key) {
+  getItem(key: string) {
     const itemJSON = this.getRawItem(key);
 
     if (itemJSON) {
-      return JSON.parse(this.getRawItem(key));
+      return JSON.parse(itemJSON);
     } else {
       return false;
     }
   }
-  setItem(key, object) {
+  setItem(key: string, object: any) {
     if (object) {
       this.setRawItem(key, JSON.stringify(object));
     }
   }
-  removeItem(key) {
+  removeItem(key: string) {
     if (localStorage.getItem(key)) {
       localStorage.removeItem(key);
     }
@@ -104,14 +106,20 @@ class LocalStorageManager {
     ];
   }
 
-  get savedMealBuilderMeal() {
-    return this.getItem('saved_meal_builder_meal');
+  get savedMealBuilderMeals() {
+    if (this.getItem('saved_meal_builder_meals')) {
+      return this.getItem('saved_meal_builder_meals');
+    } else {
+      this.setItem('saved_meal_builder_meals', []);
+      return [];
+    }
   }
-  set savedMealBuilderMeal(newMeal) {
-    this.setItem('saved_meal_builder_meal', newMeal);
+  addSavedMealBuilderMeal(newMeal: object) {
+    const newMealBuilderMeals = [...this.savedMealBuilderMeals, newMeal];
+    this.setItem('saved_meal_builder_meals', newMealBuilderMeals);
   }
   deleteSavedMealBuilderMeal() {
-    this.removeItem('saved_meal_builder_meal');
+    this.removeItem('saved_meal_builder_meals');
   }
 
   get savedMealBuilderSnack() {

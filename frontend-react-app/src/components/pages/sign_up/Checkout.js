@@ -1,4 +1,4 @@
-import LocalStorageManager from '../../../helpers/LocalStorageManager.js';
+import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
 import Grid from '@mui/material/Grid';
 import { useState } from 'react';
 import DeliveryForm from './DeliveryForm.js';

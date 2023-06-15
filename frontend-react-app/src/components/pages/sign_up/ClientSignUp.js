@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import LocalStorageManager from '../../../helpers/LocalStorageManager.js';
+import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
 import APIClient from '../../../helpers/APIClient';
 import MealSubscription from '../../../data_models/model/MealSubscription.js';
 import MealSubscriptionDTO from '../../../data_models/dto/MealSubscriptionDTO.js';
