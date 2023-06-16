@@ -1,9 +1,9 @@
 import USDAIngredientDTO from './USDAIngredientDTO';
 export default class ExtendedUSDAIngredientDTO extends USDAIngredientDTO {
-  constructor(ingredient, USDAIngredientDTOFactory) {
+  constructor(ingredient, USDAIngredientPortionDTOFactory) {
     super(ingredient);
     this.portions = ingredient.portions.map((portion) =>
-      USDAIngredientDTOFactory.injectInstance(portion)
+      USDAIngredientPortionDTOFactory.injectInstance(portion)
     );
   }
 }

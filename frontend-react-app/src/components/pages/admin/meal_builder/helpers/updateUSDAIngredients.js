@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid';
 import APIClient from '../../../../../helpers/APIClient';
 import ExtendedUSDAIngredientDTO from '../../../../../data_models/dto/ExtendedUSDAIngredientDTO';
 import ExtendedUSDAIngredient from '../../../../../data_models/model/ExtendedUSDAIngredient';
-import USDAIngredientPortionDTOFactory from '../../../../../data_models/factories/dto/ExtendedUSDAIngredientDTOFactory';
+import USDAIngredientPortionDTOFactory from '../../../../../data_models/factories/dto/USDAIngredientPortionDTOFactory';
 import USDAIngredientPortionFactory from '../../../../../data_models/factories/model/USDAIngredientPortionFactory';
 import RecipeIngredientItem from '../../../../ui_data_containers/RecipeIngredientItem';
 export default async function updateUSDAIngredients({

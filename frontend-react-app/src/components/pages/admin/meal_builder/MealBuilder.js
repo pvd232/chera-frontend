@@ -14,7 +14,7 @@ import APIClient from '../../../../helpers/APIClient';
 import BlackButton from '../../../shared_components/BlackButton.ts';
 import RowBorder from '../../dietitian/dietitian_menu/nutrition_details/RowBorder';
 import capitalize from '../../../../helpers/capitalize';
-import LocalStorageManager from '../../../../helpers/LocalStorageManager';
+import LocalStorageManager from '../../../../helpers/LocalStorageManager.ts';
 import MealPlanMealDTO from '../../../../data_models/dto/MealPlanMealDTO';
 import RecipeIngredientDTO from '../../../../data_models/dto/RecipeIngredientDTO';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
@@ -41,6 +41,7 @@ const MealBuilder = () => {
   const [mealPlans, setMealPlans] = useState([]);
   const [loading, setLoading] = useState(false);
   const [saveButtonLoading, setSaveButtonLoading] = useState(false);
+  const [hasBeenSaved, setHasBeenSaved] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -52,7 +53,6 @@ const MealBuilder = () => {
       setMealPlans: setMealPlans,
       setMealPlanMeals: setMealPlanMeals,
     });
-
     return () => (mounted = false);
   }, []);
   const handleUpdateMealIndex = (index) => {
@@ -64,11 +64,12 @@ const MealBuilder = () => {
     setIsVegetarian(getMeal(mealPlanMeals, index).isVegetarian);
     setImageUrl(getMeal(mealPlanMeals, index).imageUrl);
     setMealIngredients(getMeal(mealPlanMeals, index).mealIngredients);
+    setHasBeenSaved(false);
   };
   const handleSubmit = async () => {
     setLoading(true);
     if (mealId) {
-      // If the meal is already present in the database the delete it before creating a new one
+      // Delete old meal first
       await APIClient.deleteMeal(mealId);
     }
 
@@ -117,6 +118,8 @@ const MealBuilder = () => {
       await APIClient.createRecipeIngredientNutrients(recipeIngredients);
     }
     setLoading(false);
+    setHasBeenSaved(false);
+
     alert('Meal created!');
     window.location.reload();
   };
@@ -132,9 +135,8 @@ const MealBuilder = () => {
       dietaryRestrictions: dietaryRestrictions,
       imageUrl: imageUrl,
       mealIngredients: mealIngredients,
-      isSavedMeal: true,
     };
-    LocalStorageManager.shared.addSavedMealBuilderMeal(mealBuilderMeal);
+    LocalStorageManager.shared.savedMealBuilderMeal = mealBuilderMeal;
     updateUSDAIngredients({
       mounted: true,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
@@ -143,6 +145,7 @@ const MealBuilder = () => {
       setMealPlans: setMealPlans,
       setMealPlanMeals: setMealPlanMeals,
     }).then(() => setSaveButtonLoading(false));
+    setHasBeenSaved(true);
   };
 
   const handleAddIngredient = (newIngredient) => {
@@ -217,17 +220,15 @@ const MealBuilder = () => {
                             {capitalize(meal.mealName)}
                           </MenuItem>
                         ))}
-                        {LocalStorageManager.shared.savedMealBuilderMeals &&
-                          LocalStorageManager.shared.savedMealBuilderMeals.map(
-                            (meal, i) => (
-                              <MenuItem
-                                key={mealPlanMeals.length + 1 + i}
-                                value={mealPlanMeals.length + 1 + i}
-                              >
-                                {'(Saved meal) ' + capitalize(meal.mealName)}
-                              </MenuItem>
-                            )
-                          )}
+                        {LocalStorageManager.shared.savedMealBuilderMeal && (
+                          <MenuItem value={mealPlanMeals.length + 1}>
+                            {'(Saved meal) ' +
+                              capitalize(
+                                LocalStorageManager.shared.savedMealBuilderMeal
+                                  .mealName
+                              )}
+                          </MenuItem>
+                        )}
                       </Select>
                     </FormControl>
                   </Grid>
@@ -339,16 +340,18 @@ const MealBuilder = () => {
                   extendedUSDAIngredients={extendedUsdaIngredients}
                 />
               </Grid>
-              <Grid container justifyContent={'center'} paddingTop={10}>
-                <Grid item paddingBottom={2}>
-                  <MealCard
-                    mealName={mealName}
-                    mealTime={mealTime}
-                    mealDescription={mealDescription}
-                    imageUrl={imageUrl}
-                  />
+              {hasBeenSaved && (
+                <Grid container justifyContent={'center'} paddingTop={10}>
+                  <Grid item paddingBottom={2}>
+                    <MealCard
+                      mealName={mealName}
+                      mealTime={mealTime}
+                      mealDescription={mealDescription}
+                      imageUrl={imageUrl}
+                    />
+                  </Grid>
                 </Grid>
-              </Grid>
+              )}
             </Grid>
           </Grid>
           <Grid item xs={12} marginY={'3vh'}>

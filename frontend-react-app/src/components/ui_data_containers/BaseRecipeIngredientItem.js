@@ -10,17 +10,4 @@ export default class BaseIngredientItem {
     this.active = recipeIngredientObject.active;
     this.properlyInitialized = (() => checkProperties(this))();
   }
-  static constructFromExtendedUSDAIngredient(
-    extendedUSDAIngredient,
-    recipeIngredientId
-  ) {
-    return new BaseIngredientItem({
-      id: recipeIngredientId,
-      usdaIngredientId: extendedUSDAIngredient.id,
-      name: extendedUSDAIngredient.name,
-      usdaIngredientPortionId: '',
-      quantity: 1,
-      active: true,
-    });
-  }
 }

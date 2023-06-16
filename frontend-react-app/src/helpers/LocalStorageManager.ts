@@ -106,20 +106,14 @@ class LocalStorageManager {
     ];
   }
 
-  get savedMealBuilderMeals() {
-    if (this.getItem('saved_meal_builder_meals')) {
-      return this.getItem('saved_meal_builder_meals');
-    } else {
-      this.setItem('saved_meal_builder_meals', []);
-      return [];
-    }
+  get savedMealBuilderMeal() {
+    return this.getItem('saved_meal_builder_meal');
   }
-  addSavedMealBuilderMeal(newMeal: object) {
-    const newMealBuilderMeals = [...this.savedMealBuilderMeals, newMeal];
-    this.setItem('saved_meal_builder_meals', newMealBuilderMeals);
+  set savedMealBuilderMeal(newMeal) {
+    this.setItem('saved_meal_builder_meal', newMeal);
   }
   deleteSavedMealBuilderMeal() {
-    this.removeItem('saved_meal_builder_meals');
+    this.removeItem('saved_meal_builder_meal');
   }
 
   get savedMealBuilderSnack() {

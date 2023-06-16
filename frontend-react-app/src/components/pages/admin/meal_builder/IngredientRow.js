@@ -39,7 +39,7 @@ const IngredientRow = (props) => {
                   key={`usdaIngredientId-${ingredient.id}`}
                   value={ingredient.id}
                 >
-                  {capitalize(ingredient.name)}
+                  {capitalize(ingredient.name)} - ({ingredient.id})
                 </MenuItem>
               )
             )}
@@ -91,7 +91,7 @@ const IngredientRow = (props) => {
                   key={`usdaIngredientPortion${portion.id}`}
                   value={portion.id}
                 >
-                  {capitalize(portion.nonMetricUnit)}
+                  {capitalize(portion.nonMetricUnit)} - {portion.fdaPortionId}
                 </MenuItem>
               ))}
           </Select>
