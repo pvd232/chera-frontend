@@ -12,7 +12,7 @@ class APIClient {
       this.frontEndBaseUrl = getBaseURL('frontend');
       this.mode = 'cors';
     } else if (window.location.host === 'staging.cherahealth.com') {
-      this.env = 'staging-production';
+      this.env = 'staging';
       this.baseUrl = getBaseURL('api');
       this.frontEndBaseUrl = getBaseURL('frontend');
       this.mode = 'same-origin';
@@ -31,7 +31,7 @@ class APIClient {
 
   async fetchWrapper(request, requestParams) {
     const response = await fetch(request, requestParams).catch((error) => {
-      if (this.env === 'debug' || this.env === 'staging-production') {
+      if (this.env === 'debug' || this.env === 'staging') {
         if (typeof error.json === 'function') {
           error
             .json()
