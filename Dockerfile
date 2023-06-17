@@ -11,7 +11,7 @@ ADD /frontend-react-app ./frontend-react-app
 WORKDIR /app/frontend-react-app
 
 RUN yarn set version stable
-RUN yarn init -2
+RUN yarn global add install-peers
 RUN yarn install
 # Build the app
 RUN yarn run build
