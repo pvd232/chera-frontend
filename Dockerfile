@@ -10,9 +10,7 @@ RUN mkdir -p /app/frontend-react-app
 ADD /frontend-react-app ./frontend-react-app
 WORKDIR /app/frontend-react-app
 
-RUN yarn set version stable
-# RUN yarn add install-peers
-RUN yarn install
+RUN yarn install --production
 # Build the app
 RUN yarn run build
 
