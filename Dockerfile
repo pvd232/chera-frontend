@@ -9,7 +9,9 @@ RUN mkdir -p /app/frontend-react-app
 # Copy frontend-react-app
 ADD /frontend-react-app ./frontend-react-app
 WORKDIR /app/frontend-react-app
-RUN yarn install --production
+
+RUN yarn set version stable
+RUN yarn install
 # Build the app
 RUN yarn run build
 
