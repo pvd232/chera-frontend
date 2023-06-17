@@ -16,6 +16,7 @@ import ClientDTO from '../../../data_models/dto/ClientDTO';
 import DietitianDTO from '../../../data_models/dto/DietitianDTO';
 import Dietitian from '../../../data_models/model/Dietitian';
 import BlueCircularProgress from '../../../reusable_ui_components/BlueCircularProgress';
+import { LoginButton } from '../../../components/buttons/login-button.js';
 
 const Login = (props) => {
   const customTheme = useTheme();
@@ -56,22 +57,22 @@ const Login = (props) => {
     // AUTH
     // Here we check if the user is a dietitian or client and then call the appropriate API endpoint to authenticate them
     if (props.domain === 'dietitian') {
-      APIClient.authenticateDietitian(formValue).then((dietitianData) => {
-        // If the credentials were correct, the backend returns the dietitians's information and the value of dietitianData (which is the value returned by the server) above is JSON data
-        if (dietitianData) {
-          const dietitianDTO = new DietitianDTO(dietitianData);
-          const dietitianModel = new Dietitian(dietitianDTO);
-          LocalStorageManager.shared.dietitian = dietitianModel;
-          // We set the homeUrl property of the LocalStorageManager to the dietitian's home page
-          LocalStorageManager.shared.homeUrl = '/d-home';
-          // We set the redirect state to the dietitian's home page, which triggers the useEffect above to redirect the user to the dietitian's home page
-          setRedirect('/d-home');
-        } else {
-          // Otherwise, the value of dietitianData and we set the loginError state to true to show an error message
-          setLoginError(true);
-          setLoading(false);
-        }
-      });
+      // APIClient.authenticateDietitian(formValue).then((dietitianData) => {
+      //   // If the credentials were correct, the backend returns the dietitians's information and the value of dietitianData (which is the value returned by the server) above is JSON data
+      //   if (dietitianData) {
+      //     const dietitianDTO = new DietitianDTO(dietitianData);
+      //     const dietitianModel = new Dietitian(dietitianDTO);
+      //     LocalStorageManager.shared.dietitian = dietitianModel;
+      //     // We set the homeUrl property of the LocalStorageManager to the dietitian's home page
+      //     LocalStorageManager.shared.homeUrl = '/d-home';
+      //     // We set the redirect state to the dietitian's home page, which triggers the useEffect above to redirect the user to the dietitian's home page
+      //     setRedirect('/d-home');
+      //   } else {
+      //     // Otherwise, the value of dietitianData and we set the loginError state to true to show an error message
+      //     setLoginError(true);
+      //     setLoading(false);
+      //   }
+      // });
     } else {
       // AUTH
       // The process is idential for the client
@@ -180,7 +181,10 @@ const Login = (props) => {
                       alignItems={'center'}
                       marginTop={'5vh'}
                     >
-                      <BlackButton
+                      <LoginButton>
+                        "Login"
+                      </LoginButton>
+                      {/* <BlackButton
                         id="login-submit"
                         type="submit"
                         variant="contained"
@@ -194,7 +198,7 @@ const Login = (props) => {
                         }}
                       >
                         {loading ? <BlueCircularProgress /> : 'Login'}
-                      </BlackButton>
+                      </BlackButton> */}
                       <Link
                         to={`/request-reset-${props.domain}-password`}
                         style={{ marginLeft: '1vw', textDecoration: 'none' }}
