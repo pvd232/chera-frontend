@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import { useTheme } from '@mui/material/styles';
 import { useReducer, useState, useRef, useEffect } from 'react';
-import CardContent from '@mui/material/CardContent';
+// import CardContent from '@mui/material/CardContent';
 import FormGroup from '@mui/material/FormGroup';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -98,8 +98,6 @@ const AccountRegistration = (props) => {
               marginLeft: '10%',
               marginRight: '10%',
               marginBottom: '1%',
-
-              // height: 'fit-content',
               maxHeight: '85vh',
               border: 'none',
             }}

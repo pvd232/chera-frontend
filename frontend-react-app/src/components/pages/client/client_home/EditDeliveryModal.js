@@ -9,7 +9,7 @@ import APIClient from '../../../../helpers/APIClient';
 import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
 import Transition from '../../../shared_components/Transition';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
-import ClientMenu from '../../sign_up/client_menu/ClientMenu';
+import ClientMenu from '../../client_sign_up/client_menu/ClientMenu';
 import getNextDeliveryDate from '../helpers/getNextDeliveryDate';
 import checkUpcomingDelivery from '../helpers/checkUpcomingDelivery';
 import { pastCutoffDate } from './helpers/pastCutoffDate';

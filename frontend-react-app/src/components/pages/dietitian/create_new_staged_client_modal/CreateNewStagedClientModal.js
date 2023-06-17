@@ -9,7 +9,7 @@ import StagedClient from '../../../../data_models/model/StagedClient';
 import StagedScheduleMealDTO from '../../../../data_models/dto/StagedScheduleMealDTO';
 import StagedScheduleSnackDTO from '../../../../data_models/dto/StagedScheduleSnackDTO';
 import StagedClientDTO from '../../../../data_models/dto/StagedClientDTO';
-import ClientMenu from '../../sign_up/client_menu/ClientMenu';
+import ClientMenu from '../../client_sign_up/client_menu/ClientMenu';
 import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
 import createNewStagedClientModal from './scss/CreateNewStagedClientModal.module.scss';

@@ -3,7 +3,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import ReactGA from 'react-ga';
 import Splash from './components/pages/splash/Splash';
 import MealPlans from './components/pages/dietitian/meal_plans/MealPlans';
-import TaskBar from './components/pages/sign_up/task_bar/TaskBar';
+import TaskBar from './components/pages/client_sign_up/task_bar/TaskBar';
 import MealBuilder from './components/pages/admin/meal_builder/MealBuilder';
 import MealPlanMealBuilder from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilder';
 import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilderContainer';
@@ -21,7 +21,7 @@ import SplashLinks from './components/shared_components/navbar/links/SplashLinks
 import ClientLinks from './components/shared_components/navbar/links/ClientLinks';
 import DietitianMenu from './components/pages/dietitian/dietitian_menu/DietitianMenu';
 import Resources from './components/pages/splash/resources/Resources';
-import SignUpPage from './components/pages/sign_up/ClientSignUp';
+import SignUpPage from './components/pages/client_sign_up/ClientSignUp';
 import SnackBuilder from './components/pages/admin/snack_builder/SnackBuilder';
 import FAQs from './components/pages/splash/faqs/FAQs';
 import DietitianSignUp from './components/pages/splash/dietitian_sign_up/DietitianSignUp';
