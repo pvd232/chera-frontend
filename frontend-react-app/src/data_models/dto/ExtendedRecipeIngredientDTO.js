@@ -20,6 +20,7 @@ class ExtendedRecipeIngredientDTO extends RecipeIngredientDTO {
   }
   toJSON() {
     return {
+      ...super.toJSON(),
       id: this.id,
       usda_ingredient_id: this.usdaIngredientId,
       meal_plan_meal_id: this.mealPlanMealId,

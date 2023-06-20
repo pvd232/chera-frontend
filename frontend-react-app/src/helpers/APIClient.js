@@ -111,13 +111,13 @@ class APIClient {
   }
 
   // Admin methods
-  async getUpdatedExtendedMealPlanMeal(newRecipe) {
+  async getUpdatedExtendedMealPlanMeal(newMealPlanMeal) {
     const requestUrl = this.baseUrl + '/extended_meal_plan_meal';
 
     const request = new Request(requestUrl);
     const requestParams = {
       method: 'PUT',
-      body: JSON.stringify(newRecipe),
+      body: JSON.stringify(newMealPlanMeal),
       mode: this.mode,
       cache: 'default',
     };
@@ -125,7 +125,21 @@ class APIClient {
     const updatedExtendedMealPlanMeal = await response.json();
     return updatedExtendedMealPlanMeal;
   }
+  async getSpecificExtendedMealPlanMeal(mealPlanId, mealId) {
+    const requestUrl =
+      this.baseUrl +
+      `/extended_meal_plan_meal?meal_plan_id=${mealPlanId}&meal_id=${mealId}`;
 
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const mealPlanMealsData = await response.json();
+    return mealPlanMealsData;
+  }
   async getSpecificExtendedMealPlanMeals(mealPlanId) {
     const requestUrl =
       this.baseUrl + `/extended_meal_plan_meal?meal_plan_id=${mealPlanId}`;

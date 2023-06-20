@@ -15,6 +15,7 @@ export default class CacheManager {
     lazyCache(CacheManager.prototype, '_mealPlanMeals', getMealPlanMealsURL());
   }
   get mealPlanMeals() {
+    console.log('this._mealPlanMeals', this._mealPlanMeals);
     return this._mealPlanMeals;
   }
   set mealPlanMeals(value) {

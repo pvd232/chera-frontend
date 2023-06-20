@@ -9,6 +9,7 @@ import RecipeIngredientItem from '../../../ui_data_containers/RecipeIngredientIt
 import { v4 as uuid } from 'uuid';
 import { FormControl } from '@mui/material';
 const IngredientRow = (props) => {
+  console.log('props', props);
   return (
     <Grid container item alignItems={'center'} spacing={2}>
       <Grid item xs={4}>
@@ -98,6 +99,7 @@ const IngredientRow = (props) => {
           </Select>
         </FormControl>
       </Grid>
+
       {props.ingredient && (
         <Grid item>
           <Icon
