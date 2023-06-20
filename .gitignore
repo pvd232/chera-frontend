@@ -170,4 +170,6 @@ pip-selfcheck.json
 node_modules/
 .eslintrc.json
 package-lock.json
-# yarn.lock*
+
+# meal photos for local development
+meal_photos/

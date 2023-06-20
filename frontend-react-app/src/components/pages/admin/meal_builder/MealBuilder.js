@@ -69,6 +69,7 @@ const MealBuilder = () => {
   const handleSubmit = async () => {
     setLoading(true);
     if (mealId) {
+      console.log('deleting');
       // Delete old meal first
       await APIClient.deleteMeal(mealId);
     }
