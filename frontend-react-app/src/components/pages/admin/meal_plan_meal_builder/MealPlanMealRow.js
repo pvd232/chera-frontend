@@ -85,8 +85,8 @@ const MealPlanMealRow = (props) => {
             disabled={true}
             sx={{
               backgroundColor:
-                props.mealPlanMeal.macroData.protein > 0.35 ||
-                props.mealPlanMeal.macroData.protein < 0.1
+                props.mealPlanMeal.macroData.protein >= 0.35 ||
+                props.mealPlanMeal.macroData.protein <= 0.1
                   ? customTheme.palette.rose.secondary
                   : customTheme.palette.lightGreen.secondary,
             }}
@@ -101,8 +101,8 @@ const MealPlanMealRow = (props) => {
             disabled={true}
             sx={{
               backgroundColor:
-                props.mealPlanMeal.macroData.carb > 0.7 ||
-                props.mealPlanMeal.macroData.carb < 0.45
+                props.mealPlanMeal.macroData.carb >= 0.7 ||
+                props.mealPlanMeal.macroData.carb <= 0.4
                   ? customTheme.palette.rose.secondary
                   : customTheme.palette.lightGreen.secondary,
             }}
@@ -117,8 +117,8 @@ const MealPlanMealRow = (props) => {
             disabled={true}
             sx={{
               backgroundColor:
-                props.mealPlanMeal.macroData.fat > 0.35 ||
-                props.mealPlanMeal.macroData.fat < 0.2
+                props.mealPlanMeal.macroData.fat >= 0.38 ||
+                props.mealPlanMeal.macroData.fat <= 0.17
                   ? customTheme.palette.rose.secondary
                   : customTheme.palette.lightGreen.secondary,
             }}
@@ -139,7 +139,7 @@ const MealPlanMealRow = (props) => {
                     multiplied(props.mealPlanMeal.kCal) -
                       props.mealPlanMeal.mealPlanCalories
                   ) /
-                    props.mealPlanMeal.mealPlanCalories >
+                    props.mealPlanMeal.mealPlanCalories >=
                   0.1
                     ? customTheme.palette.rose.secondary
                     : customTheme.palette.lightGreen.secondary,

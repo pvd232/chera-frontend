@@ -77,7 +77,7 @@ const IngredientRow = (props) => {
             name={`quantity-${props.index}`}
             label="New Quantity"
             type="text"
-            disabled={props.mealPlanNumber % 2 === 0}
+            disabled={true}
             value={
               localQuantity
                 ? localQuantity * props.multiplier

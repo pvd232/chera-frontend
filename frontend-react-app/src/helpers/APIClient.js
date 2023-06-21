@@ -561,6 +561,24 @@ class APIClient {
     const responseData = await response.json();
     return responseData;
   }
+  async getClient(clientId) {
+    const requestUrl = `${this.baseUrl}/client/${clientId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+
+    // Staged client does not exist
+    if (response.status === 404) {
+      return false;
+    }
+    const responseData = await response.json();
+    return responseData;
+  }
 
   async sendReminderEmail(stagedClientId) {
     const requestUrl = this.baseUrl + '/staged_client/reminder';
