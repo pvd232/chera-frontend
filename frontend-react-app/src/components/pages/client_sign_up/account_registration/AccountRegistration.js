@@ -11,6 +11,7 @@ import BlackButton from '../../../shared_components/BlackButton.ts';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress.js';
 import HowItWorks from './HowItWorks.js';
 import CustomTextField from '../../../shared_components/CustomTextField.js';
+
 const AccountRegistration = (props) => {
   const customTheme = useTheme();
 
@@ -22,11 +23,20 @@ const AccountRegistration = (props) => {
       id: props.stagedClientId,
       password: '',
       confirmPassword: '',
+      zipCode: '',
     }
   );
 
+  // const [pricing, setPricing] = useReducer(
+  //   (state, newState) => ({ ...state, ...newState }),
+  //   {
+  //     shippingCost: 0,
+  //     stripePriceId: ""
+  //   }
+  // );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [zipCodeError, setZipCodeError] = useState(false);
 
   const timer = useRef();
   useEffect(() => {
@@ -38,18 +48,39 @@ const AccountRegistration = (props) => {
   const handleInput = (event) => {
     const id = event.target.id;
     const value = event.target.value;
+    // handle zip code input
+    if (id === "zipCode") {
+      if (isNaN(value) === false && value.length <= 5) {
+        setFormValue({zipCode : value})
+      } 
+      return;
+    }
+    
+    // handle password input
     if (id === 'confirm-password') {
       setFormValue({ confirmPassword: value });
     } else {
       setFormValue({ [id]: value });
     }
   };
+
+
   const validate = (form) => {
-    if (formValue.password !== formValue.confirmPassword) {
+    // validate password
+    if ( (formValue.password !== formValue.confirmPassword) ) {
       setError(true);
       return false;
     }
+    // validate zip code
+    if (formValue.zipCode.length < 5) {
+      setZipCodeError(true)
+      return false
+    }
+    // reset error value
     setError(false);
+    setZipCodeError(false)
+
+    // validate form inputs
     return form.checkValidity();
   };
 
@@ -69,16 +100,23 @@ const AccountRegistration = (props) => {
           active: true,
         };
         const mealSubscription = new MealSubscription(mealSubscriptionObject);
+        
+        // send zipcode to api call to get the shipping cost
+
+        const shippingCost = 0;
+        // send shipping cost to api call to get price_id below here
+        // const 
         props.updateMealSubscription(mealSubscription);
         props.updateClientPassword(formValue.password);
         setLoading(false);
       }, 500);
     }
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
-    // check that all required values have been populated before triggering button click
+    // 1) check that all required values have been populated before triggering button click
     if (validate(form)) {
       handleButtonClick();
     }
@@ -191,6 +229,31 @@ const AccountRegistration = (props) => {
                         error={error}
                         helperText={error ? 'Your passwords do not match' : ''}
                       />
+
+                      <CustomTextField
+                        // autoComplete=""
+                        required
+                        type="text"
+                        fullWidth
+                        label={'Zip Code'}
+                        name="zipCode"
+                        id="zipCode"
+                        sx={{
+                          marginLeft: 'auto',
+                          marginRight: 'auto',
+                          width: '80%',
+                        }}
+                        inputProps={{
+                          style: { fontSize: customTheme.fontEqualizer(14) },
+                        }} // font size of input text
+                        InputLabelProps={{
+                          style: { fontSize: customTheme.fontEqualizer(14) },
+                        }}
+                        onChange={handleInput}
+                        value={formValue.zipCode}
+                        error={zipCodeError}
+                        helperText={zipCodeError ? 'Invalid Zip Code' : ''}
+                      />
                     </>
 
                     <BlackButton
@@ -207,7 +270,9 @@ const AccountRegistration = (props) => {
                         borderRadius: '30px',
                         backgroundColor: customTheme.palette.olive.main,
                         color: customTheme.palette.white1.main,
+                        marginBottom: "30px"
                       }}
+                      // handle price
                     >
                       {loading ? <BlueCircularProgress /> : 'Select meals'}
                     </BlackButton>

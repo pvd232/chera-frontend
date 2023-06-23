@@ -26,13 +26,13 @@ const SignUpPage = (props) => {
   const [clientSecret, setClientSecret] = useState(false);
   const [stripeSubscriptionId, setStripeSubscriptionId] = useState(false);
   const [clientPassword, setClientPassword] = useState(false);
+  const [stripePriceId, setStripePriceId] = useState();
   const [client, setClient] = useState(false);
   const [mealSubscription, setMealSubscription] = useState(false);
   const [scheduleMeals, setScheduleMeals] = useState([]);
   const [scheduledOrderMeals, setScheduledOrderMeals] = useState([]);
   const [scheduleSnacks, setScheduleSnacks] = useState([]);
   const [scheduledOrderSnacks, setScheduledOrderSnacks] = useState([]);
-
   const [orderDiscount, setOrderDiscount] = useState(false);
   const [discountCode, setDiscountCode] = useState(false);
   const taskIndexArray = [
@@ -184,6 +184,7 @@ const SignUpPage = (props) => {
         props.updateTaskIndex(1);
       }}
       updateClientPassword={(newPassword) => setClientPassword(newPassword)}
+      stripePriceId = {(stripePriceId) => setStripePriceId(stripePriceId)}
     />
   );
   ContainerObject['ClientMenu'] = (() => {
@@ -247,6 +248,7 @@ const SignUpPage = (props) => {
         setOrderDiscount(newOrderDiscount)
       }
       setDiscountCode={(newDiscountCode) => setDiscountCode(newDiscountCode)}
+      stripePriceId={stripePriceId}
     />
   );
 

@@ -769,11 +769,13 @@ class APIClient {
     numberOfSnacks,
     clientId,
     discountCode,
-    prepaid
+    prepaid,
+    stripePriceId
   ) {
     const requestUrl = this.baseUrl + '/stripe/subscription';
 
     const requestBody = {
+      stripe_price_id: stripePriceId,
       client_id: clientId,
       number_of_meals: numberOfMeals,
       number_of_snacks: numberOfSnacks,
@@ -1430,8 +1432,12 @@ class APIClient {
     return snackPrice;
   }
 
-  async getShippingCost(state) {
-    const requestUrl = this.baseUrl + '/shipping_cost';
+  /* =================
+    descriptions: api call to get the shipping cost base on zip code
+    parametters: 
+  */
+  async getShippingCost(zipCode) {
+    const requestUrl = `${this.baseUrl}/shipping_cost/${zipCode}`;
     const request = new Request(requestUrl);
 
     const requestHeaders = new Headers();

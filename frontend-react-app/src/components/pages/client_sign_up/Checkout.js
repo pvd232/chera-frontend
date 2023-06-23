@@ -12,6 +12,7 @@ const Checkout = (props) => {
   );
   const handleSubmit = async (newClient) => {
     const subscriptionData = await APIClient.createStripeSubscription(
+      props.stripePriceId,
       props.scheduleMeals.length,
       props.scheduleSnacks.length,
       newClient.id,
