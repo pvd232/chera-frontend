@@ -1441,7 +1441,7 @@ class APIClient {
     const request = new Request(requestUrl);
 
     const requestHeaders = new Headers();
-    requestHeaders.set('state', state);
+    requestHeaders.set('zipCode', zipCode);
 
     const requestParams = {
       method: 'GET',

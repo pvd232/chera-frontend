@@ -15,18 +15,13 @@ import TaskBarLine from './TaskBarLine';
 const TaskBar = (props) => {
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [snacks, setSnacks] = useState(false);
-  const [shippingCost, setShippingCost] = useState(false);
+  const [shippingCost, setShippingCost] = useState(0);
   const [stagedClient, setStagedClient] = useState(false);
   const [taskIndex, setTaskIndex] = useState(0);
 
   useEffect(() => {
     let mounted = true;
 
-    APIClient.getShippingCost().then((shippingCost) => {
-      if (mounted) {
-        setShippingCost(shippingCost);
-      }
-    });
     APIClient.getExtendedMeals().then((extendedMeals) => {
       if (mounted) {
         const extendedMealArray = [];

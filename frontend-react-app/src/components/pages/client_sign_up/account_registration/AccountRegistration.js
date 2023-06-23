@@ -11,6 +11,7 @@ import BlackButton from '../../../shared_components/BlackButton.ts';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress.js';
 import HowItWorks from './HowItWorks.js';
 import CustomTextField from '../../../shared_components/CustomTextField.js';
+import APIClient from "./../../../../helpers/APIClient.js";
 
 const AccountRegistration = (props) => {
   const customTheme = useTheme();
@@ -27,17 +28,20 @@ const AccountRegistration = (props) => {
     }
   );
 
-  // const [pricing, setPricing] = useReducer(
-  //   (state, newState) => ({ ...state, ...newState }),
-  //   {
-  //     shippingCost: 0,
-  //     stripePriceId: ""
-  //   }
-  // );
+  // store shipping cost and stripe stripe price_id
+  const [pricing, setPricing] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      shippingCost: props.shippingCost,
+      stripePriceId: ""
+    }
+  );
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [zipCodeError, setZipCodeError] = useState(false);
 
+  // handle timeout
   const timer = useRef();
   useEffect(() => {
     return () => {
@@ -102,10 +106,16 @@ const AccountRegistration = (props) => {
         const mealSubscription = new MealSubscription(mealSubscriptionObject);
         
         // send zipcode to api call to get the shipping cost
+        APIClient.getShippingCost(formValue.zipCode).then((shippingCost) => {
+          setPricing({shippingCost : shippingCost})
+        });
+        // update shippping cost of the mealSubscription 
+        mealSubscription.shippingCost = pricing.shippingCost
 
-        const shippingCost = 0;
         // send shipping cost to api call to get price_id below here
-        // const 
+
+
+
         props.updateMealSubscription(mealSubscription);
         props.updateClientPassword(formValue.password);
         setLoading(false);
