@@ -93,6 +93,16 @@ const AccountRegistration = (props) => {
     if (!loading) {
       setLoading(true);
       timer.current = window.setTimeout(() => {
+        // send zipcode to api call to get the shipping cost
+        APIClient.getShippingCost(formValue.zipCode).then((shippingCost) => {
+          setPricing({shippingCost : shippingCost})
+        });
+
+        // send shipping cost for four meals to api call to get price_id below here
+        APIClient.getStripePriceId(pricing.shippingCosts.four_meals).then((stripePriceId) => {
+          setPricing({stripePriceId : stripePriceId})
+        });
+
         // initalize new meal subscription object
         const mealSubscriptionObject = {
           id: uuid(),
@@ -107,19 +117,8 @@ const AccountRegistration = (props) => {
 
         // create new meal subscription (Class)
         const mealSubscription = new MealSubscription(mealSubscriptionObject);
-        
-        // send zipcode to api call to get the shipping cost
-        APIClient.getShippingCost(formValue.zipCode).then((shippingCost) => {
-          setPricing({shippingCost : shippingCost})
-        });
 
-        // send shipping cost to api call to get price_id below here
-        APIClient.getShippingCost(pricing.shippingCost).then((stripePriceId) => {
-          setPricing({stripePriceId : stripePriceId})
-        });
-        // update shippping cost of the mealSubscription 
-        mealSubscription.shippingCost = pricing.shippingCost
-        mealSubscription.stripePriceId = pricing.stripePriceId.stripe_price_id
+        console.log(mealSubscription)
 
         // update meal subscription
         props.updateMealSubscription(mealSubscription);

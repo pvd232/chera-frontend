@@ -21,7 +21,7 @@ const TaskBar = (props) => {
 
   useEffect(() => {
     let mounted = true;
-
+    setShippingCost(0);
     APIClient.getExtendedMeals().then((extendedMeals) => {
       if (mounted) {
         const extendedMealArray = [];
