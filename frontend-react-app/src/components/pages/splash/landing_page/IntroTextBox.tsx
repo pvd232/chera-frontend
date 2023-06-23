@@ -41,7 +41,7 @@ const IntroTextBox = () => {
               to enable faster recovery,
             </Typography>
             <Typography className={styles.subheader}>
-              sustained by regular eating habits.
+              sustained by intuitive eating habits.
             </Typography>
           </>
         )}
