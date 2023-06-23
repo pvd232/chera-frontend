@@ -1433,15 +1433,17 @@ class APIClient {
   }
 
   /* =================
-    descriptions: api call to get the shipping cost base on zip code
-    parametters: 
+    descriptions: 
+      - send zipcode to api
+    parametters: zipCode
+    return: shippingCost (float)
   */
   async getShippingCost(zipCode) {
     const requestUrl = `${this.baseUrl}/shipping_cost/${zipCode}`;
     const request = new Request(requestUrl);
 
     const requestHeaders = new Headers();
-    requestHeaders.set('zipCode', zipCode);
+    requestHeaders.set('zip-code', zipCode);
 
     const requestParams = {
       method: 'GET',
@@ -1452,6 +1454,30 @@ class APIClient {
     const response = await this.fetchWrapper(request, requestParams);
     const shippingCost = await response.json();
     return shippingCost;
+  }
+
+  /* =================
+    descriptions:
+      - send shippingCost to api
+    parametters: zipCode
+    return: stripeShippingID - stringify(object)
+  */
+  async getStripePriceId(shippingCost) {
+    const requestUrl = `${this.baseUrl}/stripe/price_id/${shippingCost}`;
+    const request = new Request(requestUrl);
+
+    const requestHeaders = new Headers();
+    requestHeaders.set('shipping-cost', shippingCost);
+
+    const requestParams = {
+      method: 'GET',
+      headers: requestHeaders,
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const stripePriceId = await response.json();
+    return stripePriceId;
   }
 
   async getSalesTax(state) {

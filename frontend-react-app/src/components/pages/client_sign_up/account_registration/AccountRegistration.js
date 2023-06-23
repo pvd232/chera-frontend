@@ -93,6 +93,7 @@ const AccountRegistration = (props) => {
     if (!loading) {
       setLoading(true);
       timer.current = window.setTimeout(() => {
+        // initalize new meal subscription object
         const mealSubscriptionObject = {
           id: uuid(),
           clientId: formValue.id,
@@ -103,21 +104,30 @@ const AccountRegistration = (props) => {
           paused: false,
           active: true,
         };
+
+        // create new meal subscription (Class)
         const mealSubscription = new MealSubscription(mealSubscriptionObject);
         
         // send zipcode to api call to get the shipping cost
         APIClient.getShippingCost(formValue.zipCode).then((shippingCost) => {
           setPricing({shippingCost : shippingCost})
         });
-        // update shippping cost of the mealSubscription 
-        mealSubscription.shippingCost = pricing.shippingCost
 
         // send shipping cost to api call to get price_id below here
+        APIClient.getShippingCost(pricing.shippingCost).then((stripePriceId) => {
+          setPricing({stripePriceId : stripePriceId})
+        });
+        // update shippping cost of the mealSubscription 
+        mealSubscription.shippingCost = pricing.shippingCost
+        mealSubscription.stripePriceId = pricing.stripePriceId.stripe_price_id
 
-
-
+        // update meal subscription
         props.updateMealSubscription(mealSubscription);
+
+        // update password
         props.updateClientPassword(formValue.password);
+
+        // reset loading bool
         setLoading(false);
       }, 500);
     }
@@ -126,7 +136,7 @@ const AccountRegistration = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const form = event.target;
-    // 1) check that all required values have been populated before triggering button click
+    // check that all required values have been populated before triggering button click
     if (validate(form)) {
       handleButtonClick();
     }
