@@ -7,9 +7,10 @@ import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
 import capitalize from '../../../../helpers/capitalize';
 import LocalStorageManager from '../../../../helpers/LocalStorageManager';
-import getFilteredMeals from './helpers/getFilteredMeals';
+import getFilteredMealPlanMeals from './helpers/getFilteredMealPlanMeals';
 import MediaCard from './MediaCard';
-import { sortFilteredMealPlanMeals } from './helpers/sortFilteredMealPlanMeals';
+// Testing this still
+
 const DietitianMenu = (props) => {
   const customTheme = useTheme();
   const [filterMealPlanId, setFilterMealPlanId] = useState(
@@ -18,87 +19,51 @@ const DietitianMenu = (props) => {
   const [filterMealTime, setFilterMealTime] = useState('all');
   const [filterDietaryRestrictions, setFilterDietaryRestrictions] =
     useState('all');
-
-  const mealPlanMealsByMeal = (() => {
-    const mealPlanMealMap = new Map();
-    props.dataProps.mealPlanMeals.forEach((mealPlanMeal) => {
-      if (mealPlanMealMap.has(mealPlanMeal.mealId)) {
-        mealPlanMealMap.get(mealPlanMeal.mealId).push(mealPlanMeal);
-      } else {
-        mealPlanMealMap.set(mealPlanMeal.mealId, [mealPlanMeal]);
-      }
-    });
-    return mealPlanMealMap;
-  })();
-
-  const mealPlanMealsByMealPlan = (() => {
-    const mealPlanMealMap = new Map();
-    props.dataProps.mealPlanMeals.forEach((mealPlanMeal) => {
-      if (mealPlanMealMap.has(mealPlanMeal.mealPlanId)) {
-        mealPlanMealMap.get(mealPlanMeal.mealPlanId).push(mealPlanMeal);
-      } else {
-        mealPlanMealMap.set(mealPlanMeal.mealPlanId, [mealPlanMeal]);
-      }
-    });
-    return mealPlanMealMap;
-  })();
-  const mealPlanMealsByDietaryRestriction = (() => {
-    const mealPlansByDietaryRestrictionMap = new Map();
-    props.dataProps.extendedMeals.forEach((meal) => {
+  const mealsByDietaryRestrictionMap = (() => {
+    const mealsByDietaryRestrictionMapToReturn = new Map();
+    props.extendedMeals.forEach((meal) => {
       meal.dietaryRestrictions.forEach((dietaryRestriction) => {
-        const mealPlanMealsAssociated = mealPlanMealsByMeal.get(meal.id);
         if (
-          mealPlansByDietaryRestrictionMap.has(
+          !mealsByDietaryRestrictionMapToReturn.has(
             dietaryRestriction.dietaryRestrictionId
           )
         ) {
-          mealPlansByDietaryRestrictionMap.set(
+          const mealSet = new Set();
+          mealSet.add(meal.id);
+          mealsByDietaryRestrictionMapToReturn.set(
             dietaryRestriction.dietaryRestrictionId,
-            [
-              ...mealPlansByDietaryRestrictionMap.get(
-                dietaryRestriction.dietaryRestrictionId
-              ),
-              ...mealPlanMealsAssociated,
-            ]
+            mealSet
           );
         } else {
-          mealPlansByDietaryRestrictionMap.set(
-            dietaryRestriction.dietaryRestrictionId,
-            [...mealPlanMealsAssociated]
-          );
+          mealsByDietaryRestrictionMapToReturn
+            .get(dietaryRestriction.dietaryRestrictionId)
+            .add(meal.id);
         }
       });
     });
-    return mealPlansByDietaryRestrictionMap;
+    return mealsByDietaryRestrictionMapToReturn;
   })();
-
-  const mealPlanMealsByMealTime = (() => {
-    const mealPlanMealsByTimeMap = new Map();
-    props.dataProps.extendedMeals.forEach((meal) => {
-      const mealPlanMealsAssociated = mealPlanMealsByMeal.get(meal.id);
-      if (mealPlanMealsByTimeMap.has(meal.mealTime)) {
-        mealPlanMealsByTimeMap.set(meal.mealTime, [
-          ...mealPlanMealsByTimeMap.get(meal.mealTime),
-          ...mealPlanMealsAssociated,
-        ]);
+  const mealsByMealTimeMap = (() => {
+    const mealsByMealTimeMapToReturn = new Map();
+    props.extendedMeals.forEach((meal) => {
+      if (!mealsByMealTimeMapToReturn.has(meal.mealTime)) {
+        const mealSet = new Set();
+        mealSet.add(meal.id);
+        mealsByMealTimeMapToReturn.set(meal.mealTime, mealSet);
       } else {
-        mealPlanMealsByTimeMap.set(meal.mealTime, [...mealPlanMealsAssociated]);
+        mealsByMealTimeMapToReturn.get(meal.mealTime).add(meal.id);
       }
     });
-    return mealPlanMealsByTimeMap;
+    return mealsByMealTimeMapToReturn;
   })();
 
-  const [filteredMealPlanMeals, setFilteredMealPlanMeals] = useState(
-    mealPlanMealsByMealPlan.get(filterMealPlanId)
-  );
-
+  const [filteredMeals, setFilteredMeals] = useState(props.extendedMeals);
   const newHandleFilterChange = (event) => {
-    const allMealPlanMeals = props.dataProps.mealPlanMeals;
+    const extendedMeals = props.extendedMeals;
     const filterMealParameters = {
-      allMealPlanMeals,
-      mealPlanMealsByMealPlan,
-      mealPlanMealsByMealTime,
-      mealPlanMealsByDietaryRestriction,
+      extendedMeals,
+      mealsByMealTimeMap,
+      mealsByDietaryRestrictionMap,
       filterMealPlanId,
       filterMealTime,
       filterDietaryRestrictions,
@@ -106,15 +71,15 @@ const DietitianMenu = (props) => {
     if (event.target.name === 'filterMealTime') {
       setFilterMealTime(event.target.value);
       filterMealParameters.filterMealTime = event.target.value;
-      setFilteredMealPlanMeals(getFilteredMeals(filterMealParameters));
+      setFilteredMeals(getFilteredMealPlanMeals(filterMealParameters));
     } else if (event.target.name === 'filterDietaryRestrictions') {
       setFilterDietaryRestrictions(event.target.value);
       filterMealParameters.filterDietaryRestrictions = event.target.value;
-      setFilteredMealPlanMeals(getFilteredMeals(filterMealParameters));
+      setFilteredMeals(getFilteredMealPlanMeals(filterMealParameters));
     } else if (event.target.name === 'filterMealPlan') {
       setFilterMealPlanId(event.target.value);
       filterMealParameters.filterMealPlanId = event.target.value;
-      setFilteredMealPlanMeals(getFilteredMeals(filterMealParameters));
+      setFilteredMeals(getFilteredMealPlanMeals(filterMealParameters));
     }
   };
 
@@ -122,16 +87,17 @@ const DietitianMenu = (props) => {
     <Grid
       container
       paddingTop={'5vh'}
+      paddingLeft={'2vw'}
+      paddingRight={'2vw'}
       paddingBottom={'10vh'}
       // this gets rid of extra 'purple' space in view layout in chrome dev tools.
       alignItems={'flex-start'}
-      backgroundColor={customTheme.palette.fucia.secondary}
-      justifyContent={'center'}
+      backgroundColor={customTheme.palette.olive.quaternary}
     >
       <Grid
         item
         container
-        xs={10}
+        xs={12}
         spacing={2}
         sx={{ height: 'min-content' }}
         alignItems={'flex-end'}
@@ -189,23 +155,22 @@ const DietitianMenu = (props) => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid container item xs={10} paddingTop={'6vh'}>
-        <Grid container item spacing={4}>
-          {sortFilteredMealPlanMeals(filteredMealPlanMeals).map(
-            (mealPlanMeal, i) => {
-              return (
-                <Grid item key={i} md={4}>
-                  <MediaCard
-                    mealPlanMeal={mealPlanMeal}
-                    key={i}
-                    shouldDisplayNutritionDetails={true}
-                  ></MediaCard>
-                </Grid>
-              );
-            }
-          )}
-        </Grid>
-      </Grid>{' '}
+      <Grid
+        container
+        item
+        xs={12}
+        spacing={4}
+        paddingTop={'6vh'}
+        justifyContent={window.innerWidth < 450 ? 'center' : 'flex-start'}
+      >
+        {filteredMeals.map((meal, i) => {
+          return (
+            <Grid item key={i} md={4}>
+              <MediaCard meal={meal} key={i}></MediaCard>
+            </Grid>
+          );
+        })}
+      </Grid>
     </Grid>
   );
 };

@@ -7,9 +7,8 @@ import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
 import capitalize from '../../../../helpers/capitalize';
 import APIClient from '../../../../helpers/APIClient';
-import ExtendedMealDTOFactory from '../../../../data_models/factories/dto/ExtendedMealDTOFactory';
-import MealDietaryRestrictionDTOFactory from '../../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
-import ExtendedMealPlanMealDTO from '../../../../data_models/dto/ExtendedMealPlanMealDTO';
+import SnackDTOFactory from '../../../../data_models/factories/dto/SnackDTOFactory';
+import ExtendedMealPlanSnackDTO from '../../../../data_models/dto/ExtendedMealPlanSnackDTO';
 import ExtendedMealPlanDTOFactory from '../../../../data_models/factories/dto/ExtendedMealPlanDTOFactory';
 import ExtendedRecipeIngredientDTOFactory from '../../../../data_models/factories/dto/ExtendedRecipeIngredientDTOFactory';
 import USDANutrientDailyValueDTOFactory from '../../../../data_models/factories/dto/USDANutrientDailyValueDTOFactory';
@@ -17,21 +16,21 @@ import ExtendedRecipeIngredientNutrientDTOFactory from '../../../../data_models/
 import RowBorder from '../../dietitian/dietitian_menu/nutrition_details/RowBorder';
 import BlackButton from '../../../shared_components/BlackButton';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
-import MealPlanMealRow from './MealPlanMealRow';
+import MealPlanSnackRow from './MealPlanSnackRow';
 import CircularProgressPage from '../../../shared_components/CircularProgressPage';
-import { getMealPlanMeal } from './helpers/getMealPlanMeal';
-import { useMealPlanMeal } from './hooks/useMealPlanMeal';
+import { getMealPlanSnack } from './helpers/getMealPlanSnack';
+import { useMealPlanSnack } from './hooks/useMealPlanSnack';
 import ExtendedRecipeIngredientDTO from '../../../../data_models/dto/ExtendedRecipeIngredientDTO';
-import { cloneMealPlanMeal } from './helpers/cloneMealPlanMeal';
-const MealPlanMealBuilder = (props) => {
-  const [mealPlanMeal, setMealPlanMeal] = useMealPlanMeal(
+import { cloneMealPlanSnack } from './helpers/cloneMealPlanSnack';
+const MealPlanSnackBuilder = (props) => {
+  const [mealPlanSnack, setMealPlanSnack] = useMealPlanSnack(
     props.mealPlans[0].id,
-    props.meals[0].id
+    props.snacks[0].id
   );
   const [filterMealPlanId, setFilterMealPlanId] = useState(
     props.mealPlans[0].id
   );
-  const [filterMealId, setfilterMealId] = useState(props.meals[0].id);
+  const [filterSnackId, setfilterSnackId] = useState(props.snacks[0].id);
   const [multiplier, setMultiplier] = useState(1);
   const [loading, setLoading] = useState(false);
   const [hasMadeChanges, setHasMadeChanges] = useState(false);
@@ -50,20 +49,20 @@ const MealPlanMealBuilder = (props) => {
       setHasMadeChanges(false);
       setHasSubmittedChanges(false);
       setHasBeenWarned(false);
-      if (event.target.name === 'filterMealId') {
-        setfilterMealId(event.target.value);
-        const newMealPlanMeal = await getMealPlanMeal(
+      if (event.target.name === 'filterSnackId') {
+        setfilterSnackId(event.target.value);
+        const newMealPlanSnack = await getMealPlanSnack(
           filterMealPlanId,
           event.target.value
         );
-        setMealPlanMeal(newMealPlanMeal);
+        setMealPlanSnack(newMealPlanSnack);
       } else if (event.target.name === 'filterMealPlan') {
         setFilterMealPlanId(event.target.value);
-        const newMealPlanMeal = await getMealPlanMeal(
+        const newMealPlanSnack = await getMealPlanSnack(
           event.target.value,
-          filterMealId
+          filterSnackId
         );
-        setMealPlanMeal(newMealPlanMeal);
+        setMealPlanSnack(newMealPlanSnack);
       }
     }
   };
@@ -71,35 +70,35 @@ const MealPlanMealBuilder = (props) => {
     setHasMadeChanges(true);
 
     // Replace ingredient with updated ingredient
-    mealPlanMeal.recipe.splice(ingredientIndex, 1, newIngredient);
+    mealPlanSnack.recipe.splice(ingredientIndex, 1, newIngredient);
 
     // Obtain new nutritional data from backend
-    const updatedMealPlanMealData =
-      await APIClient.getUpdatedExtendedMealPlanMeal(mealPlanMeal);
+    const updatedMealPlanSnackData =
+      await APIClient.getUpdatedExtendedMealPlanSnack(mealPlanSnack);
 
     // Instantiate new object with new data
-    const updatedOddMealPlanMeal = new ExtendedMealPlanMealDTO(
-      updatedMealPlanMealData,
-      new ExtendedMealDTOFactory(new MealDietaryRestrictionDTOFactory()),
+    const updatedOddMealPlanSnack = new ExtendedMealPlanSnackDTO(
+      updatedMealPlanSnackData,
+      new SnackDTOFactory(),
       new ExtendedMealPlanDTOFactory(new USDANutrientDailyValueDTOFactory()),
       new ExtendedRecipeIngredientDTOFactory(
         new ExtendedRecipeIngredientNutrientDTOFactory()
       ),
       new ExtendedRecipeIngredientNutrientDTOFactory()
     );
-    setMealPlanMeal(updatedOddMealPlanMeal);
+    setMealPlanSnack(updatedOddMealPlanSnack);
   };
 
   const handleSubmit = async () => {
     setHasSubmittedChanges(true);
     setLoading(true);
 
-    // Default multiplier state value is 1 (no change), however if mealPlanMeal multiplier is not 1, then update recipe ingredients and nutrients
-    if (multiplier !== 1 || mealPlanMeal.multiplier !== 1) {
+    // Default multiplier state value is 1 (no change), however if mealPlanSnack multiplier is not 1, then update recipe ingredients and nutrients
+    if (multiplier !== 1 || mealPlanSnack.multiplier !== 1) {
       // Update recipe ingredients to reflect multiplier
       const multipliedRecipe = (() => {
         if (multiplier !== 1) {
-          return mealPlanMeal.recipe.map((ingredient) => {
+          return mealPlanSnack.recipe.map((ingredient) => {
             const multipliedIngredient = new ExtendedRecipeIngredientDTO(
               ingredient.toJSON()
             );
@@ -107,7 +106,7 @@ const MealPlanMealBuilder = (props) => {
             return multipliedIngredient;
           });
         } else {
-          return mealPlanMeal.recipe;
+          return mealPlanSnack.recipe;
         }
       })();
       if (multiplier !== 1) {
@@ -115,35 +114,40 @@ const MealPlanMealBuilder = (props) => {
         await APIClient.updateRecipeIngredientNutrients(multipliedRecipe);
         await APIClient.updateRecipeIngredients(multipliedRecipe);
 
-        mealPlanMeal.multiplier = multiplier;
+        mealPlanSnack.multiplier = multiplier;
         // Update meal plan meal in backend
-        await APIClient.updateMealPlanMeal(mealPlanMeal);
+        await APIClient.updateMealPlanSnack(mealPlanSnack);
       }
 
-      // // Update recipe ingredients and nutrients in backend for even meal plan meal, which has identical recipe
-      const evenMealPlan = await APIClient.getMealPlan(
-        mealPlanMeal.associatedMealPlan.number + 1
-      );
+      //  // Update recipe ingredients and nutrients in backend for sister meal plan snack, which has identical recipe
+      if (
+        mealPlanSnack.associatedMealPlan.number === 2 ||
+        mealPlanSnack.associatedMealPlan.number === 4 ||
+        mealPlanSnack.associatedMealPlan.number === 6
+      ) {
+        const evenMealPlan = await APIClient.getMealPlan(
+          mealPlanSnack.associatedMealPlan.number + 3
+        );
 
-      const evenMealPlanMeal = await getMealPlanMeal(
-        evenMealPlan.id,
-        mealPlanMeal.mealId
-      );
-      const multiplierToUse =
-        multiplier !== 1 ? multiplier : mealPlanMeal.multiplier;
-      await cloneMealPlanMeal(
-        multipliedRecipe,
-        evenMealPlanMeal,
-        multiplierToUse
-      );
+        const evenMealPlanSnack = await getMealPlanSnack(
+          evenMealPlan.id,
+          mealPlanSnack.snackId
+        );
+        const multiplierToUse =
+          multiplier !== 1 ? multiplier : mealPlanSnack.multiplier;
+        await cloneMealPlanSnack(
+          multipliedRecipe,
+          evenMealPlanSnack,
+          multiplierToUse
+        );
+      }
     }
-
-    alert('Meals successfully updated!');
+    alert('Snacks successfully updated!');
     window.location.reload();
   };
   return (
     <>
-      {mealPlanMeal ? (
+      {mealPlanSnack ? (
         <Grid
           container
           paddingTop={'5vh'}
@@ -175,7 +179,7 @@ const MealPlanMealBuilder = (props) => {
                       sx={{ fontSize: '12px' }}
                       key={i}
                     >
-                      {`${mealPlan.number} (${mealPlan.statedCaloricLowerBound}-${mealPlan.statedCaloricUpperBound} kCal)`}
+                      {`${mealPlan.number} (${mealPlan.perSnackCaloricLowerBound}-${mealPlan.perSnackCaloricUpperBound} kCal)`}
                     </MenuItem>
                   ))}
                   <MenuItem value={'all'} sx={{ fontSize: '12px' }} key={'all'}>
@@ -190,11 +194,11 @@ const MealPlanMealBuilder = (props) => {
                 <Select
                   label="Meal"
                   required
-                  name="filterMealId"
-                  value={filterMealId}
+                  name="filterSnackId"
+                  value={filterSnackId}
                   onChange={newHandleFilterChange}
                 >
-                  {props.meals.map((meal, i) => (
+                  {props.snacks.map((meal, i) => (
                     <MenuItem value={meal.id} key={i}>
                       {capitalize(meal.name)}
                     </MenuItem>
@@ -218,9 +222,9 @@ const MealPlanMealBuilder = (props) => {
             justifyContent={window.innerWidth < 450 ? 'center' : 'flex-start'}
           >
             <Grid item>
-              <MealPlanMealRow
-                mealPlanNumber={mealPlanMeal.associatedMealPlan.number}
-                mealPlanMeal={mealPlanMeal}
+              <MealPlanSnackRow
+                mealPlanNumber={mealPlanSnack.associatedMealPlan.number}
+                mealPlanSnack={mealPlanSnack}
                 updateIngredient={(ingredientIndex, newIngredient) =>
                   handleUpdateIngredients(ingredientIndex, newIngredient)
                 }
@@ -249,4 +253,4 @@ const MealPlanMealBuilder = (props) => {
     </>
   );
 };
-export default MealPlanMealBuilder;
+export default MealPlanSnackBuilder;

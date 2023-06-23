@@ -1,22 +1,15 @@
 import { useState, useEffect, cloneElement } from 'react';
 import APIClient from '../../../../helpers/APIClient';
-import CacheManager from '../../../../helpers/CacheManager';
 import MealPlanDTO from '../../../../data_models/dto/MealPlanDTO';
 import MealPlan from '../../../../data_models/model/MealPlan';
-import ExtendedMealDTOFactory from '../../../../data_models/factories/dto/ExtendedMealDTOFactory';
 import MealDietaryRestrictionDTOFactory from '../../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
 import MealDietaryRestrictionFactory from '../../../../data_models/factories/model/MealDietaryRestrictionFactory';
 import ExtendedMeal from '../../../../data_models/model/ExtendedMeal';
 import ExtendedMealDTO from '../../../../data_models/dto/ExtendedMealDTO';
-import ExtendedMealPlanMealDTO from '../../../../data_models/dto/ExtendedMealPlanMealDTO';
-import ExtendedMealPlanDTOFactory from '../../../../data_models/factories/dto/ExtendedMealPlanDTOFactory';
-import ExtendedRecipeIngredientDTOFactory from '../../../../data_models/factories/dto/ExtendedRecipeIngredientDTOFactory';
-import USDANutrientDailyValueDTOFactory from '../../../../data_models/factories/dto/USDANutrientDailyValueDTOFactory';
-import ExtendedRecipeIngredientNutrientDTOFactory from '../../../../data_models/factories/dto/ExtendedRecipeIngredientNutrientDTOFactory';
 import CircularProgressPage from '../../../shared_components/CircularProgressPage';
+// Testing this still
 
 const DietitianMenuContainer = (props) => {
-  const [mealPlanMeals, setMealPlanMeals] = useState(false);
   const [mealPlans, setMealPlans] = useState(false);
   const [extendedMeals, setExtendedMeals] = useState(false);
   useEffect(() => {
@@ -51,37 +44,13 @@ const DietitianMenuContainer = (props) => {
         setMealPlans(mealPlans);
       }
     });
-    Promise.resolve(CacheManager.shared.mealPlanMeals).then((values) => {
-      console.log('values', values);
-      if (mounted) {
-        const extendedMealPlanMealDTOs = values.map(
-          (extendedMealPlanMealData) =>
-            new ExtendedMealPlanMealDTO(
-              extendedMealPlanMealData,
-              new ExtendedMealDTOFactory(
-                new MealDietaryRestrictionDTOFactory()
-              ),
-              new ExtendedMealPlanDTOFactory(
-                new USDANutrientDailyValueDTOFactory()
-              ),
-              new ExtendedRecipeIngredientDTOFactory(
-                new ExtendedRecipeIngredientNutrientDTOFactory()
-              ),
-              new ExtendedRecipeIngredientNutrientDTOFactory()
-            )
-        );
-        setMealPlanMeals(extendedMealPlanMealDTOs);
-      }
-    });
 
     return () => (mounted = false);
   }, []);
 
-  if (mealPlans && mealPlanMeals && extendedMeals) {
-    console.log('mealPlanMeals', mealPlanMeals);
+  if (mealPlans && extendedMeals) {
     const dataProps = {
       mealPlans: mealPlans,
-      mealPlanMeals: mealPlanMeals,
       extendedMeals: extendedMeals,
     };
     // Pass the dataProps to the child component

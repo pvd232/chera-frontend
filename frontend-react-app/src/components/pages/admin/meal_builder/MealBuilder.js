@@ -99,6 +99,7 @@ const MealBuilder = () => {
         id: uuid(),
         meal_id: newMealId,
         meal_plan_id: mealPlan.id,
+        multiplier: 1,
         active: true,
       });
       await APIClient.createMealPlanMeal(mealPlanMealDTO);

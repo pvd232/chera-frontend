@@ -1,70 +1,34 @@
 import React from 'react';
-import Typography from '@mui/material/Typography';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import Grid from '@mui/material/Grid';
 import logo from '../../../../static/images/chera_logo_300x300.png';
-import capitalize from '../../../../helpers/capitalize';
 import NutritionDetails from './nutrition_details/NutritionDetails';
+import { FoodCard } from '../../../shared_components/FoodCard';
+import mediaCard from './scss/MediaCard.module.scss';
 const MediaCard = React.memo(
   (props) => {
-    const [loading, setLoading] = React.useState(true);
-
-    const onLoad = React.useCallback(() => {
-      setLoading(false);
-    }, []);
     return (
-      <Card
-        sx={{
-          maxWidth: 350,
-          height: '100%',
-          maxHeight: 450,
-          position: 'relative',
-          display: loading ? 'none' : 'block',
-        }}
-        id={props.mealPlanMeal.id}
-      >
-        <CardMedia
-          component="img"
-          sx={{
-            width: '50%',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: '20px',
-            marginBottom: '20px',
-          }}
-          src={logo}
-          alt="green iguana"
-          onLoad={onLoad}
-        />
-        <CardContent>
-          <Typography
-            gutterBottom
-            fontSize={'1rem'}
-            fontWeight={'500'}
-            component="div"
-          >
-            {props.mealPlanMeal.associatedMeal.name}
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              component="div"
-            >
-              {capitalize(props.mealPlanMeal.associatedMeal.mealTime)}
-            </Typography>
-          </Typography>
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ marginBottom: '5vh' }}
-          >
-            {props.mealPlanMeal.associatedMeal.description}
-          </Typography>
-          <NutritionDetails
-            mealPlanMeal={props.mealPlanMeal}
-          ></NutritionDetails>
-        </CardContent>
-      </Card>
+      <FoodCard
+        mealName={props.mealPlanMeal.associatedMeal.name}
+        mealTime={props.mealPlanMeal.associatedMeal.mealTime}
+        mealDescription={props.mealPlanMeal.associatedMeal.description}
+        mealImageUrl={props.mealPlanMeal.associatedMeal.imageUrl}
+        logo={logo}
+        isSnackCard={false}
+        childComponent={
+          <Grid item container className={mediaCard.actionsContainer}>
+            <Grid container item className={mediaCard.childContainer}>
+              <CardActions>
+                <Grid container className={mediaCard.iconButtonContainer}>
+                  <NutritionDetails
+                    mealPlanMeal={props.mealPlanMeal}
+                  ></NutritionDetails>
+                </Grid>
+              </CardActions>
+            </Grid>
+          </Grid>
+        }
+      />
     );
   },
   (prevProps, props) => {

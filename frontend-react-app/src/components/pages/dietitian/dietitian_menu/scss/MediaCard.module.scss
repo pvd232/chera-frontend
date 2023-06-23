@@ -1,0 +1,15 @@
+.actionsContainer {
+  margin-top: 5vh;
+  padding-left: 8px;
+  .childContainer {
+    position: absolute;
+    bottom: 3vh;
+    .iconButtonContainer {
+      align-items: center;
+    }
+  }
+}
+// Class must be defined globally due to Mui-disabled override
+.icon {
+  font-size: 2.5rem;
+}
