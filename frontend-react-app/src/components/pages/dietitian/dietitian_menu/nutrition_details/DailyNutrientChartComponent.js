@@ -7,7 +7,6 @@ import {
   ValueAxis,
 } from 'devextreme-react/chart';
 import DataSource from 'devextreme/data/data_source';
-import capitalize from '../../../../../helpers/capitalize';
 import formatNutrientLabelText from './helpers/formatNutrientLabelText';
 const DailyNutrientChartComponent = (props) => {
   const newDs = new DataSource(props.dataSource);
@@ -15,7 +14,7 @@ const DailyNutrientChartComponent = (props) => {
     <Chart dataSource={newDs}>
       <Series
         valueField="dailyValue"
-        argumentField="name"
+        argumentField="capitalizedNutrientName"
         name="Daily Nutrients"
         type="bar"
         color={props.customTheme.palette.olive.main}
@@ -39,11 +38,7 @@ const DailyNutrientChartComponent = (props) => {
         visualRange={{ startValue: -0.001, endValue: 1.0 }}
       ></ValueAxis>
       <ArgumentAxis>
-        <Label
-          visible={true}
-          customizeText={(arg) => capitalize(arg.value)}
-          family={'Roboto,Helvetica,Arial,sans-serif'}
-        >
+        <Label visible={true} family={'Roboto,Helvetica,Arial,sans-serif'}>
           <Font
             size={!props.customTheme.extraSmallScreen() ? 12 : 11.5}
             color={'black'}

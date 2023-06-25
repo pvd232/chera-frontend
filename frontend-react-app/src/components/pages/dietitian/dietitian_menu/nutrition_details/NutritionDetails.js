@@ -136,7 +136,7 @@ const NutritionDetails = (props) => {
                       <Grid
                         item
                         xl={9}
-                        lg={9}
+                        lg={10}
                         md={4}
                         sm={7}
                         xs={11}
