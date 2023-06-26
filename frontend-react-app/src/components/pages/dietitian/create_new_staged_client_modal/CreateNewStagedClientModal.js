@@ -65,12 +65,13 @@ const CreateNewStagedClientModal = (props) => {
   };
 
   const validate = async (form) => {
-    const clientIdExists = await APIClient.getStagedClient(formValue.id);
+    const stagedClientIdExists = await APIClient.getStagedClient(formValue.id);
+    const clientIdExists = await APIClient.getClient(formValue.id);
     const clientIdExistsAsDietitian = await APIClient.getDietitian(
       formValue.id
     );
 
-    if (clientIdExists || clientIdExistsAsDietitian) {
+    if (stagedClientIdExists || clientIdExistsAsDietitian || clientIdExists) {
       setError(true);
       return false;
     }

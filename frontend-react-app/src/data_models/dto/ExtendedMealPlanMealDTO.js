@@ -34,7 +34,13 @@ export default class ExtendedMealPlanMealDTO extends MealPlanMealDTO {
     this._nutrients = lazy(() => this.getNutrients());
   }
   get recipe() {
-    return this._recipe();
+    const recipeUnsorted = this._recipe();
+    const recipeSortedByName = recipeUnsorted.sort((a, b) => {
+      if (a.usdaIngredientName < b.usdaIngredientName) return -1;
+      if (a.usdaIngredientName > b.usdaIngredientName) return 1;
+      return 0;
+    });
+    return recipeSortedByName;
   }
   get nutrients() {
     return this._nutrients();
@@ -106,9 +112,7 @@ export default class ExtendedMealPlanMealDTO extends MealPlanMealDTO {
   }
   toJSON() {
     return {
-      id: this.id,
-      meal_id: this.mealId,
-      meal_plan_id: this.mealPlanId,
+      ...super.toJSON(),
       carb_k_cal: this.carbKcal,
       protein_k_cal: this.proteinKcal,
       fat_k_cal: this.fatKcal,

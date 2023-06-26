@@ -17,10 +17,15 @@
       color: theme.$fucia;
     }
   }
-  .cardContainer {
-    @include theme.xs {
-      margin-left: auto;
-      margin-right: auto;
+  .contentContainer {
+    column-gap: 5vh;
+    row-gap: 5vh;
+
+    .cardContainer {
+      @include theme.xs {
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
   }
 }

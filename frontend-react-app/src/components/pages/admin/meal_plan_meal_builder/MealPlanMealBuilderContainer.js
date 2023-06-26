@@ -44,13 +44,14 @@ const MealPlanMealBuilderContainer = (props) => {
     });
     return () => (mounted = false);
   }, []);
+
   if (mealPlans && meals) {
     const dataProps = {
       mealPlans: mealPlans,
       meals: meals,
     };
     // Pass the dataProps to the child component
-    return cloneElement(props.childComponent, { dataProps: dataProps });
+    return cloneElement(props.childComponent, { ...dataProps });
   } else {
     return <CircularProgressPage />;
   }

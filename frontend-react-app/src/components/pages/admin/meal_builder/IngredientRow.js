@@ -98,6 +98,7 @@ const IngredientRow = (props) => {
           </Select>
         </FormControl>
       </Grid>
+
       {props.ingredient && (
         <Grid item>
           <Icon

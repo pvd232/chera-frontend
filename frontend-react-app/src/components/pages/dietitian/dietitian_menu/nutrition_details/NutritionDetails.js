@@ -8,11 +8,11 @@ import Icon from '@mui/material/Icon';
 import '../../../../../static/scss/NutritionLabel.scss';
 import OrangeButton from '../../../../shared_components/OrangeButton';
 import Transition from '../../../../shared_components/Transition';
-import NutrientItem from '../../../../ui_data_containers/NutrientItem';
 import NutritionLabel from './NutritionLabel';
 import DailyNutrientChart from './DailyNutrientChart';
 import MacrosPieChart from './MacrosPieChart';
 import MacrosLegend from './MacrosLegend';
+import { getNutrientsDataSource } from './helpers/getNutrientsDataSource';
 const NutritionDetails = (props) => {
   const customTheme = useTheme();
 
@@ -28,12 +28,9 @@ const NutritionDetails = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const nutrientDataSource = Array.from(props.mealPlanMeal.nutrients.values())
-    .map(
-      (extendedRecipeIngredientDTO) =>
-        new NutrientItem(extendedRecipeIngredientDTO)
-    )
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const nutrientDataSource = getNutrientsDataSource(
+    props.mealPlanMeal.nutrients
+  );
 
   return (
     <>
@@ -139,7 +136,7 @@ const NutritionDetails = (props) => {
                       <Grid
                         item
                         xl={9}
-                        lg={9}
+                        lg={10}
                         md={4}
                         sm={7}
                         xs={11}

@@ -84,7 +84,7 @@ const CurrentMeals = (props) => (
         </Tooltip>
       )}
     </Grid>
-    <Grid item container>
+    <Grid item container className={currentMeals.contentContainer}>
       {props.currentScheduledOrderMeals.map((scheduledOrderMealCardData, i) => (
         <Grid
           item

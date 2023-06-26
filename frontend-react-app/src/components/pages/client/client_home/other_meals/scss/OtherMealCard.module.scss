@@ -18,7 +18,7 @@
       .iconButton {
         font-size: 3rem;
         cursor: pointer;
-        color: theme.$fucia;
+        color: rgba(0, 0, 0, 1);
       }
       .otherMealButton {
         @include otherMealButtonBase;
@@ -31,12 +31,6 @@
       }
     }
   }
-}
-.dietitianMealCardContainer {
-  justify-content: center;
-  align-items: flex-end;
-  margin-bottom: 3vh;
-  margin-top: 2vh;
 }
 // Class must be defined globally due to Mui-disabled override
 .icon {

@@ -5,6 +5,7 @@ export default class MealPlanMealDTO {
     this.mealId = mealPlanMealObject.meal_id;
     this.mealPlanId = mealPlanMealObject.meal_plan_id;
     this.active = mealPlanMealObject.active;
+    this.multiplier = mealPlanMealObject.multiplier;
     this.properlyInitialized = (() => checkProperties(this))();
   }
   toJSON() {
@@ -12,6 +13,7 @@ export default class MealPlanMealDTO {
       id: this.id,
       meal_id: this.mealId,
       meal_plan_id: this.mealPlanId,
+      multiplier: this.multiplier,
       active: this.active,
     };
   }

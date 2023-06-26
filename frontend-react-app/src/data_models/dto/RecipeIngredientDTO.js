@@ -3,8 +3,8 @@ export default class RecipeIngredientDTO {
   constructor(recipeIngredientObject) {
     this.id = recipeIngredientObject.id;
     this.usdaIngredientId = recipeIngredientObject.usda_ingredient_id;
-    this.mealPlanMealId = recipeIngredientObject.meal_plan_meal_id;
-    this.mealPlanSnackId = recipeIngredientObject.meal_plan_snack_id;
+    this.mealPlanMealId = recipeIngredientObject.meal_plan_meal_id ?? '';
+    this.mealPlanSnackId = recipeIngredientObject.meal_plan_snack_id ?? '';
     this.usdaIngredientPortionId =
       recipeIngredientObject.usda_ingredient_portion_id;
     this.quantity = recipeIngredientObject.quantity;

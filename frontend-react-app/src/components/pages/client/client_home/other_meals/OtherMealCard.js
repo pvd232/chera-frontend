@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
 import logo from '../../../../../static/images/chera_logo_300x300.png';
-import scheduledOrderMealCard from '../current_meals/scss/ScheduledOrderMealCard.module.scss';
+import otherMealCard from './scss/OtherMealCard.module.scss';
 import { FoodCard } from '../../../../shared_components/FoodCard';
 
 const OtherMealCard = (props) => (
@@ -13,21 +13,18 @@ const OtherMealCard = (props) => (
     logo={logo}
     isSnackCard={false}
     childComponent={
-      <Grid item container className={scheduledOrderMealCard.actionsContainer}>
-        <Grid item className={scheduledOrderMealCard.childContainer}>
+      <Grid item container className={otherMealCard.actionsContainer}>
+        <Grid item className={otherMealCard.childContainer}>
           <CardActions>
-            <Grid
-              container
-              className={scheduledOrderMealCard.iconButtonContainer}
-            >
+            <Grid container className={otherMealCard.iconButtonContainer}>
               <Button
                 variant={'contained'}
                 onClick={() => props.handleAddScheduledOrderMeal(props.meal)}
                 disabled={props.cantMakeChanges}
                 className={
                   props.cantMakeChanges
-                    ? scheduledOrderMealCard.otherMealButtonDisabled
-                    : scheduledOrderMealCard.otherMealButton
+                    ? otherMealCard.otherMealButtonDisabled
+                    : otherMealCard.otherMealButton
                 }
               >
                 Add meal

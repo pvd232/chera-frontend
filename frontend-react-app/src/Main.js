@@ -7,6 +7,8 @@ import TaskBar from './components/pages/client_sign_up/task_bar/TaskBar';
 import MealBuilder from './components/pages/admin/meal_builder/MealBuilder';
 import MealPlanMealBuilder from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilder';
 import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilderContainer';
+import MealPlanSnackBuilder from './components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilder';
+import MealPlanSnackBuilderContainer from './components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilderContainer';
 import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
 import Login from './components/pages/splash/login/Login';
 import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
@@ -104,6 +106,14 @@ const Main = (props) => {
           element={
             <MealPlanMealBuilderContainer
               childComponent={<MealPlanMealBuilder />}
+            />
+          }
+        />
+        <Route
+          path="/meal-plan-snack-builder"
+          element={
+            <MealPlanSnackBuilderContainer
+              childComponent={<MealPlanSnackBuilder />}
             />
           }
         />

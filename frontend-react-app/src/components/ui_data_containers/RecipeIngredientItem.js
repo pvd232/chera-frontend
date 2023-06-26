@@ -17,6 +17,7 @@ class RecipeIngredientItem extends BaseRecipeIngredientItem {
       usdaIngredientPortionId: '',
       quantity: 1,
       usdaIngredientPortions: extendedUSDAIngredient.portions,
+      kCal: extendedUSDAIngredient.kCal,
       active: true,
     });
   }

@@ -7,7 +7,7 @@ export const FoodCard = (props) => (
   <Card className={foodCard.card}>
     <CardMedia
       component="img"
-      src={props.logo}
+      src={props.mealImageUrl}
       alt="green iguana"
       className={foodCard.img}
     />

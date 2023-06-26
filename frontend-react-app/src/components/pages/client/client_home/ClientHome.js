@@ -351,13 +351,15 @@ const ClientHome = (props) => {
         )
       )
     );
-    await APIClient.updateScheduledOrderSnacks(
-      extendedScheduledOrderSnacks.map((extendedScheduledOrderSnack) =>
-        ScheduledOrderSnackDTO.initializeFromScheduledOrderSnack(
-          extendedScheduledOrderSnack
+    if (extendedScheduledOrderSnacks.length > 0) {
+      await APIClient.updateScheduledOrderSnacks(
+        extendedScheduledOrderSnacks.map((extendedScheduledOrderSnack) =>
+          ScheduledOrderSnackDTO.initializeFromScheduledOrderSnack(
+            extendedScheduledOrderSnack
+          )
         )
-      )
-    );
+      );
+    }
     setLoading(false);
     setEditing(false);
   };

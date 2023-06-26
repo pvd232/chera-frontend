@@ -77,4 +77,23 @@ export default class ExtendedMealPlanMeal {
   getNutrient(nutrientId) {
     return this.nutrients.get(nutrientId);
   }
+  toJSON() {
+    return {
+      ...super.toJSON(),
+      id: this.id,
+      mealId: this.mealId,
+      mealPlanId: this.mealPlanId,
+      carbKcal: this.carbKcal,
+      proteinKcal: this.proteinKcal,
+      fatKcal: this.fatKcal,
+      kCal: this.kCal,
+      active: this.active,
+      associated_meal: this.associatedMeal.toJSON(),
+      associated_meal_plan: this.associatedMealPlan.toJSON(),
+      recipe: this.recipe.map((recipeIngredient) => recipeIngredient.toJSON()),
+      nutrients: Array.from(this.nutrients.values()).map((nutrient) =>
+        nutrient.toJSON()
+      ),
+    };
+  }
 }
