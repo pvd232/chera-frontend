@@ -11,6 +11,9 @@ import { useOpen } from './hooks/useOpen.ts';
 import { useNavigate } from 'react-router-dom';
 import aboutDropDown from './scss/AboutDropDown.module.scss';
 import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
+import APIClient from '../../../helpers/logoutUser.ts';
+// import Payment from '../../pages/client_sign_up/Payment.js';
+
 const ClientProfileDropDown = () => {
   const userFirstName =
     LocalStorageManager.shared.client.firstName.toUpperCase();
@@ -21,6 +24,32 @@ const ClientProfileDropDown = () => {
   const handleLogout = () => {
     navigate('/');
     LocalStorageManager.shared.logoutUser();
+  };
+
+  const handlePayment = () => {
+    navigate('/payment');
+    // navigate('/');
+    // <Payment
+    //   clientSecret={LocalStorageManager.shared.client.clientSecret}
+    //   stripePromise={props.stripePromise}
+    //   scheduleMeals={scheduleMeals}
+    //   scheduleSnacks={scheduleSnacks}
+    //   discountCode={''}
+    //   orderDiscount={''}
+    //   stagedClient={LocalStorageManager.shared.client}
+    //   shippingCost={props.shippingCost}
+    //   handleSubmit={handleSubmit}
+    // />
+
+
+    // console.log(LocalStorageManager.shared);
+    // console.log(LocalStorageManager.shared.client);
+    // // await APIClient.stripe_payment_methods(LocalStorageManager.shared.client)
+    // console.log(LocalStorageManager.shared.clientMealSubscription);
+    // console.log(LocalStorageManager.shared.mealTimes);
+    // console.log(LocalStorageManager.shared);
+
+
   };
 
   const handleToggle = () => {
@@ -99,6 +128,19 @@ const ClientProfileDropDown = () => {
                         Log out
                       </Typography>
                     </MenuItem>
+
+
+                    <MenuItem
+                      id="payment"
+                      onClick={handlePayment}
+                      className={aboutDropDown.menuItem}
+                    >
+                      <Typography className={aboutDropDown.text}>
+                        Payment
+                      </Typography>
+                    </MenuItem>
+
+
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

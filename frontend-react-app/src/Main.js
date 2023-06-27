@@ -8,6 +8,7 @@ import MealBuilder from './components/pages/admin/meal_builder/MealBuilder';
 import MealPlanMealBuilder from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilder';
 import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilderContainer';
 import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
+import Payment from './components/pages/client/ClientPayment';
 import Login from './components/pages/splash/login/Login';
 import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
 import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
@@ -173,6 +174,18 @@ const Main = (props) => {
             />
           }
         />
+
+        <Route
+          path="/payment"
+          element={
+            <Navbar
+              childComponent={<Payment />}
+              links={<ClientLinks />}
+              homeUrl="/home"
+            />
+          }
+        />
+
         <Route
           path="/dietitian-log-in"
           element={
