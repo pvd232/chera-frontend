@@ -41,7 +41,7 @@ const About = () => (
 
           <Grid item>
             <Typography className={styles.quote}>
-              We believe in a better future for eating disorder recovery, and
+              We believe in a better future for eating disorder treatment, and
               we're so excited to be working towards it."
             </Typography>
           </Grid>

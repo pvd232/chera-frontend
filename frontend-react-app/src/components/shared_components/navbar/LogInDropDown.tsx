@@ -50,7 +50,7 @@ const LogInDropDown = () => {
       container
       item
       ref={anchorRef}
-      id="composition-button"
+      id="splash-login-dropdown"
       aria-controls={open ? 'composition-menu' : undefined}
       aria-expanded={open ? 'true' : undefined}
       aria-haspopup="true"
@@ -76,7 +76,6 @@ const LogInDropDown = () => {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList
-                    id="composition-menu"
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >

@@ -27,7 +27,7 @@ const ListOfReasons = (props) => (
       setReasonOpen={() => props.setReasonOpen('third')}
       bulletPrimaryText={'Personalized Meals'}
       bulletSecondaryText={
-        'We fine tune our meal serving sizes according to the precise nutritional needs of our clients.'
+        'We fine tune our meal and snack serving sizes according to the precise nutritional needs of our clients.'
       }
       icon={'tune'}
     ></ReasonBullet>
@@ -37,7 +37,7 @@ const ListOfReasons = (props) => (
       setReasonOpen={() => props.setReasonOpen('fourth')}
       bulletPrimaryText={'Client Journey Tracking'}
       bulletSecondaryText={
-        'Our platform provides an easy-to-use dashboard to manage client meal plans, view client meals, and comprehensively monitor nutritional intake.'
+        'Our platform provides an easy-to-use dashboard to manage client meal plans, view client meals and snacks, and comprehensively monitor nutritional intake.'
       }
       icon={'monitor_heart'}
     ></ReasonBullet>
@@ -50,16 +50,16 @@ const ListOfReasons = (props) => (
           : 'Trusted Nutrition Credentials'
       }
       bulletSecondaryText={
-        'All our meals are all dietitian approved, and were served to hundreds of nutritional experts at FNCE 2022.'
+        'All our meals and snacks are all dietitian approved, and were served to hundreds of nutritional experts at FNCE 2022.'
       }
       icon={'verified'}
     ></ReasonBullet>
     <ReasonBullet
       reasonOpen={props.reasonOpen.sixth}
       setReasonOpen={() => props.setReasonOpen('sixth')}
-      bulletPrimaryText={'Fully Prepared Meals'}
+      bulletPrimaryText={'Fully Prepared Meals & Snacks'}
       bulletSecondaryText={
-        'Our meals come fully prepared and are freezer friendly.'
+        'Our meals and snacks come fully prepared and are freezer friendly.'
       }
       icon={'dinner_dining'}
     ></ReasonBullet>
