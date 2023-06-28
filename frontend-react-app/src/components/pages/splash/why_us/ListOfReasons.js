@@ -9,7 +9,7 @@ const ListOfReasons = (props) => (
       setReasonOpen={() => props.setReasonOpen('first')}
       bulletPrimaryText={'Simplified Meal Planning & Delivery'}
       bulletSecondaryText={
-        'By making meal planning easier for you and your clients, we aim to support recovery and impede relapse.'
+        'By making meal planning easier for dietitians and their clients, we aim to support recovery and impede relapse.'
       }
       icon={'checklist'}
     ></ReasonBullet>
@@ -27,7 +27,7 @@ const ListOfReasons = (props) => (
       setReasonOpen={() => props.setReasonOpen('third')}
       bulletPrimaryText={'Personalized Meals'}
       bulletSecondaryText={
-        'We fine tune our meal serving sizes according to the precise nutritional needs of your clients.'
+        'We fine tune our meal serving sizes according to the precise nutritional needs of our clients.'
       }
       icon={'tune'}
     ></ReasonBullet>
@@ -37,7 +37,7 @@ const ListOfReasons = (props) => (
       setReasonOpen={() => props.setReasonOpen('fourth')}
       bulletPrimaryText={'Client Journey Tracking'}
       bulletSecondaryText={
-        'Our platform provides an easy-to-use dashboard to manage your client meal plans, view your client meals, and comprehensively monitor nutritional intake.'
+        'Our platform provides an easy-to-use dashboard to manage client meal plans, view client meals, and comprehensively monitor nutritional intake.'
       }
       icon={'monitor_heart'}
     ></ReasonBullet>
