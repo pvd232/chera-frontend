@@ -15,18 +15,12 @@ import TaskBarLine from './TaskBarLine';
 const TaskBar = (props) => {
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [snacks, setSnacks] = useState(false);
-  const [shippingCost, setShippingCost] = useState(false);
   const [stagedClient, setStagedClient] = useState(false);
   const [taskIndex, setTaskIndex] = useState(0);
 
   useEffect(() => {
     let mounted = true;
 
-    APIClient.getShippingCost().then((shippingCost) => {
-      if (mounted) {
-        setShippingCost(shippingCost);
-      }
-    });
     APIClient.getExtendedMeals().then((extendedMeals) => {
       if (mounted) {
         const extendedMealArray = [];
@@ -92,7 +86,6 @@ const TaskBar = (props) => {
       extendedMeals: extendedMeals,
       snacks: snacks,
       stagedClient: stagedClient,
-      shippingCost: shippingCost,
       stripePromise: props.stripePromise,
       updateTaskIndex: (newTaskIndex) => setTaskIndex(newTaskIndex),
       taskIndex: taskIndex,

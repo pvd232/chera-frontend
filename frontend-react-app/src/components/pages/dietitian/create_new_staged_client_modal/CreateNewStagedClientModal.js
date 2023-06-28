@@ -13,6 +13,7 @@ import ClientMenu from '../../client_sign_up/client_menu/ClientMenu';
 import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
 import createNewStagedClientModal from './scss/CreateNewStagedClientModal.module.scss';
+import { validateZipcode } from '../../client_sign_up/account_registration/helpers/validateZipcode';
 const CreateNewStagedClientModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,7 +25,10 @@ const CreateNewStagedClientModal = (props) => {
   const [prepaidMeals, setPrepaidMeals] = useState([]);
   const [prepaidSnacks, setPrepaidSnacks] = useState([]);
   const [page, setPage] = useState('SignUp');
-  const [shippingCost, setShippingCost] = useState(false);
+  const [zipcode, setZipcode] = useState(false);
+  const [mealPrice, setMealPrice] = useState(false);
+  const [shippingRate, setShippingRate] = useState(false);
+  const [zipcodeError, setZipcodeError] = useState(false);
   const [stagedClientId, setStagedClientId] = useState('');
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -75,13 +79,22 @@ const CreateNewStagedClientModal = (props) => {
       setError(true);
       return false;
     }
+    const validZipcode = validateZipcode(zipcode);
+    if (!validZipcode) {
+      setZipcodeError(true);
+    }
 
     setError(false);
+    setZipcodeError(false);
     return form.checkValidity();
   };
 
   // Input handlers
-  const handleButtonClick = async (scheduleMeals, scheduleSnacks) => {
+  const handleButtonClick = async (
+    scheduleMeals,
+    scheduleSnacks,
+    mealPrice = false
+  ) => {
     const newStagedClient = new StagedClient(formValue);
     setStagedClientId(newStagedClient.id);
 
@@ -95,8 +108,11 @@ const CreateNewStagedClientModal = (props) => {
       resetFormValues();
       setLoading(false);
       setOpen(false);
-      // Dietitian is selecting client meals, and has already filled out their info on the form
+      // Dietitian is selecting client meals, and has already filled out their info on the form and picked their meals
     } else if (formValue.mealsPreSelected && scheduleMeals) {
+      // Meal price will be determined dynamically as the meals are being selected
+      // Thus set the meal price after the dietitian has selected the meals
+      setMealPrice(mealPrice);
       const newStagedClient = new StagedClient(formValue);
       const stagedScheduleMealDTOs = scheduleMeals.map((stagedScheduleMeal) =>
         StagedScheduleMealDTO.initializeFromStagedScheduleMeal(
@@ -134,6 +150,9 @@ const CreateNewStagedClientModal = (props) => {
       }
     } else {
       // Dietitian is selecting client meals, and has just filled out their info on the form
+
+      const shippingRate = await APIClient.getShippingRate(zipcode);
+      setShippingRate(shippingRate);
       setShowMenu(true);
       setPage('DietitianChooseClientMealsMenu');
     }
@@ -174,14 +193,13 @@ const CreateNewStagedClientModal = (props) => {
         if (value === 'true') {
           return false;
         } else if (value === 'false') {
-          APIClient.getShippingCost().then((shippingCost) => {
-            setShippingCost(shippingCost);
-          });
           return true;
         }
       })();
       setFormValue({ mealsPreSelected: valueToSet });
       setFormValue({ mealsPrepaid: valueToSet });
+    } else if (id === 'zipcode') {
+      setZipcode(value);
     } else {
       setFormValue({ [id]: value });
     }
@@ -209,18 +227,20 @@ const CreateNewStagedClientModal = (props) => {
       dietitianId={props.dietitianId}
       prepaidMeals={prepaidMeals}
       prepaidSnacks={prepaidSnacks}
-      shippingCost={shippingCost}
+      mealPrice={mealPrice}
     />
   );
   UIContainer['DietitianChooseClientMealsMenu'] = (
     <ClientMenu
       stagedClientId={formValue.id}
       dietitianChoosingClientMeals={true}
-      onSubmit={(scheduleMeals, scheduleSnacks) =>
-        handleButtonClick(scheduleMeals, scheduleSnacks)
+      onSubmit={(scheduleMeals, scheduleSnacks, mealPrice) =>
+        handleButtonClick(scheduleMeals, scheduleSnacks, mealPrice)
       }
       extendedMeals={props.extendedMeals}
       snacks={props.snacks}
+      // Passed in to determine meal price
+      shippingRate={shippingRate}
     />
   );
   UIContainer['SignUp'] = (
@@ -231,6 +251,8 @@ const CreateNewStagedClientModal = (props) => {
       loading={loading}
       handleSubmit={handleSubmit}
       mealPlans={props.mealPlans}
+      zipcode={zipcode}
+      zipcodeError={zipcodeError}
     />
   );
   return (

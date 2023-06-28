@@ -7,7 +7,6 @@ export default function createMealData(
   dietaryRestrictions,
   mealName,
   mealTime,
-  mealPrice,
   mealDescription,
   imageUrl,
   isVegetarian
@@ -26,7 +25,6 @@ export default function createMealData(
     id: mealId,
     name: mealName,
     meal_time: mealTime,
-    price: mealPrice,
     description: mealDescription,
     image_url: imageUrl,
     active: true,

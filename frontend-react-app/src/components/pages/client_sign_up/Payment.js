@@ -40,7 +40,6 @@ const Payment = (props) => {
               orderDiscount={props.orderDiscount}
               prepaid={props.stagedClient.mealsPrepaid}
               stagedClientId={props.stagedClient.id}
-              shippingCost={props.shippingCost}
               scheduleMeals={props.scheduleMeals}
               scheduleSnacks={props.scheduleSnacks}
             />

@@ -35,6 +35,11 @@ const SignUpPage = (props) => {
 
   const [orderDiscount, setOrderDiscount] = useState(false);
   const [discountCode, setDiscountCode] = useState(false);
+  const [shippingRate, setShippingRate] = useState(false);
+  const [zipcode, setZipcode] = useState(false);
+  const [cogs, setCogs] = useState(false);
+  const [mealPrice, setMealPrice] = useState(false);
+
   const taskIndexArray = [
     'AccountRegistration',
     'ClientMenu',
@@ -60,6 +65,8 @@ const SignUpPage = (props) => {
     const newMealSubscription = new MealSubscription(mealSubscription);
     newMealSubscription.stripeSubscriptionId = stripeSubscriptionId;
     newMealSubscription.dietitianId = returnedClient.dietitianId;
+
+    newMealSubscription.shippingRate = shippingRate;
 
     const newMealSubscriptionDTO =
       MealSubscriptionDTO.initializeFromMealSubscription(newMealSubscription);
@@ -164,12 +171,14 @@ const SignUpPage = (props) => {
     newScheduleMeals,
     newScheduledOrderMeals,
     newScheduleSnacks,
-    newScheduledOrderSnacks
+    newScheduledOrderSnacks,
+    mealPrice
   ) => {
     setScheduleMeals(newScheduleMeals);
     setScheduledOrderMeals(newScheduledOrderMeals);
     setScheduleSnacks(newScheduleSnacks);
     setScheduledOrderSnacks(newScheduledOrderSnacks);
+    setMealPrice(mealPrice);
     props.updateTaskIndex(2);
   };
 
@@ -178,12 +187,15 @@ const SignUpPage = (props) => {
     <AccountRegistration
       stagedClientId={props.stagedClient.id}
       dietitianId={props.stagedClient.dietitianId}
-      shippingCost={props.shippingCost}
+      shippingRate={shippingRate}
       updateMealSubscription={(newMealSubscription) => {
         setMealSubscription(newMealSubscription);
         props.updateTaskIndex(1);
       }}
       updateClientPassword={(newPassword) => setClientPassword(newPassword)}
+      updateShippingRate={(newShippingRate) => setShippingRate(newShippingRate)}
+      updateCOGS={(newCogs) => setCogs(newCogs)}
+      updateZipcode={(newZipcode) => setZipcode(newZipcode)}
     />
   );
   ContainerObject['ClientMenu'] = (() => {
@@ -201,6 +213,7 @@ const SignUpPage = (props) => {
             setScheduledOrderMeals(newScheduledOrderMeals);
             props.updateTaskIndex(2);
           }}
+          cogs={cogs}
         />
       );
     } else {
@@ -216,22 +229,25 @@ const SignUpPage = (props) => {
             newScheduleMeals,
             newScheduledOrderMeals,
             newScheduleSnacks,
-            newScheduledOrderSnacks
+            newScheduledOrderSnacks,
+            mealPrice
           ) => {
             handleUpdateMealsData(
               newScheduleMeals,
               newScheduledOrderMeals,
               newScheduleSnacks,
-              newScheduledOrderSnacks
+              newScheduledOrderSnacks,
+              mealPrice
             );
           }}
+          cogs={cogs}
+          shippingRate={shippingRate}
         />
       );
     }
   })();
   ContainerObject['Checkout'] = (
     <Checkout
-      shippingCost={props.shippingCost}
       stagedClient={props.stagedClient}
       clientPassword={clientPassword}
       scheduleMeals={scheduleMeals}
@@ -247,6 +263,9 @@ const SignUpPage = (props) => {
         setOrderDiscount(newOrderDiscount)
       }
       setDiscountCode={(newDiscountCode) => setDiscountCode(newDiscountCode)}
+      mealPrice={mealPrice}
+      snackPrice={mealPrice / 2}
+      zipcode={zipcode}
     />
   );
 
@@ -259,7 +278,6 @@ const SignUpPage = (props) => {
       discountCode={discountCode}
       orderDiscount={orderDiscount}
       stagedClient={props.stagedClient}
-      shippingCost={props.shippingCost}
       handleSubmit={handleSubmit}
     />
   );

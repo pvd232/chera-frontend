@@ -14,28 +14,26 @@ import getNextDeliveryDate from '../helpers/getNextDeliveryDate';
 import checkUpcomingDelivery from '../helpers/checkUpcomingDelivery';
 import { pastCutoffDate } from './helpers/pastCutoffDate';
 import editDeliveryModal from './scss/EditDeliveryModal.module.scss';
+import COGSDTO from '../../../../data_models/dto/COGSDTO';
 const EditDeliveryModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [cogs, setCogs] = useState(false);
   const [loadingPauseSubscription, setLoadingPauseSubscription] =
     useState(false);
   const [loadingDeleteSubscription, setLoadingDeleteSubscription] =
     useState(false);
   const [confirmDeleteSubscription, setConfirmDeleteSubscription] =
     useState(false);
-  const [
-    confirmDeleteSubscriptionUsername,
-    setConfirmDeleteSubscriptionUsername,
-  ] = useState('');
+  const [confirmDeleteUsername, setConfirmDeleteUsername] = useState('');
   const [editMeals, setEditMeals] = useState(false);
-  const [canMakeChangesToCurrentWeek, setCanMakeChangesToCurrentWeek] =
-    useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setConfirmDeleteSubscription(false);
-    setConfirmDeleteSubscriptionUsername('');
+    setConfirmDeleteUsername('');
     setEditMeals(false);
     setOpen(false);
   };
@@ -94,7 +92,7 @@ const EditDeliveryModal = (props) => {
   };
   // TODO: Test this function
   const handleDeleteSubscription = async () => {
-    confirmDeleteSubscriptionUsername === props.clientId
+    confirmDeleteUsername === props.clientId
       ? (() => {
           setLoadingDeleteSubscription(true);
           APIClient.deleteScheduleMeals(props.mealSubscription.id).then(() => {
@@ -132,8 +130,12 @@ const EditDeliveryModal = (props) => {
         })()
       : alert('Please enter your username to confirm deletion.');
   };
-  const handleChangeMeals = () => {
-    setCanMakeChangesToCurrentWeek(true);
+  const handleChangeMeals = async () => {
+    const cogsData = await APIClient.getCOGS();
+    const cogsDTOs = cogsData.map((cog) => {
+      return new COGSDTO(cog);
+    });
+    setCogs(cogsDTOs);
     setEditMeals(true);
   };
   const skipWeekButtonDisabled = (() => {
@@ -145,6 +147,13 @@ const EditDeliveryModal = (props) => {
       return true;
     } else {
       return false;
+    }
+  })();
+  const canModifyFirstWeekMeals = (() => {
+    if (pastCutoffDate(props.selectedDeliveryIndex) || props.isFirstDelivery) {
+      return false;
+    } else {
+      return true;
     }
   })();
   return (
@@ -270,7 +279,7 @@ const EditDeliveryModal = (props) => {
                     <Button
                       disabled={props.paused}
                       variant="contained"
-                      onClick={() => handleChangeMeals()}
+                      onClick={handleChangeMeals}
                       className={editDeliveryModal.dialogButton}
                     >
                       Change Meals
@@ -334,9 +343,9 @@ const EditDeliveryModal = (props) => {
 
                         <TextField
                           id="confirm-delete-subscription"
-                          value={confirmDeleteSubscriptionUsername}
+                          value={confirmDeleteUsername}
                           onChange={(e) =>
-                            setConfirmDeleteSubscriptionUsername(e.target.value)
+                            setConfirmDeleteUsername(e.target.value)
                           }
                         ></TextField>
                       </FormGroup>
@@ -368,12 +377,14 @@ const EditDeliveryModal = (props) => {
             hasSnacks={props.extendedScheduledOrderSnacks.length > 0}
             snacks={props.snacks}
             extendedMeals={props.extendedMeals}
-            editMeals={true}
-            canChangeFirstWeek={canMakeChangesToCurrentWeek}
-            finishEditing={() => handleUpdateFoodData()}
+            changingMeals={true}
+            canChangeFirstWeek={canModifyFirstWeekMeals}
+            finishEditing={handleUpdateFoodData}
             userId={props.mealSubscription.clientId}
             mealSubscriptionId={props.mealSubscription.id}
             dietitianChoosingClientMeals={false}
+            cogs={cogs}
+            shippingRate={props.mealSubscription.shippingRate}
           ></ClientMenu>
         )}
       </Dialog>

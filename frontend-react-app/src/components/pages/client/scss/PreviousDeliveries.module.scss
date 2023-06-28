@@ -1,22 +1,31 @@
 @use '../../../../static/scss/index.scss' as theme;
 @use './Client.module.scss' as client;
 .pageContainer {
-  padding-top: 10vh;
+  padding-top: 5vh;
   justify-content: center;
   .header {
     color: theme.$fucia;
     font-size: client.$headerFontSize;
     font-weight: bold;
   }
-  .cardContainer {
-    flex-direction: column;
-    row-gap: 1vh;
-    .stack {
+  .contentContainer {
+    .cardContainer {
+      flex-direction: column;
       row-gap: 1vh;
-      .deliverDateText {
-        font-size: client.$subHeaderFontSize;
-        font-weight: bold;
+      .stack {
+        row-gap: 1vh;
+        .deliverDateText {
+          font-size: client.$subHeaderFontSize;
+          font-weight: bold;
+        }
       }
     }
+  }
+  .noDeliveriesHeaderContainer {
+    height: 10%;
+    justify-content: center;
+  }
+  .noDeliveriesFiller {
+    height: 60%;
   }
 }

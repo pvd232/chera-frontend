@@ -7,7 +7,6 @@ export default function getMeal(meals, index) {
       mealName: '',
       mealTime: '',
       mealDescription: '',
-      mealPrice: '',
       isVegetarian: false,
       imageUrl: '',
       mealIngredients: [],
@@ -19,7 +18,6 @@ export default function getMeal(meals, index) {
       mealTime: LocalStorageManager.shared.savedMealBuilderMeal.mealTime,
       mealDescription:
         LocalStorageManager.shared.savedMealBuilderMeal.mealDescription,
-      mealPrice: LocalStorageManager.shared.savedMealBuilderMeal.mealPrice,
       isVegetarian:
         LocalStorageManager.shared.savedMealBuilderMeal.isVegetarian,
       imageUrl: LocalStorageManager.shared.savedMealBuilderMeal.imageUrl,
