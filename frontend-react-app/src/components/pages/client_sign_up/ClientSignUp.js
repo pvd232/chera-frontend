@@ -214,6 +214,8 @@ const SignUpPage = (props) => {
             props.updateTaskIndex(2);
           }}
           cogs={cogs}
+          shippingRate={shippingRate}
+          snacks={props.snacks}
         />
       );
     } else {

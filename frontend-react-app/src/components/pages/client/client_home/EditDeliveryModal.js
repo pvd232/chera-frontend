@@ -277,7 +277,7 @@ const EditDeliveryModal = (props) => {
                   </Grid>
                   <Grid item>
                     <Button
-                      disabled={props.paused}
+                      disabled={props.paused || props.isFirstDelivery}
                       variant="contained"
                       onClick={handleChangeMeals}
                       className={editDeliveryModal.dialogButton}

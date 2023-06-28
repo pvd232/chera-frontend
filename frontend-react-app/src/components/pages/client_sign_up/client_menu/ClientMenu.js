@@ -652,7 +652,7 @@ const ClientMenu = (props) => {
       </Grid>
 
       {/* Side Bar */}
-      <Grid item lg={2.5} md={3.5} xs={12} sx={{ marginTop: '0vh' }}>
+      <Grid item lg={2.5} md={3.5} xs={12} >
         <SideBar
           chosenScheduleMeals={chosenScheduleMeals}
           chosenScheduleSnacks={chosenScheduleSnacks}

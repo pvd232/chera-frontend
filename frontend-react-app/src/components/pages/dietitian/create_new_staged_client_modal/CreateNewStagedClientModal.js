@@ -9,6 +9,7 @@ import StagedClient from '../../../../data_models/model/StagedClient';
 import StagedScheduleMealDTO from '../../../../data_models/dto/StagedScheduleMealDTO';
 import StagedScheduleSnackDTO from '../../../../data_models/dto/StagedScheduleSnackDTO';
 import StagedClientDTO from '../../../../data_models/dto/StagedClientDTO';
+import COGSDTO from '../../../../data_models/dto/COGSDTO';
 import ClientMenu from '../../client_sign_up/client_menu/ClientMenu';
 import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
@@ -25,7 +26,8 @@ const CreateNewStagedClientModal = (props) => {
   const [prepaidMeals, setPrepaidMeals] = useState([]);
   const [prepaidSnacks, setPrepaidSnacks] = useState([]);
   const [page, setPage] = useState('SignUp');
-  const [zipcode, setZipcode] = useState(false);
+  const [zipcode, setZipcode] = useState('');
+  const [cogs, setCogs] = useState('');
   const [mealPrice, setMealPrice] = useState(false);
   const [shippingRate, setShippingRate] = useState(false);
   const [zipcodeError, setZipcodeError] = useState(false);
@@ -150,11 +152,17 @@ const CreateNewStagedClientModal = (props) => {
       }
     } else {
       // Dietitian is selecting client meals, and has just filled out their info on the form
-
+      setLoading(true);
       const shippingRate = await APIClient.getShippingRate(zipcode);
+      const cogsData = await APIClient.getCOGS();
+      const cogsDTOs = cogsData.map((cog) => {
+        return new COGSDTO(cog);
+      });
+      setCogs(cogsDTOs);
       setShippingRate(shippingRate);
       setShowMenu(true);
       setPage('DietitianChooseClientMealsMenu');
+      setLoading(false);
     }
   };
   const handleSubmit = async (event) => {
@@ -241,6 +249,7 @@ const CreateNewStagedClientModal = (props) => {
       snacks={props.snacks}
       // Passed in to determine meal price
       shippingRate={shippingRate}
+      cogs={cogs}
     />
   );
   UIContainer['SignUp'] = (

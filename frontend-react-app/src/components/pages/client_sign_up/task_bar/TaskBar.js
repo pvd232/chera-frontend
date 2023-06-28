@@ -114,8 +114,6 @@ const TaskBar = (props) => {
             alignItems={'center'}
             paddingTop={'3vh'}
             paddingBottom={'2vh'}
-            // paddingLeft={'2vw'}
-            // paddingRight={'2vw'}
             height={'13vh'}
           >
             <Grid

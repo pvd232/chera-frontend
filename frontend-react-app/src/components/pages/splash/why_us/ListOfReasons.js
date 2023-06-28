@@ -7,33 +7,43 @@ const ListOfReasons = (props) => (
     <ReasonBullet
       reasonOpen={props.reasonOpen.first}
       setReasonOpen={() => props.setReasonOpen('first')}
-      bulletPrimaryText={'Personalized Meals'}
+      bulletPrimaryText={'Simplified Meal Planning & Delivery'}
       bulletSecondaryText={
-        'Unlike other "one size fits all" meal delivery services, we fine tune our meal serving sizes according to the precise nutritional needs of your clients.'
+        'By making meal planning easier for you and your clients, we aim to support recovery and impede relapse.'
       }
-      icon={'tune'}
+      icon={'checklist'}
     ></ReasonBullet>
     <ReasonBullet
       reasonOpen={props.reasonOpen.second}
       setReasonOpen={() => props.setReasonOpen('second')}
       bulletPrimaryText={'Thoughtful Labeling '}
       bulletSecondaryText={
-        "We don't place nutrition labels on our meals, easing meal time stress, and use discreet packaging when shipping your clients their weekly meals."
+        "We don't place nutrition labels on our meals, and prioritize neutral language around food."
       }
       icon={'redeem'}
     ></ReasonBullet>
     <ReasonBullet
       reasonOpen={props.reasonOpen.third}
       setReasonOpen={() => props.setReasonOpen('third')}
-      bulletPrimaryText={'Client Recovery Tracking'}
+      bulletPrimaryText={'Personalized Meals'}
       bulletSecondaryText={
-        "Our platform provides an easy-to-use dashboard to manage your client's meal plan, view your client's meals, and comprehensively monitor their nutritional intake using the 25+ nutrient daily values we track."
+        'We fine tune our meal serving sizes according to the precise nutritional needs of your clients.'
+      }
+      icon={'tune'}
+    ></ReasonBullet>
+
+    <ReasonBullet
+      reasonOpen={props.reasonOpen.fourth}
+      setReasonOpen={() => props.setReasonOpen('fourth')}
+      bulletPrimaryText={'Client Journey Tracking'}
+      bulletSecondaryText={
+        'Our platform provides an easy-to-use dashboard to manage your client meal plans, view your client meals, and comprehensively monitor nutritional intake.'
       }
       icon={'monitor_heart'}
     ></ReasonBullet>
     <ReasonBullet
-      reasonOpen={props.reasonOpen.fourth}
-      setReasonOpen={() => props.setReasonOpen('fourth')}
+      reasonOpen={props.reasonOpen.fifth}
+      setReasonOpen={() => props.setReasonOpen('fifth')}
       bulletPrimaryText={
         props.xsScreen
           ? 'Trusted Nutrition Creds'
@@ -45,11 +55,11 @@ const ListOfReasons = (props) => (
       icon={'verified'}
     ></ReasonBullet>
     <ReasonBullet
-      reasonOpen={props.reasonOpen.fifth}
-      setReasonOpen={() => props.setReasonOpen('fifth')}
+      reasonOpen={props.reasonOpen.sixth}
+      setReasonOpen={() => props.setReasonOpen('sixth')}
       bulletPrimaryText={'Fully Prepared Meals'}
       bulletSecondaryText={
-        'Our meals come fully prepared and are freezer friendly – maximizing convenience and removing barriers to meal compliance!'
+        'Our meals come fully prepared and are freezer friendly.'
       }
       icon={'dinner_dining'}
     ></ReasonBullet>

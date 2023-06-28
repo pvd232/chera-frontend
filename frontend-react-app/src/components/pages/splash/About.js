@@ -25,19 +25,16 @@ const About = () => (
         <Grid container item lg={6.3} className={styles.quoteContainer}>
           <Grid item>
             <Typography className={styles.quote}>
-              "For too long, the needs of those suffering from eating disorders
-              have gone overlooked. I founded Chera to change that. We're
-              building a platform that straddles a unique intersection of
-              technology, nutrition, and mental health; drawing on the expertise
-              of our diverse team of clinicians, dietitians, and engineers to
-              streamline and expedite the recovery process.
+              "Chera is a platform that straddles a unique intersection of
+              technology, nutrition, and mental health.
             </Typography>
           </Grid>
           <Grid item></Grid>
           <Grid item>
             <Typography className={styles.quote}>
-              Recovery is at the heart of everything we do. We're constantly
-              innovating around ways we can improve access and quality of care.
+              Supporting recovery is at the heart of everything we do. Powered
+              by a team of clinicians, engineers, and others, we're innovating
+              around ways we can improve access and quality of care.
             </Typography>
           </Grid>
           <Grid item></Grid>
@@ -54,7 +51,7 @@ const About = () => (
           </Grid>
 
           <Grid item>
-            <Typography className={styles.jobTitle}>CEO</Typography>
+            <Typography className={styles.jobTitle}>CEO, Co-Founder</Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -91,7 +88,7 @@ const About = () => (
 
           <Grid item>
             <Typography className={styles.jobTitle}>
-              Chief Clinical Officer
+              Chief Clinical Officer, Co-Founder
             </Typography>
           </Grid>
         </Grid>

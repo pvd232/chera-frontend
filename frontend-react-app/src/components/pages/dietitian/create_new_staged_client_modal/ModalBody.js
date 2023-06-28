@@ -15,6 +15,13 @@ import BlueCircularProgress from '../../../shared_components/BlueCircularProgres
 import modalBody from './scss/ModalBody.module.scss';
 import { Button } from '@mui/material';
 const ModalBody = (props) => {
+  const zipcodeIsHidden = (() => {
+    if (!props.formValue.mealsPrepaid && !props.formValue.mealsPreSelected) {
+      return true;
+    } else {
+      return false;
+    }
+  })();
   return (
     <DialogContent className={modalBody.dialog}>
       <Stack className={modalBody.stack}>
@@ -96,7 +103,7 @@ const ModalBody = (props) => {
                       ))}
                     </Select>
                   </FormControl>
-                  <FormGroup>
+                  {/* <FormGroup>
                     <FormControlLabel
                       control={
                         <Switch
@@ -121,30 +128,34 @@ const ModalBody = (props) => {
                       }
                       label="Pay for First Week Meals"
                     />
-                  </FormGroup>
-                  <InputLabel className={modalBody.inputLabel}>
-                    Client Zipcode
-                  </InputLabel>
+                  </FormGroup> */}
+                  {!zipcodeIsHidden ? (
+                    <>
+                      <InputLabel className={modalBody.inputLabel}>
+                        Client Zipcode
+                      </InputLabel>
 
-                  <TextField
-                    fullWidth
-                    label={'Zipcode'}
-                    id="zipcode"
-                    value={props.zipcode}
-                    onChange={props.handleInput}
-                    hidden={
-                      !props.formValue.mealsPrepaid &&
-                      !props.formValue.mealsPreSelected
-                    }
-                    required={
-                      props.formValue.mealsPrepaid ||
-                      props.formValue.mealsPreSelected
-                    }
-                    error={props.zipcodeError}
-                    helperText={
-                      props.error ? 'Please choose a valid zipcode' : ''
-                    }
-                  />
+                      <TextField
+                        fullWidth
+                        label={'Zipcode'}
+                        id="zipcode"
+                        value={props.zipcode}
+                        onChange={props.handleInput}
+                        hidden={zipcodeIsHidden}
+                        required={
+                          props.formValue.mealsPrepaid ||
+                          props.formValue.mealsPreSelected
+                        }
+                        error={props.zipcodeError}
+                        helperText={
+                          props.error ? 'Please choose a valid zipcode' : ''
+                        }
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+
                   <Button
                     id="staged-client-submit"
                     type="submit"

@@ -25,7 +25,6 @@ const SnackCard = (props) => {
           height: '30vh',
           marginLeft: 'auto',
           marginRight: 'auto',
-          marginTop: '20px',
           marginBottom: '20px',
         }}
       />

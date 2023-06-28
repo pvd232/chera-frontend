@@ -116,6 +116,17 @@ const DietitianHomeContainer = (props) => {
         setSnacks(snacks);
       }
     });
+    APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {
+      const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
+        (date) => parseFloat(date) * 1000
+      );
+      LocalStorageManager.shared.upcomingDeliveryDates =
+        upcomingDeliveryDatesArray;
+      const upcomingCutoffDatesArray = data.upcoming_cutoff_dates.map(
+        (date) => parseFloat(date) * 1000
+      );
+      LocalStorageManager.shared.upcomingCutoffDates = upcomingCutoffDatesArray;
+    });
     const stagedClientId = searchParams.get('stagedClientId');
     if (stagedClientId) {
       setStagedClientId(stagedClientId);

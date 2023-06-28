@@ -147,10 +147,13 @@ const ClientPreSelectedMenu = (props) => {
       <Grid item lg={2.5} md={3.5} xs={12} sx={{ marginTop: '0vh' }}>
         {
           <SideBar
-            extendedStagedScheduleMeals={extendedStagedScheduleMeals}
+            chosenScheduleMeals={extendedStagedScheduleMeals}
+            chosenScheduleSnacks={[]}
             handleSubmit={handleSubmit}
             customTheme={customTheme}
             loading={loading}
+            cogs={props.cogs}
+            shippingRate={props.shippingRate}
           />
         }
       </Grid>
