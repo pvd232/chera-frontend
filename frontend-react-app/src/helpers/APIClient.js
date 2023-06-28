@@ -1491,11 +1491,7 @@ class APIClient {
   }
 
   getClientHomeUrl() {
-    if (this.env === 'debug') {
-      return this.frontEndBaseUrl + '/home';
-    } else {
-      return this.baseUrl + '/home';
-    }
+    return this.frontEndBaseUrl + '/home';
   }
 
   async getClientExtendedOrderMeals(mealSubscriptionId) {

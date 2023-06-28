@@ -281,6 +281,8 @@ const SignUpPage = (props) => {
       orderDiscount={orderDiscount}
       stagedClient={props.stagedClient}
       handleSubmit={handleSubmit}
+      mealPrice={mealPrice}
+      snackPrice={mealPrice / 2}
     />
   );
   if (props.stagedClient) {
