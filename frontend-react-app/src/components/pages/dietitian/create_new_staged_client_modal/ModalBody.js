@@ -76,6 +76,7 @@ const ModalBody = (props) => {
                     value={props.formValue.notes}
                     onChange={props.handleInput}
                   />
+
                   <InputLabel className={modalBody.inputLabel}>
                     Client Meal Plan
                   </InputLabel>
@@ -88,7 +89,7 @@ const ModalBody = (props) => {
                       required
                       id="mealPlanId"
                       value={props.formValue.mealPlanId}
-                      // onChange={props.handleEatingDisorderInput}
+                      onChange={props.handleInput}
                     >
                       {props.mealPlans.map((mealPlan, i) => (
                         <MenuItem
@@ -103,7 +104,7 @@ const ModalBody = (props) => {
                       ))}
                     </Select>
                   </FormControl>
-                  {/* <InputLabel className={modalBody.inputLabel}>
+                  <InputLabel className={modalBody.inputLabel}>
                     Client Diagnosis
                   </InputLabel>
                   <FormControl>
@@ -115,7 +116,7 @@ const ModalBody = (props) => {
                       required
                       id="eatingDisorderId"
                       value={props.formValue.eatingDisorderId}
-                      onChange={props.handleInput}
+                      onChange={props.handleEatingDisorderInput}
                     >
                       {props.eatingDisorders.map((eatingDisorder, i) => (
                         <MenuItem
@@ -123,13 +124,11 @@ const ModalBody = (props) => {
                           id={`eatingDisorder-${i}`}
                           value={eatingDisorder.id}
                         >
-                          {`${capitalize(eatingDisorder.name)}: ${
-                            eatingDisorder.statedCaloricLowerBound
-                          }-${eatingDisorder.statedCaloricUpperBound} calories`}
+                          {capitalize(eatingDisorder.name)}
                         </MenuItem>
                       ))}
                     </Select>
-                  </FormControl> */}
+                  </FormControl>
                   {/* <FormGroup>
                     <FormControlLabel
                       control={

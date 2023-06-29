@@ -6,12 +6,6 @@ export default class EatingDisorderDTO {
 
         this.properlyInitialized = (() => checkProperties(this))();
     }
-    static initializeFromStagedClient(eatingDisorder) {
-        return new StagedClientDTO({
-            id: eatingDisorder.id,
-            name: eatingDisorder.name,
-        });
-    }
 
     toJSON() {
         const data = {
