@@ -27,6 +27,11 @@ const ClientProfileDropDown = () => {
   };
 
   const handlePayment = () => {
+      console.log(LocalStorageManager.shared);
+    console.log(LocalStorageManager.shared.client);
+    console.log(LocalStorageManager.shared.clientMealSubscription);
+    console.log(LocalStorageManager.shared.mealTimes);
+    console.log(LocalStorageManager.shared);
     navigate('/payment');
     // navigate('/');
     // <Payment

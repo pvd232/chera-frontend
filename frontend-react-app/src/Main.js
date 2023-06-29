@@ -179,7 +179,8 @@ const Main = (props) => {
           path="/payment"
           element={
             <Navbar
-              childComponent={<Payment />}
+              childComponent={<Payment
+                stripePromise={props.stripePromise} />}
               links={<ClientLinks />}
               homeUrl="/home"
             />
