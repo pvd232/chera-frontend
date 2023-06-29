@@ -133,6 +133,7 @@ export default function SearchLocationInput(props) {
           {...params}
           label="Address* (Ex: 123 Main St #1B, New York, NY 94111)"
           fullWidth
+          required
           sx={{
             backgroundColor: props.dietitianInput ? '#fcfcfb' : '',
           }}
