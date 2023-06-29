@@ -1,11 +1,8 @@
-const getMealsSubtotal = (scheduledMeals, scheduleSnacks) => {
-  let cost = 0.0;
-  for (const scheduledMeal of scheduledMeals) {
-    cost += scheduledMeal.associatedMeal.price;
-  }
-  for (const scheduleSnack of scheduleSnacks) {
-    cost += scheduleSnack.associatedSnack.price;
-  }
-  return cost.toFixed(2);
+const getOrderSubtotal = (mealPrice, scheduledMeals, scheduleSnacks) => {
+  const snackPrice = mealPrice / 2;
+  const scheduledMealsCost = mealPrice * scheduledMeals.length;
+  const scheduledSnacksCost = snackPrice * scheduleSnacks.length;
+  const cost = scheduledMealsCost + scheduledSnacksCost;
+  return cost;
 };
-export default getMealsSubtotal;
+export default getOrderSubtotal;

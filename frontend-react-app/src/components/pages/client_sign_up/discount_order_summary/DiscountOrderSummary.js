@@ -12,6 +12,7 @@ import DiscountDTO from '../../../../data_models/dto/DiscountDTO.js';
 import Discount from '../../../../data_models/model/Discount.js';
 import BlackButton from '../../../shared_components/BlackButton.ts';
 import getSubtotal from './getSubtotal.js';
+import getOrderSubtotal from '../client_menu/helpers/getOrderSubtotal.js';
 const DiscountOrderSummary = (props) => {
   const customTheme = useTheme();
 
@@ -19,12 +20,20 @@ const DiscountOrderSummary = (props) => {
   const [orderDiscountAmount, setOrderDiscountAmount] = useState(0);
   const [discountCode, setDiscountCode] = useState('');
   const [discountValid, setDiscountValid] = useState(true);
-  const mealsSubtotal = getSubtotal(props.scheduleMeals, false);
-  const snacksSubtotal = getSubtotal(false, props.scheduleSnacks);
+  const mealsSubtotal = getSubtotal(
+    props.mealPrice,
+    props.snackPrice,
+    props.scheduleMeals,
+    false
+  );
+  const snacksSubtotal = getSubtotal(
+    props.mealPrice,
+    props.snackPrice,
+    false,
+    props.scheduleSnacks
+  );
   const [total, setTotal] = useState(
-    getSubtotal(props.scheduleMeals, false) +
-      getSubtotal(false, props.scheduleSnacks) +
-      props.shippingCost
+    getOrderSubtotal(props.mealPrice, props.scheduleMeals, props.scheduleSnacks)
   );
   const handleSubmit = async () => {
     if (discountCode !== '') {
@@ -49,7 +58,7 @@ const DiscountOrderSummary = (props) => {
         newOrderDiscount.amount =
           mealsSubtotal + snacksSubtotal - newDiscountedSubtotal;
 
-        const newTotal = newDiscountedSubtotal + props.shippingCost;
+        const newTotal = newDiscountedSubtotal;
         setTotal(newTotal);
         setDiscountValid(true);
         setDiscountPercentage(newDiscount.discountPercentage);
@@ -58,6 +67,7 @@ const DiscountOrderSummary = (props) => {
           APIClient.createPaymentIntent(
             props.scheduleMeals.length,
             props.scheduleSnacks.length,
+            props.zipcode,
             props.stagedClientId,
             newDiscount.code
           ).then((clientSecret) => {
@@ -207,12 +217,7 @@ const DiscountOrderSummary = (props) => {
               ) : (
                 <></>
               )}
-              <Grid item container xs={6} justifyContent={'flex-start'}>
-                <p>Shipping</p>
-              </Grid>
-              <Grid item container xs={6} justifyContent={'flex-end'}>
-                <p>{props.shippingCost.toFixed(2)}</p>
-              </Grid>
+
               <Grid item container xs={6} justifyContent={'flex-start'}>
                 <p style={{ fontWeight: 'bold' }}>Total</p>
               </Grid>

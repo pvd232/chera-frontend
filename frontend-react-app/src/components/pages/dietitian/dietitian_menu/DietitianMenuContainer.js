@@ -52,7 +52,6 @@ const DietitianMenuContainer = (props) => {
       }
     });
     Promise.resolve(CacheManager.shared.mealPlanMeals).then((values) => {
-      console.log('values', values);
       if (mounted) {
         const extendedMealPlanMealDTOs = values.map(
           (extendedMealPlanMealData) =>
@@ -78,7 +77,6 @@ const DietitianMenuContainer = (props) => {
   }, []);
 
   if (mealPlans && mealPlanMeals && extendedMeals) {
-    console.log('mealPlanMeals', mealPlanMeals);
     const dataProps = {
       mealPlans: mealPlans,
       mealPlanMeals: mealPlanMeals,

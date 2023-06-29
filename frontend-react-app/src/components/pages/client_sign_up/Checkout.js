@@ -14,6 +14,8 @@ const Checkout = (props) => {
     const subscriptionData = await APIClient.createStripeSubscription(
       props.scheduleMeals.length,
       props.scheduleSnacks.length,
+      // Use the zipcode the client inputted, encase they did so incorrectly in the AccountRegistration page
+      newClient.zipcode,
       newClient.id,
       LocalStorageManager.shared.discount
         ? LocalStorageManager.shared.discount.code
@@ -62,7 +64,6 @@ const Checkout = (props) => {
         <Grid item container lg={5} md={4}>
           <DiscountOrderSummary
             stagedClientId={props.stagedClient.id}
-            shippingCost={props.shippingCost}
             scheduleMeals={props.scheduleMeals}
             scheduleSnacks={props.scheduleSnacks}
             dietitianPrepaying={false}
@@ -70,6 +71,8 @@ const Checkout = (props) => {
               props.setOrderDiscount(orderDiscount)
             }
             setDiscountCode={(discount) => props.setDiscountCode(discount)}
+            mealPrice={props.mealPrice}
+            snackPrice={props.snackPrice}
           />
         </Grid>
       ) : (

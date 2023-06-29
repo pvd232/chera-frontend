@@ -449,6 +449,7 @@ class APIClient {
     stagedClientId,
     dietitianId,
     stripePaymentIntentId,
+    zipcode,
     discountCode = false
   ) {
     const requestUrl = this.baseUrl + '/dietitian_prepayment';
@@ -744,6 +745,19 @@ class APIClient {
   }
 
   // Client methods
+  async getCOGS() {
+    const requestUrl = this.baseUrl + `/cogs`;
+    const request = new Request(requestUrl);
+
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const cogsData = await response.json();
+    return cogsData;
+  }
   async createMealSubscription(mealSubscription) {
     const requestUrl = this.baseUrl + '/meal_subscription';
 
@@ -759,6 +773,7 @@ class APIClient {
 
     return returnedMealSubscriptionData;
   }
+
   async deactivateMealSubscription(mealSubscriptionId) {
     const requestUrl =
       this.baseUrl + `/meal_subscription/${mealSubscriptionId}`;
@@ -861,6 +876,7 @@ class APIClient {
   async createStripeSubscription(
     numberOfMeals,
     numberOfSnacks,
+    zipcode,
     clientId,
     discountCode,
     prepaid
@@ -871,6 +887,7 @@ class APIClient {
       client_id: clientId,
       number_of_meals: numberOfMeals,
       number_of_snacks: numberOfSnacks,
+      zipcode: zipcode,
       discount_code: discountCode,
       prepaid: prepaid,
     };
@@ -1263,6 +1280,21 @@ class APIClient {
 
     return mealsData;
   }
+  async geEatingDisorders() {
+    const requestUrl = this.baseUrl + '/eating_disorder';
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+
+    const eatingDisorderData = await response.json();
+
+    return eatingDisorderData;
+  }
   async getMeal(mealId) {
     const requestUrl = this.baseUrl + '/meal/' + mealId;
 
@@ -1459,11 +1491,7 @@ class APIClient {
   }
 
   getClientHomeUrl() {
-    if (this.env === 'debug') {
-      return this.frontEndBaseUrl + '/home';
-    } else {
-      return this.baseUrl + '/home';
-    }
+    return this.frontEndBaseUrl + '/home';
   }
 
   async getClientExtendedOrderMeals(mealSubscriptionId) {
@@ -1511,8 +1539,37 @@ class APIClient {
     return dietaryRestrictionData;
   }
 
-  async getMealPrice() {
-    const requestUrl = this.baseUrl + '/meal_price';
+  // async getMealPrice() {
+  //   const requestUrl = this.baseUrl + '/meal_price';
+  //   const request = new Request(requestUrl);
+
+  //   const requestParams = {
+  //     method: 'GET',
+  //     mode: this.mode,
+  //     cache: 'default',
+  //   };
+  //   const response = await this.fetchWrapper(request, requestParams);
+  //   const mealPrice = await response.json();
+  //   return mealPrice;
+  // }
+
+  // async getSnackPrice() {
+  //   const requestUrl = this.baseUrl + '/snack_price';
+  //   const request = new Request(requestUrl);
+
+  //   const requestParams = {
+  //     method: 'GET',
+  //     mode: this.mode,
+  //     cache: 'default',
+  //   };
+  //   const response = await this.fetchWrapper(request, requestParams);
+  //   const snackPrice = await response.json();
+  //   return snackPrice;
+  // }
+
+  async getShippingRate(zipcode) {
+    const requestUrl =
+      this.baseUrl + `/shippo/shipping_rate?zipcode=${zipcode}`;
     const request = new Request(requestUrl);
 
     const requestParams = {
@@ -1521,40 +1578,9 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-    const mealPrice = await response.json();
-    return mealPrice;
-  }
-
-  async getSnackPrice() {
-    const requestUrl = this.baseUrl + '/snack_price';
-    const request = new Request(requestUrl);
-
-    const requestParams = {
-      method: 'GET',
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(request, requestParams);
-    const snackPrice = await response.json();
-    return snackPrice;
-  }
-
-  async getShippingCost(state) {
-    const requestUrl = this.baseUrl + '/shipping_cost';
-    const request = new Request(requestUrl);
-
-    const requestHeaders = new Headers();
-    requestHeaders.set('state', state);
-
-    const requestParams = {
-      method: 'GET',
-      headers: requestHeaders,
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(request, requestParams);
-    const shippingCost = await response.json();
-    return shippingCost;
+    const shippingRate = await response.json();
+    const floatShippingRate = parseFloat(shippingRate);
+    return floatShippingRate;
   }
 
   async getSalesTax(state) {
@@ -1600,6 +1626,7 @@ class APIClient {
   async createPaymentIntent(
     numMeals,
     numSnacks,
+    zipcode,
     staged_client_id,
     discountCode
   ) {
@@ -1609,6 +1636,7 @@ class APIClient {
     const requestHeaders = new Headers();
     requestHeaders.set('number_of_meals', numMeals);
     requestHeaders.set('number_of_snacks', numSnacks);
+    requestHeaders.set('zipcode', zipcode);
     requestHeaders.set('staged_client_id', staged_client_id);
     requestHeaders.set('discount_code', !discountCode ? '' : discountCode);
     const requestParams = {

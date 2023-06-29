@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Grid';
 import CardActions from '@mui/material/CardActions';
 import Button from '@mui/material/Button';
-import logo from '../../../../../static/images/chera_logo_300x300.png';
 import otherMealCard from './scss/OtherMealCard.module.scss';
 import { FoodCard } from '../../../../shared_components/FoodCard';
 
@@ -10,7 +9,7 @@ const OtherMealCard = (props) => (
     mealName={props.meal.name}
     mealTime={props.meal.mealTime}
     mealDescription={props.meal.description}
-    logo={logo}
+    mealImageUrl={props.meal.imageUrl}
     isSnackCard={false}
     childComponent={
       <Grid item container className={otherMealCard.actionsContainer}>

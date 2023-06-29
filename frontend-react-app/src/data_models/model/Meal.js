@@ -6,7 +6,6 @@ export default class Meal {
     this.name = mealObject.name;
     this.description = mealObject.description;
     this.imageUrl = mealObject.imageUrl;
-    this.price = mealObject.price;
     this.active = mealObject.active;
     this.properlyInitialized = (() => checkProperties(this))();
   }

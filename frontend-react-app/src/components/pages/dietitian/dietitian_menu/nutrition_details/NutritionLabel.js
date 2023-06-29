@@ -15,7 +15,7 @@ const NutritionLabel = (props) => (
         Servings per container: 1
       </Typography>
     </header>
-    <Grid container item xs={12}>
+    <Grid container item >
       <Grid item>
         <Typography
           color={'black'}

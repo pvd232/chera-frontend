@@ -48,15 +48,7 @@ const DeliveryForm = (props) => {
   const handleInput = async (event) => {
     const id = event.target.id;
     const value = event.target.value;
-
-    if (id === 'phoneNumber') {
-      const numberValue = Number(value);
-      if (!isNaN(numberValue)) {
-        setFormValue({ [id]: numberValue });
-      }
-    } else {
-      setFormValue({ [id]: value });
-    }
+    setFormValue({ [id]: value });
   };
   const validateAddress = async (addressObject) => {
     const validAddress = await APIClient.validateAddress(addressObject);
@@ -102,7 +94,11 @@ const DeliveryForm = (props) => {
     const status = form.checkValidity();
     setPhoneError(false);
     if (status) {
-      if (isNaN(Number(formValue.phoneNumber !== 'number'))) {
+      const rawPhoneNumber = formValue.phoneNumber.split('-').join('');
+      if (rawPhoneNumber.length !== 10) {
+        setPhoneError(true);
+        return false;
+      } else if (isNaN(Number(rawPhoneNumber))) {
         setPhoneError(true);
         return false;
       }
@@ -255,17 +251,19 @@ const DeliveryForm = (props) => {
                   />
                 </Grid>
               </Grid>
-              <Grid container item>
+              <Grid container item rowGap={'1vh'}>
                 <Grid item xs={12}>
                   <FormHelperText hidden={!phoneError} error={true}>
                     Please enter a valid number
                   </FormHelperText>
+                </Grid>
+                <Grid item xs={12}>
                   <CustomTextField
                     autoComplete="new-password"
                     type="tel"
                     required
                     fullWidth
-                    label={'Phone Number'}
+                    label={'Phone Number (Ex: 232-921-7890)'}
                     id="phoneNumber"
                     onChange={handleInput}
                     value={formValue.phoneNumber}
