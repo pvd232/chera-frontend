@@ -11,7 +11,6 @@ const Splash = () => {
   return (
     <Grid container item className={styles.pageContainer}>
       <LandingPage />
-      <MissionPage />
       <HowItWorks />
       <WhyUs />
       <FNCEApproved />

@@ -92,7 +92,7 @@ const AboutDropDown = () => {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    {/* <MenuItem
+                    <MenuItem
                       id="our-mission"
                       onClick={handleNavigate}
                       className={styles.menuItem}
@@ -100,7 +100,7 @@ const AboutDropDown = () => {
                       <Typography className={styles.text}>
                         Our mission
                       </Typography>
-                    </MenuItem> */}
+                    </MenuItem>
                     <MenuItem
                       id="resources"
                       onClick={handleNavigate}
