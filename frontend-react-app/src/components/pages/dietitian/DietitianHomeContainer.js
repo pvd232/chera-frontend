@@ -86,7 +86,6 @@ const DietitianHomeContainer = (props) => {
         const eatingDisorders = eatingDisorderDTOs.map(
           (eatingDisorderDTO) => new EatingDisorder(eatingDisorderDTO)
         );
-        console.log(eatingDisorders)
         setEatingDisorders(eatingDisorders);
       }
     });
