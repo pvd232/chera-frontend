@@ -29,7 +29,6 @@ import SnackBuilder from './components/pages/admin/snack_builder/SnackBuilder';
 import FAQs from './components/pages/splash/faqs/FAQs';
 import DietitianSignUp from './components/pages/splash/dietitian_sign_up/DietitianSignUp';
 import DietitianLinks from './components/shared_components/navbar/links/DietitianLinks';
-import MissionPage from './components/pages/splash/mission_page/MissionPage';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -281,16 +280,6 @@ const Main = (props) => {
           element={
             <Navbar
               childComponent={<Resources />}
-              links={<SplashLinks />}
-              homeUrl="/"
-            />
-          }
-        />
-        <Route
-          path="/our-mission"
-          element={
-            <Navbar
-              childComponent={<MissionPage />}
               links={<SplashLinks />}
               homeUrl="/"
             />
