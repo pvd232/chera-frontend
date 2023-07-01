@@ -52,6 +52,26 @@ class APIClient {
       throw new Error('Invalid response');
     }
   }
+
+  async updateClientPaymentMethod(clientID: string, subscriptionID: string, newCardToken: string): Promise<any> {
+    const requestUrl = this.baseUrl + `/stripe/update_payment_method/${clientID}/${subscriptionID}/${newCardToken}` ;
+  
+    const request = new Request(requestUrl);
+    const requestParams: RequestInit = {
+      method: 'POST',
+      mode: this.mode as RequestMode,
+      cache: 'default',
+    };
+  
+    const response = await this.fetchWrapper(request, requestParams);
+    console.log(response);
+    if (response instanceof Response) {
+      const responseData = await response.json();
+      return responseData;
+    } else {
+      throw new Error('Invalid response');
+    }
+  }
   
 
   async fetchWrapper(request: RequestInfo | URL, requestParams: RequestInit | undefined) {

@@ -21,6 +21,8 @@ const CardForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+  console.log(LocalStorageManager.shared.clientMealSubscription);
+
 
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet
@@ -38,14 +40,36 @@ const CardForm = () => {
       console.error(error);
     } else {
       console.log('Payment Method:', paymentMethod);
-      // Use the paymentMethod.id to further process the card details
+      
+
+      stripe.createToken(cardElement).then(function(result) {
+        if (result.error) {
+          console.log("Error adding new card")
+          console.error(result.error);
+        } else {
+          var token = result.token.id;
+          console.log(token);
+
+          const resp = APIC.updateClientPaymentMethod(LocalStorageManager.shared.client.stripeId, LocalStorageManager.shared.clientMealSubscription.stripeSubscriptionId, token);
+          console.log(resp)
+        }
+      });
+
+      
     }
   };
 
   return (
     <form id="card-form" onSubmit={handleSubmit}>
-      <div id="card-element">
-        <CardElement options={{ /* customize card element appearance */ }} />
+      <div id="card-element" style={{ display: 'grid', gap: '10px' }}>
+      <CardElement options={{
+      style: {
+        base: {
+          display: 'flex',
+          marginBottom: '10px',
+        },
+      },
+    }} />
       </div>
       <button type="submit">Submit</button>
     </form>
@@ -114,33 +138,32 @@ const CardForm = () => {
   );
 };
 const ClientPayment = (props) => {
+  const [curPayment, setcurPayment] = useState('');
   useEffect(() => {
     const fetchClientPaymentMethod = async () => {
       console.log(LocalStorageManager.shared.client);
       const resp = await APIC.getClientPaymentMethod(LocalStorageManager.shared.client.stripeId);
       console.log(resp);
+      setcurPayment(resp)
     };
 
     fetchClientPaymentMethod();
   }, []);
 
 
-
-  const appearance = {
-    theme: 'stripe',
-  };
-  const stripeOptions = {
-    clientSecret: props.clientSecret,
-    appearance: appearance,
-  };
-
   return (
-    <Grid container item className={previousDeliveries.pageContainer} xs={10}>
+    <Grid container item  xs={10}>
       <Grid item>
-        <Typography id={'previous-deliveries-header'} className={previousDeliveries.header}>
-          Your Payment Method
+      <br />
+      <br />
+      <br />
+        <Typography id={'previous-deliveries-header'} >
+          Your Current Payment Method: **** **** **** {curPayment}
         </Typography>
-        <Typography>Payment page</Typography>
+        <br />
+        <br />
+        <br />
+        <Typography>Add New Card:</Typography>
         <Elements stripe={props.stripePromise}>
           <CardForm />
         </Elements>
