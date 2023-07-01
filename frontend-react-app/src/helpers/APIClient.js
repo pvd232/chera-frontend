@@ -1053,20 +1053,6 @@ class APIClient {
     await this.fetchWrapper(request, requestParams);
     return;
   }
-  
-  async updateClientAddress(clientAddressData) {
-    const requestUrl = this.baseUrl + '/client/update_address';
-
-    const request = new Request(requestUrl);
-    const requestParams = {
-      method: 'PUT',
-      body: JSON.stringify(clientAddressData),
-      mode: this.mode,
-      cache: 'default',
-    };
-    await this.fetchWrapper(request, requestParams);
-    return;
-  }
   async getClientMealSubscription(clientId) {
     const requestUrl =
       this.baseUrl + `/meal_subscription?client_id=${clientId}`;
