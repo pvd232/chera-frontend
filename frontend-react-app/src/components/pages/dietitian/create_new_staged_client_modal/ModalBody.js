@@ -88,7 +88,7 @@ const ModalBody = (props) => {
                       required
                       id="mealPlanId"
                       value={props.formValue.mealPlanId}
-                      onChange={props.handleInput}
+                      // onChange={props.handleEatingDisorderInput}
                     >
                       {props.mealPlans.map((mealPlan, i) => (
                         <MenuItem
@@ -103,6 +103,33 @@ const ModalBody = (props) => {
                       ))}
                     </Select>
                   </FormControl>
+                  {/* <InputLabel className={modalBody.inputLabel}>
+                    Client Diagnosis
+                  </InputLabel>
+                  <FormControl>
+                    <InputLabel className={modalBody.inputLabel}>
+                      Eating Disorder
+                    </InputLabel>
+                    <Select
+                      label="Eating Disorder"
+                      required
+                      id="eatingDisorderId"
+                      value={props.formValue.eatingDisorderId}
+                      onChange={props.handleInput}
+                    >
+                      {props.eatingDisorders.map((eatingDisorder, i) => (
+                        <MenuItem
+                          key={`eatingDisorder-${i}`}
+                          id={`eatingDisorder-${i}`}
+                          value={eatingDisorder.id}
+                        >
+                          {`${capitalize(eatingDisorder.name)}: ${
+                            eatingDisorder.statedCaloricLowerBound
+                          }-${eatingDisorder.statedCaloricUpperBound} calories`}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl> */}
                   {/* <FormGroup>
                     <FormControlLabel
                       control={
