@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import { CircularProgress } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Button, Grid, Typography, TextField, CircularProgress } from '@mui/material';
 import planDetails from './scss/PlanDetails.module.scss';
 import planImage from './../../../static/images/plan.png';
 import APIClient from '../../../helpers/APIClient';
