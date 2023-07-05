@@ -23,6 +23,10 @@ const ClientProfileDropDown = () => {
     LocalStorageManager.shared.logoutUser();
   };
 
+  const handleUpdateAddress=()=>{
+    navigate('/update-address');
+  }
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -97,6 +101,15 @@ const ClientProfileDropDown = () => {
                     >
                       <Typography className={aboutDropDown.text}>
                         Log out
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      id="updateAddress"
+                      onClick={handleUpdateAddress}
+                      className={aboutDropDown.menuItem}
+                    >
+                      <Typography className={aboutDropDown.text}>
+                        Update Address
                       </Typography>
                     </MenuItem>
                   </MenuList>
