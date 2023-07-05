@@ -6,7 +6,7 @@ export default class MealDTO {
     this.name = mealObject.name;
     this.description = mealObject.description;
     this.imageUrl = mealObject.image_url;
-    this.price = mealObject.price;
+    this.price = 0;
     this.active = mealObject.active;
     this.properlyInitialized = (() => checkProperties(this))();
   }

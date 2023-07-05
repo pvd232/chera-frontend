@@ -11,7 +11,28 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import styles from './scss/AboutDropDown.module.scss';
+import { useAuth0 } from "@auth0/auth0-react";
+
 const LogInDropDown = () => {
+  const { loginWithRedirect } = useAuth0();
+
+  const handleLogin = async (event: React.MouseEvent<HTMLElement>) => {
+    const id = event.currentTarget.id;
+    if (`${id}` === "client-log-in"){
+      await loginWithRedirect({
+        appState: {
+          returnTo: "/home",
+        },
+      });
+    }else {
+      await loginWithRedirect({
+        appState: {
+          returnTo: "/d-home",
+        },
+      });
+    }
+  };
+
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
   const navigate = useNavigate();
@@ -82,7 +103,7 @@ const LogInDropDown = () => {
                   >
                     <MenuItem
                       id="client-log-in"
-                      onClick={handleNavigate}
+                      onClick={handleLogin}
                       className={styles.menuItem}
                     >
                       <Typography className={styles.text}>
@@ -91,7 +112,7 @@ const LogInDropDown = () => {
                     </MenuItem>
                     <MenuItem
                       id="dietitian-log-in"
-                      onClick={handleNavigate}
+                      onClick={handleLogin}
                       className={styles.menuItem}
                     >
                       <Typography className={styles.text}>

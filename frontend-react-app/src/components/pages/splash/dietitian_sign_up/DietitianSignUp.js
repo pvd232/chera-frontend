@@ -1,23 +1,25 @@
-import { useReducer, useState } from 'react';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import CardContent from '@mui/material/CardContent';
-import FormGroup from '@mui/material/FormGroup';
-import FormControl from '@mui/material/FormControl';
-import Stack from '@mui/material/Stack';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormHelperText from '@mui/material/FormHelperText';
-import LocalStorageManager from '../../../../helpers/LocalStorageManager';
-import APIClient from '../../../../helpers/APIClient';
-import DietitianDTO from '../../../../data_models/dto/DietitianDTO';
-import Dietitian from '../../../../data_models/model/Dietitian';
-import BlackButton from '../../../shared_components/BlackButton.ts';
-import { getAddressObject } from '../../client_sign_up/helpers/getAddressObject';
-import SearchLocationInput from '../../client_sign_up/SearchLocationInput';
-import styles from './scss/DietitianSignUp.module.scss';
-import ErrorMessage from './ErrorMessage';
-import RegistrationErrorMessage from './RegistrationErrorMessage';
-import CustomTextField from '../../../shared_components/CustomTextField';
+import { useReducer, useState } from "react";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import CardContent from "@mui/material/CardContent";
+import FormGroup from "@mui/material/FormGroup";
+import FormControl from "@mui/material/FormControl";
+import Stack from "@mui/material/Stack";
+import CircularProgress from "@mui/material/CircularProgress";
+import FormHelperText from "@mui/material/FormHelperText";
+import LocalStorageManager from "../../../../helpers/LocalStorageManager";
+import APIClient from "../../../../helpers/APIClient";
+import DietitianDTO from "../../../../data_models/dto/DietitianDTO";
+import Dietitian from "../../../../data_models/model/Dietitian";
+import BlackButton from "../../../shared_components/BlackButton.ts";
+import { getAddressObject } from "../../client_sign_up/helpers/getAddressObject";
+import SearchLocationInput from "../../client_sign_up/SearchLocationInput";
+import styles from "./scss/DietitianSignUp.module.scss";
+import ErrorMessage from "./ErrorMessage";
+import RegistrationErrorMessage from "./RegistrationErrorMessage";
+import CustomTextField from "../../../shared_components/CustomTextField";
+import { useAuth0 } from "@auth0/auth0-react";
+
 const DietitianSignUp = () => {
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
@@ -27,18 +29,18 @@ const DietitianSignUp = () => {
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
-      id: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      dieteticRegistrationNumber: '',
-      street: '',
-      suite: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      address: '',
-      clinicUrl: '',
+      id: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      dieteticRegistrationNumber: "",
+      street: "",
+      suite: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      address: "",
+      clinicUrl: "",
       datetime: Date.now(),
       clients: [],
       active: true,
@@ -46,12 +48,21 @@ const DietitianSignUp = () => {
     }
   );
 
+  const { user } = useAuth0();
+  if (user !== undefined) {
+    console.log("user id:", user.sub);
+    console.log("email id:", user.email);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
 
     const form = event.target;
-
+    
+    if (user !== undefined) {
+      formValue.id = user.email;
+    }
     const validated = await validate(form);
     if (validated) {
       const dietitianDTO = DietitianDTO.initializeFromForm(formValue);
@@ -66,12 +77,12 @@ const DietitianSignUp = () => {
       const createdDietitianDTO = new DietitianDTO(returnedDietitianData);
       const createdDietitian = new Dietitian(createdDietitianDTO);
 
-      LocalStorageManager.shared.homeUrl = '/d-home';
+      LocalStorageManager.shared.homeUrl = "/d-home";
       LocalStorageManager.shared.dietitian = createdDietitian;
       if (!createdDietitian.admin) {
-        window.location.assign('/d-home');
+        window.location.assign("/d-home");
       } else {
-        window.location.assign('/a-home');
+        window.location.assign("/a-home");
       }
     } else {
       setLoading(false);
@@ -85,18 +96,18 @@ const DietitianSignUp = () => {
   };
   const validateAddress = async (addressObject) => {
     const validAddress = await APIClient.validateAddress(addressObject);
-    if (validAddress.addressStatus === 'invalid') {
+    if (validAddress.addressStatus === "invalid") {
       setAddressValueError(true);
       return false;
-    } else if (validAddress.addressStatus === 'missingSuite') {
-      setSuiteError('Please enter your APT, Suite, etc.');
+    } else if (validAddress.addressStatus === "missingSuite") {
+      setSuiteError("Please enter your APT, Suite, etc.");
       return validAddress;
-    } else if (validAddress.addressStatus === 'invalidSuite') {
-      setSuiteError('Please enter a valid suite number.');
+    } else if (validAddress.addressStatus === "invalidSuite") {
+      setSuiteError("Please enter a valid suite number.");
       return validAddress;
     } else {
       setAddressValueError(false);
-      setSuiteError('');
+      setSuiteError("");
       return validAddress;
     }
   };
@@ -118,21 +129,21 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
-    if (formValue.suite !== '') {
-      const addressParts = formValue.address.split(',');
-      const newStreet = addressParts[0] + ' ' + formValue.suite;
+    if (formValue.suite !== "") {
+      const addressParts = formValue.address.split(",");
+      const newStreet = addressParts[0] + " " + formValue.suite;
       addressParts[0] = newStreet;
-      const newAddress = addressParts.join(',');
+      const newAddress = addressParts.join(",");
       const validAddress = await validateAddress(getAddressObject(newAddress));
 
-      if (validAddress.addressStatus !== 'valid') {
+      if (validAddress.addressStatus !== "valid") {
         return false;
       }
     }
     return form.checkValidity();
   };
   const handleAddress = async (address) => {
-    if (address.split(',').length === 4) {
+    if (address.split(",").length === 4) {
       const addressObject = getAddressObject(address);
       const validAddress = await validateAddress(addressObject);
       if (validAddress) {
@@ -149,32 +160,9 @@ const DietitianSignUp = () => {
           <Typography className={styles.header}>Dietitian sign up</Typography>
           <form onSubmit={handleSubmit}>
             <FormGroup>
-              <Stack direction={'column'} rowGap={3}>
+              <Stack direction={"column"} rowGap={3}>
                 <FormControl variant="filled">
                   <ErrorMessage error={error} />
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label="Email"
-                    id="id"
-                    type="email"
-                    onChange={handleInput}
-                    value={formValue.id}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
-                  <CustomTextField
-                    required
-                    type="password"
-                    autoComplete={'new-password'}
-                    fullWidth
-                    label="Choose a password"
-                    id="password"
-                    onChange={handleInput}
-                    value={formValue.password}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
                   <CustomTextField
                     required
                     fullWidth
@@ -198,10 +186,10 @@ const DietitianSignUp = () => {
                   <FormHelperText
                     hidden={!addressValueError}
                     error={true}
-                    sx={{ marginBottom: '1.5vh' }}
+                    sx={{ marginBottom: "1.5vh" }}
                   >
                     {
-                      'You chose an invalid address. Please choose another address from the dropdown.'
+                      "You chose an invalid address. Please choose another address from the dropdown."
                     }
                   </FormHelperText>
                   <SearchLocationInput
@@ -211,14 +199,14 @@ const DietitianSignUp = () => {
                 </FormControl>
                 <FormControl variant="filled">
                   <FormHelperText
-                    hidden={suiteError === ''}
+                    hidden={suiteError === ""}
                     error={true}
-                    sx={{ marginBottom: '1.5vh' }}
+                    sx={{ marginBottom: "1.5vh" }}
                   >
                     {suiteError}
                   </FormHelperText>
                   <CustomTextField
-                    disabled={suiteError === ''}
+                    disabled={suiteError === ""}
                     required
                     fullWidth
                     label="Suite"
@@ -248,7 +236,7 @@ const DietitianSignUp = () => {
                     type="url"
                     onChange={handleInput}
                     value={formValue.clinicUrl}
-                    autoComplete={'off'}
+                    autoComplete={"off"}
                   />
                 </FormControl>
 
@@ -256,10 +244,10 @@ const DietitianSignUp = () => {
                   id="dietRegSubmit"
                   disabled={loading}
                   variant="contained"
-                  type={'submit'}
+                  type={"submit"}
                   className={styles.submitButton}
                 >
-                  {loading ? <CircularProgress size={24} /> : 'Submit'}
+                  {loading ? <CircularProgress size={24} /> : "Submit"}
                 </BlackButton>
               </Stack>
             </FormGroup>

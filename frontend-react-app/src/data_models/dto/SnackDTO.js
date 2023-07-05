@@ -5,7 +5,7 @@ export default class SnackDTO {
     this.name = snackObject.name;
     this.description = snackObject.description;
     this.imageUrl = snackObject.image_url;
-    this.price = snackObject.price;
+    this.price = 0;
     this.active = snackObject.active;
     this.properlyInitialized = (() => checkProperties(this))();
   }
