@@ -1622,7 +1622,19 @@ class APIClient {
       return false;
     }
   }
+  async updateClientAddress(clientAddressData) {
+    const requestUrl = this.baseUrl + '/client/profile_page';
 
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'PUT',
+      body: JSON.stringify(clientAddressData),
+      mode: this.mode,
+      cache: 'default',
+    };
+    await this.fetchWrapper(request, requestParams);
+    return;
+  }
   async createPaymentIntent(
     numMeals,
     numSnacks,

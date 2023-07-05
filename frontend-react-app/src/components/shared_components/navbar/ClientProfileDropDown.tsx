@@ -23,6 +23,12 @@ const ClientProfileDropDown = () => {
     LocalStorageManager.shared.logoutUser();
   };
 
+  //navigate to the Profile Page
+  const handleUpdateAddress = () => {
+    //directory with Profile.js
+    navigate('/update-address');
+  }
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -90,6 +96,15 @@ const ClientProfileDropDown = () => {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
+                  <MenuItem
+                    id="update-address" //Added the profile to drop down
+                    onClick={handleUpdateAddress}
+                    className={aboutDropDown.menuItem}
+                  >
+                    <Typography className={aboutDropDown.text}>
+                      Update Address
+                    </Typography>
+                  </MenuItem>
                     <MenuItem
                       id="logout"
                       onClick={handleLogout}

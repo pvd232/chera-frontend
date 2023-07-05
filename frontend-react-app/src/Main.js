@@ -28,6 +28,7 @@ import SnackBuilder from './components/pages/admin/snack_builder/SnackBuilder';
 import FAQs from './components/pages/splash/faqs/FAQs';
 import DietitianSignUp from './components/pages/splash/dietitian_sign_up/DietitianSignUp';
 import DietitianLinks from './components/shared_components/navbar/links/DietitianLinks';
+import UpdateAddress from './components/pages/client/client_home/UpdateAddress'; //imported the Profile Page
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -183,6 +184,17 @@ const Main = (props) => {
             />
           }
         />
+        <Route
+          path="/update-address"
+          element={
+            <Navbar
+              childComponent={<UpdateAddress />}
+              links={<ClientLinks />}
+              homeUrl="/home"
+            />
+          }
+        />
+        
         <Route
           path="/dietitian-log-in"
           element={
