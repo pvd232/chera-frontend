@@ -34,6 +34,14 @@
         font-weight: bold;
         margin-top: 2vh;
       }
+      .confirmUsernameField {
+        margin-top: 2vh;
+        font-size: client.$buttonFontSize;
+      }
+      .closeAccountLoader {
+        margin-left: 8vh;
+        margin-top: 3vh;
+      }
       .closeAccountLink {
         display: flex;
         justify-content: right;

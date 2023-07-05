@@ -188,7 +188,7 @@ const Main = (props) => {
           path="/plan-details"
           element={
             <Navbar
-              childComponent={<PlanDetails />}
+              childComponent={<PlanDetails domain={'client'} />}
               links={<ClientLinks />}
               homeUrl="/home"
             />

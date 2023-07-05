@@ -1,11 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import TextField from '@mui/material/TextField';
+import { CircularProgress } from '@mui/material';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
 import planDetails from './scss/PlanDetails.module.scss';
 import planImage from './../../../static/images/plan.png';
-const PlanDetails = () => {
+import APIClient from '../../../helpers/APIClient';
+import LocalStorageManager from '../../../helpers/LocalStorageManager';
+const PlanDetails = (props) => {
+  const [confirmDeleteUsername, setConfirmDeleteUsername] = 
+    useState('');
+  const [loadingDeleteSubscription, setLoadingDeleteSubscription] =
+    useState(false);
+  // const [confirmDeleteSubscription, setConfirmDeleteSubscription] =
+  //   useState(false);
+
+  const handleDeleteSubscription = async () => {
+    console.log(LocalStorageManager.shared.client);
+    const client = LocalStorageManager.shared.client;
+    confirmDeleteUsername === client.id
+    // confirmDeleteUsername === props.clientId
+      ? (() => {
+          setLoadingDeleteSubscription(true);
+          APIClient.deleteScheduleMeals(client.mealPlanId).then(() => {
+            APIClient.deleteScheduledOrderMeals(client.mealPlanId).then(
+              () => {
+                APIClient.deleteScheduleSnacks(client.mealPlanId).then(
+                  () => {
+                    APIClient.deleteScheduledOrderSnacks(
+                      client.mealPlanId
+                    ).then(() => {
+                      APIClient.deleteStripeSubscription(
+                        client.id
+                      ).then(() => {
+                        APIClient.deleteStripeCustomer(
+                          client.stripeId
+                        ).then(() => {
+                          APIClient.deactivateClient(client.id).then(
+                            () => {
+                              APIClient.deactivateMealSubscription(
+                                client.id
+                              ).then(() => {
+                                setLoadingDeleteSubscription(false);
+                                props.handleDeleteSubscription();
+                              });
+                            }
+                          );
+                        });
+                      });
+                    });
+                  }
+                );
+              }
+            );
+          });
+        })()
+      : alert('Please enter your username to confirm deletion.');
+  };
+
   return (
     <Grid container item className={planDetails.pageContainer} xs={8}>
       <Grid item container justifyContent={'center'} borderBottom={'2px solid darkGrey'}>
@@ -53,10 +106,30 @@ const PlanDetails = () => {
               When you close your account, you lose access to your historical shopping data and settings.
             </Typography>
           </Grid>
-          <Grid item xs={4}>
-            <Link to="/close-account" className={planDetails.closeAccountLink}>
-              Close Account
-            </Link>
+          <Grid container item xs={4}>
+            <Grid item xs={6}>
+              <TextField 
+                className={planDetails.confirmUsernameField}
+                label="Confirm Username..." 
+                value={confirmDeleteUsername} 
+                onChange={event => setConfirmDeleteUsername(event.target.value)} 
+              />
+            </Grid>
+            <Grid item xs={6}>
+            {
+                loadingDeleteSubscription 
+                ? 
+                <Grid item xs={6}>
+                  <CircularProgress className={planDetails.closeAccountLoader} color="secondary" />
+                </Grid>
+                : 
+                <Grid item xs={6}>
+                  <Button className={planDetails.closeAccountLink} onClick={handleDeleteSubscription}>
+                    Close Account
+                  </Button>
+                </Grid>
+              }
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
