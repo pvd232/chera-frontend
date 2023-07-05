@@ -5,25 +5,9 @@ import Card from '@mui/material/Card';
 const ClientOrderSummary = (props) => {
   const customTheme = useTheme();
 
-  const mealsSubtotal = (() => {
-    let mealsSubtotal = 0;
-    props.scheduleMeals.forEach(
-      (scheduleMeal) => (mealsSubtotal += scheduleMeal.associatedMeal.price)
-    );
-    return mealsSubtotal;
-  })();
-  const snacksSubtotal = (() => {
-    let snacksSubtotal = 0;
-    props.scheduleSnacks.forEach(
-      (scheduleSnack) => (snacksSubtotal += scheduleSnack.associatedSnack.price)
-    );
-    return snacksSubtotal;
-  })();
-
-  const total = (() => {
-    const total = mealsSubtotal + snacksSubtotal + props.shippingCost;
-    return total;
-  })();
+  const mealsSubtotal = props.scheduleMeals.length * props.mealPrice;
+  const snacksSubtotal = props.scheduleSnacks.length * props.snackPrice;
+  const total = mealsSubtotal + snacksSubtotal;
 
   return (
     <Grid
@@ -75,12 +59,6 @@ const ClientOrderSummary = (props) => {
             </Grid>
             <Grid item container xs={6} justifyContent={'flex-end'}>
               <p>{snacksSubtotal.toFixed(2)}</p>
-            </Grid>
-            <Grid item container xs={6} justifyContent={'flex-start'}>
-              <p>Shipping</p>
-            </Grid>
-            <Grid item container xs={6} justifyContent={'flex-end'}>
-              <p>{props.shippingCost.toFixed(2)}</p>
             </Grid>
 
             {props.prepaid ? (

@@ -31,7 +31,6 @@ const MealBuilder = () => {
   const [mealName, setMealName] = useState('');
   const [mealTime, setMealTime] = useState('');
   const [mealDescription, setMealDescription] = useState('');
-  const [mealPrice, setMealPrice] = useState(0);
   const [isVegetarian, setIsVegetarian] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [mealIngredients, setMealIngredients] = useState([]);
@@ -48,7 +47,6 @@ const MealBuilder = () => {
     updateUSDAIngredients({
       mounted: mounted,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
-      setMealPrice: setMealPrice,
       setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
       setMealPlanMeals: setMealPlanMeals,
@@ -81,7 +79,6 @@ const MealBuilder = () => {
       dietaryRestrictions,
       mealName,
       mealTime,
-      mealPrice,
       mealDescription,
       imageUrl,
       isVegetarian
@@ -131,7 +128,6 @@ const MealBuilder = () => {
       mealName: mealName,
       mealTime: mealTime,
       mealDescription: mealDescription,
-      mealPrice: mealPrice,
       isVegetarian: isVegetarian,
       dietaryRestrictions: dietaryRestrictions,
       imageUrl: imageUrl,
@@ -141,7 +137,6 @@ const MealBuilder = () => {
     updateUSDAIngredients({
       mounted: true,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
-      setMealPrice: setMealPrice,
       setDietaryRestrictions: setDietaryRestrictions,
       setMealPlans: setMealPlans,
       setMealPlanMeals: setMealPlanMeals,

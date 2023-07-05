@@ -17,8 +17,6 @@ export default function getBaseURL(service) {
       window.location.host === 'localhost'
     ) {
       return 'http://localhost:3000';
-    } else if (window.location.host === 'staging.cherahealth.com') {
-      return `https://${window.location.host}`;
     } else {
       return `https://${window.location.host}`;
     }

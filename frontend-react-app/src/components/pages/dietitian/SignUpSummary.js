@@ -16,6 +16,7 @@ const SignUpSummary = (props) => {
     APIClient.createPaymentIntent(
       props.numMeals,
       props.numSnacks,
+      props.zipcode,
       props.stagedClientId,
       false
     ).then((paymentIntentData) => {
@@ -25,7 +26,7 @@ const SignUpSummary = (props) => {
       }
     });
     return () => (mounted = false);
-  }, [props.numMeals, props.numSnacks, props.stagedClientId]);
+  }, [props.numMeals, props.numSnacks, props.zipcode, props.stagedClientId]);
 
   const appearance = {
     theme: 'stripe',
@@ -56,7 +57,6 @@ const SignUpSummary = (props) => {
           >
             <DiscountOrderSummary
               stagedClientId={props.stagedClientId}
-              shippingCost={props.shippingCost}
               scheduleMeals={props.prepaidMeals}
               scheduleSnacks={props.prepaidSnacks}
               dietitianPrepaying={true}
@@ -88,6 +88,7 @@ const SignUpSummary = (props) => {
                 returnUrl={APIClient.getPaidStagedMealsReturnUrl(
                   props.stagedClientId
                 )}
+                zipcode={props.zipcode}
               />
             </Grid>
           </Elements>

@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
 import { useTheme } from '@mui/material/styles';
-import { useReducer, useState, useRef, useEffect } from 'react';
+import { useReducer, useState } from 'react';
 // import CardContent from '@mui/material/CardContent';
 import FormGroup from '@mui/material/FormGroup';
 import Typography from '@mui/material/Typography';
@@ -11,6 +11,10 @@ import BlackButton from '../../../shared_components/BlackButton.ts';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress.js';
 import HowItWorks from './HowItWorks.js';
 import CustomTextField from '../../../shared_components/CustomTextField.js';
+import { validateZipcode } from './helpers/validateZipcode.js';
+import APIClient from '../../../../helpers/APIClient.js';
+import COGSDTO from '../../../../data_models/dto/COGSDTO.js';
+
 const AccountRegistration = (props) => {
   const customTheme = useTheme();
 
@@ -22,18 +26,13 @@ const AccountRegistration = (props) => {
       id: props.stagedClientId,
       password: '',
       confirmPassword: '',
+      zipcode: '',
     }
   );
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-
-  const timer = useRef();
-  useEffect(() => {
-    return () => {
-      clearTimeout(timer.current);
-    };
-  }, []);
+  const [zipcodeError, setZipcodeError] = useState(false);
 
   const handleInput = (event) => {
     const id = event.target.id;
@@ -48,31 +47,43 @@ const AccountRegistration = (props) => {
     if (formValue.password !== formValue.confirmPassword) {
       setError(true);
       return false;
+    } else if (!validateZipcode(formValue.zipcode)) {
+      setZipcodeError(true);
+      return false;
     }
     setError(false);
+    setZipcodeError(false);
     return form.checkValidity();
   };
 
   // Input handlers
-  const handleButtonClick = () => {
+  const handleButtonClick = async () => {
     if (!loading) {
       setLoading(true);
-      timer.current = window.setTimeout(() => {
-        const mealSubscriptionObject = {
-          id: uuid(),
-          clientId: formValue.id,
-          shippingCost: props.shippingCost,
-          stripeSubscriptionId: '',
-          dietitianId: props.dietitianId,
-          datetime: Date.now(),
-          paused: false,
-          active: true,
-        };
-        const mealSubscription = new MealSubscription(mealSubscriptionObject);
-        props.updateMealSubscription(mealSubscription);
-        props.updateClientPassword(formValue.password);
-        setLoading(false);
-      }, 500);
+      const mealSubscriptionObject = {
+        id: uuid(),
+        clientId: formValue.id,
+        dietitianId: props.dietitianId,
+        stripeSubscriptionId: '',
+        shippingRate: props.shippingRate,
+        datetime: Date.now(),
+        paused: false,
+        active: true,
+      };
+      props.updateZipcode(formValue.zipcode)
+      const shippingCostPerBox = await APIClient.getShippingRate(
+        formValue.zipcode
+      );
+      props.updateShippingRate(shippingCostPerBox);
+      const cogsData = await APIClient.getCOGS();
+      const cogsDTOs = cogsData.map((cog) => new COGSDTO(cog));
+
+      props.updateCOGS(cogsDTOs);
+      const mealSubscription = new MealSubscription(mealSubscriptionObject);
+      props.updateMealSubscription(mealSubscription);
+      props.updateClientPassword(formValue.password);
+
+      setLoading(false);
     }
   };
   const handleSubmit = (event) => {
@@ -190,6 +201,32 @@ const AccountRegistration = (props) => {
                         value={formValue.confirmPassword}
                         error={error}
                         helperText={error ? 'Your passwords do not match' : ''}
+                      />
+                      <CustomTextField
+                        required
+                        type="text"
+                        fullWidth
+                        label={'Zipcode'}
+                        // must set both name and autoComplete to 'new-password' this for autofill to stop
+                        name="zipcode"
+                        id="zipcode"
+                        sx={{
+                          marginLeft: 'auto',
+                          marginRight: 'auto',
+                          width: '80%',
+                        }}
+                        inputProps={{
+                          style: { fontSize: customTheme.fontEqualizer(14) },
+                        }} // font size of input text
+                        InputLabelProps={{
+                          style: { fontSize: customTheme.fontEqualizer(14) },
+                        }}
+                        onChange={handleInput}
+                        value={formValue.zipcode}
+                        error={zipcodeError}
+                        helperText={
+                          zipcodeError ? 'Please enter a valid zipcde' : ''
+                        }
                       />
                     </>
 

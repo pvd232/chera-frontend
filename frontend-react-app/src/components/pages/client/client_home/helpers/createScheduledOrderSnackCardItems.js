@@ -61,7 +61,7 @@ const createScheduledOrderSnackCardItems = (
 
     const scheduledOrderSnacksMapForDeliveryDate =
       clientScheduledOrderSnackMap.get(deliveryDateTimeStamp);
-    return scheduledOrderSnacksMapForDeliveryDate;
+    return scheduledOrderSnacksMapForDeliveryDate ?? false;
   }
   // Otherwise if no deliveryDateIndex is passed in, return the map for all deliveryDates (PreviousDeliveries.js uses this to display the snacks for all deliveryDates)
   else {

@@ -71,7 +71,7 @@ const ClientProfileDropDown = () => {
       className={aboutDropDown.clientDropDownContainer}
     >
       <Grid item>
-        <div className={aboutDropDown.personIconContainer} id="test">
+        <div className={aboutDropDown.personIconContainer} id="accountDetails">
           <Typography className={aboutDropDown.personIcon}>
            {userFirstName.charAt(0)}
           </Typography>

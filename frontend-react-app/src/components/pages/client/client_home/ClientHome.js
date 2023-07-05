@@ -616,7 +616,10 @@ const ClientHome = (props) => {
                   currentDeliveryDateIndex={selectedDeliveryIndex}
                 />
               </Grid>
-              {extendedScheduledOrderSnacks.length > 0 && (
+              {createScheduledOrderSnackCardItems(
+                extendedScheduledOrderSnacks,
+                selectedDeliveryIndex
+              ) && (
                 <Grid container item>
                   <CurrentSnacks
                     currentScheduledOrderSnacks={Array.from(

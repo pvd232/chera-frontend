@@ -5,8 +5,9 @@ import Icon from '@mui/material/Icon';
 import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
 import capitalize from '../../../../helpers/capitalize';
 import BlackButton from '../../../shared_components/BlackButton.ts';
-import getSnacksSubtotal from './helpers/getOrderSubtotal';
+import getOrderSubtotal from './helpers/getOrderSubtotal';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
+import { getMealPrice } from './helpers/getMealPrice';
 
 const SideBar = (props) => {
   const breakfastMeals = props.chosenScheduleMeals.filter(
@@ -223,10 +224,16 @@ const SideBar = (props) => {
           </Grid>
           <Grid item xs={5}>
             <Typography fontSize={'1rem'} textAlign={'left'}>
-              {`Total: $${getSnacksSubtotal(
+              {`Total: $${getOrderSubtotal(
+                getMealPrice(
+                  props.cogs,
+                  props.shippingRate,
+                  props.chosenScheduleMeals.length,
+                  props.chosenScheduleSnacks.length
+                ),
                 props.chosenScheduleMeals,
                 props.chosenScheduleSnacks
-              )}`}
+              ).toFixed(2)}`}
             </Typography>
           </Grid>
         </Grid>

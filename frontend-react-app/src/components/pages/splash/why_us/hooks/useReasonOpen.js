@@ -13,6 +13,7 @@ export const useReasonOpen = () => {
       third: false,
       fourth: false,
       fifth: false,
+      sixth: false,
     }
   );
   const handleSetReasonOpen = (reasonNumber) => {

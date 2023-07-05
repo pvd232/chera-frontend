@@ -1,5 +1,3 @@
-import { v4 as uuid } from 'uuid';
-import { useTheme } from '@mui/material/styles';
 import * as React from 'react';
 import { useState } from 'react';
 import { Button, FormControl } from '@mui/material';
@@ -24,8 +22,6 @@ import StagedClientDTO from '../../../data_models/dto/StagedClientDTO';
 import ClientDTO from '../../../data_models/dto/ClientDTO';
 import editClientMealPlanModal from './scss/EditClientMealPlanModal.module.scss';
 const EditClientMealPlanModal = (props) => {
-  const customTheme = useTheme();
-
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
