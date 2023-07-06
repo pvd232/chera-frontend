@@ -40,6 +40,7 @@ const CreateNewStagedClientModal = (props) => {
       id: '',
       firstName: '',
       mealPlanId: '',
+      // eatingDisorderId: '',
       notes: '',
       dietitianId: props.dietitianId,
       currentWeight: '',
@@ -59,6 +60,7 @@ const CreateNewStagedClientModal = (props) => {
       id: '',
       firstName: '',
       mealPlanId: '',
+      // eatingDisorderId: '',
       notes: '',
       dietitianId: props.dietitianId,
       currentWeight: '',
@@ -99,6 +101,7 @@ const CreateNewStagedClientModal = (props) => {
     scheduleSnacks,
     mealPrice = false
   ) => {
+    // Make sure initializing Staged Client with new property works - shouldnt have to do anything here
     const newStagedClient = new StagedClient(formValue);
     setStagedClientId(newStagedClient.id);
 
@@ -179,13 +182,18 @@ const CreateNewStagedClientModal = (props) => {
       return false;
     }
   };
-
+  // const handleEatingDisorderInput = (event) => {
+  //   const value = event.target.value;
+  //   setFormValue({ eatingDisorderId: value });
+  // };
   const handleInput = (event) => {
     const id = event.target.id;
     const value = event.target.value;
     if (id === 'confirm-password') {
       setFormValue({ confirmPassword: value });
-    } else if (id === undefined) {
+    }
+    // Figure out how to pass in eating disorder values
+    else if (id === undefined) {
       setFormValue({ mealPlanId: value });
     } else if (id === 'mealsPreSelected') {
       const valueToSet = (() => {
@@ -262,6 +270,8 @@ const CreateNewStagedClientModal = (props) => {
       loading={loading}
       handleSubmit={handleSubmit}
       mealPlans={props.mealPlans}
+      // eatingDisorders={props.eatingDisorders}
+      // handleEatingDisorderInput={handleEatingDisorderInput}
       zipcode={zipcode}
       zipcodeError={zipcodeError}
     />

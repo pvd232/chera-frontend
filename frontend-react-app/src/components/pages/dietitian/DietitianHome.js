@@ -83,6 +83,7 @@ const DietititanHome = (props) => {
               extendedMeals={props.extendedMeals}
               snacks={props.snacks}
               mealPlans={props.mealPlans.mealPlansArray}
+              // eatingDisorders={props.eatingDisorders}
               dietitianId={props.dietitianId}
               stripePromise={props.stripePromise}
               handleFinishCreatingStagedClient={
