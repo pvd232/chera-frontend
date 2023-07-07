@@ -88,6 +88,7 @@ const ModalBody = (props) => {
                       required
                       id="mealPlanId"
                       value={props.formValue.mealPlanId}
+                      onChange={props.handleInput}
                       // onChange={props.handleEatingDisorderInput}
                     >
                       {props.mealPlans.map((mealPlan, i) => (

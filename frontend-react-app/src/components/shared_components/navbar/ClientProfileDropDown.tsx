@@ -16,9 +16,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 const ClientProfileDropDown = () => {
   const { logout } = useAuth0();
     
-  const userFirstName = ''
-  //const userFirstName =
-    //LocalStorageManager.shared.client.firstName.toUpperCase();
+  const userFirstName = LocalStorageManager.shared.client.firstName.toUpperCase();
   //const navigate = useNavigate();
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
