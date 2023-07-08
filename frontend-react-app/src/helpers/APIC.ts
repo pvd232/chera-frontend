@@ -53,8 +53,8 @@ class APIClient {
     }
   }
 
-  async updateClientPaymentMethod(clientID: string, subscriptionID: string, newCardToken: string): Promise<any> {
-    const requestUrl = this.baseUrl + `/stripe/update_payment_method/${clientID}/${subscriptionID}/${newCardToken}` ;
+  async updateClientPaymentMethod(clientID: string, subscriptionID: string, paymentMethod: string): Promise<any> {
+    const requestUrl = this.baseUrl + `/stripe/update_payment_method/${clientID}/${subscriptionID}/${paymentMethod}` ;
   
     const request = new Request(requestUrl);
     const requestParams: RequestInit = {

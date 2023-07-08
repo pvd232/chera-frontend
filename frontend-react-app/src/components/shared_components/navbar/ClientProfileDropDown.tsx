@@ -27,34 +27,7 @@ const ClientProfileDropDown = () => {
   };
 
   const handlePayment = () => {
-      console.log(LocalStorageManager.shared);
-    console.log(LocalStorageManager.shared.client);
-    console.log(LocalStorageManager.shared.clientMealSubscription);
-    console.log(LocalStorageManager.shared.mealTimes);
-    console.log(LocalStorageManager.shared);
     navigate('/payment');
-    // navigate('/');
-    // <Payment
-    //   clientSecret={LocalStorageManager.shared.client.clientSecret}
-    //   stripePromise={props.stripePromise}
-    //   scheduleMeals={scheduleMeals}
-    //   scheduleSnacks={scheduleSnacks}
-    //   discountCode={''}
-    //   orderDiscount={''}
-    //   stagedClient={LocalStorageManager.shared.client}
-    //   shippingCost={props.shippingCost}
-    //   handleSubmit={handleSubmit}
-    // />
-
-
-    // console.log(LocalStorageManager.shared);
-    // console.log(LocalStorageManager.shared.client);
-    // // await APIClient.stripe_payment_methods(LocalStorageManager.shared.client)
-    // console.log(LocalStorageManager.shared.clientMealSubscription);
-    // console.log(LocalStorageManager.shared.mealTimes);
-    // console.log(LocalStorageManager.shared);
-
-
   };
 
   const handleToggle = () => {
