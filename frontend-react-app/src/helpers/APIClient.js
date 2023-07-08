@@ -917,8 +917,10 @@ class APIClient {
     return stripeData;
   }
   async deleteStripeSubscription(stripeSubscriptionId) {
+    // const requestUrl =
+    //   this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
     const requestUrl =
-      this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
+    this.baseUrl + `/stripe/subscription?stripe_subscription_id=${stripeSubscriptionId}`;
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -927,9 +929,12 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-
-    const stripeData = await response.json();
-    return stripeData;
+    if (response.status === 204) {
+      return null;
+    } else {
+        const stripeData = await response.json();
+        return stripeData;
+    }
   }
 
   async authenticateClient(credentials) {
@@ -1049,8 +1054,12 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-    const clientJSON = await response.json();
-    return clientJSON;
+    if (response.status === 204) {
+      return null;
+    } else {
+        const clientJSON = await response.json();
+        return clientJSON;
+    }
   }
   async updateClient(clientData) {
     const requestUrl = this.baseUrl + '/client';

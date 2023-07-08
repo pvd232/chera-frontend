@@ -4,31 +4,32 @@ import planDetails from './scss/PlanDetails.module.scss';
 import planImage from './../../../static/images/plan.png';
 import APIClient from '../../../helpers/APIClient';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
+import { useNavigate } from 'react-router-dom';
 const PlanDetails = (props) => {
   const [confirmDeleteUsername, setConfirmDeleteUsername] = 
     useState('');
   const [loadingDeleteSubscription, setLoadingDeleteSubscription] =
     useState(false);
-  // const [confirmDeleteSubscription, setConfirmDeleteSubscription] =
-  //   useState(false);
+  const navigate = useNavigate();
 
   const handleDeleteSubscription = async () => {
     console.log(LocalStorageManager.shared.client);
+    console.log(LocalStorageManager.shared.clientMealSubscription)
     const client = LocalStorageManager.shared.client;
+    const clientMeal = LocalStorageManager.shared.clientMealSubscription;
     confirmDeleteUsername === client.id
-    // confirmDeleteUsername === props.clientId
       ? (() => {
           setLoadingDeleteSubscription(true);
-          APIClient.deleteScheduleMeals(client.mealPlanId).then(() => {
-            APIClient.deleteScheduledOrderMeals(client.mealPlanId).then(
+          APIClient.deleteScheduleMeals(clientMeal.id).then(() => {
+            APIClient.deleteScheduledOrderMeals(clientMeal.id).then(
               () => {
-                APIClient.deleteScheduleSnacks(client.mealPlanId).then(
+                APIClient.deleteScheduleSnacks(clientMeal.id).then(
                   () => {
                     APIClient.deleteScheduledOrderSnacks(
-                      client.mealPlanId
+                      clientMeal.id
                     ).then(() => {
                       APIClient.deleteStripeSubscription(
-                        client.id
+                        clientMeal.stripeSubscriptionId
                       ).then(() => {
                         APIClient.deleteStripeCustomer(
                           client.stripeId
@@ -36,10 +37,10 @@ const PlanDetails = (props) => {
                           APIClient.deactivateClient(client.id).then(
                             () => {
                               APIClient.deactivateMealSubscription(
-                                client.id
+                                clientMeal.id
                               ).then(() => {
                                 setLoadingDeleteSubscription(false);
-                                props.handleDeleteSubscription();
+                                navigate('/client-log-in');
                               });
                             }
                           );
