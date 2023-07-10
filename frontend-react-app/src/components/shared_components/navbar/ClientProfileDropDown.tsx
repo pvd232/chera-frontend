@@ -95,6 +95,15 @@ const ClientProfileDropDown = () => {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem
+                      id="client-plan-details"
+                      onClick={() => navigate('/plan-details')}
+                      className={aboutDropDown.menuItem}
+                    >
+                      <Typography className={aboutDropDown.text}>
+                          Plan Details
+                        </Typography>
+                    </MenuItem>
+                    <MenuItem
                       id="logout"
                       onClick={handleLogout}
                       className={aboutDropDown.menuItem}
