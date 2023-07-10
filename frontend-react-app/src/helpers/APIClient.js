@@ -687,18 +687,18 @@ class APIClient {
     const mealPlanData = await response.json();
     return mealPlanData;
   }
-  // async getEatingDisorders() {
-  //   const requestUrl = `${this.baseUrl}/eating_disorder`;
-  //   const request = new Request(requestUrl);
-  //   const requestParams = {
-  //     method: 'GET',
-  //     mode: this.mode,
-  //     cache: 'default',
-  //   };
-  //   const response = await this.fetchWrapper(request, requestParams);
-  //   const eatingDisorderData = await response.json();
-  //   return eatingDisorderData;
-  // }
+  async getEatingDisorders() {
+    const requestUrl = `${this.baseUrl}/eating_disorder`;
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const eatingDisorderData = await response.json();
+    return eatingDisorderData;
+  }
 
   async getExtendedClients(dietitianId) {
     const requestUrl = `${this.baseUrl}/extended_client?dietitian_id=${dietitianId}`;
