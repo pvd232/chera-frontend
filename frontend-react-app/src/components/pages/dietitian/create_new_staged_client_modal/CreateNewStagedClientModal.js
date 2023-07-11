@@ -9,10 +9,12 @@ import StagedClient from '../../../../data_models/model/StagedClient';
 import StagedScheduleMealDTO from '../../../../data_models/dto/StagedScheduleMealDTO';
 import StagedScheduleSnackDTO from '../../../../data_models/dto/StagedScheduleSnackDTO';
 import StagedClientDTO from '../../../../data_models/dto/StagedClientDTO';
+import COGSDTO from '../../../../data_models/dto/COGSDTO';
 import ClientMenu from '../../client_sign_up/client_menu/ClientMenu';
 import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
 import createNewStagedClientModal from './scss/CreateNewStagedClientModal.module.scss';
+import { validateZipcode } from '../../client_sign_up/account_registration/helpers/validateZipcode';
 const CreateNewStagedClientModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -24,7 +26,11 @@ const CreateNewStagedClientModal = (props) => {
   const [prepaidMeals, setPrepaidMeals] = useState([]);
   const [prepaidSnacks, setPrepaidSnacks] = useState([]);
   const [page, setPage] = useState('SignUp');
-  const [shippingCost, setShippingCost] = useState(false);
+  const [zipcode, setZipcode] = useState('');
+  const [cogs, setCogs] = useState('');
+  const [mealPrice, setMealPrice] = useState(false);
+  const [shippingRate, setShippingRate] = useState(false);
+  const [zipcodeError, setZipcodeError] = useState(false);
   const [stagedClientId, setStagedClientId] = useState('');
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -34,8 +40,14 @@ const CreateNewStagedClientModal = (props) => {
       id: '',
       firstName: '',
       mealPlanId: '',
+      eatingDisorderId: '',
+      currentWeight: 0,
+      targetWeight: 0,
+      age: 0,
+      gender: '',
       notes: '',
       dietitianId: props.dietitianId,
+      currentWeight: '',
       active: true,
       accountCreated: false,
       datetime: Date.now(),
@@ -52,8 +64,14 @@ const CreateNewStagedClientModal = (props) => {
       id: '',
       firstName: '',
       mealPlanId: '',
+      eatingDisorderId: '',
+      currentWeight: 0,
+      targetWeight: 0,
+      age: 0,
+      gender: '',
       notes: '',
       dietitianId: props.dietitianId,
+      currentWeight: '',
       active: true,
       accountCreated: false,
       datetime: Date.now(),
@@ -75,13 +93,23 @@ const CreateNewStagedClientModal = (props) => {
       setError(true);
       return false;
     }
+    const validZipcode = validateZipcode(zipcode);
+    if (!validZipcode) {
+      setZipcodeError(true);
+    }
 
     setError(false);
+    setZipcodeError(false);
     return form.checkValidity();
   };
 
   // Input handlers
-  const handleButtonClick = async (scheduleMeals, scheduleSnacks) => {
+  const handleButtonClick = async (
+    scheduleMeals,
+    scheduleSnacks,
+    mealPrice = false
+  ) => {
+    // Make sure initializing Staged Client with new property works - shouldnt have to do anything here
     const newStagedClient = new StagedClient(formValue);
     setStagedClientId(newStagedClient.id);
 
@@ -95,8 +123,11 @@ const CreateNewStagedClientModal = (props) => {
       resetFormValues();
       setLoading(false);
       setOpen(false);
-      // Dietitian is selecting client meals, and has already filled out their info on the form
+      // Dietitian is selecting client meals, and has already filled out their info on the form and picked their meals
     } else if (formValue.mealsPreSelected && scheduleMeals) {
+      // Meal price will be determined dynamically as the meals are being selected
+      // Thus set the meal price after the dietitian has selected the meals
+      setMealPrice(mealPrice);
       const newStagedClient = new StagedClient(formValue);
       const stagedScheduleMealDTOs = scheduleMeals.map((stagedScheduleMeal) =>
         StagedScheduleMealDTO.initializeFromStagedScheduleMeal(
@@ -134,8 +165,17 @@ const CreateNewStagedClientModal = (props) => {
       }
     } else {
       // Dietitian is selecting client meals, and has just filled out their info on the form
+      setLoading(true);
+      const shippingRate = await APIClient.getShippingRate(zipcode);
+      const cogsData = await APIClient.getCOGS();
+      const cogsDTOs = cogsData.map((cog) => {
+        return new COGSDTO(cog);
+      });
+      setCogs(cogsDTOs);
+      setShippingRate(shippingRate);
       setShowMenu(true);
       setPage('DietitianChooseClientMealsMenu');
+      setLoading(false);
     }
   };
   const handleSubmit = async (event) => {
@@ -151,12 +191,24 @@ const CreateNewStagedClientModal = (props) => {
     }
   };
 
+  const handleEatingDisorderInput = (event) => {
+    const value = event.target.value;
+    setFormValue({ eatingDisorderId: value });
+  };
+  
+  const handleGenderInput = (event) => {
+    const value = event.target.value;
+    setFormValue({ gender: value });
+  };
+
   const handleInput = (event) => {
     const id = event.target.id;
     const value = event.target.value;
     if (id === 'confirm-password') {
       setFormValue({ confirmPassword: value });
-    } else if (id === undefined) {
+    }
+    // Figure out how to pass in eating disorder values
+    else if (id === undefined) {
       setFormValue({ mealPlanId: value });
     } else if (id === 'mealsPreSelected') {
       const valueToSet = (() => {
@@ -174,14 +226,13 @@ const CreateNewStagedClientModal = (props) => {
         if (value === 'true') {
           return false;
         } else if (value === 'false') {
-          APIClient.getShippingCost().then((shippingCost) => {
-            setShippingCost(shippingCost);
-          });
           return true;
         }
       })();
       setFormValue({ mealsPreSelected: valueToSet });
       setFormValue({ mealsPrepaid: valueToSet });
+    } else if (id === 'zipcode') {
+      setZipcode(value);
     } else {
       setFormValue({ [id]: value });
     }
@@ -209,18 +260,21 @@ const CreateNewStagedClientModal = (props) => {
       dietitianId={props.dietitianId}
       prepaidMeals={prepaidMeals}
       prepaidSnacks={prepaidSnacks}
-      shippingCost={shippingCost}
+      mealPrice={mealPrice}
     />
   );
   UIContainer['DietitianChooseClientMealsMenu'] = (
     <ClientMenu
       stagedClientId={formValue.id}
       dietitianChoosingClientMeals={true}
-      onSubmit={(scheduleMeals, scheduleSnacks) =>
-        handleButtonClick(scheduleMeals, scheduleSnacks)
+      onSubmit={(scheduleMeals, scheduleSnacks, mealPrice) =>
+        handleButtonClick(scheduleMeals, scheduleSnacks, mealPrice)
       }
       extendedMeals={props.extendedMeals}
       snacks={props.snacks}
+      // Passed in to determine meal price
+      shippingRate={shippingRate}
+      cogs={cogs}
     />
   );
   UIContainer['SignUp'] = (
@@ -231,6 +285,11 @@ const CreateNewStagedClientModal = (props) => {
       loading={loading}
       handleSubmit={handleSubmit}
       mealPlans={props.mealPlans}
+      eatingDisorders={props.eatingDisorders}
+      handleEatingDisorderInput={handleEatingDisorderInput}
+      handleGenderInput={handleGenderInput}
+      zipcode={zipcode}
+      zipcodeError={zipcodeError}
     />
   );
   return (

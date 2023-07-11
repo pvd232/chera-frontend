@@ -4,17 +4,15 @@ import CardActions from '@mui/material/CardActions';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import IconButton from '@mui/material/IconButton';
-import logo from '../../../../../static/images/chera_logo_300x300.png';
 import scheduledOrderMealCard from '../current_meals/scss/ScheduledOrderMealCard.module.scss';
 import { FoodCard } from '../../../../shared_components/FoodCard';
 
 const ScheduledOrderSnackCard = (props) => (
   <FoodCard
     mealName={props.snackData.snack.name}
-    mealTime={props.snackData.snack.mealTime}
     mealDescription={props.snackData.snack.description}
     isSnackCard={true}
-    logo={logo}
+    mealImageUrl={props.snackData.snack.imageUrl}
     childComponent={
       <Grid item container className={scheduledOrderMealCard.actionsContainer}>
         <Grid item className={scheduledOrderMealCard.childContainer}>

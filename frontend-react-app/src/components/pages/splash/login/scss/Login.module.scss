@@ -1,9 +1,9 @@
 @use '../../../../../static/scss/index.scss' as theme;
 @use '../../../splash/scss/Splash.module.scss' as splash;
 .loginPageContainer {
-  justify-content: center;
-  background-color: theme.$lightFucia;
   @include splash.splash-page-container;
+  padding-top: 5vh;
+  padding-bottom: 8vh;
   .header {
     margin-bottom: 10vh;
     @include splash.splash-page-header;
@@ -17,14 +17,14 @@
     .formRow {
       background-color: theme.$antiqueWhite;
     }
-    .submitButton {
-      background-color: theme.$fucia;
-      padding-left: 2vh;
-      padding-right: 2vh;
-      padding-top: 1vh;
-      padding-bottom: 1vh;
-      margin-top: 2vh;
-      font-size: 1rem;
-    }
+  }
+  .submitButton {
+    background-color: theme.$fucia;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-top: 2vh;
+    font-size: 1rem;
   }
 }

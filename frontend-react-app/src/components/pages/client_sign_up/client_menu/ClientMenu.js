@@ -37,6 +37,7 @@ import StagedScheduleSnack from '../../../../data_models/model/StagedScheduleSna
 import ExtendedStagedScheduleSnack from '../../../../data_models/model/ExtendedStagedScheduleSnack';
 import checkOrderQuantity from './helpers/checkOrderQuantity';
 import checkMinimumMealQuantity from './helpers/checkMinimumMealQuantity';
+import { getMealPrice } from './helpers/getMealPrice';
 
 const ClientMenu = (props) => {
   const customTheme = useTheme();
@@ -330,24 +331,30 @@ const ClientMenu = (props) => {
     if (!loading) {
       setLoading(true);
     }
+    const mealPrice = getMealPrice(
+      props.cogs,
+      props.shippingRate,
+      chosenScheduleMeals.length,
+      chosenScheduleSnacks.length
+    );
     if (!props.dietitianChoosingClientMeals) {
       // Client choosing meals
-      const scheduledOrderMeals = createScheduledOrderMeals(
+      const newScheduledOrderMeals = createScheduledOrderMeals(
         chosenScheduleMeals,
-        props.editMeals && !props.canChangeFirstWeek ? false : true
+        props.changingMeals && props.canChangeFirstWeek ? true : false
       );
 
       const scheduledOrderSnacks = (() => {
         if (chosenScheduleSnacks.length > 0) {
           return createScheduledOrderSnacks(
             chosenScheduleSnacks,
-            props.editMeals && !props.canChangeFirstWeek ? false : true
+            props.changingMeals && props.canChangeFirstWeek ? true : false
           );
         } else {
           return [];
         }
       })();
-      if (props.editMeals) {
+      if (props.changingMeals) {
         //  Delete meals
         await APIClient.deleteScheduleMeals(
           LocalStorageManager.shared.clientMealSubscription.id
@@ -371,7 +378,7 @@ const ClientMenu = (props) => {
         );
         await APIClient.createScheduleMeals(scheduleMealDTOs);
 
-        const scheduledOrderMealDTOs = scheduledOrderMeals.map(
+        const scheduledOrderMealDTOs = newScheduledOrderMeals.map(
           (scheduledOrderMeal) =>
             ScheduledOrderMealDTO.initializeFromScheduledOrderMeal(
               scheduledOrderMeal
@@ -393,11 +400,14 @@ const ClientMenu = (props) => {
         );
 
         await APIClient.createScheduledOrderSnacks(scheduledOrderSnackDTOs);
+
+        // Update stripe subscription with new numMeals and numSnacks
         await APIClient.updateStripeSubscription(
           LocalStorageManager.shared.clientMealSubscription.id,
           chosenScheduleMeals.length,
           chosenScheduleSnacks.length
         );
+
         timer.current = window.setTimeout(() => {
           setLoading(false);
           props.finishEditing();
@@ -418,16 +428,16 @@ const ClientMenu = (props) => {
             chosenScheduleMeals,
             scheduledOrderMeals,
             chosenScheduleSnacks,
-            scheduledOrderSnacks
+            scheduledOrderSnacks,
+            mealPrice
           );
         }, 500);
       }
     } else {
       // Dietitian choosing meals
-      props.onSubmit(chosenScheduleMeals, chosenScheduleSnacks);
+      props.onSubmit(chosenScheduleMeals, chosenScheduleSnacks, mealPrice);
     }
   };
-
   return (
     <Grid
       container
@@ -513,16 +523,10 @@ const ClientMenu = (props) => {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item lg={5} md={8} xs={10} ml={2}>
+          <Grid item lg={6} md={8} xs={10} ml={2}>
             <FormHelperText
               hidden={
                 !checkMinimumMealQuantity(editing, chosenScheduleMeals)
-                  ? false
-                  : !checkOrderQuantity(
-                      editing,
-                      chosenScheduleMeals,
-                      chosenScheduleSnacks
-                    )
                   ? false
                   : true
               }
@@ -531,11 +535,67 @@ const ClientMenu = (props) => {
                 fontSize: '1rem',
               }}
             >
-              {!checkMinimumMealQuantity(editing, chosenScheduleMeals)
-                ? `You must select a minimum of 6 meals. Please add ${
-                    6 - chosenScheduleMeals.length
-                  } more`
-                : 'You must select an even number of meals + snacks. 2 snacks are packed in 1 meal container. E.g. 6 meals + 2 snacks = 7 meal containers. Please add 1 more meal, or add 2 more snacks.'}
+              {`You must select a minimum of ${
+                props.cogs[0].numMeals
+              } meals. Please add ${
+                props.cogs[0].numMeals - chosenScheduleMeals.length
+              } more`}
+            </FormHelperText>
+            <FormHelperText
+              hidden={
+                checkMinimumMealQuantity(editing, chosenScheduleMeals) &&
+                !checkOrderQuantity(
+                  editing,
+                  chosenScheduleMeals,
+                  chosenScheduleSnacks
+                )
+                  ? false
+                  : true
+              }
+              error={true}
+              sx={{
+                fontSize: '1rem',
+              }}
+            >
+              {'You must select an even number of meals + snacks.'}
+            </FormHelperText>
+            <FormHelperText
+              hidden={
+                checkMinimumMealQuantity(editing, chosenScheduleMeals) &&
+                !checkOrderQuantity(
+                  editing,
+                  chosenScheduleMeals,
+                  chosenScheduleSnacks
+                )
+                  ? false
+                  : true
+              }
+              error={true}
+              sx={{
+                fontSize: '1rem',
+              }}
+            >
+              {
+                ' 2 snacks are packed in 1 meal container (Ex: 6 meals + 2 snacks = 7 meal containers).'
+              }
+            </FormHelperText>
+            <FormHelperText
+              hidden={
+                checkMinimumMealQuantity(editing, chosenScheduleMeals) &&
+                !checkOrderQuantity(
+                  editing,
+                  chosenScheduleMeals,
+                  chosenScheduleSnacks
+                )
+                  ? false
+                  : true
+              }
+              error={true}
+              sx={{
+                fontSize: '1rem',
+              }}
+            >
+              {'Please add 1 more meal, or add 2 more snacks.'}
             </FormHelperText>
           </Grid>
         </Grid>
@@ -592,7 +652,7 @@ const ClientMenu = (props) => {
       </Grid>
 
       {/* Side Bar */}
-      <Grid item lg={2.5} md={3.5} xs={12} sx={{ marginTop: '0vh' }}>
+      <Grid item lg={2.5} md={3.5} xs={12} >
         <SideBar
           chosenScheduleMeals={chosenScheduleMeals}
           chosenScheduleSnacks={chosenScheduleSnacks}
@@ -603,7 +663,9 @@ const ClientMenu = (props) => {
           handleRemoveSnack={(removedSnack) => handleRemoveSnack(removedSnack)}
           customTheme={customTheme}
           loading={loading}
-          editMeals={props.editMeals}
+          editMeals={props.changingMeals}
+          cogs={props.cogs}
+          shippingRate={props.shippingRate}
         />
       </Grid>
       {/* Side Bar */}

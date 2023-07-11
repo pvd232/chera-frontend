@@ -7,8 +7,9 @@ import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
 import capitalize from '../../../../helpers/capitalize';
 import LocalStorageManager from '../../../../helpers/LocalStorageManager';
-import getFilteredMealPlanMeals from './helpers/getFilteredMealPlanMeals';
+import getFilteredMeals from './helpers/getFilteredMeals';
 import MediaCard from './MediaCard';
+import { sortFilteredMealPlanMeals } from './helpers/sortFilteredMealPlanMeals';
 const DietitianMenu = (props) => {
   const customTheme = useTheme();
   const [filterMealPlanId, setFilterMealPlanId] = useState(
@@ -105,15 +106,15 @@ const DietitianMenu = (props) => {
     if (event.target.name === 'filterMealTime') {
       setFilterMealTime(event.target.value);
       filterMealParameters.filterMealTime = event.target.value;
-      setFilteredMealPlanMeals(getFilteredMealPlanMeals(filterMealParameters));
+      setFilteredMealPlanMeals(getFilteredMeals(filterMealParameters));
     } else if (event.target.name === 'filterDietaryRestrictions') {
       setFilterDietaryRestrictions(event.target.value);
       filterMealParameters.filterDietaryRestrictions = event.target.value;
-      setFilteredMealPlanMeals(getFilteredMealPlanMeals(filterMealParameters));
+      setFilteredMealPlanMeals(getFilteredMeals(filterMealParameters));
     } else if (event.target.name === 'filterMealPlan') {
       setFilterMealPlanId(event.target.value);
       filterMealParameters.filterMealPlanId = event.target.value;
-      setFilteredMealPlanMeals(getFilteredMealPlanMeals(filterMealParameters));
+      setFilteredMealPlanMeals(getFilteredMeals(filterMealParameters));
     }
   };
 
@@ -121,17 +122,16 @@ const DietitianMenu = (props) => {
     <Grid
       container
       paddingTop={'5vh'}
-      paddingLeft={'2vw'}
-      paddingRight={'2vw'}
       paddingBottom={'10vh'}
       // this gets rid of extra 'purple' space in view layout in chrome dev tools.
       alignItems={'flex-start'}
-      backgroundColor={customTheme.palette.olive.quaternary}
+      backgroundColor={customTheme.palette.fucia.secondary}
+      justifyContent={'center'}
     >
       <Grid
         item
         container
-        xs={12}
+        xs={10}
         spacing={2}
         sx={{ height: 'min-content' }}
         alignItems={'flex-end'}
@@ -189,26 +189,23 @@ const DietitianMenu = (props) => {
           </FormControl>
         </Grid>
       </Grid>
-      <Grid
-        container
-        item
-        xs={12}
-        spacing={4}
-        paddingTop={'6vh'}
-        justifyContent={window.innerWidth < 450 ? 'center' : 'flex-start'}
-      >
-        {filteredMealPlanMeals.map((mealPlanMeal, i) => {
-          return (
-            <Grid item key={i} md={4}>
-              <MediaCard
-                mealPlanMeal={mealPlanMeal}
-                key={i}
-                shouldDisplayNutritionDetails={true}
-              ></MediaCard>
-            </Grid>
-          );
-        })}
-      </Grid>
+      <Grid container item xs={10} paddingTop={'6vh'}>
+        <Grid container item spacing={4}>
+          {sortFilteredMealPlanMeals(filteredMealPlanMeals).map(
+            (mealPlanMeal, i) => {
+              return (
+                <Grid item key={i} md={4}>
+                  <MediaCard
+                    mealPlanMeal={mealPlanMeal}
+                    key={i}
+                    shouldDisplayNutritionDetails={true}
+                  ></MediaCard>
+                </Grid>
+              );
+            }
+          )}
+        </Grid>
+      </Grid>{' '}
     </Grid>
   );
 };

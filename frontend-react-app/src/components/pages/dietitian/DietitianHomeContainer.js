@@ -4,6 +4,8 @@ import APIClient from '../../../helpers/APIClient';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import MealPlanDTO from '../../../data_models/dto/MealPlanDTO';
 import MealPlan from '../../../data_models/model/MealPlan';
+import EatingDisorderDTO from '../../../data_models/dto/EatingDisorderDTO';
+import EatingDisorder from '../../../data_models/model/EatingDisorder';
 import ExtendedScheduleMeal from '../../../data_models/model/ExtendedScheduleMeal';
 import ExtendedScheduleMealDTO from '../../../data_models/dto/ExtendedScheduleMealDTO';
 import MealSubscriptionDTO from '../../../data_models/dto/MealSubscriptionDTO';
@@ -21,6 +23,7 @@ const DietitianHomeContainer = (props) => {
   const [scheduleMeals, setScheduleMeals] = useState(false);
   const [mealSubscriptions, setMealSubscriptions] = useState(false);
   const [mealPlans, setMealPlans] = useState(false);
+  const [eatingDisorders, setEatingDisorders] = useState([]);
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [snacks, setSnacks] = useState(false);
 
@@ -75,6 +78,17 @@ const DietitianHomeContainer = (props) => {
         setMealSubscriptions([]);
       }
     });
+    APIClient.getEatingDisorders().then((eatingDisordersData) => {
+      if (mounted) {
+        const eatingDisorderDTOs = eatingDisordersData.map(
+          (eatingDisorderData) => new EatingDisorderDTO(eatingDisorderData)
+        );
+        const eatingDisorders = eatingDisorderDTOs.map(
+          (eatingDisorderDTO) => new EatingDisorder(eatingDisorderDTO)
+        );
+        setEatingDisorders(eatingDisorders);
+      }
+    });
     APIClient.getMealPlans().then((mealPlansData) => {
       if (mounted) {
         const mealPlanDTOs = mealPlansData.map(
@@ -116,6 +130,17 @@ const DietitianHomeContainer = (props) => {
         setSnacks(snacks);
       }
     });
+    APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {
+      const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
+        (date) => parseFloat(date) * 1000
+      );
+      LocalStorageManager.shared.upcomingDeliveryDates =
+        upcomingDeliveryDatesArray;
+      const upcomingCutoffDatesArray = data.upcoming_cutoff_dates.map(
+        (date) => parseFloat(date) * 1000
+      );
+      LocalStorageManager.shared.upcomingCutoffDates = upcomingCutoffDatesArray;
+    });
     const stagedClientId = searchParams.get('stagedClientId');
     if (stagedClientId) {
       setStagedClientId(stagedClientId);
@@ -134,6 +159,7 @@ const DietitianHomeContainer = (props) => {
       scheduleMeals: scheduleMeals,
       mealSubscriptions: mealSubscriptions,
       mealPlans: mealPlans,
+      eatingDisorders: eatingDisorders,
       extendedMeals: extendedMeals,
       snacks: snacks,
     };

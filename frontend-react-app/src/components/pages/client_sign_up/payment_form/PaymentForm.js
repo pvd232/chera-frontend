@@ -20,6 +20,7 @@ const PaymentForm = (props) => {
         props.stagedClientId,
         props.dietitianId,
         props.stripePaymentIntentId,
+        props.zipcode,
         props.discountCode
       );
     } else {

@@ -22,6 +22,7 @@ import CircularProgressPage from '../../../shared_components/CircularProgressPag
 import { getMealPlanMeal } from './helpers/getMealPlanMeal';
 import { useMealPlanMeal } from './hooks/useMealPlanMeal';
 import ExtendedRecipeIngredientDTO from '../../../../data_models/dto/ExtendedRecipeIngredientDTO';
+import { cloneMealPlanMeal } from './helpers/cloneMealPlanMeal';
 const MealPlanMealBuilder = (props) => {
   const [mealPlanMeal, setMealPlanMeal] = useMealPlanMeal(
     props.mealPlans[0].id,
@@ -37,9 +38,10 @@ const MealPlanMealBuilder = (props) => {
   const [hasSubmittedChanges, setHasSubmittedChanges] = useState(false);
   const [hasBeenWarned, setHasBeenWarned] = useState(false);
   const handleBlur = (event) => {
-    setMultiplier(event.target.value);
+    setMultiplier(parseFloat(event.target.value));
   };
   const newHandleFilterChange = async (event) => {
+    setMultiplier(1);
     if (hasMadeChanges && !hasSubmittedChanges && !hasBeenWarned) {
       alert('Your changes will be abandoned if you do not save them first.');
       setHasBeenWarned(true);
@@ -91,19 +93,49 @@ const MealPlanMealBuilder = (props) => {
   const handleSubmit = async () => {
     setHasSubmittedChanges(true);
     setLoading(true);
-    const recipeIngredientListOfLists = [];
-    const multipliedRecipe = mealPlanMeal.recipe.map((ingredient) => {
-      const multipliedIngredient = new ExtendedRecipeIngredientDTO(
-        ingredient.toJSON()
+
+    // Default multiplier state value is 1 (no change), however if mealPlanMeal multiplier is not 1, then update recipe ingredients and nutrients
+    if (multiplier !== 1 || mealPlanMeal.multiplier !== 1) {
+      // Update recipe ingredients to reflect multiplier
+      const multipliedRecipe = (() => {
+        if (multiplier !== 1) {
+          return mealPlanMeal.recipe.map((ingredient) => {
+            const multipliedIngredient = new ExtendedRecipeIngredientDTO(
+              ingredient.toJSON()
+            );
+            multipliedIngredient.quantity = ingredient.quantity * multiplier;
+            return multipliedIngredient;
+          });
+        } else {
+          return mealPlanMeal.recipe;
+        }
+      })();
+      if (multiplier !== 1) {
+        // Update recipe ingredients and nutrients in backend
+        await APIClient.updateRecipeIngredientNutrients(multipliedRecipe);
+        await APIClient.updateRecipeIngredients(multipliedRecipe);
+
+        mealPlanMeal.multiplier = multiplier;
+        // Update meal plan meal in backend
+        await APIClient.updateMealPlanMeal(mealPlanMeal);
+      }
+
+      // // Update recipe ingredients and nutrients in backend for even meal plan meal, which has identical recipe
+      const evenMealPlan = await APIClient.getMealPlan(
+        mealPlanMeal.associatedMealPlan.number + 1
       );
-      multipliedIngredient.quantity = ingredient.quantity * multiplier;
-      return multipliedIngredient;
-    });
-    recipeIngredientListOfLists.push(multipliedRecipe);
-    for (const recipeIngredientList of recipeIngredientListOfLists) {
-      // Update recipe ingredient nutrients first to use difference in recipe ingredient quantities to calculate new nutrient values
-      await APIClient.updateRecipeIngredientNutrients(recipeIngredientList);
-      await APIClient.updateRecipeIngredients(recipeIngredientList);
+
+      const evenMealPlanMeal = await getMealPlanMeal(
+        evenMealPlan.id,
+        mealPlanMeal.mealId
+      );
+      const multiplierToUse =
+        multiplier !== 1 ? multiplier : mealPlanMeal.multiplier;
+      await cloneMealPlanMeal(
+        multipliedRecipe,
+        evenMealPlanMeal,
+        multiplierToUse
+      );
     }
 
     alert('Meals successfully updated!');

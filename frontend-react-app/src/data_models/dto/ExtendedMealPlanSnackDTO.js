@@ -57,7 +57,12 @@ export default class ExtendedMealPlanSnackDTO extends MealPlanSnackDTO {
       return this.associatedMealPlan.dinnerCalories;
     }
   }
-
+  get mealPlanSnackCalories() {
+    const lowerBound = this.associatedMealPlan.perSnackCaloricLowerBound;
+    const upperBound = this.associatedMealPlan.perSnackCaloricUpperBound;
+    const average = (lowerBound + upperBound) / 2;
+    return average;
+  }
   getNutrient(nutrientId) {
     return this.nutrients.get(nutrientId);
   }

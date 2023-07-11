@@ -9,6 +9,10 @@ import styles from './scss/WhyUs.module.scss';
 
 const RHS = () => {
   const navigate = useNavigate();
+  const handleNavigate = () => {
+    window.scrollTo(0, 0);
+    navigate('/faqs');
+  };
   return (
     <Grid container item lg={6} className={styles.rhsContainer}>
       <Grid item xs={9}>
@@ -22,7 +26,7 @@ const RHS = () => {
       <Grid item>
         <Stack className={styles.stack}>
           <Typography className={styles.text}>Questions?</Typography>
-          <Button onClick={() => navigate('/faqs')} className={styles.button}>
+          <Button onClick={handleNavigate} className={styles.button}>
             Contact us
           </Button>
         </Stack>

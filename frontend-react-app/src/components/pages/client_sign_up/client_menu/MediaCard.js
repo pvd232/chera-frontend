@@ -6,27 +6,25 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
-import logo from '../../../../static/images/chera_logo_300x300.png';
 const MediaCard = (props) => {
   return (
     <Card
       sx={{
         maxWidth: 320,
+        maxHeight: 500,
         height: '100%',
-        maxHeight: 450,
         position: 'relative',
-        // display: loading ? "none" : "block",
       }}
     >
       <CardMedia
         component="img"
-        src={logo}
+        src={props.meal.imageUrl}
         alt="green iguana"
         sx={{
-          width: '50%',
+          maxHeight: '230px',
+          height: '30vh',
           marginLeft: 'auto',
           marginRight: 'auto',
-          marginTop: '20px',
           marginBottom: '20px',
         }}
       />

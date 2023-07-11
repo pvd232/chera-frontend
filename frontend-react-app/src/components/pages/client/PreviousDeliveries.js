@@ -11,7 +11,7 @@ const PreviousDeliveries = () => {
   if (previousOrderMeals) {
     return (
       <Grid container item className={previousDeliveries.pageContainer} xs={10}>
-        <Grid item>
+        <Grid item container justifyContent={'center'}>
           <Typography
             id={'previous-deliveries-header'}
             className={previousDeliveries.header}
@@ -19,9 +19,10 @@ const PreviousDeliveries = () => {
             Your Orders
           </Typography>
         </Grid>
-        <Grid container item>
-          {previousOrderMeals.length > 0 ? (
-            previousOrderMeals.map((orderMealCardItem) => (
+
+        {previousOrderMeals.length > 0 ? (
+          <Grid container item className={previousDeliveries.contentContainer}>
+            {previousOrderMeals.map((orderMealCardItem) => (
               <Grid container item className={previousDeliveries.cardContainer}>
                 <Grid item>
                   <Stack className={previousDeliveries.stack}>
@@ -43,13 +44,29 @@ const PreviousDeliveries = () => {
                   </Grid>
                 ))}
               </Grid>
-            ))
-          ) : (
-            <Typography>
-              Nothing to see here yet! Check back after your first delivery.
-            </Typography>
-          )}
-        </Grid>
+            ))}
+          </Grid>
+        ) : (
+          <>
+            <Grid
+              item
+              container
+              className={previousDeliveries.noDeliveriesHeaderContainer}
+            >
+              <Grid item>
+                <Typography>
+                  Nothing to see here yet! Check back after your first delivery.
+                </Typography>
+              </Grid>
+            </Grid>
+
+            <Grid
+              item
+              container
+              className={previousDeliveries.noDeliveriesFiller}
+            ></Grid>
+          </>
+        )}
       </Grid>
     );
   } else {

@@ -1,4 +1,5 @@
 import { useReducer, useState, useEffect } from 'react';
+import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -138,6 +139,9 @@ const Login = (props) => {
                 >
                   {loading ? <CircularProgress size={24} /> : 'Submit'}
                 </BlackButton>
+                <Link href="/request-reset-client-password" underline="hover" display="flex" justifyContent="center">
+                      <Typography>Forgot Password?</Typography>
+                </Link>
               </Stack>
             </FormGroup>
           </form>

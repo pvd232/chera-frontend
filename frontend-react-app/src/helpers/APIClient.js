@@ -111,6 +111,32 @@ class APIClient {
   }
 
   // Admin methods
+  async createMealPlanMeal(mealPlanMeal) {
+    const requestUrl = this.baseUrl + '/meal_plan_meal';
+
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(mealPlanMeal),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async updateMealPlanMeal(mealPlanMeal) {
+    const requestUrl = this.baseUrl + '/meal_plan_meal';
+
+    const requestParams = {
+      method: 'PUT',
+      body: JSON.stringify(mealPlanMeal),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
   async getUpdatedExtendedMealPlanMeal(newMealPlanMeal) {
     const requestUrl = this.baseUrl + '/extended_meal_plan_meal';
 
@@ -154,7 +180,75 @@ class APIClient {
     const mealPlanMealsData = await response.json();
     return mealPlanMealsData;
   }
+  async createMealPlanSnack(mealPlanSnack) {
+    const requestUrl = this.baseUrl + '/meal_plan_snack';
 
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(mealPlanSnack),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async updateMealPlanSnack(mealPlanSnack) {
+    const requestUrl = this.baseUrl + '/meal_plan_snack';
+
+    const requestParams = {
+      method: 'PUT',
+      body: JSON.stringify(mealPlanSnack),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async getUpdatedExtendedMealPlanSnack(newMealPlanSnack) {
+    const requestUrl = this.baseUrl + '/extended_meal_plan_snack';
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'PUT',
+      body: JSON.stringify(newMealPlanSnack),
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const updatedExtendedMealPlanMeal = await response.json();
+    return updatedExtendedMealPlanMeal;
+  }
+  async getSpecificExtendedMealPlanSnack(mealPlanId, snackId) {
+    const requestUrl =
+      this.baseUrl +
+      `/extended_meal_plan_snack?meal_plan_id=${mealPlanId}&snack_id=${snackId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const mealPlanMealsData = await response.json();
+    return mealPlanMealsData;
+  }
+  async getSpecificExtendedMealPlanSnacks(mealPlanId) {
+    const requestUrl =
+      this.baseUrl + `/extended_meal_plan_snack?meal_plan_id=${mealPlanId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const mealPlanSnacksData = await response.json();
+    return mealPlanSnacksData;
+  }
   async updateRecipeIngredientNutrients(recipeIngredients) {
     const requestUrl = this.baseUrl + '/recipe_ingredient_nutrient';
     const requestParams = {
@@ -225,21 +319,6 @@ class APIClient {
     return extendedStagedScheduleMealObjects;
   }
 
-  async getSpecificExtendedMealPlanSnacks(mealPlanId) {
-    const requestUrl =
-      this.baseUrl + `/extended_meal_plan_snack?meal_plan_id=${mealPlanId}`;
-
-    const request = new Request(requestUrl);
-    const requestParams = {
-      method: 'GET',
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(request, requestParams);
-    const mealPlanSnacksData = await response.json();
-    return mealPlanSnacksData;
-  }
-
   async createMeal(meal) {
     const requestUrl = this.baseUrl + '/meal';
 
@@ -294,40 +373,12 @@ class APIClient {
     return;
   }
 
-  async createMealPlanSnack(mealPlanSnack) {
-    const requestUrl = this.baseUrl + '/meal_plan_snack';
-
-    const requestParams = {
-      method: 'POST',
-      body: JSON.stringify(mealPlanSnack),
-      mode: this.mode,
-      cache: 'default',
-    };
-
-    await this.fetchWrapper(requestUrl, requestParams);
-    return;
-  }
-
   async createRecipeIngredients(recipeIngredients) {
     const requestUrl = this.baseUrl + '/recipe_ingredient';
 
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(recipeIngredients),
-      mode: this.mode,
-      cache: 'default',
-    };
-
-    await this.fetchWrapper(requestUrl, requestParams);
-    return;
-  }
-
-  async createMealPlanMeal(mealPlanMeal) {
-    const requestUrl = this.baseUrl + '/meal_plan_meal';
-
-    const requestParams = {
-      method: 'POST',
-      body: JSON.stringify(mealPlanMeal),
       mode: this.mode,
       cache: 'default',
     };
@@ -398,6 +449,7 @@ class APIClient {
     stagedClientId,
     dietitianId,
     stripePaymentIntentId,
+    zipcode,
     discountCode = false
   ) {
     const requestUrl = this.baseUrl + '/dietitian_prepayment';
@@ -611,7 +663,18 @@ class APIClient {
     await this.fetchWrapper(request, requestParams);
     return;
   }
-
+  async getMealPlan(mealPlanNumber) {
+    const requestUrl = `${this.baseUrl}/meal_plan?meal_plan_number=${mealPlanNumber}`;
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const mealPlanData = await response.json();
+    return mealPlanData;
+  }
   async getMealPlans() {
     const requestUrl = `${this.baseUrl}/meal_plan`;
     const request = new Request(requestUrl);
@@ -623,6 +686,18 @@ class APIClient {
     const response = await this.fetchWrapper(request, requestParams);
     const mealPlanData = await response.json();
     return mealPlanData;
+  }
+  async getEatingDisorders() {
+    const requestUrl = `${this.baseUrl}/eating_disorder`;
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const eatingDisorderData = await response.json();
+    return eatingDisorderData;
   }
 
   async getExtendedClients(dietitianId) {
@@ -682,6 +757,19 @@ class APIClient {
   }
 
   // Client methods
+  async getCOGS() {
+    const requestUrl = this.baseUrl + `/cogs`;
+    const request = new Request(requestUrl);
+
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const cogsData = await response.json();
+    return cogsData;
+  }
   async createMealSubscription(mealSubscription) {
     const requestUrl = this.baseUrl + '/meal_subscription';
 
@@ -697,6 +785,7 @@ class APIClient {
 
     return returnedMealSubscriptionData;
   }
+
   async deactivateMealSubscription(mealSubscriptionId) {
     const requestUrl =
       this.baseUrl + `/meal_subscription/${mealSubscriptionId}`;
@@ -799,6 +888,7 @@ class APIClient {
   async createStripeSubscription(
     numberOfMeals,
     numberOfSnacks,
+    zipcode,
     clientId,
     discountCode,
     prepaid
@@ -809,6 +899,7 @@ class APIClient {
       client_id: clientId,
       number_of_meals: numberOfMeals,
       number_of_snacks: numberOfSnacks,
+      zipcode: zipcode,
       discount_code: discountCode,
       prepaid: prepaid,
     };
@@ -826,8 +917,10 @@ class APIClient {
     return stripeData;
   }
   async deleteStripeSubscription(stripeSubscriptionId) {
+    // const requestUrl =
+    //   this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
     const requestUrl =
-      this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
+    this.baseUrl + `/stripe/subscription?stripe_subscription_id=${stripeSubscriptionId}`;
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -836,9 +929,12 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-
-    const stripeData = await response.json();
-    return stripeData;
+    if (response.status === 204) {
+      return null;
+    } else {
+        const stripeData = await response.json();
+        return stripeData;
+    }
   }
 
   async authenticateClient(credentials) {
@@ -958,8 +1054,12 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-    const clientJSON = await response.json();
-    return clientJSON;
+    if (response.status === 204) {
+      return null;
+    } else {
+        const clientJSON = await response.json();
+        return clientJSON;
+    }
   }
   async updateClient(clientData) {
     const requestUrl = this.baseUrl + '/client';
@@ -968,6 +1068,19 @@ class APIClient {
     const requestParams = {
       method: 'PUT',
       body: JSON.stringify(clientData),
+      mode: this.mode,
+      cache: 'default',
+    };
+    await this.fetchWrapper(request, requestParams);
+    return;
+  }
+  async updateClientAddress(clientAddressData) {
+    const requestUrl = this.baseUrl + '/client/update_address';
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'PUT',
+      body: JSON.stringify(clientAddressData),
       mode: this.mode,
       cache: 'default',
     };
@@ -1202,6 +1315,22 @@ class APIClient {
     return mealsData;
   }
 
+  async getMeal(mealId) {
+    const requestUrl = this.baseUrl + '/meal/' + mealId;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+
+    const mealsData = await response.json();
+
+    return mealsData;
+  }
+
   async getSnacks() {
     const requestUrl = this.baseUrl + '/snack';
 
@@ -1382,11 +1511,7 @@ class APIClient {
   }
 
   getClientHomeUrl() {
-    if (this.env === 'debug') {
-      return this.frontEndBaseUrl + '/home';
-    } else {
-      return this.baseUrl + '/home';
-    }
+    return this.frontEndBaseUrl + '/home';
   }
 
   async getClientExtendedOrderMeals(mealSubscriptionId) {
@@ -1434,8 +1559,37 @@ class APIClient {
     return dietaryRestrictionData;
   }
 
-  async getMealPrice() {
-    const requestUrl = this.baseUrl + '/meal_price';
+  // async getMealPrice() {
+  //   const requestUrl = this.baseUrl + '/meal_price';
+  //   const request = new Request(requestUrl);
+
+  //   const requestParams = {
+  //     method: 'GET',
+  //     mode: this.mode,
+  //     cache: 'default',
+  //   };
+  //   const response = await this.fetchWrapper(request, requestParams);
+  //   const mealPrice = await response.json();
+  //   return mealPrice;
+  // }
+
+  // async getSnackPrice() {
+  //   const requestUrl = this.baseUrl + '/snack_price';
+  //   const request = new Request(requestUrl);
+
+  //   const requestParams = {
+  //     method: 'GET',
+  //     mode: this.mode,
+  //     cache: 'default',
+  //   };
+  //   const response = await this.fetchWrapper(request, requestParams);
+  //   const snackPrice = await response.json();
+  //   return snackPrice;
+  // }
+
+  async getShippingRate(zipcode) {
+    const requestUrl =
+      this.baseUrl + `/shippo/shipping_rate?zipcode=${zipcode}`;
     const request = new Request(requestUrl);
 
     const requestParams = {
@@ -1444,40 +1598,9 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-    const mealPrice = await response.json();
-    return mealPrice;
-  }
-
-  async getSnackPrice() {
-    const requestUrl = this.baseUrl + '/snack_price';
-    const request = new Request(requestUrl);
-
-    const requestParams = {
-      method: 'GET',
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(request, requestParams);
-    const snackPrice = await response.json();
-    return snackPrice;
-  }
-
-  async getShippingCost(state) {
-    const requestUrl = this.baseUrl + '/shipping_cost';
-    const request = new Request(requestUrl);
-
-    const requestHeaders = new Headers();
-    requestHeaders.set('state', state);
-
-    const requestParams = {
-      method: 'GET',
-      headers: requestHeaders,
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(request, requestParams);
-    const shippingCost = await response.json();
-    return shippingCost;
+    const shippingRate = await response.json();
+    const floatShippingRate = parseFloat(shippingRate);
+    return floatShippingRate;
   }
 
   async getSalesTax(state) {
@@ -1523,6 +1646,7 @@ class APIClient {
   async createPaymentIntent(
     numMeals,
     numSnacks,
+    zipcode,
     staged_client_id,
     discountCode
   ) {
@@ -1532,6 +1656,7 @@ class APIClient {
     const requestHeaders = new Headers();
     requestHeaders.set('number_of_meals', numMeals);
     requestHeaders.set('number_of_snacks', numSnacks);
+    requestHeaders.set('zipcode', zipcode);
     requestHeaders.set('staged_client_id', staged_client_id);
     requestHeaders.set('discount_code', !discountCode ? '' : discountCode);
     const requestParams = {
