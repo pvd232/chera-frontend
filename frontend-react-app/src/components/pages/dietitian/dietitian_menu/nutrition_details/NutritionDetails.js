@@ -37,12 +37,13 @@ const NutritionDetails = (props) => {
       <OrangeButton
         variant="outlined"
         sx={{
-          fontSize: 'small',
-          width: 120
+          position: 'absolute',
+          // Max distance, Ideal distance, Required distance
+          bottom: 'clamp(2vh, 2vh, 10px)',
         }}
         onClick={handleClickOpen}
       >
-        Nutrients
+        Nutrition Details
       </OrangeButton>
       {open ? (
         <Dialog
