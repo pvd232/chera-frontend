@@ -10,7 +10,6 @@ import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_mea
 import MealPlanSnackBuilder from './components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilder';
 import MealPlanSnackBuilderContainer from './components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilderContainer';
 import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
-import PlanDetails from './components/pages/client/PlanDetails';
 import Login from './components/pages/splash/login/Login';
 import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
 import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
@@ -189,16 +188,6 @@ const Main = (props) => {
           element={
             <Navbar
               childComponent={<PreviousDeliveries />}
-              links={<ClientLinks />}
-              homeUrl="/home"
-            />
-          }
-        />
-        <Route
-          path="/plan-details"
-          element={
-            <Navbar
-              childComponent={<PlanDetails domain={'client'} />}
               links={<ClientLinks />}
               homeUrl="/home"
             />
