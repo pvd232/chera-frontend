@@ -68,69 +68,6 @@ const ModalBody = (props) => {
                             />
 
                             <InputLabel className={modalBody.inputLabel}>
-                                Client Age
-                            </InputLabel>
-                            <TextField
-                                required
-                                fullWidth
-                                label={'Age'}
-                                id="age"
-                                type='number'
-                                inputProps={{
-                                    step: 0.01,
-                                    min: 0,
-                                    max: 1000,
-                                    }}
-                                value={props.formValue.age ? parseFloat(props.formValue.age) : ''}
-                                onChange={props.handleInput}
-                            />
-
-                            <InputLabel className={modalBody.inputLabel}>
-                                Client Gender
-                            </InputLabel>
-                            <FormControl>
-                                <InputLabel className={modalBody.inputLabel}>
-                                    Gender
-                                </InputLabel>
-                                <Select
-                                    label='Gender'
-                                    required
-                                    id="gender"
-                                    value={props.formValue.gender}
-                                    onChange={props.handleGenderInput}
-                                >
-                                {genderOptions.map((gender, i) => (
-                                    <MenuItem
-                                        key={`gender-${i}`}
-                                        id={`gender-${i}`}
-                                        value={gender}
-                                    >
-                                        {capitalize(gender)}
-                                    </MenuItem>
-                                ))}
-                                </Select>
-                            </FormControl>
-
-                            <InputLabel className={modalBody.inputLabel}>
-                                Client Current Weight
-                            </InputLabel>
-                            <TextField
-                                required
-                                fullWidth
-                                label={'Current Weight'}
-                                id="currentWeight"
-                                placeholder='Current Weight'
-                                type='number'
-                                inputProps={{
-                                    step: 1,
-                                    min: 0,
-                                    max: 1000,
-                                }}
-                                value={props.formValue.currentWeight ? parseInt(props.formValue.currentWeight) : ''}
-                                onChange={props.handleInput}
-                            />
-
-                            <InputLabel className={modalBody.inputLabel}>
                                 Client Target Weight
                             </InputLabel>
                             <TextField

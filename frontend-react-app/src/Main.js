@@ -1,62 +1,63 @@
-import { useEffect } from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
-import ReactGA from 'react-ga';
-import Splash from './components/pages/splash/Splash';
-import MealPlans from './components/pages/dietitian/meal_plans/MealPlans';
-import TaskBar from './components/pages/client_sign_up/task_bar/TaskBar';
-import MealBuilder from './components/pages/admin/meal_builder/MealBuilder';
-import MealPlanMealBuilder from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilder';
-import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilderContainer';
-import MealPlanSnackBuilder from './components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilder';
-import MealPlanSnackBuilderContainer from './components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilderContainer';
-import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
-import PlanDetails from './components/pages/client/PlanDetails';
-import Login from './components/pages/splash/login/Login';
-import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
-import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
-import DietitianHomeContainer from './components/pages/dietitian/DietitianHomeContainer';
-import DietitianMenuContainer from './components/pages/dietitian/dietitian_menu/DietitianMenuContainer';
-import DietititanHome from './components/pages/dietitian/DietitianHome';
-import RequestResetPassword from './components/pages/splash/login/RequestResetPassword';
-import ResetPassword from './components/pages/splash/login/ResetPassword';
-import Navbar from './components/shared_components/navbar/Navbar';
-import SplashLinks from './components/shared_components/navbar/links/SplashLinks';
-import ClientLinks from './components/shared_components/navbar/links/ClientLinks';
-import DietitianMenu from './components/pages/dietitian/dietitian_menu/DietitianMenu';
-import Resources from './components/pages/splash/resources/Resources';
-import SignUpPage from './components/pages/client_sign_up/ClientSignUp';
-import SnackBuilder from './components/pages/admin/snack_builder/SnackBuilder';
-import FAQs from './components/pages/splash/faqs/FAQs';
-import DietitianSignUp from './components/pages/splash/dietitian_sign_up/DietitianSignUp';
-import DietitianLinks from './components/shared_components/navbar/links/DietitianLinks';
-import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
-const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
-if (process.env.NODE_ENV === 'production') {
+import { useEffect } from "react";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import ReactGA from "react-ga";
+import Splash from "./components/pages/splash/Splash";
+import MealPlans from "./components/pages/dietitian/meal_plans/MealPlans";
+import TaskBar from "./components/pages/client_sign_up/task_bar/TaskBar";
+import MealBuilder from "./components/pages/admin/meal_builder/MealBuilder";
+import MealPlanMealBuilder from "./components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilder";
+import MealPlanMealBuilderContainer from "./components/pages/admin/meal_plan_meal_builder/MealPlanMealBuilderContainer";
+import MealPlanSnackBuilder from "./components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilder";
+import MealPlanSnackBuilderContainer from "./components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilderContainer";
+import PreviousDeliveries from "./components/pages/client/PreviousDeliveries";
+import Login from "./components/pages/splash/login/Login";
+import ClientMeals from "./components/pages/dietitian/client_meals/ClientMeals";
+import ClientHomeContainer from "./components/pages/client/ClientHomeContainer";
+import DietitianHomeContainer from "./components/pages/dietitian/DietitianHomeContainer";
+import DietitianMenuContainer from "./components/pages/dietitian/dietitian_menu/DietitianMenuContainer";
+import DietititanHome from "./components/pages/dietitian/DietitianHome";
+import RequestResetPassword from "./components/pages/splash/login/RequestResetPassword";
+import ResetPassword from "./components/pages/splash/login/ResetPassword";
+import Navbar from "./components/shared_components/navbar/Navbar";
+import SplashLinks from "./components/shared_components/navbar/links/SplashLinks";
+import ClientLinks from "./components/shared_components/navbar/links/ClientLinks";
+import DietitianMenu from "./components/pages/dietitian/dietitian_menu/DietitianMenu";
+import Resources from "./components/pages/splash/resources/Resources";
+import SignUpPage from "./components/pages/client_sign_up/ClientSignUp";
+import SnackBuilder from "./components/pages/admin/snack_builder/SnackBuilder";
+import FAQs from "./components/pages/splash/faqs/FAQs";
+import DietitianSignUp from "./components/pages/splash/dietitian_sign_up/DietitianSignUp";
+import DietitianLinks from "./components/shared_components/navbar/links/DietitianLinks";
+import { Auth0ProviderWithNavigate } from "./auth0/auth0-provider-with-navigate";
+import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
+const TRACKING_ID = "UA-238874096-1"; // OUR_TRACKING_ID
+
+if (process.env.NODE_ENV === "production") {
   ReactGA.initialize(TRACKING_ID);
 }
 
 const Main = (props) => {
   useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       ReactGA.pageview(window.location.pathname + window.location.search);
     }
   }, []);
   return (
     // The Routes decides which element to show based on the current URL
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Navbar
-              childComponent={<Splash></Splash>}
-              links={<SplashLinks />}
-              homeUrl={'/'}
-            />
-          }
-        />
-
+      <Auth0ProviderWithNavigate>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Navbar
+                childComponent={<Splash></Splash>}
+                links={<SplashLinks />}
+                homeUrl={"/"}
+              />
+            }
+          />
         <Route
           path="/meal-plans"
           element={
@@ -296,7 +297,8 @@ const Main = (props) => {
           }
         />
       </Routes>
-    </BrowserRouter>
+    </Auth0ProviderWithNavigate>
+  </BrowserRouter>
   );
 };
 export default Main;
