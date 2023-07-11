@@ -1,17 +1,10 @@
 .actionsContainer {
   margin-top: 5vh;
-  // padding-left: 8px;
+  padding-left: 8px;
   .childContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: absolute;
     bottom: 3vh;
-    
     .iconButtonContainer {
-      width: 250px;
-      display: flex;
-      justify-content: space-between;
       align-items: center;
     }
   }

@@ -5,7 +5,6 @@ import logo from '../../../../static/images/chera_logo_300x300.png';
 import NutritionDetails from './nutrition_details/NutritionDetails';
 import { FoodCard } from '../../../shared_components/FoodCard';
 import mediaCard from './scss/MediaCard.module.scss';
-import IngredientList from './ingredients/IngredientList';
 const MediaCard = React.memo(
   (props) => {
     return (
@@ -24,9 +23,6 @@ const MediaCard = React.memo(
                   <NutritionDetails
                     mealPlanMeal={props.mealPlanMeal}
                   ></NutritionDetails>
-                  <IngredientList
-                    ingredientItems={props.mealPlanMeal.recipe}
-                  ></IngredientList>
                 </Grid>
               </CardActions>
             </Grid>
