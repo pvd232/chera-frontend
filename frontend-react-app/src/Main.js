@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import ReactGA from "react-ga";
@@ -29,6 +30,7 @@ import FAQs from "./components/pages/splash/faqs/FAQs";
 import DietitianSignUp from "./components/pages/splash/dietitian_sign_up/DietitianSignUp";
 import DietitianLinks from "./components/shared_components/navbar/links/DietitianLinks";
 import { Auth0ProviderWithNavigate } from "./auth0/auth0-provider-with-navigate";
+import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
 const TRACKING_ID = "UA-238874096-1"; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === "production") {
@@ -56,229 +58,247 @@ const Main = (props) => {
               />
             }
           />
-
-          <Route
-            path="/meal-plans"
-            element={
-              <Navbar
-                childComponent={
-                  <DietitianHomeContainer
-                    stripePromise={props.stripePromise}
-                    childComponent={<MealPlans />}
-                  />
-                }
-                links={<DietitianLinks />}
-                homeUrl="/d-home"
-              />
-            }
-          />
-          <Route
-            path="/dietitian-sign-up"
-            element={
-              <Navbar
-                childComponent={<DietitianSignUp />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/faqs"
-            element={
-              <Navbar
-                childComponent={<FAQs />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/client-sign-up"
-            element={
-              <TaskBar
-                stripePromise={props.stripePromise}
-                childComponent={<SignUpPage />}
-              />
-            }
-          />
-          <Route path="/meal-builder" element={<MealBuilder />} />
-          <Route path="/snack-builder" element={<SnackBuilder />} />
-          <Route
-            path="/meal-plan-meal-builder"
-            element={
-              <MealPlanMealBuilderContainer
-                childComponent={<MealPlanMealBuilder />}
-              />
-            }
-          />
-          <Route
-            path="/meal-plan-snack-builder"
-            element={
-              <MealPlanSnackBuilderContainer
-                childComponent={<MealPlanSnackBuilder />}
-              />
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <Navbar
-                childComponent={<ClientHomeContainer />}
-                links={<ClientLinks />}
-                homeUrl="/home"
-              />
-            }
-          />
-          <Route
-            path="/d-home"
-            element={
-              <Navbar
-                childComponent={
-                  <DietitianHomeContainer
-                    stripePromise={props.stripePromise}
-                    childComponent={<DietititanHome />}
-                  />
-                }
-                links={<DietitianLinks />}
-                homeUrl="/d-home"
-              />
-            }
-          />
-          <Route
-            path="/d-home-payment-confirmed"
-            element={
-              <Navbar
-                childComponent={
-                  <DietitianHomeContainer
-                    stripePromise={props.stripePromise}
-                    paymentConfirmed={true}
-                    childComponent={<DietititanHome />}
-                  />
-                }
-                links={<DietitianLinks />}
-                homeUrl={"/d-home"}
-              />
-            }
-          />
-          <Route
-            path="/client-meals"
-            element={
-              <Navbar
-                childComponent={
-                  <DietitianHomeContainer
-                    stripePromise={props.stripePromise}
-                    childComponent={<ClientMeals />}
-                  />
-                }
-                links={<DietitianLinks />}
-                homeUrl={"/d-home"}
-              />
-            }
-          />
-          <Route
-            path="/previous-deliveries"
-            element={
-              <Navbar
-                childComponent={<PreviousDeliveries />}
-                links={<ClientLinks />}
-                homeUrl="/home"
-              />
-            }
-          />
-          <Route
-            path="/dietitian-log-in"
-            element={
-              <Navbar
-                childComponent={<Login domain={"dietitian"} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/client-log-in"
-            element={
-              <Navbar
-                childComponent={<Login domain={"client"} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            exact
-            path="/request-reset-client-password"
-            element={
-              <Navbar
-                childComponent={<RequestResetPassword domain={"client"} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/request-reset-dietitian-password"
-            element={
-              <Navbar
-                childComponent={
-                  <RequestResetPassword
-                    domain={"dietitian"}
-                  ></RequestResetPassword>
-                }
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            exact
-            path="/reset-client-password"
-            element={
-              <Navbar
-                childComponent={<ResetPassword domain={"client"} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/reset-dietitian-password"
-            element={
-              <Navbar
-                childComponent={<ResetPassword domain={"dietitian"} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/menu"
-            element={
-              <Navbar
-                childComponent={
-                  <DietitianMenuContainer
-                    stripePromise={props.stripePromise}
-                    childComponent={<DietitianMenu />}
-                  />
-                }
-                links={<DietitianLinks />}
-                homeUrl="/d-home"
-              />
-            }
-          />
-          <Route
-            path="/resources"
-            element={
-              <Navbar
-                childComponent={<Resources />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-        </Routes>
-      </Auth0ProviderWithNavigate>
-    </BrowserRouter>
+        <Route
+          path="/meal-plans"
+          element={
+            <Navbar
+              childComponent={
+                <DietitianHomeContainer
+                  stripePromise={props.stripePromise}
+                  childComponent={<MealPlans />}
+                />
+              }
+              links={<DietitianLinks />}
+              homeUrl="/d-home"
+            />
+          }
+        />
+        <Route
+          path="/dietitian-sign-up"
+          element={
+            <Navbar
+              childComponent={<DietitianSignUp />}
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route 
+          path="/update-address"
+          element={
+            <Navbar 
+              childComponent={<UpdateAddress />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route
+          path="/faqs"
+          element={
+            <Navbar
+              childComponent={<FAQs />}
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route
+          path="/client-sign-up"
+          element={
+            <TaskBar
+              stripePromise={props.stripePromise}
+              childComponent={<SignUpPage />}
+            />
+          }
+        />
+        <Route path="/meal-builder" element={<MealBuilder />} />
+        <Route path="/snack-builder" element={<SnackBuilder />} />
+        <Route
+          path="/meal-plan-meal-builder"
+          element={
+            <MealPlanMealBuilderContainer
+              childComponent={<MealPlanMealBuilder />}
+            />
+          }
+        />
+        <Route
+          path="/meal-plan-snack-builder"
+          element={
+            <MealPlanSnackBuilderContainer
+              childComponent={<MealPlanSnackBuilder />}
+            />
+          }
+        />
+        <Route
+          path="/home"
+          element={
+            <Navbar
+              childComponent={<ClientHomeContainer />}
+              links={<ClientLinks />}
+              homeUrl="/home"
+            />
+          }
+        />
+        <Route
+          path="/d-home"
+          element={
+            <Navbar
+              childComponent={
+                <DietitianHomeContainer
+                  stripePromise={props.stripePromise}
+                  childComponent={<DietititanHome />}
+                />
+              }
+              links={<DietitianLinks />}
+              homeUrl="/d-home"
+            />
+          }
+        />
+        <Route
+          path="/d-home-payment-confirmed"
+          element={
+            <Navbar
+              childComponent={
+                <DietitianHomeContainer
+                  stripePromise={props.stripePromise}
+                  paymentConfirmed={true}
+                  childComponent={<DietititanHome />}
+                />
+              }
+              links={<DietitianLinks />}
+              homeUrl={'/d-home'}
+            />
+          }
+        />
+        <Route
+          path="/client-meals"
+          element={
+            <Navbar
+              childComponent={
+                <DietitianHomeContainer
+                  stripePromise={props.stripePromise}
+                  childComponent={<ClientMeals />}
+                />
+              }
+              links={<DietitianLinks />}
+              homeUrl={'/d-home'}
+            />
+          }
+        />
+        <Route
+          path="/previous-deliveries"
+          element={
+            <Navbar
+              childComponent={<PreviousDeliveries />}
+              links={<ClientLinks />}
+              homeUrl="/home"
+            />
+          }
+        />
+        <Route
+          path="/plan-details"
+          element={
+            <Navbar
+              childComponent={<PlanDetails domain={'client'} />}
+              links={<ClientLinks />}
+              homeUrl="/home"
+            />
+          }
+        />
+        <Route
+          path="/dietitian-log-in"
+          element={
+            <Navbar
+              childComponent={<Login domain={'dietitian'} />}
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route
+          path="/client-log-in"
+          element={
+            <Navbar
+              childComponent={<Login domain={'client'} />}
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route
+          exact
+          path="/request-reset-client-password"
+          element={
+            <Navbar
+              childComponent={<RequestResetPassword domain={'client'} />}
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route
+          path="/request-reset-dietitian-password"
+          element={
+            <Navbar
+              childComponent={
+                <RequestResetPassword
+                  domain={'dietitian'}
+                ></RequestResetPassword>
+              }
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route
+          exact
+          path="/reset-client-password"
+          element={
+            <Navbar
+              childComponent={<ResetPassword domain={'client'} />}
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route
+          path="/reset-dietitian-password"
+          element={
+            <Navbar
+              childComponent={<ResetPassword domain={'dietitian'} />}
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+        <Route
+          path="/menu"
+          element={
+            <Navbar
+              childComponent={
+                <DietitianMenuContainer
+                  stripePromise={props.stripePromise}
+                  childComponent={<DietitianMenu />}
+                />
+              }
+              links={<DietitianLinks />}
+              homeUrl="/d-home"
+            />
+          }
+        />
+        <Route
+          path="/resources"
+          element={
+            <Navbar
+              childComponent={<Resources />}
+              links={<SplashLinks />}
+              homeUrl="/"
+            />
+          }
+        />
+      </Routes>
+    </Auth0ProviderWithNavigate>
+  </BrowserRouter>
   );
 };
 export default Main;
