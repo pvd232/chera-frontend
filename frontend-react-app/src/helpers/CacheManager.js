@@ -1,7 +1,9 @@
 import lazyCache from './lazyCache';
 import getBaseURL from './getBaseURL';
-const getMealPlanMealsURL = () => {
-  return getBaseURL('api') + '/extended_meal_plan_meal';
+const getMealPlanMealsURL = (mealPlanId) => {
+  return (
+    getBaseURL('api') + `/extended_meal_plan_meal?meal_plan_id=${mealPlanId}`
+  );
 };
 export default class CacheManager {
   static shared = (() => {

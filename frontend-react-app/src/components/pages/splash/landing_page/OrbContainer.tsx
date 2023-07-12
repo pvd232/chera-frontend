@@ -2,10 +2,10 @@ import { Grid } from '@mui/material';
 import { Stage } from '@pixi/react';
 import { useWindowWidth } from '../../../hooks/useWindowWidth';
 import useOrbs from './hooks/useOrbs';
+import { useWindowHeight } from '../../../hooks/useWindowHeight';
 const OrbContainer = () => {
   const windowWidth = useWindowWidth();
-  const height = window.innerHeight - 0.15 * window.innerHeight;
-  const width = windowWidth - 0.011 * windowWidth;
+  const windowHeight = useWindowHeight();
   const orbs = useOrbs();
 
   return (
@@ -15,8 +15,8 @@ const OrbContainer = () => {
           autoDensity: true,
           backgroundAlpha: 0,
         }}
-        width={width}
-        height={height}
+        width={0.989 * windowWidth}
+        height={0.85 * windowHeight}
       >
         {orbs.map((orb) => {
           return orb;

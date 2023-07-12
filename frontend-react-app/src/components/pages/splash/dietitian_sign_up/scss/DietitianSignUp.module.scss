@@ -17,4 +17,23 @@
     margin-top: 2vh;
     font-size: 1rem;
   }
+  .errorText {
+    margin-bottom: 1.5vh;
+  }
+  .sampleForm {
+    margin-top: 3vh;
+  }
+  .sampleCheckbox {
+    // color: theme.$fucia;
+    background-color: theme.$antiqueWhite;
+    margin: 0;
+    border-radius: 4px;
+    border: 1px solid rgb(0, 0, 0, 0.2);
+  }
+  .toolTip {
+    color: theme.$fucia;
+  }
+}
+.toolTip {
+  color: theme.$fucia;
 }

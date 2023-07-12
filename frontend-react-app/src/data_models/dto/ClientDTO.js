@@ -43,7 +43,6 @@ export default class ClientDTO {
       active: client.active,
     });
   }
-
   toJSON() {
     return {
       id: this.id,

@@ -131,11 +131,16 @@ export default function SearchLocationInput(props) {
       renderInput={(params) => (
         <TextField
           {...params}
-          label="Address* (Ex: 123 Main St #1B, New York, NY 94111)"
+          label={
+            !props.dietitianInput || props.sample
+              ? 'Shipping address (Ex: 123 Main St #1B, New York, NY 94111)'
+              : 'Clinic address (Ex: 123 Main St #1B, New York, NY 94111)'
+          }
           fullWidth
           required
           sx={{
-            backgroundColor: props.dietitianInput ? '#fcfcfb' : '',
+            backgroundColor:
+              props.dietitianInput || props.sample ? '#fcfcfb' : '',
           }}
         />
       )}

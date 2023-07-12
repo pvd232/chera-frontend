@@ -14,6 +14,7 @@ export default class Dietitian {
       this.clinicAddress = dietitianObject.clinicAddress;
       this.clinicUrl = dietitianObject.clinicUrl;
       this.datetime = dietitianObject.datetime;
+      this.gotSample = dietitianObject.gotSample;
       this.admin = dietitianObject.admin;
       this.active = dietitianObject.active;
     } else {
@@ -27,6 +28,7 @@ export default class Dietitian {
       this.clinicAddress = dietitianObject.clinicAddress;
       this.clinicUrl = '';
       this.datetime = '';
+      this.gotSample = false;
       this.admin = false;
       this.active = true;
     }
