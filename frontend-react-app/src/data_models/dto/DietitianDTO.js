@@ -13,6 +13,7 @@ export default class DietitianDTO {
     this.clinicAddress = dietitianObject.clinic_address;
     this.clinicUrl = dietitianObject.clinic_url;
     this.datetime = dietitianObject.datetime * 1000;
+    this.gotSample = dietitianObject.got_sample;
     this.active = dietitianObject.active;
     this.admin = dietitianObject.admin;
     this.properlyInitialized = (() => checkProperties(this))();
@@ -29,10 +30,10 @@ export default class DietitianDTO {
       clinic_state: formData.state,
       clinic_address: formData.address,
       clinic_url: formData.clinicUrl,
-      admin: formData.admin,
-      notes: formData.notes,
       datetime: formData.datetime / 1000,
+      got_sample: formData.gotSample,
       active: formData.active,
+      admin: formData.admin,
     });
   }
 
@@ -48,6 +49,7 @@ export default class DietitianDTO {
       clinic_address: this.clinicAddress,
       clinic_url: this.clinicUrl,
       datetime: this.datetime / 1000,
+      got_sample: this.gotSample,
       active: this.active,
       admin: this.admin,
     };

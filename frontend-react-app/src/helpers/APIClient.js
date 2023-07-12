@@ -402,6 +402,35 @@ class APIClient {
   }
 
   // Dietitian methods
+  async sendMealSampleConfirmationEmail(dietitian) {
+    const requestUrl = this.baseUrl + '/email/meal_sample';
+
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(dietitian),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
+  async createMealSampleShipment(dietitian, shippingAddress) {
+    const requestUrl = this.baseUrl + '/shippo/meal_sample_shipment';
+    const requestBody = {
+      dietitian: dietitian,
+      shipping_address: shippingAddress,
+    };
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
   async getNutrients() {
     const requestUrl = this.baseUrl + '/nutrient';
 

@@ -7,7 +7,11 @@ const ListOfReasons = (props) => (
     <ReasonBullet
       reasonOpen={props.reasonOpen.first}
       setReasonOpen={() => props.setReasonOpen('first')}
-      bulletPrimaryText={'Simplified Meal Planning & Delivery'}
+      bulletPrimaryText={
+        props.xsScreen
+          ? 'Simplified Meal Planning'
+          : 'Simplified Meal Planning & Delivery'
+      }
       bulletSecondaryText={
         'By making meal planning easier for dietitians and their clients, we aim to support recovery and impede relapse.'
       }
@@ -57,7 +61,9 @@ const ListOfReasons = (props) => (
     <ReasonBullet
       reasonOpen={props.reasonOpen.sixth}
       setReasonOpen={() => props.setReasonOpen('sixth')}
-      bulletPrimaryText={'Fully Prepared Meals & Snacks'}
+      bulletPrimaryText={
+        props.xsScreen ? 'Fully Prepared Food' : 'Fully Prepared Meals & Snacks'
+      }
       bulletSecondaryText={
         'Our meals and snacks come fully prepared and are freezer friendly.'
       }

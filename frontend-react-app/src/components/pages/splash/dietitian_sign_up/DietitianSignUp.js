@@ -1,31 +1,38 @@
-import { useReducer, useState } from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import CardContent from "@mui/material/CardContent";
-import FormGroup from "@mui/material/FormGroup";
-import FormControl from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import CircularProgress from "@mui/material/CircularProgress";
-import FormHelperText from "@mui/material/FormHelperText";
-import LocalStorageManager from "../../../../helpers/LocalStorageManager";
-import APIClient from "../../../../helpers/APIClient";
-import DietitianDTO from "../../../../data_models/dto/DietitianDTO";
-import Dietitian from "../../../../data_models/model/Dietitian";
-import BlackButton from "../../../shared_components/BlackButton.ts";
-import { getAddressObject } from "../../client_sign_up/helpers/getAddressObject";
-import SearchLocationInput from "../../client_sign_up/SearchLocationInput";
-import styles from "./scss/DietitianSignUp.module.scss";
-import ErrorMessage from "./ErrorMessage";
-import RegistrationErrorMessage from "./RegistrationErrorMessage";
-import CustomTextField from "../../../shared_components/CustomTextField";
-import { useAuth0 } from "@auth0/auth0-react";
-
+import { useReducer, useState } from 'react';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
+import FormGroup from '@mui/material/FormGroup';
+import FormControl from '@mui/material/FormControl';
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
+import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@mui/icons-material/Info';
+import Tooltip from '@mui/material/Tooltip';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { useAuth0 } from '@auth0/auth0-react';
+import LocalStorageManager from '../../../../helpers/LocalStorageManager';
+import APIClient from '../../../../helpers/APIClient';
+import DietitianDTO from '../../../../data_models/dto/DietitianDTO';
+import Dietitian from '../../../../data_models/model/Dietitian';
+import BlackButton from '../../../shared_components/BlackButton.ts';
+import { getAddressObject } from '../../client_sign_up/helpers/getAddressObject';
+import SearchLocationInput from '../../client_sign_up/SearchLocationInput';
+import styles from './scss/DietitianSignUp.module.scss';
+import ErrorMessage from './ErrorMessage';
+import RegistrationErrorMessage from './RegistrationErrorMessage';
+import CustomTextField from '../../../shared_components/CustomTextField';
+import { useSample } from './hooks/useSample';
 const DietitianSignUp = () => {
+  const [sample, setSample] = useSample();
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [addressValueError, setAddressValueError] = useState(false);
   const [suiteError, setSuiteError] = useState(false);
+  const [sampleSuiteError, setSampleSuiteError] = useState(false);
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -42,9 +49,21 @@ const DietitianSignUp = () => {
       address: "",
       clinicUrl: "",
       datetime: Date.now(),
+      gotSample: false,
       clients: [],
       active: true,
       admin: false,
+    }
+  );
+  const [sampleFormValue, setSampleFormValue] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      street: '',
+      suite: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      address: '',
     }
   );
 
@@ -72,10 +91,16 @@ const DietitianSignUp = () => {
       if (!returnedDietitianData) {
         alert(APIClient.networkErrorMessage);
       }
-      setLoading(false);
-
       const createdDietitianDTO = new DietitianDTO(returnedDietitianData);
       const createdDietitian = new Dietitian(createdDietitianDTO);
+      if (sample) {
+        await APIClient.createMealSampleShipment(
+          createdDietitianDTO,
+          sampleFormValue
+        );
+        await APIClient.sendMealSampleConfirmationEmail(createdDietitianDTO);
+      }
+      setLoading(false);
 
       LocalStorageManager.shared.homeUrl = "/d-home";
       LocalStorageManager.shared.dietitian = createdDietitian;
@@ -94,20 +119,49 @@ const DietitianSignUp = () => {
     let value = event.target.value;
     setFormValue({ [id]: value });
   };
-  const validateAddress = async (addressObject) => {
+
+  const handleCheckbox = () => {
+    setSample(!sample);
+  };
+  const handleAddress = async (address, isSample = false) => {
+    if (address.split(',').length === 4) {
+      const addressObject = getAddressObject(address);
+      const validAddress = await validateAddress(addressObject, isSample);
+      if (validAddress) {
+        if (isSample) {
+          setSampleFormValue(addressObject);
+        } else {
+          setFormValue(addressObject);
+        }
+      }
+    } else {
+      setAddressValueError(true);
+    }
+  };
+  const validateAddress = async (addressObject, isSample = false) => {
     const validAddress = await APIClient.validateAddress(addressObject);
-    if (validAddress.addressStatus === "invalid") {
+    const suiteErrorText = 'Please enter your APT, Suite, etc.';
+    if (validAddress.addressStatus === 'invalid') {
       setAddressValueError(true);
       return false;
-    } else if (validAddress.addressStatus === "missingSuite") {
-      setSuiteError("Please enter your APT, Suite, etc.");
+    } else if (validAddress.addressStatus === 'missingSuite') {
+      if (isSample) {
+        setSampleSuiteError(suiteErrorText);
+      } else {
+        setSuiteError(suiteErrorText);
+      }
       return validAddress;
-    } else if (validAddress.addressStatus === "invalidSuite") {
-      setSuiteError("Please enter a valid suite number.");
+    } else if (validAddress.addressStatus === 'invalidSuite') {
+      if (isSample) {
+        setSampleSuiteError('Please enter a valid suite number.');
+      } else {
+        setSuiteError('Please enter a valid suite number.');
+      }
       return validAddress;
     } else {
       setAddressValueError(false);
-      setSuiteError("");
+      setSuiteError('');
+      setSampleSuiteError('');
       return validAddress;
     }
   };
@@ -142,6 +196,7 @@ const DietitianSignUp = () => {
     }
     return form.checkValidity();
   };
+
   const handleAddress = async (address) => {
     if (address.split(",").length === 4) {
       const addressObject = getAddressObject(address);
@@ -153,6 +208,7 @@ const DietitianSignUp = () => {
       setAddressValueError(true);
     }
   };
+
   return (
     <Grid container className={styles.dSignUpPageContainer}>
       <Grid item lg={4} md={6} xs={10}>
@@ -186,7 +242,7 @@ const DietitianSignUp = () => {
                   <FormHelperText
                     hidden={!addressValueError}
                     error={true}
-                    sx={{ marginBottom: "1.5vh" }}
+                    className={styles.errorText}
                   >
                     {
                       "You chose an invalid address. Please choose another address from the dropdown."
@@ -201,15 +257,15 @@ const DietitianSignUp = () => {
                   <FormHelperText
                     hidden={suiteError === ""}
                     error={true}
-                    sx={{ marginBottom: "1.5vh" }}
+                    className={styles.errorText}
                   >
                     {suiteError}
                   </FormHelperText>
                   <CustomTextField
-                    disabled={suiteError === ""}
-                    required
+                    disabled={suiteError === ''}
+                    required={suiteError !== ''}
                     fullWidth
-                    label="Suite"
+                    label="Clinic suite"
                     id="suite"
                     onChange={handleInput}
                     value={formValue.suite}
@@ -239,7 +295,66 @@ const DietitianSignUp = () => {
                     autoComplete={"off"}
                   />
                 </FormControl>
-
+                {sample && (
+                  <>
+                    <FormControlLabel
+                      control={
+                        <>
+                          <Tooltip
+                            title="You will receive 1 sample of both our Chicken Pesto Pasta, and our Peanut Noodles with Tofu"
+                            placement="right"
+                          >
+                            <IconButton>
+                              <InfoIcon className={styles.toolTip} />
+                            </IconButton>
+                          </Tooltip>
+                          <Checkbox
+                            checked={sample}
+                            onChange={handleCheckbox}
+                          />
+                        </>
+                      }
+                      label="Receive Free Shipment of Sample Meals"
+                      className={styles.sampleCheckbox}
+                    />
+                    <FormControl variant="filled">
+                      <FormHelperText
+                        hidden={!addressValueError}
+                        error={true}
+                        className={styles.errorText}
+                      >
+                        {
+                          'You chose an invalid address. Please choose another address from the dropdown.'
+                        }
+                      </FormHelperText>
+                      <SearchLocationInput
+                        onUpdate={(address) => handleAddress(address, true)}
+                        dietitianInput={true}
+                        sample={sample}
+                      />
+                    </FormControl>
+                    <FormControl variant="filled">
+                      <FormHelperText
+                        hidden={sampleSuiteError === ''}
+                        error={true}
+                        className={styles.errorText}
+                      >
+                        {sampleSuiteError}
+                      </FormHelperText>
+                      <CustomTextField
+                        disabled={sampleSuiteError === ''}
+                        required={sampleSuiteError !== ''}
+                        fullWidth
+                        label="Shipping suite"
+                        id="sampleSuite"
+                        onChange={(event) =>
+                          setSampleFormValue({ suite: event.target.value })
+                        }
+                        value={sampleFormValue.suite}
+                      />
+                    </FormControl>
+                  </>
+                )}
                 <BlackButton
                   id="dietRegSubmit"
                   disabled={loading}

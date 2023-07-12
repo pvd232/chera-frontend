@@ -14,7 +14,6 @@
     @include theme.xs {
       @include splash.splash-page-header;
       text-align: left;
-      line-height: 150%;
     }
   }
   .subheader {

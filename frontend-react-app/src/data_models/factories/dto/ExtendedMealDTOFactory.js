@@ -1,6 +1,6 @@
 import ExtendedMealDTO from '../../dto/ExtendedMealDTO';
 
-export default class MealDTOFactory {
+export default class ExtendedMealDTOFactory {
   constructor(mealDietaryRestrictionDTOFactory) {
     this.mealDietaryRestrictionDTOFactory = mealDietaryRestrictionDTOFactory;
   }
