@@ -14,67 +14,72 @@ import ExtendedRecipeIngredientDTOFactory from '../../../../data_models/factorie
 import USDANutrientDailyValueDTOFactory from '../../../../data_models/factories/dto/USDANutrientDailyValueDTOFactory';
 import ExtendedRecipeIngredientNutrientDTOFactory from '../../../../data_models/factories/dto/ExtendedRecipeIngredientNutrientDTOFactory';
 import CircularProgressPage from '../../../shared_components/CircularProgressPage';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
 
 const DietitianMenuContainer = (props) => {
   const [mealPlanMeals, setMealPlanMeals] = useState(false);
   const [mealPlans, setMealPlans] = useState(false);
   const [extendedMeals, setExtendedMeals] = useState(false);
+
+  const authHeader = useAuthHeader();
+
   useEffect(() => {
     let mounted = true;
-    APIClient.getExtendedMeals().then((extendedMealData) => {
-      if (mounted) {
-        const extendedMealDTOs = extendedMealData.map(
-          (extendedMealData) =>
-            new ExtendedMealDTO(
-              extendedMealData,
-              new MealDietaryRestrictionDTOFactory()
-            )
-        );
-        const extendedMeals = extendedMealDTOs.map(
-          (extendedMealDTO) =>
-            new ExtendedMeal(
-              extendedMealDTO,
-              new MealDietaryRestrictionFactory()
-            )
-        );
-        setExtendedMeals(extendedMeals);
-      }
-    });
-    APIClient.getMealPlans().then((mealPlansData) => {
-      if (mounted) {
-        const mealPlanDTOs = mealPlansData.map(
-          (mealPlanData) => new MealPlanDTO(mealPlanData)
-        );
-        const mealPlans = mealPlanDTOs.map(
-          (mealPlanDTO) => new MealPlan(mealPlanDTO)
-        );
-        setMealPlans(mealPlans);
-      }
-    });
-    Promise.resolve(CacheManager.shared.mealPlanMeals).then((values) => {
-      if (mounted) {
-        const extendedMealPlanMealDTOs = values.map(
-          (extendedMealPlanMealData) =>
-            new ExtendedMealPlanMealDTO(
-              extendedMealPlanMealData,
-              new ExtendedMealDTOFactory(
+    if(authHeader){
+      APIClient.getExtendedMeals(authHeader).then((extendedMealData) => {
+        if (mounted) {
+          const extendedMealDTOs = extendedMealData.map(
+            (extendedMealData) =>
+              new ExtendedMealDTO(
+                extendedMealData,
                 new MealDietaryRestrictionDTOFactory()
-              ),
-              new ExtendedMealPlanDTOFactory(
-                new USDANutrientDailyValueDTOFactory()
-              ),
-              new ExtendedRecipeIngredientDTOFactory(
+              )
+          );
+          const extendedMeals = extendedMealDTOs.map(
+            (extendedMealDTO) =>
+              new ExtendedMeal(
+                extendedMealDTO,
+                new MealDietaryRestrictionFactory()
+              )
+          );
+          setExtendedMeals(extendedMeals);
+        }
+      });
+      APIClient.getMealPlans(authHeader).then((mealPlansData) => {
+        if (mounted) {
+          const mealPlanDTOs = mealPlansData.map(
+            (mealPlanData) => new MealPlanDTO(mealPlanData)
+          );
+          const mealPlans = mealPlanDTOs.map(
+            (mealPlanDTO) => new MealPlan(mealPlanDTO)
+          );
+          setMealPlans(mealPlans);
+        }
+      });
+      Promise.resolve(CacheManager.shared.mealPlanMeals).then((values) => {
+        if (mounted) {
+          const extendedMealPlanMealDTOs = values.map(
+            (extendedMealPlanMealData) =>
+              new ExtendedMealPlanMealDTO(
+                extendedMealPlanMealData,
+                new ExtendedMealDTOFactory(
+                  new MealDietaryRestrictionDTOFactory()
+                ),
+                new ExtendedMealPlanDTOFactory(
+                  new USDANutrientDailyValueDTOFactory()
+                ),
+                new ExtendedRecipeIngredientDTOFactory(
+                  new ExtendedRecipeIngredientNutrientDTOFactory()
+                ),
                 new ExtendedRecipeIngredientNutrientDTOFactory()
-              ),
-              new ExtendedRecipeIngredientNutrientDTOFactory()
-            )
-        );
-        setMealPlanMeals(extendedMealPlanMealDTOs);
-      }
-    });
-
+              )
+          );
+          setMealPlanMeals(extendedMealPlanMealDTOs);
+        }
+      });
+    }
     return () => (mounted = false);
-  }, []);
+  }, [authHeader]);
 
   if (mealPlans && mealPlanMeals && extendedMeals) {
     const dataProps = {

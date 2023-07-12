@@ -66,7 +66,7 @@ class APIClient {
     return response;
   }
 
-  async getCurrentWeekDeliveryandCutoffDates() {
+  async getCurrentWeekDeliveryandCutoffDates(headers) {
     const requestUrl = this.baseUrl + `/delivery_date`;
 
     const request = new Request(requestUrl);
@@ -74,6 +74,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseData = await response.json();
@@ -675,13 +676,14 @@ class APIClient {
     const mealPlanData = await response.json();
     return mealPlanData;
   }
-  async getMealPlans() {
+  async getMealPlans(headers) {
     const requestUrl = `${this.baseUrl}/meal_plan`;
     const request = new Request(requestUrl);
     const requestParams = {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const mealPlanData = await response.json();
@@ -700,7 +702,7 @@ class APIClient {
   //   return eatingDisorderData;
   // }
 
-  async getExtendedClients(dietitianId) {
+  async getExtendedClients(dietitianId, headers) {
     const requestUrl = `${this.baseUrl}/extended_client?dietitian_id=${dietitianId}`;
 
     const request = new Request(requestUrl);
@@ -708,6 +710,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     if (response.status === 204) {
@@ -718,7 +721,7 @@ class APIClient {
     }
   }
 
-  async getDietitianExtendedScheduleMeals(dietitianId) {
+  async getDietitianExtendedScheduleMeals(dietitianId, headers) {
     const requestUrl =
       this.baseUrl + `/extended_schedule_meal?dietitian_id=${dietitianId}`;
 
@@ -727,6 +730,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     if (response.status === 204) {
@@ -737,7 +741,7 @@ class APIClient {
     }
   }
 
-  async getDietitianMealSubscriptions(dietitianId) {
+  async getDietitianMealSubscriptions(dietitianId, headers) {
     const requestUrl =
       this.baseUrl + `/meal_subscription?dietitian_id=${dietitianId}`;
 
@@ -746,6 +750,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     if (response.status === 204) {
@@ -1065,7 +1070,7 @@ class APIClient {
     await this.fetchWrapper(request, requestParams);
     return;
   }
-  async getClientMealSubscription(clientId) {
+  async getClientMealSubscription(clientId, headers) {
     const requestUrl =
       this.baseUrl + `/meal_subscription?client_id=${clientId}`;
 
@@ -1073,6 +1078,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(requestUrl, requestParams);
     const returnedMealSubscriptionData = await response.json();
@@ -1262,7 +1268,7 @@ class APIClient {
     return;
   }
 
-  async getExtendedMeals() {
+  async getExtendedMeals(headers) {
     const requestUrl = this.baseUrl + '/extended_meal';
 
     const request = new Request(requestUrl);
@@ -1270,6 +1276,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
@@ -1309,14 +1316,15 @@ class APIClient {
     return mealsData;
   }
 
-  async getSnacks() {
+  async getSnacks(headers) {
     const requestUrl = this.baseUrl + '/snack';
-
+    
     const request = new Request(requestUrl);
     const requestParams = {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
