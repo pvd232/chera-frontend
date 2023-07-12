@@ -31,6 +31,10 @@ const ClientProfileDropDown = () => {
     });
   };
 
+  const handleUpdateAddress=()=>{
+    navigate('/update-address');
+  }
+
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };
@@ -99,12 +103,30 @@ const ClientProfileDropDown = () => {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem
+                      id="client-plan-details"
+                      onClick={() => navigate('/plan-details')}
+                      className={aboutDropDown.menuItem}
+                    >
+                      <Typography className={aboutDropDown.text}>
+                          Plan Details
+                        </Typography>
+                    </MenuItem>
+                    <MenuItem
                       id="logout"
                       onClick={handleLogout}
                       className={aboutDropDown.menuItem}
                     >
                       <Typography className={aboutDropDown.text}>
                         Log out
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      id="updateAddress"
+                      onClick={handleUpdateAddress}
+                      className={aboutDropDown.menuItem}
+                    >
+                      <Typography className={aboutDropDown.text}>
+                        Update Address
                       </Typography>
                     </MenuItem>
                   </MenuList>

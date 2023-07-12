@@ -4,6 +4,11 @@ export default class StagedClient {
   constructor(stagedClient) {
     this.id = stagedClient.id;
     this.firstName = stagedClient.firstName;
+    this.currentWeight = stagedClient.current_weight;
+    this.targetWeight = stagedClient.target_weight;
+    this.age = stagedClient.age;
+    this.gender = stagedClient.gender;
+    this.eatingDisorderId = stagedClient.eating_disorder_id;
     this.dietitianId = stagedClient.dietitianId;
     this.mealPlanId = stagedClient.mealPlanId;
     this.datetime = stagedClient.datetime;

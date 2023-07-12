@@ -22,7 +22,7 @@ const DietitianHomeContainer = (props) => {
   const [scheduleMeals, setScheduleMeals] = useState(false);
   const [mealSubscriptions, setMealSubscriptions] = useState(false);
   const [mealPlans, setMealPlans] = useState(false);
-  // const [eatingDisorders, setEatingDisorders] = useState(false);
+  const [eatingDisorders, setEatingDisorders] = useState([]);
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [snacks, setSnacks] = useState(false);
 
@@ -152,7 +152,7 @@ const DietitianHomeContainer = (props) => {
       scheduleMeals: scheduleMeals,
       mealSubscriptions: mealSubscriptions,
       mealPlans: mealPlans,
-      // eatingDisorders: eatingDisorders,
+      eatingDisorders: eatingDisorders,
       extendedMeals: extendedMeals,
       snacks: snacks,
     };
