@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { Button, FormControlLabel, FormGroup } from '@mui/material';
+import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import APIClient from '../../../../helpers/APIClient';
@@ -10,7 +9,6 @@ import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
 import Transition from '../../../shared_components/Transition';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import ClientMenu from '../../client_sign_up/client_menu/ClientMenu';
-import getNextDeliveryDate from '../helpers/getNextDeliveryDate';
 import checkUpcomingDelivery from '../helpers/checkUpcomingDelivery';
 import { pastCutoffDate } from './helpers/pastCutoffDate';
 import editDeliveryModal from './scss/EditDeliveryModal.module.scss';
@@ -21,19 +19,13 @@ const EditDeliveryModal = (props) => {
   const [cogs, setCogs] = useState(false);
   const [loadingPauseSubscription, setLoadingPauseSubscription] =
     useState(false);
-  const [loadingDeleteSubscription, setLoadingDeleteSubscription] =
-    useState(false);
-  const [confirmDeleteSubscription, setConfirmDeleteSubscription] =
-    useState(false);
-  const [confirmDeleteUsername, setConfirmDeleteUsername] = useState('');
+
   const [editMeals, setEditMeals] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
-    setConfirmDeleteSubscription(false);
-    setConfirmDeleteUsername('');
     setEditMeals(false);
     setOpen(false);
   };
@@ -90,46 +82,7 @@ const EditDeliveryModal = (props) => {
       );
     });
   };
-  // TODO: Test this function
-  const handleDeleteSubscription = async () => {
-    confirmDeleteUsername === props.clientId
-      ? (() => {
-          setLoadingDeleteSubscription(true);
-          APIClient.deleteScheduleMeals(props.mealSubscription.id).then(() => {
-            APIClient.deleteScheduledOrderMeals(props.mealSubscription.id).then(
-              () => {
-                APIClient.deleteScheduleSnacks(props.mealSubscription.id).then(
-                  () => {
-                    APIClient.deleteScheduledOrderSnacks(
-                      props.mealSubscription.id
-                    ).then(() => {
-                      APIClient.deleteStripeSubscription(
-                        props.mealSubscription.stripeSubscriptionId
-                      ).then(() => {
-                        APIClient.deleteStripeCustomer(
-                          props.stripeCustomerId
-                        ).then(() => {
-                          APIClient.deactivateClient(props.clientId).then(
-                            () => {
-                              APIClient.deactivateMealSubscription(
-                                props.clientId
-                              ).then(() => {
-                                setLoadingDeleteSubscription(false);
-                                props.handleDeleteSubscription();
-                              });
-                            }
-                          );
-                        });
-                      });
-                    });
-                  }
-                );
-              }
-            );
-          });
-        })()
-      : alert('Please enter your username to confirm deletion.');
-  };
+
   const handleChangeMeals = async () => {
     const cogsData = await APIClient.getCOGS();
     const cogsDTOs = cogsData.map((cog) => {

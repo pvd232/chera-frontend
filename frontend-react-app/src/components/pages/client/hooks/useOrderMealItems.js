@@ -5,13 +5,10 @@ import ExtendedMealDTOFactory from '../../../../data_models/factories/dto/Extend
 import MealDietaryRestrictionFactory from '../../../../data_models/factories/model/MealDietaryRestrictionFactory';
 import MealDietaryRestrictionDTOFactory from '../../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
 import ExtendedScheduledOrderMealDTOFactory from '../../../../data_models/factories/dto/ExtendedScheduledOrderMealDTOFactory';
-import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
 import LocalStorageManager from '../../../../helpers/LocalStorageManager';
 import ExtendedOrderMealDTO from '../../../../data_models/dto/ExtendedOrderMealDTO';
 import PreviousDeliveryItem from '../../../ui_data_containers/PreviousDeliveryItem';
-import DietitianClientMealCard from '../../../shared_components/DietitianClientMealCard';
 import createScheduledOrderMealCardItems from '../client_home/helpers/createScheduledOrderMealCardItems';
-import CircularProgressPage from '../../../shared_components/CircularProgressPage';
 import APIClient from '../../../../helpers/APIClient';
 export const useOrderMealItems = () => {
   const [previousOrderMeals, setPreviousOrderMeals] = useState(false);

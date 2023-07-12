@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useOpen } from './hooks/useOpen.ts';
 import React from 'react';
 import Grid from '@mui/material/Grid';
@@ -11,23 +10,23 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import styles from './scss/AboutDropDown.module.scss';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 
 const LogInDropDown = () => {
   const { loginWithRedirect } = useAuth0();
 
   const handleLogin = async (event: React.MouseEvent<HTMLElement>) => {
     const id = event.currentTarget.id;
-    if (`${id}` === "client-log-in"){
+    if (`${id}` === 'client-log-in') {
       await loginWithRedirect({
         appState: {
-          returnTo: "/home",
+          returnTo: '/home',
         },
       });
-    }else {
+    } else {
       await loginWithRedirect({
         appState: {
-          returnTo: "/d-home",
+          returnTo: '/d-home',
         },
       });
     }
@@ -35,12 +34,6 @@ const LogInDropDown = () => {
 
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
-  const navigate = useNavigate();
-
-  const handleNavigate = (event: React.MouseEvent<HTMLElement>) => {
-    const id = event.currentTarget.id;
-    navigate(`/${id}`);
-  };
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
   };

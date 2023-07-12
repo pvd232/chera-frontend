@@ -47,7 +47,6 @@ const CreateNewStagedClientModal = (props) => {
       gender: '',
       notes: '',
       dietitianId: props.dietitianId,
-      currentWeight: '',
       active: true,
       accountCreated: false,
       datetime: Date.now(),
@@ -71,7 +70,6 @@ const CreateNewStagedClientModal = (props) => {
       gender: '',
       notes: '',
       dietitianId: props.dietitianId,
-      currentWeight: '',
       active: true,
       accountCreated: false,
       datetime: Date.now(),
@@ -195,7 +193,7 @@ const CreateNewStagedClientModal = (props) => {
     const value = event.target.value;
     setFormValue({ eatingDisorderId: value });
   };
-  
+
   const handleGenderInput = (event) => {
     const value = event.target.value;
     setFormValue({ gender: value });
