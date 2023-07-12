@@ -153,55 +153,7 @@ const AccountRegistration = (props) => {
                     <>
                       {/* AUTH */}
                       {/* Here we capture the client's password */}
-
-                      <CustomTextField
-                        autoComplete="new-password"
-                        required
-                        type="password"
-                        fullWidth
-                        label={'Create a password'}
-                        // must set both name and autoComplete to 'new-password' this for autofill to stop
-                        name="new-password"
-                        id="password"
-                        sx={{
-                          marginLeft: 'auto',
-                          marginRight: 'auto',
-                          width: '80%',
-                        }}
-                        inputProps={{
-                          style: { fontSize: customTheme.fontEqualizer(14) },
-                        }} // font size of input text
-                        InputLabelProps={{
-                          style: { fontSize: customTheme.fontEqualizer(14) },
-                        }}
-                        onChange={handleInput}
-                        value={formValue.password}
-                      />
-                      <CustomTextField
-                        autoComplete="new-password"
-                        required
-                        type="password"
-                        fullWidth
-                        label={'Confirm your password'}
-                        // must set both name and autoComplete to 'new-password' this for autofill to stop
-                        name="new-password"
-                        id="confirm-password"
-                        sx={{
-                          marginLeft: 'auto',
-                          marginRight: 'auto',
-                          width: '80%',
-                        }}
-                        inputProps={{
-                          style: { fontSize: customTheme.fontEqualizer(14) },
-                        }} // font size of input text
-                        InputLabelProps={{
-                          style: { fontSize: customTheme.fontEqualizer(14) },
-                        }}
-                        onChange={handleInput}
-                        value={formValue.confirmPassword}
-                        error={error}
-                        helperText={error ? 'Your passwords do not match' : ''}
-                      />
+                                        
                       <CustomTextField
                         required
                         type="text"

@@ -40,7 +40,11 @@ const CreateNewStagedClientModal = (props) => {
       id: '',
       firstName: '',
       mealPlanId: '',
-      // eatingDisorderId: '',
+      eatingDisorderId: '',
+      currentWeight: 0,
+      targetWeight: 0,
+      age: 0,
+      gender: '',
       notes: '',
       dietitianId: props.dietitianId,
       currentWeight: '',
@@ -60,7 +64,11 @@ const CreateNewStagedClientModal = (props) => {
       id: '',
       firstName: '',
       mealPlanId: '',
-      // eatingDisorderId: '',
+      eatingDisorderId: '',
+      currentWeight: 0,
+      targetWeight: 0,
+      age: 0,
+      gender: '',
       notes: '',
       dietitianId: props.dietitianId,
       currentWeight: '',
@@ -182,10 +190,17 @@ const CreateNewStagedClientModal = (props) => {
       return false;
     }
   };
-  // const handleEatingDisorderInput = (event) => {
-  //   const value = event.target.value;
-  //   setFormValue({ eatingDisorderId: value });
-  // };
+
+  const handleEatingDisorderInput = (event) => {
+    const value = event.target.value;
+    setFormValue({ eatingDisorderId: value });
+  };
+  
+  const handleGenderInput = (event) => {
+    const value = event.target.value;
+    setFormValue({ gender: value });
+  };
+
   const handleInput = (event) => {
     const id = event.target.id;
     const value = event.target.value;
@@ -270,8 +285,9 @@ const CreateNewStagedClientModal = (props) => {
       loading={loading}
       handleSubmit={handleSubmit}
       mealPlans={props.mealPlans}
-      // eatingDisorders={props.eatingDisorders}
-      // handleEatingDisorderInput={handleEatingDisorderInput}
+      eatingDisorders={props.eatingDisorders}
+      handleEatingDisorderInput={handleEatingDisorderInput}
+      handleGenderInput={handleGenderInput}
       zipcode={zipcode}
       zipcodeError={zipcodeError}
     />

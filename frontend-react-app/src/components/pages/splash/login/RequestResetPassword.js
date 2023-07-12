@@ -1,20 +1,19 @@
-import { useTheme } from '@mui/material/styles';
-import { useState } from 'react';
-import FormHelperText from '@mui/material/FormHelperText';
-import Stack from '@mui/material/Stack';
-import Grid from '@mui/material/Grid';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import FormGroup from '@mui/material/FormGroup';
-import TextField from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
-import BlackButton from '../../../shared_components/BlackButton.ts';
-import APIClient from '../../../../helpers/APIClient.js';
+import { useState } from "react";
+import FormHelperText from "@mui/material/FormHelperText";
+import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import FormGroup from "@mui/material/FormGroup";
+import FormControl from '@mui/material/FormControl';
+import CustomTextField from "../../../shared_components/CustomTextField";
+import CircularProgress from "@mui/material/CircularProgress";
+import BlackButton from "../../../shared_components/BlackButton.ts";
+import APIClient from "../../../../helpers/APIClient.js";
+import styles from "./scss/Login.module.scss";
 
 const RequestResetPassword = (props) => {
-  const customTheme = useTheme();
-
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [resetpasswordError, setResetPasswordError] = useState(false);
   const [showText, setShowText] = useState(false);
@@ -26,7 +25,7 @@ const RequestResetPassword = (props) => {
   const handleButtonClick = () => {
     if (!loading) {
       setLoading(true);
-      if (props.domain === 'dietitian') {
+      if (props.domain === "dietitian") {
         APIClient.requestResetDietitianPassword(email).then((value) => {
           setLoading(false);
           if (value) {
@@ -58,107 +57,67 @@ const RequestResetPassword = (props) => {
     }
   };
   return (
-    <Grid container justifyContent={'center'}>
-      <CardContent>
-        <Grid item xs={12} margin={'0 auto'}>
+    <Grid container className={styles.loginPageContainer}>
+      <Grid item lg={4} md={6} xs={10}>
+        <CardContent>
+          <Typography className={styles.header}>Reset your password</Typography>
           <form onSubmit={handleSubmit} autoComplete="new-password">
-            <fieldset
-              style={{
-                boxShadow: customTheme.border.boxShadow.medium,
-                padding: '4vh 5vw',
-                boxSizing: 'border-box',
-                margin: '0 10%',
-                height: 'fit-content',
-              }}
-            >
-              <FormGroup>
-                <Grid container>
-                  <Typography
-                    width={'90%'}
-                    fontSize={'2rem'}
-                    textAlign={'center'}
-                    margin={'0 auto'}
-                    paddingBottom={'5vh'}
-                    paddingTop={'6vh'}
+            <FormGroup>
+                <Stack className={styles.stack}>
+                  <FormControl variant="filled">
+                    <FormHelperText
+                      hidden={!resetpasswordError}
+                      error={true}
+                      className={styles.formError}
+                    >
+                      Your email is incorrect
+                    </FormHelperText>
+                    <CustomTextField
+                      required
+                      fullWidth
+                      label={"Email"}
+                      id="id"
+                      sx={{
+                        marginTop: "2vh"         
+                      }}
+                      onChange={(event) => {
+                        setEmail(event.target.value);
+                      }}
+                      value={email}
+                      className={styles.formRow}
+                    />
+                  </FormControl>
+                  <BlackButton
+                    type="submit"
+                    variant="contained"
+                    disabled={loading}
+                    sx={{
+                      fontSize: ".75rem",
+                      paddingBottom: "1vh",
+                      marginBottom: "5vh",
+                    }}
+                    className={styles.submitButton}
                   >
-                    Reset your password
+                    {loading ? (
+                      <CircularProgress size={24} />
+                    ) : (
+                      "Send Password Reset Email"
+                    )}
+                  </BlackButton>
+
+                  <Typography
+                    sx={{
+                      opacity: showText ? 1 : 0,
+                      marginBottom: "5vh",
+                    }}
+                  >
+                    A link to reset your password has been sent to your email.
                   </Typography>
-
-                  <Grid item xs={12}>
-                    <Stack direction={'column'} alignItems={'center'}>
-                      <FormHelperText hidden={!resetpasswordError} error={true}>
-                        Your email is incorrect
-                      </FormHelperText>
-                      <TextField
-                        required
-                        fullWidth
-                        label={'Email'}
-                        id="id"
-                        sx={{
-                          marginLeft: 'auto',
-                          marginRight: 'auto',
-                          marginBottom: '5vh',
-                          marginTop: '2vh',
-                          width:
-                            window.innerWidth < 450
-                              ? '80%'
-                              : window.innerWidth < 950
-                              ? '75%'
-                              : '70%',
-                        }}
-                        onChange={(event) => {
-                          setEmail(event.target.value);
-                        }}
-                        value={email}
-                      />
-                      <BlackButton
-                        type="submit"
-                        variant="contained"
-                        disabled={loading}
-                        sx={{
-                          fontSize: '.75rem',
-                          marginLeft: 'auto',
-                          marginRight: 'auto',
-                          width:
-                            window.innerWidth < 450
-                              ? '80%'
-                              : window.innerWidth < 950
-                              ? '75%'
-                              : '70%',
-                          paddingTop: '1vh',
-                          paddingBottom: '1vh',
-                          marginBottom: '5vh',
-                        }}
-                      >
-                        {loading ? (
-                          <CircularProgress
-                            size={24}
-                            sx={{
-                              color: `${customTheme.palette.black.main}`,
-                            }}
-                          />
-                        ) : (
-                          'Send Password Reset Email'
-                        )}
-                      </BlackButton>
-
-                      <Typography
-                        sx={{
-                          opacity: showText ? 1 : 0,
-                          marginBottom: '5vh',
-                        }}
-                      >
-                        A link to reset your password has been sent to your
-                        email.
-                      </Typography>
-                    </Stack>
-                  </Grid>
-                </Grid>
-              </FormGroup>
-            </fieldset>
+                </Stack>
+            </FormGroup>
           </form>
-        </Grid>
-      </CardContent>
+        </CardContent>
+      </Grid>
     </Grid>
   );
 };

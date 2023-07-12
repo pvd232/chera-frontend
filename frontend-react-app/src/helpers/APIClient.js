@@ -716,18 +716,18 @@ class APIClient {
     const mealPlanData = await response.json();
     return mealPlanData;
   }
-  // async getEatingDisorders() {
-  //   const requestUrl = `${this.baseUrl}/eating_disorder`;
-  //   const request = new Request(requestUrl);
-  //   const requestParams = {
-  //     method: 'GET',
-  //     mode: this.mode,
-  //     cache: 'default',
-  //   };
-  //   const response = await this.fetchWrapper(request, requestParams);
-  //   const eatingDisorderData = await response.json();
-  //   return eatingDisorderData;
-  // }
+  async getEatingDisorders() {
+    const requestUrl = `${this.baseUrl}/eating_disorder`;
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const eatingDisorderData = await response.json();
+    return eatingDisorderData;
+  }
 
   async getExtendedClients(dietitianId) {
     const requestUrl = `${this.baseUrl}/extended_client?dietitian_id=${dietitianId}`;
@@ -946,8 +946,10 @@ class APIClient {
     return stripeData;
   }
   async deleteStripeSubscription(stripeSubscriptionId) {
+    // const requestUrl =
+    //   this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
     const requestUrl =
-      this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
+    this.baseUrl + `/stripe/subscription?stripe_subscription_id=${stripeSubscriptionId}`;
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -956,9 +958,12 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-
-    const stripeData = await response.json();
-    return stripeData;
+    if (response.status === 204) {
+      return null;
+    } else {
+        const stripeData = await response.json();
+        return stripeData;
+    }
   }
 
   async authenticateClient(credentials) {
@@ -1078,8 +1083,12 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-    const clientJSON = await response.json();
-    return clientJSON;
+    if (response.status === 204) {
+      return null;
+    } else {
+        const clientJSON = await response.json();
+        return clientJSON;
+    }
   }
   async updateClient(clientData) {
     const requestUrl = this.baseUrl + '/client';
@@ -1088,6 +1097,19 @@ class APIClient {
     const requestParams = {
       method: 'PUT',
       body: JSON.stringify(clientData),
+      mode: this.mode,
+      cache: 'default',
+    };
+    await this.fetchWrapper(request, requestParams);
+    return;
+  }
+  async updateClientAddress(clientAddressData) {
+    const requestUrl = this.baseUrl + '/client/update_address';
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'PUT',
+      body: JSON.stringify(clientAddressData),
       mode: this.mode,
       cache: 'default',
     };

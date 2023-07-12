@@ -3,6 +3,13 @@ export default class StagedClientDTO {
   constructor(stagedClient) {
     this.id = stagedClient.id;
     this.firstName = stagedClient.first_name;
+
+    this.currentWeight = stagedClient.current_weight;
+    this.targetWeight = stagedClient.target_weight;
+    this.age = stagedClient.age;
+    this.gender = stagedClient.gender;
+    this.eatingDisorderId = stagedClient.eating_disorder_id;
+    
     this.dietitianId = stagedClient.dietitian_id;
     this.mealPlanId = stagedClient.meal_plan_id;
     this.datetime = stagedClient.datetime;
@@ -19,6 +26,11 @@ export default class StagedClientDTO {
     return new StagedClientDTO({
       id: stagedClient.id,
       first_name: stagedClient.firstName,
+      currentWeight: stagedClient.current_weight,
+      targetWeight: stagedClient.target_weight,
+      age: stagedClient.age,
+      gender: stagedClient.gender,
+      eatingDisorderId: stagedClient.eating_disorder_id,
       dietitian_id: stagedClient.dietitianId,
       meal_plan_id: stagedClient.mealPlanId,
       datetime: stagedClient.datetime,
@@ -35,6 +47,11 @@ export default class StagedClientDTO {
     const data = {
       id: this.id,
       first_name: this.firstName,
+      currentWeight: this.current_weight,
+      targetWeight: this.target_weight,
+      age: this.age,
+      gender: this.gender,
+      eatingDisorderId: this.eating_disorder_id,
       dietitian_id: this.dietitianId,
       meal_plan_id: this.mealPlanId,
       notes: this.notes,

@@ -7,6 +7,12 @@ import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import FormHelperText from '@mui/material/FormHelperText';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@mui/icons-material/Info';
+import Tooltip from '@mui/material/Tooltip';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { useAuth0 } from '@auth0/auth0-react';
 import LocalStorageManager from '../../../../helpers/LocalStorageManager';
 import APIClient from '../../../../helpers/APIClient';
 import DietitianDTO from '../../../../data_models/dto/DietitianDTO';
@@ -19,12 +25,6 @@ import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
 import CustomTextField from '../../../shared_components/CustomTextField';
 import { useSample } from './hooks/useSample';
-import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
-import Tooltip from '@mui/material/Tooltip';
-
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
 const DietitianSignUp = () => {
   const [sample, setSample] = useSample();
   const [error, setError] = useState(false);
@@ -36,18 +36,18 @@ const DietitianSignUp = () => {
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
-      id: '',
-      password: '',
-      firstName: '',
-      lastName: '',
-      dieteticRegistrationNumber: '',
-      street: '',
-      suite: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      address: '',
-      clinicUrl: '',
+      id: "",
+      password: "",
+      firstName: "",
+      lastName: "",
+      dieteticRegistrationNumber: "",
+      street: "",
+      suite: "",
+      city: "",
+      state: "",
+      zipcode: "",
+      address: "",
+      clinicUrl: "",
       datetime: Date.now(),
       gotSample: false,
       clients: [],
@@ -67,12 +67,21 @@ const DietitianSignUp = () => {
     }
   );
 
+  const { user } = useAuth0();
+  if (user !== undefined) {
+    console.log("user id:", user.sub);
+    console.log("email id:", user.email);
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
 
     const form = event.target;
-
+    
+    if (user !== undefined) {
+      formValue.id = user.email;
+    }
     const validated = await validate(form);
     if (validated) {
       const dietitianDTO = DietitianDTO.initializeFromForm(formValue);
@@ -93,12 +102,12 @@ const DietitianSignUp = () => {
       }
       setLoading(false);
 
-      LocalStorageManager.shared.homeUrl = '/d-home';
+      LocalStorageManager.shared.homeUrl = "/d-home";
       LocalStorageManager.shared.dietitian = createdDietitian;
       if (!createdDietitian.admin) {
-        window.location.assign('/d-home');
+        window.location.assign("/d-home");
       } else {
-        window.location.assign('/a-home');
+        window.location.assign("/a-home");
       }
     } else {
       setLoading(false);
@@ -174,18 +183,30 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
-    if (formValue.suite !== '') {
-      const addressParts = formValue.address.split(',');
-      const newStreet = addressParts[0] + ' ' + formValue.suite;
+    if (formValue.suite !== "") {
+      const addressParts = formValue.address.split(",");
+      const newStreet = addressParts[0] + " " + formValue.suite;
       addressParts[0] = newStreet;
-      const newAddress = addressParts.join(',');
+      const newAddress = addressParts.join(",");
       const validAddress = await validateAddress(getAddressObject(newAddress));
 
-      if (validAddress.addressStatus !== 'valid') {
+      if (validAddress.addressStatus !== "valid") {
         return false;
       }
     }
     return form.checkValidity();
+  };
+
+  const handleAddress = async (address) => {
+    if (address.split(",").length === 4) {
+      const addressObject = getAddressObject(address);
+      const validAddress = await validateAddress(addressObject);
+      if (validAddress) {
+        setFormValue(addressObject);
+      }
+    } else {
+      setAddressValueError(true);
+    }
   };
 
   return (
@@ -195,32 +216,9 @@ const DietitianSignUp = () => {
           <Typography className={styles.header}>Dietitian sign up</Typography>
           <form onSubmit={handleSubmit}>
             <FormGroup>
-              <Stack direction={'column'} rowGap={3}>
+              <Stack direction={"column"} rowGap={3}>
                 <FormControl variant="filled">
                   <ErrorMessage error={error} />
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label="Email"
-                    id="id"
-                    type="email"
-                    onChange={handleInput}
-                    value={formValue.id}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
-                  <CustomTextField
-                    required
-                    type="password"
-                    autoComplete={'new-password'}
-                    fullWidth
-                    label="Choose a password"
-                    id="password"
-                    onChange={handleInput}
-                    value={formValue.password}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
                   <CustomTextField
                     required
                     fullWidth
@@ -247,7 +245,7 @@ const DietitianSignUp = () => {
                     className={styles.errorText}
                   >
                     {
-                      'You chose an invalid address. Please choose another address from the dropdown.'
+                      "You chose an invalid address. Please choose another address from the dropdown."
                     }
                   </FormHelperText>
                   <SearchLocationInput
@@ -257,7 +255,7 @@ const DietitianSignUp = () => {
                 </FormControl>
                 <FormControl variant="filled">
                   <FormHelperText
-                    hidden={suiteError === ''}
+                    hidden={suiteError === ""}
                     error={true}
                     className={styles.errorText}
                   >
@@ -294,7 +292,7 @@ const DietitianSignUp = () => {
                     type="url"
                     onChange={handleInput}
                     value={formValue.clinicUrl}
-                    autoComplete={'off'}
+                    autoComplete={"off"}
                   />
                 </FormControl>
                 {sample && (
@@ -361,10 +359,10 @@ const DietitianSignUp = () => {
                   id="dietRegSubmit"
                   disabled={loading}
                   variant="contained"
-                  type={'submit'}
+                  type={"submit"}
                   className={styles.submitButton}
                 >
-                  {loading ? <CircularProgress size={24} /> : 'Submit'}
+                  {loading ? <CircularProgress size={24} /> : "Submit"}
                 </BlackButton>
               </Stack>
             </FormGroup>
