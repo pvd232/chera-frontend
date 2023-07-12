@@ -11,7 +11,6 @@ import { useOpen } from './hooks/useOpen.ts';
 //import { useNavigate } from 'react-router-dom';
 import aboutDropDown from './scss/AboutDropDown.module.scss';
 import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
-import APIClient from '../../../helpers/logoutUser.ts';
 import { useAuth0 } from "@auth0/auth0-react";
 
 const ClientProfileDropDown = () => {
@@ -30,11 +29,6 @@ const ClientProfileDropDown = () => {
         returnTo: window.location.origin,
       },
     });
-  };
-
-
-  const handlePayment = () => {
-    navigate('/payment');
   };
 
   const handleUpdateAddress=()=>{
@@ -126,17 +120,6 @@ const ClientProfileDropDown = () => {
                         Log out
                       </Typography>
                     </MenuItem>
-                    <MenuItem
-                      id="payment"
-                      onClick={handlePayment}
-                      className={aboutDropDown.menuItem}
-                    >
-                      <Typography className={aboutDropDown.text}>
-                        Payment
-                      </Typography>
-                    </MenuItem>
-
-
                     <MenuItem
                       id="updateAddress"
                       onClick={handleUpdateAddress}

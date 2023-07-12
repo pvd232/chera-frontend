@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import ReactGA from "react-ga";
@@ -30,7 +31,6 @@ import DietitianSignUp from "./components/pages/splash/dietitian_sign_up/Dietiti
 import DietitianLinks from "./components/shared_components/navbar/links/DietitianLinks";
 import { Auth0ProviderWithNavigate } from "./auth0/auth0-provider-with-navigate";
 import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
-import Payment from './components/pages/client/ClientPayment';
 const TRACKING_ID = "UA-238874096-1"; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === "production") {
@@ -195,19 +195,6 @@ const Main = (props) => {
             />
           }
         />
-
-        <Route
-          path="/payment"
-          element={
-            <Navbar
-              childComponent={<Payment
-                stripePromise={props.stripePromise} />}
-              links={<ClientLinks />}
-              homeUrl="/home"
-            />
-          }
-        />
-
         <Route
           path="/plan-details"
           element={
