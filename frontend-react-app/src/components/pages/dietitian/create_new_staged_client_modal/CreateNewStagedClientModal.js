@@ -202,11 +202,7 @@ const CreateNewStagedClientModal = (props) => {
   const handleInput = (event) => {
     const id = event.target.id;
     const value = event.target.value;
-    if (id === 'confirm-password') {
-      setFormValue({ confirmPassword: value });
-    }
-    // Figure out how to pass in eating disorder values
-    else if (id === undefined) {
+    if (id === undefined) {
       setFormValue({ mealPlanId: value });
     } else if (id === 'mealsPreSelected') {
       const valueToSet = (() => {

@@ -54,7 +54,6 @@ const Checkout = (props) => {
           }}
           editAddress={editAddress}
           handleSubmit={(newClient) => handleSubmit(newClient)}
-          clientPassword={props.clientPassword}
           stagedClientId={props.stagedClient.id}
           dietitianId={props.stagedClient.dietitianId}
           mealPlanId={props.stagedClient.mealPlanId}

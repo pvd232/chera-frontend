@@ -4,7 +4,6 @@ export default class Client {
   constructor(clientObject) {
     if (clientObject) {
       this.id = clientObject.id;
-      this.password = clientObject.password;
       this.dietitianId = clientObject.dietitianId;
       this.mealPlanId = clientObject.mealPlanId;
       this.stripeId = clientObject.stripeId;
@@ -23,7 +22,6 @@ export default class Client {
       this.active = clientObject.active;
     } else {
       this.id = '';
-      this.password = '';
       this.dietitianId = '';
       this.mealPlanId = '';
       this.stripeId = '';

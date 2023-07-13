@@ -502,75 +502,6 @@ class APIClient {
     return;
   }
 
-  async updateDietitianPassword(formValues) {
-    const requestUrl = this.baseUrl + '/dietitian/reset_password';
-
-    const request = new Request(requestUrl);
-    const requestParams = {
-      method: 'PUT',
-      body: JSON.stringify(formValues),
-      mode: this.mode,
-      cache: 'default',
-    };
-
-    const updatedDietitanData = await this.fetchWrapper(request, requestParams);
-    const updatedDietitan = await updatedDietitanData.json();
-    return updatedDietitan;
-  }
-
-  async requestResetDietitianPassword(email) {
-    const requestUrl = this.baseUrl + '/dietitian/reset_password';
-
-    const requestHeaders = new Headers();
-    requestHeaders.set('dietitian-id', email);
-
-    const request = new Request(requestUrl);
-    const requestParams = {
-      method: 'GET',
-      headers: requestHeaders,
-      mode: this.mode,
-      cache: 'default',
-    };
-
-    const response = await this.fetchWrapper(request, requestParams);
-    // Unauthorized dietitianId
-    if (response.status === 401) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  async authenticateDietitian(credentials) {
-    const requestUrl = this.baseUrl + `/dietitian/authenticate`;
-    const requestHeaders = new Headers();
-    requestHeaders.set(
-      'Authorization',
-      'Basic ' +
-        Buffer.from(`${credentials.username}:${credentials.password}`).toString(
-          'base64'
-        )
-    );
-
-    const request = new Request(requestUrl);
-
-    const requestParams = {
-      method: 'GET',
-      headers: requestHeaders,
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(request, requestParams);
-
-    // Dietitian failed to authenticate
-    if (response.status === 401) {
-      return false;
-    } else {
-      const dietitianJSON = await response.json();
-      return dietitianJSON;
-    }
-  }
-
   async getDietitian(dietitianId) {
     const requestUrl = `${this.baseUrl}/dietitian/${dietitianId}`;
 
@@ -842,43 +773,7 @@ class APIClient {
 
     await this.fetchWrapper(requestUrl, requestParams);
   }
-  async updateClientPassword(formValues) {
-    const requestUrl = this.baseUrl + '/client/password';
 
-    const request = new Request(requestUrl);
-    const requestParams = {
-      method: 'PUT',
-      body: JSON.stringify(formValues),
-      mode: this.mode,
-      cache: 'default',
-    };
-
-    const response = await this.fetchWrapper(request, requestParams);
-    const updatedClient = await response.json();
-    return updatedClient;
-  }
-  async requestResetClientPassword(email) {
-    const requestUrl = this.baseUrl + '/client/password';
-
-    const requestHeaders = new Headers();
-    requestHeaders.set('client-id', email);
-
-    const request = new Request(requestUrl);
-    const requestParams = {
-      method: 'GET',
-      headers: requestHeaders,
-      mode: this.mode,
-      cache: 'default',
-    };
-
-    const response = await this.fetchWrapper(request, requestParams);
-    // Unauthorized clientId
-    if (response.status === 401) {
-      return false;
-    } else {
-      return true;
-    }
-  }
   async updateStripeSubscription(
     mealSubscriptionId,
     numberOfMeals,
@@ -949,7 +844,8 @@ class APIClient {
     // const requestUrl =
     //   this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
     const requestUrl =
-    this.baseUrl + `/stripe/subscription?stripe_subscription_id=${stripeSubscriptionId}`;
+      this.baseUrl +
+      `/stripe/subscription?stripe_subscription_id=${stripeSubscriptionId}`;
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -961,39 +857,11 @@ class APIClient {
     if (response.status === 204) {
       return null;
     } else {
-        const stripeData = await response.json();
-        return stripeData;
+      const stripeData = await response.json();
+      return stripeData;
     }
   }
 
-  async authenticateClient(credentials) {
-    const requestUrl = this.baseUrl + `/client/authenticate`;
-    const requestHeaders = new Headers();
-
-    requestHeaders.set(
-      'Authorization',
-      'Basic ' +
-        Buffer.from(`${credentials.username}:${credentials.password}`).toString(
-          'base64'
-        )
-    );
-
-    const request = new Request(requestUrl);
-    const requestParams = {
-      method: 'GET',
-      headers: requestHeaders,
-      mode: this.mode,
-      cache: 'default',
-    };
-    const response = await this.fetchWrapper(request, requestParams);
-    // Client failed to authenticate
-    if (response.status === 401) {
-      return false;
-    } else {
-      const clientJSON = await response.json();
-      return clientJSON;
-    }
-  }
   async checkIfFirstWeek(mealSubscriptionId) {
     const requestUrl =
       this.baseUrl + `/meal_subscription/${mealSubscriptionId}/first_week`;
@@ -1086,8 +954,8 @@ class APIClient {
     if (response.status === 204) {
       return null;
     } else {
-        const clientJSON = await response.json();
-        return clientJSON;
+      const clientJSON = await response.json();
+      return clientJSON;
     }
   }
   async updateClient(clientData) {

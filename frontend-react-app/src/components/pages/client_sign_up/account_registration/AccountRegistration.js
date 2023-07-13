@@ -33,16 +33,10 @@ const AccountRegistration = (props) => {
   const handleInput = (event) => {
     const id = event.target.id;
     const value = event.target.value;
-    if (id === 'confirm-password') {
-      setFormValue({ confirmPassword: value });
-    } else {
-      setFormValue({ [id]: value });
-    }
+    setFormValue({ [id]: value });
   };
   const validate = (form) => {
-    if (formValue.password !== formValue.confirmPassword) {
-      return false;
-    } else if (!validateZipcode(formValue.zipcode)) {
+    if (!validateZipcode(formValue.zipcode)) {
       setZipcodeError(true);
       return false;
     }
@@ -75,7 +69,6 @@ const AccountRegistration = (props) => {
       props.updateCOGS(cogsDTOs);
       const mealSubscription = new MealSubscription(mealSubscriptionObject);
       props.updateMealSubscription(mealSubscription);
-      props.updateClientPassword(formValue.password);
 
       setLoading(false);
     }

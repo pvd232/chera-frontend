@@ -4,7 +4,6 @@ export default class Dietitian {
   constructor(dietitianObject) {
     if (dietitianObject) {
       this.id = dietitianObject.id;
-      this.password = dietitianObject.password;
       this.firstName = dietitianObject.firstName;
       this.lastName = dietitianObject.lastName;
       this.dieteticRegistrationNumber =
@@ -19,7 +18,6 @@ export default class Dietitian {
       this.active = dietitianObject.active;
     } else {
       this.id = '';
-      this.password = '';
       this.firstName = '';
       this.lastName = '';
       this.dieteticRegistrationNumber = '';

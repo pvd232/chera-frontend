@@ -12,7 +12,7 @@ import CustomTextField from '../../../shared_components/CustomTextField';
 import LocalStorageManager from '../../../../helpers/LocalStorageManager';
 import { useNavigate } from 'react-router-dom';
 const UpdateAddress = (props) => {
-//   const customTheme = useTheme();
+  //   const customTheme = useTheme();
   const [addressValueError, setAddressValueError] = useState(false);
   const [suiteError, setSuiteError] = useState('');
   const navigate = useNavigate();
@@ -21,8 +21,7 @@ const UpdateAddress = (props) => {
     {
       // if the client secret exists then this page is being rerendered and all of these values have been inputted
       id: LocalStorageManager.shared.client.id,
-      password: LocalStorageManager.shared.client.password,
-      dietitian_id:LocalStorageManager.shared.client.dietitianId,
+      dietitian_id: LocalStorageManager.shared.client.dietitianId,
       meal_plan_id: LocalStorageManager.shared.client.mealPlanId,
       stripe_id: LocalStorageManager.shared.client.stripeId,
       first_name: LocalStorageManager.shared.client.firstName,
@@ -40,7 +39,7 @@ const UpdateAddress = (props) => {
       active: true,
     }
   );
-  
+
   const [loading, setLoading] = useState(false);
   const handleInput = async (event) => {
     const id = event.target.id;
@@ -116,7 +115,7 @@ const UpdateAddress = (props) => {
     if (validated) {
       APIClient.updateClientAddress(formValue);
       setLoading(false);
-      navigate('/home')
+      navigate('/home');
     } else {
       setLoading(false);
       return false;
@@ -141,96 +140,96 @@ const UpdateAddress = (props) => {
               Delivery Information
             </Typography>
           </Grid>
+          <Grid
+            container
+            item
+            direction={'column'}
+            rowGap={'3vh'}
+            alignItems={'center'}
+          >
+            <Grid container item rowGap={'1vh'}>
+              <Grid item xs={12}>
+                <FormHelperText hidden={!addressValueError} error={true}>
+                  {'Please enter a valid address.'}
+                </FormHelperText>
+              </Grid>
+              <Grid item xs={12}>
+                <SearchLocationInput
+                  onUpdate={(address) => handleAddress(address)}
+                />
+              </Grid>
+            </Grid>
+            <Grid container item justifyContent={'space-between'}>
+              <Grid item xs={5.8}>
+                <CustomTextField
+                  disabled={true}
+                  fullWidth
+                  label={'City'}
+                  id="city"
+                  value={formValue.city}
+                />
+              </Grid>
+              <Grid item xs={5.8}>
+                <CustomTextField
+                  disabled={true}
+                  fullWidth
+                  label={'State'}
+                  id="state"
+                  value={formValue.state}
+                />
+              </Grid>
+            </Grid>
             <Grid
               container
               item
-              direction={'column'}
-              rowGap={'3vh'}
-              alignItems={'center'}
+              justifyContent={'space-between'}
+              alignItems={'flex-end'}
             >
-              <Grid container item rowGap={'1vh'}>
+              <Grid container item xs={5.8} rowGap={'1vh'}>
                 <Grid item xs={12}>
-                  <FormHelperText hidden={!addressValueError} error={true}>
-                    {'Please enter a valid address.'}
+                  <FormHelperText hidden={suiteError === ''} error={true}>
+                    {suiteError}
                   </FormHelperText>
                 </Grid>
                 <Grid item xs={12}>
-                  <SearchLocationInput
-                    onUpdate={(address) => handleAddress(address)}
+                  <CustomTextField
+                    disabled={suiteError === ''}
+                    fullWidth
+                    label={suiteError !== '' ? 'Suite* (Ex: #1A)' : 'Suite'}
+                    id="suite"
+                    onChange={handleInput}
+                    value={formValue.suite}
                   />
                 </Grid>
               </Grid>
-              <Grid container item justifyContent={'space-between'}>
-                <Grid item xs={5.8}>
-                  <CustomTextField
-                    disabled={true}
-                    fullWidth
-                    label={'City'}
-                    id="city"
-                    value={formValue.city}
-                  />
-                </Grid>
-                <Grid item xs={5.8}>
-                  <CustomTextField
-                    disabled={true}
-                    fullWidth
-                    label={'State'}
-                    id="state"
-                    value={formValue.state}
-                  />
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                item
-                justifyContent={'space-between'}
-                alignItems={'flex-end'}
-              >
-                <Grid container item xs={5.8} rowGap={'1vh'}>
-                  <Grid item xs={12}>
-                    <FormHelperText hidden={suiteError === ''} error={true}>
-                      {suiteError}
-                    </FormHelperText>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <CustomTextField
-                      disabled={suiteError === ''}
-                      fullWidth
-                      label={suiteError !== '' ? 'Suite* (Ex: #1A)' : 'Suite'}
-                      id="suite"
-                      onChange={handleInput}
-                      value={formValue.suite}
-                    />
-                  </Grid>
-                </Grid>
-                <Grid item xs={5.8}>
-                  <CustomTextField
-                    disabled={true}
-                    autoComplete="new-password"
-                    type="text"
-                    fullWidth
-                    label={'Zipcode'}
-                    id="zipcode"
-                    value={formValue.zipcode}
-                  />
-                </Grid>
-              </Grid>
-              <Grid container item justifyContent={'center'}>
-                <Grid item>
-                  <BlackButton
-                    sx={{
-                      padding: '1vh 2vw 1vh 2vw',
-                    }}
-                    id="address"
-                    variant="contained"
-                    disabled={loading}
-                    type="submit"
-                  >
-                    {loading ? <BlueCircularProgress /> : 'Update Address'}
-                  </BlackButton>
-                </Grid>
+              <Grid item xs={5.8}>
+                <CustomTextField
+                  disabled={true}
+                  autoComplete="new-password"
+                  type="text"
+                  fullWidth
+                  label={'Zipcode'}
+                  id="zipcode"
+                  value={formValue.zipcode}
+                />
               </Grid>
             </Grid>
+            <Grid container item justifyContent={'center'}>
+              <Grid item>
+                <BlackButton
+                  sx={{
+                    padding: '1vh 2vw 1vh 2vw',
+                  }}
+                  id="address"
+                  variant="contained"
+                  disabled={loading}
+                  type="submit"
+                >
+                  {loading ? <BlueCircularProgress /> : 'Update Address'}
+                </BlackButton>
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
       </Card>
     </form>

@@ -24,7 +24,6 @@ const DeliveryForm = (props) => {
       // if the client secret exists then this page is being rerendered and all of these values have been inputted
 
       id: props.stagedClientId,
-      password: props.clientPassword,
       dietitianId: props.dietitianId,
       mealPlanId: props.mealPlanId,
       stripeId: '',

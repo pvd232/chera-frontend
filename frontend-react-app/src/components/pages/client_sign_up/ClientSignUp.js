@@ -25,7 +25,6 @@ import AccountRegistration from './account_registration/AccountRegistration';
 const SignUpPage = (props) => {
   const [clientSecret, setClientSecret] = useState(false);
   const [stripeSubscriptionId, setStripeSubscriptionId] = useState(false);
-  const [clientPassword, setClientPassword] = useState(false);
   const [client, setClient] = useState(false);
   const [mealSubscription, setMealSubscription] = useState(false);
   const [scheduleMeals, setScheduleMeals] = useState([]);
@@ -50,8 +49,6 @@ const SignUpPage = (props) => {
   const handleSubmit = async () => {
     const rehydratedClientDTO = ClientDTO.initializeFromForm(client);
 
-    // AUTH
-    // This is where we create the client in the backend. The username and password are properties of the client, and will be stored as a row in the client table. The password will be hashed.
     const returnedClientData = await APIClient.createClient(
       rehydratedClientDTO
     );
@@ -192,7 +189,6 @@ const SignUpPage = (props) => {
         setMealSubscription(newMealSubscription);
         props.updateTaskIndex(1);
       }}
-      updateClientPassword={(newPassword) => setClientPassword(newPassword)}
       updateShippingRate={(newShippingRate) => setShippingRate(newShippingRate)}
       updateCOGS={(newCogs) => setCogs(newCogs)}
       updateZipcode={(newZipcode) => setZipcode(newZipcode)}
@@ -251,7 +247,6 @@ const SignUpPage = (props) => {
   ContainerObject['Checkout'] = (
     <Checkout
       stagedClient={props.stagedClient}
-      clientPassword={clientPassword}
       scheduleMeals={scheduleMeals}
       scheduleSnacks={scheduleSnacks}
       stripePromse={props.stripePromise}

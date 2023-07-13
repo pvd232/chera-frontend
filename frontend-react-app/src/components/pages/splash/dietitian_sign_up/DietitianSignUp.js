@@ -37,7 +37,6 @@ const DietitianSignUp = () => {
     (state, newState) => ({ ...state, ...newState }),
     {
       id: '',
-      password: '',
       firstName: '',
       lastName: '',
       dieteticRegistrationNumber: '',
