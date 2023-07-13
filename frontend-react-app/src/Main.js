@@ -16,8 +16,6 @@ import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
 import DietitianHomeContainer from './components/pages/dietitian/DietitianHomeContainer';
 import DietitianMenuContainer from './components/pages/dietitian/dietitian_menu/DietitianMenuContainer';
 import DietititanHome from './components/pages/dietitian/DietitianHome';
-import RequestResetPassword from './components/pages/splash/login/RequestResetPassword';
-import ResetPassword from './components/pages/splash/login/ResetPassword';
 import Navbar from './components/shared_components/navbar/Navbar';
 import SplashLinks from './components/shared_components/navbar/links/SplashLinks';
 import ClientLinks from './components/shared_components/navbar/links/ClientLinks';
@@ -28,7 +26,7 @@ import SnackBuilder from './components/pages/admin/snack_builder/SnackBuilder';
 import FAQs from './components/pages/splash/faqs/FAQs';
 import DietitianSignUp from './components/pages/splash/dietitian_sign_up/DietitianSignUp';
 import DietitianLinks from './components/shared_components/navbar/links/DietitianLinks';
-import { Auth0ProviderWithNavigate } from './auth0/auth0-provider-with-navigate';
+import { Auth0Navigator } from './auth0/Auth0Navigator';
 import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
 import Payment from './components/pages/client/ClientPayment';
 import PlanDetails from './components/pages/client/PlanDetails';
@@ -47,7 +45,7 @@ const Main = (props) => {
   return (
     // The Routes decides which element to show based on the current URL
     <BrowserRouter>
-      <Auth0ProviderWithNavigate>
+      <Auth0Navigator>
         <Routes>
           <Route
             path="/"
@@ -233,52 +231,7 @@ const Main = (props) => {
               />
             }
           />
-          <Route
-            exact
-            path="/request-reset-client-password"
-            element={
-              <Navbar
-                childComponent={<RequestResetPassword domain={'client'} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/request-reset-dietitian-password"
-            element={
-              <Navbar
-                childComponent={
-                  <RequestResetPassword
-                    domain={'dietitian'}
-                  ></RequestResetPassword>
-                }
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            exact
-            path="/reset-client-password"
-            element={
-              <Navbar
-                childComponent={<ResetPassword domain={'client'} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/reset-dietitian-password"
-            element={
-              <Navbar
-                childComponent={<ResetPassword domain={'dietitian'} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
+
           <Route
             path="/menu"
             element={
@@ -305,7 +258,7 @@ const Main = (props) => {
             }
           />
         </Routes>
-      </Auth0ProviderWithNavigate>
+      </Auth0Navigator>
     </BrowserRouter>
   );
 };

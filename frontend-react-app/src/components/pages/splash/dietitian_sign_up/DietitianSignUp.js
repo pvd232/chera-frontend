@@ -179,7 +179,7 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
-    if (formValue.suite !== '') {
+    if (formValue.suite !== '' && suiteError !== '') {
       const addressParts = formValue.address.split(',');
       const newStreet = addressParts[0] + ' ' + formValue.suite;
       addressParts[0] = newStreet;
