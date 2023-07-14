@@ -21,7 +21,6 @@ const DietitianProfileDropDown = () => {
   const [open, setOpen] = useOpen(anchorRef);
 
   const handleLogout = () => {
-    LocalStorageManager.shared.logoutUser();
     logout({
       logoutParams: {
         returnTo: window.location.origin,
