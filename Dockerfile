@@ -1,14 +1,12 @@
 # Build environment
 # Static React app
 FROM node:19.9.0-bullseye as react-build
-# # Set working directory
-# WORKDIR /app
 
-# Copy frontend-react-app
+# Copy frontend-react-app into the local directory in the container
 ADD /frontend-react-app .
-# WORKDIR /frontend-react-app
 
 RUN yarn install --production
+
 # Build the app
 RUN yarn run build
 
