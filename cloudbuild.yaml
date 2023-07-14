@@ -11,10 +11,10 @@ steps:
     args:
       - 'run'
       - 'deploy'
-      - 'SERVICE-NAME'
+      - '$_SERVICE_NAME'
       - '--image'
       - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
       - '--region'
-      - 'REGION'
+      - '_REGION'
 images:
   - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
