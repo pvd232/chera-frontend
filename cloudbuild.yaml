@@ -24,5 +24,4 @@ steps:
       - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
       - '--region'
       - '_REGION'
-images:
-  - 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA'
+images: ['gcr.io/$PROJECT_ID/$_SERVICE_NAME:latest']
