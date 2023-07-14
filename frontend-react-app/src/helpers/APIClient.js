@@ -1,4 +1,3 @@
-import { Buffer } from 'buffer';
 import getBaseURL from './getBaseURL';
 class APIClient {
   constructor() {
