@@ -22,7 +22,7 @@ export const Auth0Navigator = ({ children }) => {
     } else if (env === 'staging') {
       return 'RRSlRkh1xGcfv69g1xACq1RRgA9jevda';
     } else {
-      return '';
+      return 'Uzd6Gt4tk8ihZhmwSRtSiT7MpaMeIbsF';
     }
   })();
 
