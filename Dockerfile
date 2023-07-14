@@ -5,8 +5,8 @@ FROM node:19.9.0-bullseye as react-build
 # WORKDIR /app
 
 # Copy frontend-react-app
-ADD /frontend-react-app ./frontend-react-app
-WORKDIR /frontend-react-app
+ADD /frontend-react-app .
+# WORKDIR /frontend-react-app
 
 RUN yarn install --production
 # Build the app
@@ -16,7 +16,7 @@ RUN yarn run build
 FROM ghcr.io/zvonimirsun/nginx:stable-alpine-brotli
 COPY nginx.conf /etc/nginx/conf.d/configfile.template
 
-COPY --from=react-build /frontend-react-app/build /usr/share/nginx/html
+COPY --from=react-build /build /usr/share/nginx/html
 
 ENV PORT 8080
 ENV HOST 0.0.0.0
