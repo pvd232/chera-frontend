@@ -165,9 +165,22 @@ class APIClient {
     const mealPlanMealsData = await response.json();
     return mealPlanMealsData;
   }
-  async getSpecificExtendedMealPlanMeals(mealPlanId) {
-    const requestUrl =
-      this.baseUrl + `/extended_meal_plan_meal?meal_plan_id=${mealPlanId}`;
+  async getSpecificExtendedMealPlanMeals(
+    mealPlanId = false,
+    mealPlanNumber = false
+  ) {
+    const requestUrl = (() => {
+      if (mealPlanId) {
+        return (
+          this.baseUrl + `/extended_meal_plan_meal?meal_plan_id=${mealPlanId}`
+        );
+      } else {
+        return (
+          this.baseUrl +
+          `/extended_meal_plan_meal?meal_plan_number=${mealPlanNumber}`
+        );
+      }
+    })();
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -234,10 +247,22 @@ class APIClient {
     const mealPlanMealsData = await response.json();
     return mealPlanMealsData;
   }
-  async getSpecificExtendedMealPlanSnacks(mealPlanId) {
-    const requestUrl =
-      this.baseUrl + `/extended_meal_plan_snack?meal_plan_id=${mealPlanId}`;
-
+  async getSpecificExtendedMealPlanSnacks(
+    mealPlanId = false,
+    mealPlanNumber = false
+  ) {
+    const requestUrl = (() => {
+      if (mealPlanId) {
+        return (
+          this.baseUrl + `/extended_meal_plan_snack?meal_plan_id=${mealPlanId}`
+        );
+      } else {
+        return (
+          this.baseUrl +
+          `/extended_meal_plan_snack?meal_plan_number=${mealPlanNumber}`
+        );
+      }
+    })();
     const request = new Request(requestUrl);
     const requestParams = {
       method: 'GET',

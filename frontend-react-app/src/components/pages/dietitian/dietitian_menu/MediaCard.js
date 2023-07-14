@@ -1,7 +1,6 @@
 import React from 'react';
 import CardActions from '@mui/material/CardActions';
 import Grid from '@mui/material/Grid';
-import logo from '../../../../static/images/chera_logo_300x300.png';
 import NutritionDetails from './nutrition_details/NutritionDetails';
 import { FoodCard } from '../../../shared_components/FoodCard';
 import mediaCard from './scss/MediaCard.module.scss';
@@ -10,12 +9,11 @@ const MediaCard = React.memo(
   (props) => {
     return (
       <FoodCard
-        mealName={props.mealPlanMeal.associatedMeal.name}
-        mealTime={props.mealPlanMeal.associatedMeal.mealTime}
-        mealDescription={props.mealPlanMeal.associatedMeal.description}
-        mealImageUrl={props.mealPlanMeal.associatedMeal.imageUrl}
-        logo={logo}
-        isSnackCard={false}
+        mealName={props.name}
+        mealTime={props.mealTime}
+        mealDescription={props.description}
+        mealImageUrl={props.imageUrl}
+        isSnackCard={props.isSnackCard ?? false}
         childComponent={
           <Grid item container className={mediaCard.actionsContainer}>
             <Grid container item className={mediaCard.childContainer}>
@@ -23,6 +21,7 @@ const MediaCard = React.memo(
                 <Grid container className={mediaCard.iconButtonContainer}>
                   <NutritionDetails
                     mealPlanMeal={props.mealPlanMeal}
+                    name={props.name}
                   ></NutritionDetails>
                   <IngredientList
                     ingredientItems={props.mealPlanMeal.recipe}

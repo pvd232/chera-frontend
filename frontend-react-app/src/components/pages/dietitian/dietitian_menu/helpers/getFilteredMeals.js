@@ -32,21 +32,25 @@ export default function getFilteredMealPlanMeals({
     filterMealPlanId === 'all'
       ? allMealPlanMeals
       : mealPlanMealsByMealPlan.get(filterMealPlanId);
-  const mealPlanFilteredMealsMap = new Map();
-  mealPlanFilteredArray.forEach((item) => {
-    if (!mealPlanFilteredMealsMap.has(item.id)) {
-      mealPlanFilteredMealsMap.set(item.id, item);
-    }
-  });
-  const filteredMealPlanMealsArray = [];
-  allMealPlanMeals.forEach((item) => {
-    if (
-      dietFilteredMealsMap.has(item.id) &&
-      timeFilteredMealsMap.has(item.id) &&
-      mealPlanFilteredMealsMap.has(item.id)
-    ) {
-      filteredMealPlanMealsArray.push(item);
-    }
-  });
-  return filteredMealPlanMealsArray;
+  if (mealPlanFilteredArray) {
+    const mealPlanFilteredMealsMap = new Map();
+    mealPlanFilteredArray.forEach((item) => {
+      if (!mealPlanFilteredMealsMap.has(item.id)) {
+        mealPlanFilteredMealsMap.set(item.id, item);
+      }
+    });
+    const filteredMealPlanMealsArray = [];
+    allMealPlanMeals.forEach((item) => {
+      if (
+        dietFilteredMealsMap.has(item.id) &&
+        timeFilteredMealsMap.has(item.id) &&
+        mealPlanFilteredMealsMap.has(item.id)
+      ) {
+        filteredMealPlanMealsArray.push(item);
+      }
+    });
+    return filteredMealPlanMealsArray;
+  } else {
+    return false;
+  }
 }

@@ -10,7 +10,6 @@ import MealPlanMealBuilderContainer from './components/pages/admin/meal_plan_mea
 import MealPlanSnackBuilder from './components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilder';
 import MealPlanSnackBuilderContainer from './components/pages/admin/meal_plan_snack_builder/MealPlanSnackBuilderContainer';
 import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
-import Login from './components/pages/splash/login/Login';
 import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
 import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
 import DietitianHomeContainer from './components/pages/dietitian/DietitianHomeContainer';
@@ -91,6 +90,18 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={<FAQs />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/sample-menu"
+            element={
+              <Navbar
+                childComponent={
+                  <DietitianMenuContainer childComponent={<DietitianMenu />} />
+                }
                 links={<SplashLinks />}
                 homeUrl="/"
               />
@@ -211,27 +222,6 @@ const Main = (props) => {
               />
             }
           />
-          <Route
-            path="/dietitian-log-in"
-            element={
-              <Navbar
-                childComponent={<Login domain={'dietitian'} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-          <Route
-            path="/client-log-in"
-            element={
-              <Navbar
-                childComponent={<Login domain={'client'} />}
-                links={<SplashLinks />}
-                homeUrl="/"
-              />
-            }
-          />
-
           <Route
             path="/menu"
             element={

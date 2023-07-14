@@ -38,7 +38,7 @@ const NutritionDetails = (props) => {
         variant="outlined"
         sx={{
           fontSize: 'small',
-          width: 120
+          width: 120,
         }}
         onClick={handleClickOpen}
       >
@@ -101,7 +101,7 @@ const NutritionDetails = (props) => {
                       fontWeight={'bold'}
                       paddingBottom={'3vh'}
                     >
-                      {props.mealPlanMeal.associatedMeal.name}
+                      {props.name}
                     </Typography>
                   </Grid>
                   <Grid
