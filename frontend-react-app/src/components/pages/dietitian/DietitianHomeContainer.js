@@ -29,6 +29,7 @@ const DietitianHomeContainer = (props) => {
 
   const searchParams = useSearchParams()[0];
   const [stagedClientId, setStagedClientId] = useState('');
+  const [isSampleTrialPeriod, setIsSampleTrialPeriod] = useState('');
 
   useEffect(() => {
     let mounted = true;
@@ -141,6 +142,9 @@ const DietitianHomeContainer = (props) => {
       );
       LocalStorageManager.shared.upcomingCutoffDates = upcomingCutoffDatesArray;
     });
+    APIClient.getIsSampleTrialPeriod().then((isSampleTrialPeriod) => {
+      setIsSampleTrialPeriod(isSampleTrialPeriod);
+    });
     const stagedClientId = searchParams.get('stagedClientId');
     if (stagedClientId) {
       setStagedClientId(stagedClientId);
@@ -148,7 +152,12 @@ const DietitianHomeContainer = (props) => {
     return () => (mounted = false);
   }, [props, searchParams]);
 
-  if (scheduleMeals && mealSubscriptions && mealPlans) {
+  if (
+    scheduleMeals &&
+    mealSubscriptions &&
+    mealPlans &&
+    isSampleTrialPeriod !== ''
+  ) {
     // Remove duplicative clients from stagedClients if they have already created their account
 
     const dataProps = {
@@ -162,6 +171,7 @@ const DietitianHomeContainer = (props) => {
       eatingDisorders: eatingDisorders,
       extendedMeals: extendedMeals,
       snacks: snacks,
+      isSampleTrialPeriod: isSampleTrialPeriod,
     };
     // Pass the dataProps to the child component
     return cloneElement(props.childComponent, { ...dataProps });

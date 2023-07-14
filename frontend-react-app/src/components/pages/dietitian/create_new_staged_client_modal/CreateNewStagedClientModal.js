@@ -3,6 +3,9 @@ import { useState, useReducer } from 'react';
 import Button from '@mui/material/Button';
 import Icon from '@mui/material/Icon';
 import Dialog from '@mui/material/Dialog';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import InfoIcon from '@mui/icons-material/Info';
 import APIClient from '../../../../helpers/APIClient';
 import Transition from '../../../shared_components/Transition';
 import StagedClient from '../../../../data_models/model/StagedClient';
@@ -288,14 +291,58 @@ const CreateNewStagedClientModal = (props) => {
   );
   return (
     <div className={createNewStagedClientModal.rootDiv}>
-      <Button
-        id="add-staged-client-button"
-        variant="contained"
-        onClick={handleClickOpen}
-        className={createNewStagedClientModal.button}
-      >
-        + Add New Client
-      </Button>
+      {props.isSampleTrialPeriod ? (
+        <Grid container>
+          <Grid
+            item
+            container
+            justifyContent={'flex-end'}
+            alignItems={'flex-end'}
+          >
+            <Grid item>
+              <Tooltip
+                title={
+                  'We are currently in our sample trial period. We expect to have the platform fully functional by Monday, July 24th!'
+                }
+              >
+                <IconButton>
+                  <InfoIcon className={createNewStagedClientModal.toolTip} />
+                </IconButton>
+              </Tooltip>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Button
+              id="add-staged-client-button"
+              variant="contained"
+              onClick={handleClickOpen}
+              className={
+                !props.isSampleTrialPeriod
+                  ? createNewStagedClientModal.button
+                  : createNewStagedClientModal.buttonDisabled
+              }
+              disabled={props.isSampleTrialPeriod}
+            >
+              + Add New Client
+            </Button>
+          </Grid>
+        </Grid>
+      ) : (
+        <Button
+          id="add-staged-client-button"
+          variant="contained"
+          onClick={handleClickOpen}
+          className={
+            !props.isSampleTrialPeriod
+              ? createNewStagedClientModal.button
+              : createNewStagedClientModal.buttonDisabled
+          }
+          disabled={props.isSampleTrialPeriod}
+        >
+          + Add New Client
+        </Button>
+      )}
+
       <Dialog
         open={open}
         TransitionComponent={Transition}

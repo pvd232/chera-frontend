@@ -64,7 +64,19 @@ class APIClient {
     });
     return response;
   }
+  async getIsSampleTrialPeriod() {
+    const requestUrl = this.baseUrl + `/dietitian/sample_trial_period`;
 
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const responseData = await response.json();
+    return responseData;
+  }
   async getCurrentWeekDeliveryandCutoffDates() {
     const requestUrl = this.baseUrl + `/delivery_date`;
 

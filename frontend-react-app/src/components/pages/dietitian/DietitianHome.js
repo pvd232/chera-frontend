@@ -89,6 +89,7 @@ const DietititanHome = (props) => {
               handleFinishCreatingStagedClient={
                 handleFinishCreatingStagedClient
               }
+              isSampleTrialPeriod={props.isSampleTrialPeriod}
             ></CreateNewStagedClientModal>
           </Grid>
         </Grid>
