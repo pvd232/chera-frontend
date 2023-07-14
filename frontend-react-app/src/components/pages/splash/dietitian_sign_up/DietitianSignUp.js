@@ -26,6 +26,7 @@ import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
 import CustomTextField from '../../../shared_components/CustomTextField';
 import { useSample } from './hooks/useSample';
+import testIfNumber from '../../client_sign_up/account_registration/helpers/testIfNumber';
 const DietitianSignUp = () => {
   const { loginWithRedirect } = useAuth0();
   const [sample, setSample] = useSample();
@@ -50,6 +51,9 @@ const DietitianSignUp = () => {
       zipcode: '',
       address: '',
       clinicUrl: '',
+      numberOfEDClients: 0,
+      percentIntensiveOutpatient: 0,
+      percentRegularOutpatient: 0,
       datetime: Date.now(),
       gotSample: false,
       clients: [],
@@ -198,6 +202,25 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
+    const numberOfEDClientsChars = formValue.numberOfEDClients.split('');
+    const intensiveOutpatientChars =
+      formValue.percentIntensiveOutpatient.split('');
+    const regularOutpatientChars = formValue.percentRegularOutpatient.split('');
+    for (let i = 0; i < intensiveOutpatientChars.length; i++) {
+      if (!testIfNumber(intensiveOutpatientChars[i])) {
+        return false;
+      }
+    }
+    for (let i = 0; i < regularOutpatientChars.length; i++) {
+      if (!testIfNumber(regularOutpatientChars[i])) {
+        return false;
+      }
+    }
+    for (let i = 0; i < numberOfEDClientsChars.length; i++) {
+      if (!testIfNumber(numberOfEDClientsChars[i])) {
+        return false;
+      }
+    }
     if (formValue.suite !== '' && suiteError !== '') {
       const addressParts = formValue.address.split(',');
       const newStreet = addressParts[0] + ' ' + formValue.suite;
@@ -299,6 +322,43 @@ const DietitianSignUp = () => {
                         type="url"
                         onChange={handleInput}
                         value={formValue.clinicUrl}
+                        autoComplete={'off'}
+                      />
+                    </FormControl>
+                    <FormControl variant="filled">
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="Number of ED clients"
+                        id="numberOfEDClients"
+                        type="text"
+                        onChange={handleInput}
+                        value={formValue.numberOfEDClients}
+                        autoComplete={'off'}
+                      />
+                    </FormControl>
+
+                    <FormControl variant="filled">
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="Percent of ED clients intensive outpatient (Ex: 40)"
+                        id="percentIntensiveOutpatient"
+                        type="text"
+                        onChange={handleInput}
+                        value={formValue.percentIntensiveOutpatient}
+                        autoComplete={'off'}
+                      />
+                    </FormControl>
+                    <FormControl variant="filled">
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="Percent of ED clients regular outpatient (ex: 60)"
+                        id="percentRegularOutpatient"
+                        type="text"
+                        onChange={handleInput}
+                        value={formValue.percentRegularOutpatient}
                         autoComplete={'off'}
                       />
                     </FormControl>
