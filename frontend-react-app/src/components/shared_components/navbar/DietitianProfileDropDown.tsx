@@ -11,18 +11,17 @@ import { useOpen } from './hooks/useOpen.ts';
 //import { useNavigate } from 'react-router-dom';
 import aboutDropDown from './scss/AboutDropDown.module.scss';
 import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 
 const DietitianProfileDropDown = () => {
   const { logout } = useAuth0();
-  const userFirstName = LocalStorageManager.shared.dietitian.firstName.toUpperCase();
-  //const navigate = useNavigate();
+  const userFirstName =
+    LocalStorageManager.shared.dietitian.firstName.toUpperCase();
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
 
   const handleLogout = () => {
-    //navigate('/');
-    //LocalStorageManager.shared.logoutUser();
+    LocalStorageManager.shared.logoutUser();
     logout({
       logoutParams: {
         returnTo: window.location.origin,

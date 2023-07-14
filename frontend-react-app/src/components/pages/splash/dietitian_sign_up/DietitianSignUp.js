@@ -20,12 +20,14 @@ import Dietitian from '../../../../data_models/model/Dietitian';
 import BlackButton from '../../../shared_components/BlackButton.ts';
 import { getAddressObject } from '../../client_sign_up/helpers/getAddressObject';
 import SearchLocationInput from '../../client_sign_up/SearchLocationInput';
+import CircularProgressPage from '../../../shared_components/CircularProgressPage';
 import styles from './scss/DietitianSignUp.module.scss';
 import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
 import CustomTextField from '../../../shared_components/CustomTextField';
 import { useSample } from './hooks/useSample';
 const DietitianSignUp = () => {
+  const { loginWithRedirect } = useAuth0();
   const [sample, setSample] = useSample();
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
@@ -33,6 +35,7 @@ const DietitianSignUp = () => {
   const [addressValueError, setAddressValueError] = useState(false);
   const [suiteError, setSuiteError] = useState(false);
   const [sampleSuiteError, setSampleSuiteError] = useState(false);
+
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -67,6 +70,23 @@ const DietitianSignUp = () => {
   );
 
   const { user } = useAuth0();
+  if (!user) {
+    const returnUrl = (() => {
+      if (window.location.href.includes('sample=true')) {
+        return '/dietitian-sign-up?sample=true';
+      } else {
+        return '/dietitian-sign-up';
+      }
+    })();
+    loginWithRedirect({
+      authorizationParams: {
+        screen_hint: 'signup',
+      },
+      appState: {
+        returnTo: returnUrl,
+      },
+    });
+  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -193,113 +213,38 @@ const DietitianSignUp = () => {
   };
 
   return (
-    <Grid container className={styles.dSignUpPageContainer}>
-      <Grid item lg={4} md={6} xs={10}>
-        <CardContent>
-          <Typography className={styles.header}>Dietitian sign up</Typography>
-          <form onSubmit={handleSubmit}>
-            <FormGroup>
-              <Stack direction={'column'} rowGap={3}>
-                <FormControl variant="filled">
-                  <ErrorMessage error={error} />
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label="First name"
-                    id="firstName"
-                    onChange={handleInput}
-                    value={formValue.firstName}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label="Last name"
-                    id="lastName"
-                    onChange={handleInput}
-                    value={formValue.lastName}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
-                  <FormHelperText
-                    hidden={!addressValueError}
-                    error={true}
-                    className={styles.errorText}
-                  >
-                    {
-                      'You chose an invalid address. Please choose another address from the dropdown.'
-                    }
-                  </FormHelperText>
-                  <SearchLocationInput
-                    dietitianInput={true}
-                    onUpdate={(address) => handleAddress(address)}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
-                  <FormHelperText
-                    hidden={suiteError === ''}
-                    error={true}
-                    className={styles.errorText}
-                  >
-                    {suiteError}
-                  </FormHelperText>
-                  <CustomTextField
-                    disabled={suiteError === ''}
-                    required={suiteError !== ''}
-                    fullWidth
-                    label="Clinic suite"
-                    id="suite"
-                    onChange={handleInput}
-                    value={formValue.suite}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
-                  <RegistrationErrorMessage error={registrationError} />
-
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label="Dietetic registration number"
-                    id="dieteticRegistrationNumber"
-                    onChange={handleInput}
-                    value={formValue.dieteticRegistrationNumber}
-                  />
-                </FormControl>
-                <FormControl variant="filled">
-                  <CustomTextField
-                    required
-                    fullWidth
-                    label="Clinic website url"
-                    id="clinicUrl"
-                    type="url"
-                    onChange={handleInput}
-                    value={formValue.clinicUrl}
-                    autoComplete={'off'}
-                  />
-                </FormControl>
-                {sample && (
-                  <>
-                    <FormControlLabel
-                      control={
-                        <>
-                          <Tooltip
-                            title="You will receive 1 sample of both our Chicken Pesto Pasta, and our Peanut Noodles with Tofu"
-                            placement="right"
-                          >
-                            <IconButton>
-                              <InfoIcon className={styles.toolTip} />
-                            </IconButton>
-                          </Tooltip>
-                          <Checkbox
-                            checked={sample}
-                            onChange={handleCheckbox}
-                          />
-                        </>
-                      }
-                      label="Receive Free Shipment of Sample Meals"
-                      className={styles.sampleCheckbox}
-                    />
+    <>
+      {user ? (
+        <Grid container className={styles.dSignUpPageContainer}>
+          <Grid item lg={4} md={6} xs={10}>
+            <CardContent>
+              <Typography className={styles.header}>
+                Dietitian sign up
+              </Typography>
+              <form onSubmit={handleSubmit}>
+                <FormGroup>
+                  <Stack direction={'column'} rowGap={3}>
+                    <FormControl variant="filled">
+                      <ErrorMessage error={error} />
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="First name"
+                        id="firstName"
+                        onChange={handleInput}
+                        value={formValue.firstName}
+                      />
+                    </FormControl>
+                    <FormControl variant="filled">
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="Last name"
+                        id="lastName"
+                        onChange={handleInput}
+                        value={formValue.lastName}
+                      />
+                    </FormControl>
                     <FormControl variant="filled">
                       <FormHelperText
                         hidden={!addressValueError}
@@ -311,48 +256,131 @@ const DietitianSignUp = () => {
                         }
                       </FormHelperText>
                       <SearchLocationInput
-                        onUpdate={(address) => handleAddress(address, true)}
                         dietitianInput={true}
-                        sample={sample}
+                        onUpdate={(address) => handleAddress(address)}
                       />
                     </FormControl>
                     <FormControl variant="filled">
                       <FormHelperText
-                        hidden={sampleSuiteError === ''}
+                        hidden={suiteError === ''}
                         error={true}
                         className={styles.errorText}
                       >
-                        {sampleSuiteError}
+                        {suiteError}
                       </FormHelperText>
                       <CustomTextField
-                        disabled={sampleSuiteError === ''}
-                        required={sampleSuiteError !== ''}
+                        disabled={suiteError === ''}
+                        required={suiteError !== ''}
                         fullWidth
-                        label="Shipping suite"
-                        id="sampleSuite"
-                        onChange={(event) =>
-                          setSampleFormValue({ suite: event.target.value })
-                        }
-                        value={sampleFormValue.suite}
+                        label="Clinic suite"
+                        id="suite"
+                        onChange={handleInput}
+                        value={formValue.suite}
                       />
                     </FormControl>
-                  </>
-                )}
-                <BlackButton
-                  id="dietRegSubmit"
-                  disabled={loading}
-                  variant="contained"
-                  type={'submit'}
-                  className={styles.submitButton}
-                >
-                  {loading ? <CircularProgress size={24} /> : 'Submit'}
-                </BlackButton>
-              </Stack>
-            </FormGroup>
-          </form>
-        </CardContent>
-      </Grid>
-    </Grid>
+                    <FormControl variant="filled">
+                      <RegistrationErrorMessage error={registrationError} />
+
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="Dietetic registration number"
+                        id="dieteticRegistrationNumber"
+                        onChange={handleInput}
+                        value={formValue.dieteticRegistrationNumber}
+                      />
+                    </FormControl>
+                    <FormControl variant="filled">
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="Clinic website url"
+                        id="clinicUrl"
+                        type="url"
+                        onChange={handleInput}
+                        value={formValue.clinicUrl}
+                        autoComplete={'off'}
+                      />
+                    </FormControl>
+                    {sample && (
+                      <>
+                        <FormControlLabel
+                          control={
+                            <>
+                              <Tooltip
+                                title="You will receive 1 sample of both our Chicken Pesto Pasta, and our Peanut Noodles with Tofu"
+                                placement="right"
+                              >
+                                <IconButton>
+                                  <InfoIcon className={styles.toolTip} />
+                                </IconButton>
+                              </Tooltip>
+                              <Checkbox
+                                checked={sample}
+                                onChange={handleCheckbox}
+                              />
+                            </>
+                          }
+                          label="Receive Free Shipment of Sample Meals"
+                          className={styles.sampleCheckbox}
+                        />
+                        <FormControl variant="filled">
+                          <FormHelperText
+                            hidden={!addressValueError}
+                            error={true}
+                            className={styles.errorText}
+                          >
+                            {
+                              'You chose an invalid address. Please choose another address from the dropdown.'
+                            }
+                          </FormHelperText>
+                          <SearchLocationInput
+                            onUpdate={(address) => handleAddress(address, true)}
+                            dietitianInput={true}
+                            sample={sample}
+                          />
+                        </FormControl>
+                        <FormControl variant="filled">
+                          <FormHelperText
+                            hidden={sampleSuiteError === ''}
+                            error={true}
+                            className={styles.errorText}
+                          >
+                            {sampleSuiteError}
+                          </FormHelperText>
+                          <CustomTextField
+                            disabled={sampleSuiteError === ''}
+                            required={sampleSuiteError !== ''}
+                            fullWidth
+                            label="Shipping suite"
+                            id="sampleSuite"
+                            onChange={(event) =>
+                              setSampleFormValue({ suite: event.target.value })
+                            }
+                            value={sampleFormValue.suite}
+                          />
+                        </FormControl>
+                      </>
+                    )}
+                    <BlackButton
+                      id="dietRegSubmit"
+                      disabled={loading}
+                      variant="contained"
+                      type={'submit'}
+                      className={styles.submitButton}
+                    >
+                      {loading ? <CircularProgress size={24} /> : 'Submit'}
+                    </BlackButton>
+                  </Stack>
+                </FormGroup>
+              </form>
+            </CardContent>
+          </Grid>
+        </Grid>
+      ) : (
+        <CircularProgressPage />
+      )}
+    </>
   );
 };
 export default DietitianSignUp;
