@@ -75,20 +75,22 @@ const DailyNutrientChart = (props) => {
           {dataSourceIndices.map((index, i) => (
             <Grid item xs={12} key={i}>
               <DailyNutrientChartComponent
+                customTheme={props.customTheme}
                 dataSource={props.dataSource.slice(
                   i === 0 ? 0 : dataSourceIndices[i - 1],
 
                   index
                 )}
-              ></DailyNutrientChartComponent>
+              />
             </Grid>
           ))}
           <Grid item xs={12}>
             <DailyNutrientChartComponent
+              customTheme={props.customTheme}
               dataSource={props.dataSource.slice(
                 dataSourceIndices[dataSourceIndices.length - 1]
               )}
-            ></DailyNutrientChartComponent>
+            />
           </Grid>
         </>
       );
