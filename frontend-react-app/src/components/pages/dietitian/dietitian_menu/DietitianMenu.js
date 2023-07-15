@@ -34,7 +34,9 @@ const DietitianMenu = (props) => {
     getMealPlanMealsByMealPlan(props.mealPlanMeals).get(filterMealPlanId)
   );
   const [filteredMealPlanSnacks, setFilteredMealPlanSnacks] = useState(
-    getMealPlanMealsByMealPlan(props.mealPlanSnacks).get(filterMealPlanId)
+    getMealPlanMealsByMealPlan(props.mealPlanSnacks)
+      ? getMealPlanMealsByMealPlan(props.mealPlanSnacks).get(filterMealPlanId)
+      : false
   );
   const [mealsLoading, setMealsLoading] = useState(false);
   const [snacksLoading, setSnacksLoading] = useState(false);
@@ -256,22 +258,28 @@ const DietitianMenu = (props) => {
           </Grid>
         ) : (
           <Grid container item spacing={4}>
-            {sortFilteredMealPlanMeals(filteredMealPlanSnacks).map(
-              (mealPlanSnack, i) => {
-                return (
-                  <Grid item key={i} md={4}>
-                    <MediaCard
-                      mealPlanMeal={mealPlanSnack}
-                      name={mealPlanSnack.associatedSnack.name}
-                      description={mealPlanSnack.associatedSnack.description}
-                      imageUrl={mealPlanSnack.associatedSnack.imageUrl}
-                      isSnackCard={true}
-                      key={i}
-                      shouldDisplayNutritionDetails={true}
-                    ></MediaCard>
-                  </Grid>
-                );
-              }
+            {filteredMealPlanSnacks ? (
+              sortFilteredMealPlanMeals(filteredMealPlanSnacks).map(
+                (mealPlanSnack, i) => {
+                  return (
+                    <Grid item key={i} md={4}>
+                      <MediaCard
+                        mealPlanMeal={mealPlanSnack}
+                        name={mealPlanSnack.associatedSnack.name}
+                        description={mealPlanSnack.associatedSnack.description}
+                        imageUrl={mealPlanSnack.associatedSnack.imageUrl}
+                        isSnackCard={true}
+                        key={i}
+                        shouldDisplayNutritionDetails={true}
+                      ></MediaCard>
+                    </Grid>
+                  );
+                }
+              )
+            ) : (
+              <Grid container item justifyContent={'center'}>
+                <CircularProgress />
+              </Grid>
             )}
           </Grid>
         )}

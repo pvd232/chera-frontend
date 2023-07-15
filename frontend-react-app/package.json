@@ -45,7 +45,7 @@
     "web-vitals": "^3.4.0"
   },
   "scripts": {
-    "start": "HTTPS=true react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --bail",
     "eject": "react-scripts eject"

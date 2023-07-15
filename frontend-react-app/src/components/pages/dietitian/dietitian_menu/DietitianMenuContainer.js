@@ -12,17 +12,18 @@ import { mapExtendedMealPlanMealData } from './helpers/mapExtendedMealPlanMealDa
 import { mapExtendedMealPlanSnackData } from './helpers/mapExtendedMealPlanSnackData';
 
 const DietitianMenuContainer = (props) => {
-  const [mealPlanMeals, setMealPlanMeals] = useState(false);
-  const [mealPlanSnacks, setMealPlanSnacks] = useState(false);
   const [mealPlans, setMealPlans] = useState(false);
   const [extendedMeals, setExtendedMeals] = useState(false);
-  const [specificFood, setSpecificFood] = useReducer(
+  const [specificMealPlanMeals, setSpecificMealPlanMeals] = useState(false);
+  const [specificMealPlanSnacks, setSpecificMealPlanSnacks] = useState(false);
+
+  const [unspecificFood, setUnspecificFood] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
       // if the client secret exists then this page is being rerendered and all of these values have been inputted
 
-      specificMealPlanMeals: false,
-      specificMealPlanSnacks: false,
+      mealPlanMeals: false,
+      mealPlanSnacks: false,
     }
   );
   useEffect(() => {
@@ -57,15 +58,27 @@ const DietitianMenuContainer = (props) => {
         setMealPlans(mealPlans);
       }
     });
-    const specificSnacksPromise = APIClient.getSpecificExtendedMealPlanSnacks(
-      false,
-      5
+    APIClient.getSpecificExtendedMealPlanSnacks(false, 5).then(
+      (mealPlanSnacksData) => {
+        if (mounted) {
+          const extendedMealPlanSnackDTOs =
+            mapExtendedMealPlanSnackData(mealPlanSnacksData);
+          setSpecificMealPlanSnacks(extendedMealPlanSnackDTOs);
+        }
+      }
     );
-    const specificMealsPromise = APIClient.getSpecificExtendedMealPlanMeals(
-      false,
-      5
+    APIClient.getSpecificExtendedMealPlanMeals(false, 5).then(
+      (mealPlanMealsData) => {
+        if (mounted) {
+          const extendedMealPlanMealDTOs =
+            mapExtendedMealPlanMealData(mealPlanMealsData);
+          setSpecificMealPlanMeals(extendedMealPlanMealDTOs);
+        }
+      }
     );
-    Promise.all([specificSnacksPromise, specificMealsPromise]).then(
+    const mealPlanSnacksPromise = CacheManager.shared.mealPlanSnacks;
+    const mealPlanMealsPromise = CacheManager.shared.mealPlanMeals;
+    Promise.all([mealPlanSnacksPromise, mealPlanMealsPromise]).then(
       (responses) => {
         const mealPlanSnacksData = responses[0];
         const mealPlanMealsData = responses[1];
@@ -74,48 +87,46 @@ const DietitianMenuContainer = (props) => {
             mapExtendedMealPlanSnackData(mealPlanSnacksData);
           const extendedMealPlanMealDTOs =
             mapExtendedMealPlanMealData(mealPlanMealsData);
-          setSpecificFood({
-            specificMealPlanSnacks: extendedMealPlanSnackDTOs,
-            specificMealPlanMeals: extendedMealPlanMealDTOs,
+          setUnspecificFood({
+            unspecificMealPlanSnacks: extendedMealPlanSnackDTOs,
+            unspecificMealPlanMeals: extendedMealPlanMealDTOs,
           });
         }
       }
     );
-    Promise.resolve(CacheManager.shared.mealPlanSnacks).then((values) => {
-      if (mounted) {
-        const extendedMealPlanSnackDTOs = mapExtendedMealPlanSnackData(values);
-        setMealPlanSnacks(extendedMealPlanSnackDTOs);
-      }
-    });
-    Promise.resolve(CacheManager.shared.mealPlanMeals).then((values) => {
-      if (mounted) {
-        const extendedMealPlanMealDTOs = mapExtendedMealPlanMealData(values);
-        setMealPlanMeals(extendedMealPlanMealDTOs);
-      }
-    });
 
     return () => (mounted = false);
   }, []);
 
   if (
-    mealPlans &&
-    extendedMeals &&
-    specificFood.specificMealPlanSnacks &&
-    specificFood.specificMealPlanMeals &&
-    !mealPlanMeals
+    (mealPlans &&
+      extendedMeals &&
+      specificMealPlanMeals &&
+      !specificMealPlanSnacks &&
+      !unspecificFood.mealPlanMeals) ||
+    (mealPlans &&
+      extendedMeals &&
+      specificMealPlanMeals &&
+      specificMealPlanSnacks &&
+      !unspecificFood.mealPlanMeals)
   ) {
     const dataProps = {
       mealPlans: mealPlans,
-      mealPlanMeals: specificFood.specificMealPlanMeals,
-      mealPlanSnacks: specificFood.specificMealPlanSnacks,
+      mealPlanMeals: specificMealPlanMeals,
+      mealPlanSnacks: specificMealPlanSnacks,
       extendedMeals: extendedMeals,
     };
     return cloneElement(props.childComponent, { ...dataProps });
-  } else if (mealPlans && extendedMeals && mealPlanMeals && mealPlanSnacks) {
+  } else if (
+    mealPlans &&
+    extendedMeals &&
+    unspecificFood.mealPlanMeals &&
+    unspecificFood.mealPlanSnacks
+  ) {
     const dataProps = {
       mealPlans: mealPlans,
-      mealPlanMeals: mealPlanMeals,
-      mealPlanSnacks: mealPlanSnacks,
+      mealPlanMeals: unspecificFood.mealPlanMeals,
+      mealPlanSnacks: unspecificFood.mealPlanSnacks,
       extendedMeals: extendedMeals,
     };
     return cloneElement(props.childComponent, { ...dataProps });
