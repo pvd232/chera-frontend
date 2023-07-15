@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export const Auth0Navigator = ({ children }) => {
   const navigate = useNavigate();
   const env = (() => {
-    if (window.location.origin === 'http://localhost:3000') {
+    if (window.location.origin.includes('localhost:3000')) {
       return 'development';
     } else if (window.location.origin === 'https://staging.cherahealth.com') {
       return 'staging';

@@ -1,24 +1,11 @@
 export default function getBaseURL(service) {
   if (service === 'api') {
-    // Host name will be localhost not localhost:3000 in jest environment
-    if (
-      window.location.host === 'localhost:3000' ||
-      window.location.host === 'localhost'
-    ) {
+    if (window.location.origin.includes('localhost')) {
       return 'http://localhost:4000/api';
-    } else if (window.location.host === 'staging.cherahealth.com') {
-      return `https://${window.location.host}/api`;
     } else {
-      return `https://${window.location.host}/api`;
+      return `${window.location.origin}/api`;
     }
   } else {
-    if (
-      window.location.host === 'localhost:3000' ||
-      window.location.host === 'localhost'
-    ) {
-      return 'http://localhost:3000';
-    } else {
-      return `https://${window.location.host}`;
-    }
+    return `${window.location.origin}`;
   }
 }
