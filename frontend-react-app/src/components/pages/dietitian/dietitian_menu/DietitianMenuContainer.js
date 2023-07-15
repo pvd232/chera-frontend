@@ -68,9 +68,7 @@ const DietitianMenuContainer = (props) => {
     Promise.all([specificSnacksPromise, specificMealsPromise]).then(
       (responses) => {
         const mealPlanSnacksData = responses[0];
-        console.log('mealPlanSnacksData', mealPlanSnacksData);
         const mealPlanMealsData = responses[1];
-        console.log('mealPlanMealsData', mealPlanMealsData);
         if (mounted) {
           const extendedMealPlanSnackDTOs =
             mapExtendedMealPlanSnackData(mealPlanSnacksData);
