@@ -31,6 +31,7 @@ import DietitianSignUp from "./components/pages/splash/dietitian_sign_up/Dietiti
 import DietitianLinks from "./components/shared_components/navbar/links/DietitianLinks";
 import { Auth0ProviderWithNavigate } from "./auth0/auth0-provider-with-navigate";
 import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
+import PlanDetails from './components/pages/client/PlanDetails';
 const TRACKING_ID = "UA-238874096-1"; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === "production") {
