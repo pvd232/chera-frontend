@@ -3,7 +3,6 @@ import capitalize from '../../helpers/capitalize';
 export default class DietitianDTO {
   constructor(dietitianObject) {
     this.id = dietitianObject.id;
-    this.password = dietitianObject.password;
     this.firstName = dietitianObject.first_name;
     this.lastName = dietitianObject.last_name;
     this.dieteticRegistrationNumber =
@@ -21,7 +20,6 @@ export default class DietitianDTO {
   static initializeFromForm(formData) {
     return new DietitianDTO({
       id: formData.id,
-      password: formData.password,
       first_name: formData.firstName,
       last_name: formData.lastName,
       dietetic_registration_number: formData.dieteticRegistrationNumber,
@@ -39,7 +37,6 @@ export default class DietitianDTO {
   toJSON() {
     const data = {
       id: this.id,
-      password: this.password,
       first_name: this.firstName,
       last_name: this.lastName,
       dietetic_registration_number: this.dieteticRegistrationNumber,

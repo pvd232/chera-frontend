@@ -17,6 +17,9 @@ import MealDietaryRestrictionDTOFactory from "../../../data_models/factories/dto
 import ExtendedMealFactory from "../../../data_models/factories/model/ExtendedMealFactory";
 import MealDietaryRestrictionFactory from "../../../data_models/factories/model/MealDietaryRestrictionFactory";
 import useAuthHeader from '../../../helpers/useAuthHeader';
+import EatingDisorderDTO from '../../../data_models/dto/EatingDisorderDTO';
+import EatingDisorder from '../../../data_models/model/EatingDisorder';
+import { useClients } from "./hooks/useClients";
 
 const DietitianHomeContainer = (props) => {
   const [scheduleMeals, setScheduleMeals] = useState(false);
@@ -30,6 +33,7 @@ const DietitianHomeContainer = (props) => {
   const [stagedClientId, setStagedClientId] = useState("");
 
   const authHeader = useAuthHeader();
+  const clients = useClients()[0];
 
   useEffect(() => {
     let mounted = true;
@@ -78,6 +82,17 @@ const DietitianHomeContainer = (props) => {
           }
         } else {
           setMealSubscriptions([]);
+        }
+      });
+      APIClient.getEatingDisorders().then((eatingDisordersData) => {
+        if (mounted) {
+          const eatingDisorderDTOs = eatingDisordersData.map(
+            (eatingDisorderData) => new EatingDisorderDTO(eatingDisorderData)
+          );
+          const eatingDisorders = eatingDisorderDTOs.map(
+            (eatingDisorderDTO) => new EatingDisorder(eatingDisorderDTO)
+          );
+          setEatingDisorders(eatingDisorders);
         }
       });
       APIClient.getMealPlans(authHeader).then((mealPlansData) => {
@@ -141,9 +156,9 @@ const DietitianHomeContainer = (props) => {
     return () => (mounted = false);
   }, [props, searchParams, authHeader]);
 
-  if (scheduleMeals && mealSubscriptions && mealPlans) {
+  if (scheduleMeals && mealSubscriptions && mealPlans && eatingDisorders) {
     // Remove duplicative clients from stagedClients if they have already created their account
-
+    
     const dataProps = {
       dietitianId: LocalStorageManager.shared.dietitian.id,
       stripePromise: props.stripePromise,
@@ -155,6 +170,7 @@ const DietitianHomeContainer = (props) => {
       eatingDisorders: eatingDisorders,
       extendedMeals: extendedMeals,
       snacks: snacks,
+      clients: clients 
     };
     // Pass the dataProps to the child component
     return cloneElement(props.childComponent, { ...dataProps });

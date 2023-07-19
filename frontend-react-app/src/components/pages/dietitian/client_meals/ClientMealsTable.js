@@ -60,7 +60,6 @@ const ClientMealsTable = (props) => {
                       capitalize(client.lastName)}
                   </MenuItem>
                 ))}
-                <MenuItem value={"all"}>All</MenuItem>
               </Select>
             </FormControl>
           </Grid>
