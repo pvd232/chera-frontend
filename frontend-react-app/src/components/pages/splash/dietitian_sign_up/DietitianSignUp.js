@@ -202,10 +202,18 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
-    const numberOfEDClientsChars = formValue.numberOfEDClients.split('');
-    const intensiveOutpatientChars =
-      formValue.percentIntensiveOutpatient.split('');
-    const regularOutpatientChars = formValue.percentRegularOutpatient.split('');
+    const numberOfEDClientsChars = String(formValue.numberOfEDClients).split(
+      ''
+    );
+
+    const intensiveOutpatientChars = String(
+      formValue.percentIntensiveOutpatient
+    ).split('');
+
+    const regularOutpatientChars = String(
+      formValue.percentRegularOutpatient
+    ).split('');
+
     for (let i = 0; i < intensiveOutpatientChars.length; i++) {
       if (!testIfNumber(intensiveOutpatientChars[i])) {
         return false;
@@ -329,7 +337,7 @@ const DietitianSignUp = () => {
                       <CustomTextField
                         required
                         fullWidth
-                        label="Number of ED clients"
+                        label="Number of ED clients you treat"
                         id="numberOfEDClients"
                         type="text"
                         onChange={handleInput}
@@ -342,7 +350,7 @@ const DietitianSignUp = () => {
                       <CustomTextField
                         required
                         fullWidth
-                        label="Percent of ED clients intensive outpatient (Ex: 40)"
+                        label="Percent of your ED clients intensive outpatient (Ex: 40)"
                         id="percentIntensiveOutpatient"
                         type="text"
                         onChange={handleInput}
@@ -354,7 +362,7 @@ const DietitianSignUp = () => {
                       <CustomTextField
                         required
                         fullWidth
-                        label="Percent of ED clients regular outpatient (ex: 60)"
+                        label="Percent of your ED clients regular outpatient (ex: 60)"
                         id="percentRegularOutpatient"
                         type="text"
                         onChange={handleInput}

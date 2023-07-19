@@ -74,11 +74,7 @@ class LocalStorageManager {
 
   // Client properties
   get client() {
-    if (this.getItem('client')) {
-      return this.getItem('client');
-    } else {
-      return false;
-    }
+    return this.getItem('client');
   }
   set client(newClient) {
     this.setItem('client', newClient);
