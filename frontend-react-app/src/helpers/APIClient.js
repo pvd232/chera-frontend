@@ -1512,34 +1512,6 @@ class APIClient {
     return dietaryRestrictionData;
   }
 
-  // async getMealPrice() {
-  //   const requestUrl = this.baseUrl + '/meal_price';
-  //   const request = new Request(requestUrl);
-
-  //   const requestParams = {
-  //     method: 'GET',
-  //     mode: this.mode,
-  //     cache: 'default',
-  //   };
-  //   const response = await this.fetchWrapper(request, requestParams);
-  //   const mealPrice = await response.json();
-  //   return mealPrice;
-  // }
-
-  // async getSnackPrice() {
-  //   const requestUrl = this.baseUrl + '/snack_price';
-  //   const request = new Request(requestUrl);
-
-  //   const requestParams = {
-  //     method: 'GET',
-  //     mode: this.mode,
-  //     cache: 'default',
-  //   };
-  //   const response = await this.fetchWrapper(request, requestParams);
-  //   const snackPrice = await response.json();
-  //   return snackPrice;
-  // }
-
   async getShippingRate(zipcode) {
     const requestUrl =
       this.baseUrl + `/shippo/shipping_rate?zipcode=${zipcode}`;
@@ -1623,7 +1595,11 @@ class APIClient {
     return paymentIntentDataJSON;
   }
   async checkDieteticRegistrationNumber(dieteticRegistrationNumber) {
-    if (this.env === 'debug' || this.env === 'staging') {
+    if (
+      this.env === 'debug' ||
+      this.env === 'staging' ||
+      this.env === 'production'
+    ) {
       return true;
     }
     const requestUrl = this.baseUrl + '/test_dietetic';
