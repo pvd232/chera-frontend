@@ -156,6 +156,7 @@ const DietitianHomeContainer = (props) => {
     scheduleMeals &&
     mealSubscriptions &&
     mealPlans &&
+    eatingDisorders &&
     isSampleTrialPeriod !== ''
   ) {
     // Remove duplicative clients from stagedClients if they have already created their account

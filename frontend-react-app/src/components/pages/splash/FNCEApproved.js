@@ -1,4 +1,4 @@
-/* eslint-disable jsx-a11y/alt-text */
+import { forwardRef } from 'react';
 import Grid from '@mui/material/Grid';
 import Icon from '@mui/material/Icon';
 import Typography from '@mui/material/Typography';
@@ -9,11 +9,11 @@ import cheraPlusFNCE from '../../../static/images/chera_plus_fnce.png';
 import cheraLogo from '../../../static/images/chera_logo_300x100.png';
 import eatRightLogo from '../../../static/images/eat_right_logo_5.png';
 import styles from './scss/FNCEApproved.module.scss';
-const FNCEApproved = () => {
+const FNCEApproved = forwardRef((_, ref) => {
   const windowWidth = useWindowWidth();
   const xsScreen = windowWidth <= ScreenSize.xs;
   return (
-    <Grid container item className={styles.fnceApprovedPageContainer}>
+    <Grid container item className={styles.fnceApprovedPageContainer} ref={ref}>
       <Grid container item className={styles.childPageContainer} xs={10}>
         <Grid item>
           <Typography className={styles.header}>
@@ -82,6 +82,6 @@ const FNCEApproved = () => {
       </Grid>
     </Grid>
   );
-};
+});
 
 export default FNCEApproved;
