@@ -557,6 +557,26 @@ class APIClient {
     }
   }
 
+  async getDietitianDetails(dietitianId) {
+    const requestUrl = `${this.baseUrl}/dietitian/${dietitianId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+
+    // Dietitian does not exist
+    if (response.status === 404) {
+      return false;
+    } else {
+      const dietitianData = await response.json();
+      return dietitianData;
+    }
+  }
+
   async createDietitian(dietitian) {
     const requestUrl = this.baseUrl + '/dietitian';
 

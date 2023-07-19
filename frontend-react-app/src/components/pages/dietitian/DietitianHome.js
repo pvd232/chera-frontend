@@ -23,12 +23,13 @@ import { getExtendedClients } from './helpers/getExtendedClients';
 import { getClientItems } from './helpers/getClientItems';
 import { getStagedClientItems } from './helpers/getStagedClientItems';
 import dietitianHome from './scss/DietitianHome.module.scss';
+
 const DietititanHome = (props) => {
   const windowWidth = useWindowWidth();
   const isMobile = windowWidth < ScreenSize.xs;
   const [clients, setClients] = useClients();
   const [stagedClients, setStagedClients] = useStagedClients();
-
+  
   const handleFinishCreatingStagedClient = async () => {
     const extendedStagedClients = await getExtendedStagedClients(
       props.dietitianId

@@ -26,7 +26,7 @@ const LogInDropDown = () => {
     } else {
       await loginWithRedirect({
         appState: {
-          returnTo: '/d-home',
+          returnTo: '/loading',
         },
       });
     }

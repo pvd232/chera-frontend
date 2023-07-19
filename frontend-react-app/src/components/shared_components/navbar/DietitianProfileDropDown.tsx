@@ -1,22 +1,22 @@
-import React from 'react';
-import Grid from '@mui/material/Grid';
-import MenuItem from '@mui/material/MenuItem';
-import Typography from '@mui/material/Typography';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
-import MenuList from '@mui/material/MenuList';
-import { useOpen } from './hooks/useOpen.ts';
+import React from "react";
+import Grid from "@mui/material/Grid";
+import MenuItem from "@mui/material/MenuItem";
+import Typography from "@mui/material/Typography";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Grow from "@mui/material/Grow";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
+import MenuList from "@mui/material/MenuList";
+import { useOpen } from "./hooks/useOpen.ts";
 //import { useNavigate } from 'react-router-dom';
-import aboutDropDown from './scss/AboutDropDown.module.scss';
-import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
-import { useAuth0 } from '@auth0/auth0-react';
+import aboutDropDown from "./scss/AboutDropDown.module.scss";
+import LocalStorageManager from "../../../helpers/LocalStorageManager.ts";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const DietitianProfileDropDown = () => {
   const { logout } = useAuth0();
   const userFirstName =
-    LocalStorageManager.shared.dietitian.firstName.toUpperCase();
+    LocalStorageManager.shared.dietitian.first_name.toUpperCase();
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
 
@@ -45,10 +45,10 @@ const DietitianProfileDropDown = () => {
   };
 
   const handleListKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Tab') {
+    if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
-    } else if (event.key === 'Escape') {
+    } else if (event.key === "Escape") {
       setOpen(false);
     }
   };
@@ -59,8 +59,8 @@ const DietitianProfileDropDown = () => {
       item
       ref={anchorRef}
       id="composition-button"
-      aria-controls={open ? 'composition-menu' : undefined}
-      aria-expanded={open ? 'true' : undefined}
+      aria-controls={open ? "composition-menu" : undefined}
+      aria-expanded={open ? "true" : undefined}
       aria-haspopup="true"
       onClick={handleToggle}
       className={aboutDropDown.clientDropDownContainer}
