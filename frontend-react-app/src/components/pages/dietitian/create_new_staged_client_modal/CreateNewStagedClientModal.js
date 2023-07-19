@@ -337,7 +337,6 @@ const CreateNewStagedClientModal = (props) => {
               ? createNewStagedClientModal.button
               : createNewStagedClientModal.buttonDisabled
           }
-          disabled={props.isSampleTrialPeriod}
         >
           + Add New Client
         </Button>
