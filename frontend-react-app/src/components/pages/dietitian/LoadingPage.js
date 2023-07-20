@@ -23,7 +23,6 @@ const LoadingPage = () => {
               APIClient.getDietitianDetails(email).then((dietitianData) => {
                 const dietitianDTO = new DietitianDTO(dietitianData);
                 const dietitian = new Dietitian(dietitianDTO);
-                LocalStorageManager.shared.homeUrl = '/d-home';
                 LocalStorageManager.shared.dietitian = dietitian;
                 navigate('/d-home');
               });

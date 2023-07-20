@@ -30,6 +30,7 @@ import testIfNumber from '../../client_sign_up/account_registration/helpers/test
 const DietitianSignUp = () => {
   const { loginWithRedirect } = useAuth0();
   const [sample, setSample] = useSample();
+  console.log('sample', sample);
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -55,12 +56,13 @@ const DietitianSignUp = () => {
       percentIntensiveOutpatient: 0,
       percentRegularOutpatient: 0,
       datetime: Date.now(),
-      gotSample: false,
+      gotSample: '',
       clients: [],
       active: true,
       admin: false,
     }
   );
+
   const [sampleFormValue, setSampleFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -96,11 +98,10 @@ const DietitianSignUp = () => {
     event.preventDefault();
     setLoading(true);
 
-    const form = event.target;
+    formValue.gotSample = sample;
+    formValue.id = user.email;
 
-    if (user !== undefined) {
-      formValue.id = user.email;
-    }
+    const form = event.target;
     const validated = await validate(form);
     if (validated) {
       const dietitianDTO = DietitianDTO.initializeFromForm(formValue);
@@ -121,8 +122,8 @@ const DietitianSignUp = () => {
       }
       setLoading(false);
 
-      LocalStorageManager.shared.homeUrl = '/d-home';
       LocalStorageManager.shared.dietitian = createdDietitian;
+      window.location.assign('/d-home');
     } else {
       setLoading(false);
       return false;
