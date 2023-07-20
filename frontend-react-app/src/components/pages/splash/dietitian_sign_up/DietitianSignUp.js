@@ -26,11 +26,9 @@ import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
 import CustomTextField from '../../../shared_components/CustomTextField';
 import { useSample } from './hooks/useSample';
-import testIfNumber from '../../client_sign_up/account_registration/helpers/testIfNumber';
 const DietitianSignUp = () => {
   const { loginWithRedirect } = useAuth0();
   const [sample, setSample] = useSample();
-  console.log('sample', sample);
   const [error, setError] = useState(false);
   const [registrationError, setRegistrationError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -198,33 +196,7 @@ const DietitianSignUp = () => {
     } else {
       setRegistrationError(false);
     }
-    const numberOfEDClientsChars = String(formValue.numberOfEDClients).split(
-      ''
-    );
 
-    const intensiveOutpatientChars = String(
-      formValue.percentIntensiveOutpatient
-    ).split('');
-
-    const regularOutpatientChars = String(
-      formValue.percentRegularOutpatient
-    ).split('');
-
-    for (let i = 0; i < intensiveOutpatientChars.length; i++) {
-      if (!testIfNumber(intensiveOutpatientChars[i])) {
-        return false;
-      }
-    }
-    for (let i = 0; i < regularOutpatientChars.length; i++) {
-      if (!testIfNumber(regularOutpatientChars[i])) {
-        return false;
-      }
-    }
-    for (let i = 0; i < numberOfEDClientsChars.length; i++) {
-      if (!testIfNumber(numberOfEDClientsChars[i])) {
-        return false;
-      }
-    }
     if (formValue.suite !== '' && suiteError !== '') {
       const addressParts = formValue.address.split(',');
       const newStreet = addressParts[0] + ' ' + formValue.suite;
@@ -335,7 +307,7 @@ const DietitianSignUp = () => {
                         fullWidth
                         label="Number of ED clients you treat"
                         id="numberOfEDClients"
-                        type="text"
+                        type="number"
                         onChange={handleInput}
                         value={formValue.numberOfEDClients}
                         autoComplete={'off'}
@@ -348,7 +320,7 @@ const DietitianSignUp = () => {
                         fullWidth
                         label="Percent of your ED clients intensive outpatient (Ex: 40)"
                         id="percentIntensiveOutpatient"
-                        type="text"
+                        type="number"
                         onChange={handleInput}
                         value={formValue.percentIntensiveOutpatient}
                         autoComplete={'off'}
@@ -360,7 +332,7 @@ const DietitianSignUp = () => {
                         fullWidth
                         label="Percent of your ED clients regular outpatient (ex: 60)"
                         id="percentRegularOutpatient"
-                        type="text"
+                        type="number"
                         onChange={handleInput}
                         value={formValue.percentRegularOutpatient}
                         autoComplete={'off'}
