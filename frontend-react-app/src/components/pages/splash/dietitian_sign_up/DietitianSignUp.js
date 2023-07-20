@@ -123,11 +123,6 @@ const DietitianSignUp = () => {
 
       LocalStorageManager.shared.homeUrl = '/d-home';
       LocalStorageManager.shared.dietitian = createdDietitian;
-      if (!createdDietitian.admin) {
-        window.location.assign('/d-home');
-      } else {
-        window.location.assign('/a-home');
-      }
     } else {
       setLoading(false);
       return false;
