@@ -332,11 +332,7 @@ const CreateNewStagedClientModal = (props) => {
           id="add-staged-client-button"
           variant="contained"
           onClick={handleClickOpen}
-          className={
-            !props.isSampleTrialPeriod
-              ? createNewStagedClientModal.button
-              : createNewStagedClientModal.buttonDisabled
-          }
+          className={createNewStagedClientModal.button}
         >
           + Add New Client
         </Button>
