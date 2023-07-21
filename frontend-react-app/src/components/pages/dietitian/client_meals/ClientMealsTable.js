@@ -80,19 +80,19 @@ const ClientMealsTable = (props) => {
         </Grid>
       </Grid>
 
-      {props.scheduleMealCardItems.map((scheduleMealCardItem) => {
+      {props.currentScheduledOrderMeals.map((scheduledOrderMealCardData, i) => {
         // scheduleMealCardItem is an Array of flattened ScheduleMealCardItem maps
         // scheduleMealCardItem[0] is the scheduleMealId
         // scheduleMealCardItem[1] is the ScheduleMealCardItem
         return (
           <Grid
             item
-            key={"grid-" + String(scheduleMealCardItem[0])}
+            key={`gridChosenScheduledOrderMeal${i}`}
             className={clientMealsTable.scheduleMealCardContainer}
           >
             <ScheduleMealCard
-              mealData={scheduleMealCardItem[1]}
-              key={String(scheduleMealCardItem[0])}
+              mealData={scheduledOrderMealCardData}
+              key={`clientMeal${i}`}
             />
           </Grid>
         );
