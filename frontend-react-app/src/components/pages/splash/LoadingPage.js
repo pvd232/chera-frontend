@@ -60,7 +60,9 @@ const LoadingPage = () => {
     }
   }, [user, isAuthenticated, navigate]);
 
-  if (dietitianData && LocalStorageManager.shared.dietitian) {
+  if (clientData && LocalStorageManager.shared.client){
+    navigate("/home");
+  }else if (dietitianData && LocalStorageManager.shared.dietitian) {
     navigate("/d-home");
   }
 

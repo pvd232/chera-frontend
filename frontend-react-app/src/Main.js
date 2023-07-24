@@ -13,7 +13,7 @@ import PreviousDeliveries from './components/pages/client/PreviousDeliveries';
 import ClientMeals from './components/pages/dietitian/client_meals/ClientMeals';
 import ClientHomeContainer from './components/pages/client/ClientHomeContainer';
 import DietitianHomeContainer from './components/pages/dietitian/DietitianHomeContainer';
-import LoadingPage from './components/pages/dietitian/LoadingPage';
+import LoadingPage from './components/pages/splash/LoadingPage';
 import DietitianMenuContainer from './components/pages/dietitian/dietitian_menu/DietitianMenuContainer';
 import DietititanHome from './components/pages/dietitian/DietitianHome';
 import Navbar from './components/shared_components/navbar/Navbar';
