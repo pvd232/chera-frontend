@@ -44,7 +44,19 @@ const SplashLinks = () => {
           </Grid>
 
           <Grid item>
-            <LogInDropDown />
+          <Button
+              variant="contained"
+              className={styles.dietitianSignupButton}
+              onClick={() =>
+                loginWithRedirect({
+                  appState: {
+                    returnTo: '/loading',
+                  },
+                })
+              }
+            >
+              Log In
+            </Button>
           </Grid>
         </>
       )}
