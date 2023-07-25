@@ -16,9 +16,9 @@ import ExtendedMealDTOFactory from "../../../data_models/factories/dto/ExtendedM
 import MealDietaryRestrictionDTOFactory from "../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory";
 import ExtendedMealFactory from "../../../data_models/factories/model/ExtendedMealFactory";
 import MealDietaryRestrictionFactory from "../../../data_models/factories/model/MealDietaryRestrictionFactory";
-import useAuthHeader from '../../../helpers/useAuthHeader';
-import EatingDisorderDTO from '../../../data_models/dto/EatingDisorderDTO';
-import EatingDisorder from '../../../data_models/model/EatingDisorder';
+import useAuthHeader from "../../../helpers/useAuthHeader";
+import EatingDisorderDTO from "../../../data_models/dto/EatingDisorderDTO";
+import EatingDisorder from "../../../data_models/model/EatingDisorder";
 import { useClients } from "./hooks/useClients";
 
 const DietitianHomeContainer = (props) => {
@@ -37,9 +37,10 @@ const DietitianHomeContainer = (props) => {
 
   useEffect(() => {
     let mounted = true;
-    if(authHeader){
+    if (authHeader) {
       APIClient.getDietitianExtendedScheduleMeals(
-        LocalStorageManager.shared.dietitian.id, authHeader
+        LocalStorageManager.shared.dietitian.id,
+        authHeader
       ).then((extendedScheduleMealsData) => {
         if (extendedScheduleMealsData) {
           const extendedScheduleMealArray = [];
@@ -63,18 +64,21 @@ const DietitianHomeContainer = (props) => {
         }
       });
       APIClient.getDietitianMealSubscriptions(
-        LocalStorageManager.shared.dietitian.id, authHeader
+        LocalStorageManager.shared.dietitian.id,
+        authHeader
       ).then((mealSubscriptionData) => {
         if (mealSubscriptionData) {
           const mealSubscriptionsMap = new Map();
-  
+
           mealSubscriptionData
             .map(
               (mealSubscriptionJSON) =>
                 new MealSubscriptionDTO(mealSubscriptionJSON)
             )
             .forEach((mealSubscriptionDTO) => {
-              const mealSubscription = new MealSubscription(mealSubscriptionDTO);
+              const mealSubscription = new MealSubscription(
+                mealSubscriptionDTO
+              );
               mealSubscriptionsMap.set(mealSubscription.id, mealSubscription);
             });
           if (mounted) {
@@ -106,7 +110,7 @@ const DietitianHomeContainer = (props) => {
             mealPlansMap.set(mealPlanDTO.id, newMealPlan);
             return newMealPlan;
           });
-  
+
           setMealPlans({
             mealPlansMap: mealPlansMap,
             mealPlansArray: mealPlansArray,
@@ -136,17 +140,20 @@ const DietitianHomeContainer = (props) => {
           setSnacks(snacks);
         }
       });
-      APIClient.getCurrentWeekDeliveryandCutoffDates(authHeader).then((data) => {
-        const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
-          (date) => parseFloat(date) * 1000
-        );
-        LocalStorageManager.shared.upcomingDeliveryDates =
-          upcomingDeliveryDatesArray;
-        const upcomingCutoffDatesArray = data.upcoming_cutoff_dates.map(
-          (date) => parseFloat(date) * 1000
-        );
-        LocalStorageManager.shared.upcomingCutoffDates = upcomingCutoffDatesArray;
-      });
+      APIClient.getCurrentWeekDeliveryandCutoffDates(authHeader).then(
+        (data) => {
+          const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
+            (date) => parseFloat(date) * 1000
+          );
+          LocalStorageManager.shared.upcomingDeliveryDates =
+            upcomingDeliveryDatesArray;
+          const upcomingCutoffDatesArray = data.upcoming_cutoff_dates.map(
+            (date) => parseFloat(date) * 1000
+          );
+          LocalStorageManager.shared.upcomingCutoffDates =
+            upcomingCutoffDatesArray;
+        }
+      );
     }
 
     const stagedClientId = searchParams.get("stagedClientId");
@@ -158,7 +165,7 @@ const DietitianHomeContainer = (props) => {
 
   if (scheduleMeals && mealSubscriptions && mealPlans && eatingDisorders) {
     // Remove duplicative clients from stagedClients if they have already created their account
-    
+
     const dataProps = {
       dietitianId: LocalStorageManager.shared.dietitian.id,
       stripePromise: props.stripePromise,
@@ -170,7 +177,7 @@ const DietitianHomeContainer = (props) => {
       eatingDisorders: eatingDisorders,
       extendedMeals: extendedMeals,
       snacks: snacks,
-      clients: clients 
+      clients: clients,
     };
     // Pass the dataProps to the child component
     return cloneElement(props.childComponent, { ...dataProps });
