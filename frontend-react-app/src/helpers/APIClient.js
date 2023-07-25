@@ -438,6 +438,19 @@ class APIClient {
   }
 
   // Dietitian methods
+  async getMealNutrientStats(dietitian) {
+    const requestUrl = this.baseUrl + '/email/meal_sample';
+
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(dietitian),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
   async sendMealSampleConfirmationEmail(dietitian) {
     const requestUrl = this.baseUrl + '/email/meal_sample';
 

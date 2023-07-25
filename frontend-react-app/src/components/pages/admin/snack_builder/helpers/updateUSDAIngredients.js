@@ -8,7 +8,6 @@ import RecipeIngredientItem from '../../../../ui_data_containers/RecipeIngredien
 export default async function updateUSDAIngredients({
   mounted,
   setExtendedUsdaIngredients,
-  setSnackPrice,
   setMealPlans,
   setMealPlanSnacks,
 }) {
@@ -40,10 +39,7 @@ export default async function updateUSDAIngredients({
   if (mounted) {
     setExtendedUsdaIngredients(extendedIngredientsMap);
   }
-  const snackPrice = await APIClient.getSnackPrice();
-  if (mounted) {
-    setSnackPrice(snackPrice);
-  }
+
   const mealPlans = await APIClient.getMealPlans();
   if (mounted) {
     setMealPlans(mealPlans);

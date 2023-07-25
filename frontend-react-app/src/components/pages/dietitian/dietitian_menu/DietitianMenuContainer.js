@@ -8,15 +8,19 @@ import MealDietaryRestrictionFactory from '../../../../data_models/factories/mod
 import ExtendedMeal from '../../../../data_models/model/ExtendedMeal';
 import ExtendedMealDTO from '../../../../data_models/dto/ExtendedMealDTO';
 import CircularProgressPage from '../../../shared_components/CircularProgressPage';
+
 import { mapExtendedMealPlanMealData } from './helpers/mapExtendedMealPlanMealData';
 import { mapExtendedMealPlanSnackData } from './helpers/mapExtendedMealPlanSnackData';
+import { mapMealNutrientStatsData } from './helpers/mapMealNutrientStatsData';
+import { mapSnackNutrientStatsData } from './helpers/mapSnackNutrientStatsData';
 
 const DietitianMenuContainer = (props) => {
   const [mealPlans, setMealPlans] = useState(false);
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [specificMealPlanMeals, setSpecificMealPlanMeals] = useState(false);
   const [specificMealPlanSnacks, setSpecificMealPlanSnacks] = useState(false);
-
+  const [mealNutrientStats, setMealNutrientStats] = useState(false);
+  const [snackNutrientStats, setSnackNutrientStats] = useState(false);
   const [unspecificFood, setUnspecificFood] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -94,7 +98,26 @@ const DietitianMenuContainer = (props) => {
         }
       }
     );
-
+    const mealNutrientStatsPromise = CacheManager.shared.mealNutrientStats;
+    Promise.resolve(mealNutrientStatsPromise).then((mealNutrientStatsData) => {
+      if (mounted) {
+        const mealNutrientStatsDTOs = mapMealNutrientStatsData(
+          mealNutrientStatsData
+        );
+        setMealNutrientStats(mealNutrientStatsDTOs);
+      }
+    });
+    const snackNutrientStatsPromise = CacheManager.shared.snackNutrientStats;
+    Promise.resolve(snackNutrientStatsPromise).then(
+      (snackNutrientStatsData) => {
+        if (mounted) {
+          const snackNutrientStatsDTOs = mapSnackNutrientStatsData(
+            snackNutrientStatsData
+          );
+          setSnackNutrientStats(snackNutrientStatsDTOs);
+        }
+      }
+    );
     return () => (mounted = false);
   }, []);
 
@@ -108,13 +131,22 @@ const DietitianMenuContainer = (props) => {
       extendedMeals &&
       specificMealPlanMeals &&
       specificMealPlanSnacks &&
-      !unspecificFood.mealPlanMeals)
+      !unspecificFood.mealPlanMeals) ||
+    (mealPlans &&
+      extendedMeals &&
+      specificMealPlanMeals &&
+      specificMealPlanSnacks &&
+      !unspecificFood.mealPlanMeals &&
+      mealNutrientStats &&
+      snackNutrientStats)
   ) {
     const dataProps = {
       mealPlans: mealPlans,
       mealPlanMeals: specificMealPlanMeals,
       mealPlanSnacks: specificMealPlanSnacks,
       extendedMeals: extendedMeals,
+      mealNutrientStats: mealNutrientStats,
+      snackNutrientStats: snackNutrientStats,
     };
     return cloneElement(props.childComponent, { ...dataProps });
   } else if (
@@ -128,6 +160,8 @@ const DietitianMenuContainer = (props) => {
       mealPlanMeals: unspecificFood.mealPlanMeals,
       mealPlanSnacks: unspecificFood.mealPlanSnacks,
       extendedMeals: extendedMeals,
+      mealNutrientStats: mealNutrientStats,
+      snackNutrientStats: snackNutrientStats,
     };
     return cloneElement(props.childComponent, { ...dataProps });
   } else {

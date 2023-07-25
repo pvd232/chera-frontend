@@ -2,18 +2,13 @@ import FoodNutrientStatsDTO from './FoodNutrientStatsDTO.js';
 export default class SnackNutrientStatsDTO extends FoodNutrientStatsDTO {
   constructor(
     foodNutrientStatsJSON,
-    mealPlanDTOFactory,
     nutrientDailyValueDTOFactory,
-    extendedSnackDTOFactory,
-    extendedSnackJSON
+    extendedSnackDTOFactory
   ) {
-    super(
-      foodNutrientStatsJSON,
-      mealPlanDTOFactory,
-      nutrientDailyValueDTOFactory
+    super(foodNutrientStatsJSON, nutrientDailyValueDTOFactory);
+    this.associatedSnack = extendedSnackDTOFactory.injectInstance(
+      foodNutrientStatsJSON.associated_snack
     );
-    this.associatedSnack =
-      extendedSnackDTOFactory.injectInstance(extendedSnackJSON);
   }
   get name() {
     return this.associatedSnack.name;

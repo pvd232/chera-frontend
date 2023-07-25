@@ -384,13 +384,13 @@ const NutritionLabel = (props) => (
       </Grid>
     </Grid>
 
-    <Typography color={'black'} fontSize={'.7rem'}>
+    {/* <Typography color={'black'} fontSize={'.7rem'}>
       * Percent Daily Values are based on Meal Plan{' '}
       {props.mealPlanMeal.associatedMealPlan.number} <br /> (currently selected)
       which is a {props.mealPlanMeal.associatedMealPlan.statedCaloricLowerBound}{' '}
       – {props.mealPlanMeal.associatedMealPlan.statedCaloricUpperBound} calorie
       diet.
-    </Typography>
+    </Typography> */}
   </section>
 );
 export default NutritionLabel;
