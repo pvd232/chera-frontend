@@ -10,7 +10,7 @@ import clientMealsTable from "./scss/ClientMealsTable.module.scss";
 import DeliveryDateUtility from "../../../../helpers/DeliveryDateUtility";
 const ClientMealsTable = (props) => {
   
-  const deliveryDayIndex = [0, 1, 2, 3]
+  const deliveryDayIndex = [0, 1, 2]
 
   const handleChangeDeliveryIndex = (event) => {
     const selectedDeliveryIndex = event.target.value;
@@ -81,9 +81,6 @@ const ClientMealsTable = (props) => {
       </Grid>
 
       {props.currentScheduledOrderMeals.map((scheduledOrderMealCardData, i) => {
-        // scheduleMealCardItem is an Array of flattened ScheduleMealCardItem maps
-        // scheduleMealCardItem[0] is the scheduleMealId
-        // scheduleMealCardItem[1] is the ScheduleMealCardItem
         return (
           <Grid
             item

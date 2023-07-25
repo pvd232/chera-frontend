@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import ClientMealsTable from "./ClientMealsTable";
-import createScheduleMealCardItems from "./helpers/createScheduleMealCardItems";
 import createScheduledOrderMealCardItems from "../../client/client_home/helpers/createScheduledOrderMealCardItems";
 import refreshScheduledOrderMeals from '../../client/client_home/helpers/refreshScheduledOrderMeals';
 import clientMeals from "./scss/ClientMeals.module.scss";
@@ -21,7 +20,6 @@ const ClientMeals = (props) => {
     props.clients.clientArray ? props.clients.clientArray[0].id : ""
   );
 
-  const [scheduleMealCardItems, setScheduleMealCardItems] = useState([]);
   const [selectedDeliveryIndex, setSelectedDeliveryIndex] = useState(0);
   const [extendedScheduledOrderMeals, setExtendedScheduledOrderMeals] =
     useState([]);
@@ -72,24 +70,6 @@ const ClientMeals = (props) => {
     }
   }, [filterClient, authHeader]);
 
-  
-
-  const scheduleMealsByMealSubscriptionMap = (() => {
-    const map = new Map();
-    props.scheduleMeals.forEach((extendedScheduleMeal) => {
-      if (map.has(extendedScheduleMeal.mealSubscriptionId)) {
-        map
-          .get(extendedScheduleMeal.mealSubscriptionId)
-          .push(extendedScheduleMeal);
-      } else {
-        map.set(extendedScheduleMeal.mealSubscriptionId, [
-          extendedScheduleMeal,
-        ]);
-      }
-    });
-    return map;
-  })();
-
   const mealSubscriptionsByClientIdMap = (() => {
     const map = new Map();
     props.mealSubscriptions.forEach((mealSubscription) => {
@@ -107,17 +87,17 @@ const ClientMeals = (props) => {
       mealSubscription.id
     );
     setExtendedScheduledOrderMeals(refreshedMeals);
-    /*setScheduleMealCardItems(() => {
-      if (event.target.value !== "all") {
-        const client = props.clients.clientMap.get(event.target.value);
-        const mealSubscription = mealSubscriptionsByClientIdMap.get(client.id);
-        return createScheduleMealCardItems(
-          scheduleMealsByMealSubscriptionMap.get(mealSubscription.id)
-        );
-      } else {
-        return createScheduleMealCardItems(props.scheduleMeals);
-      }
-    });*/
+    setSelectedDeliveryIndex(0);
+  };
+
+  const handleChangeDeliveryIndex = async (deliveryIndex) => {
+    setSelectedDeliveryIndex(deliveryIndex);
+    const client = props.clients.clientMap.get(filterClient);
+    const mealSubscription = mealSubscriptionsByClientIdMap.get(client.id);
+    const refreshedMeals = await refreshScheduledOrderMeals(
+      mealSubscription.id
+    );
+    setExtendedScheduledOrderMeals(refreshedMeals);
   };
 
   return (
@@ -135,7 +115,7 @@ const ClientMeals = (props) => {
         )}
         handleFilterChange={(e) => handleFilterChange(e)}
         handleChangeDeliveryIndex={(deliveryIndex) =>
-          setSelectedDeliveryIndex(deliveryIndex)
+          handleChangeDeliveryIndex(deliveryIndex)
         }
       />
     </Grid>
