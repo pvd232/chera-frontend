@@ -76,7 +76,9 @@ const DietitianSignUp = () => {
   const { user } = useAuth0();
   if (!user) {
     const returnUrl = (() => {
-      if (window.location.href.includes('sample=true')) {
+      if (window.location.href.includes('sample=true&nys=true')) {
+        return '/dietitian-sign-up?sample=true&nys=true';
+      } else if (window.location.href.includes('sample=true')) {
         return '/dietitian-sign-up?sample=true';
       } else {
         return '/dietitian-sign-up';
@@ -117,6 +119,9 @@ const DietitianSignUp = () => {
           sampleFormValue
         );
         await APIClient.sendMealSampleConfirmationEmail(createdDietitianDTO);
+      }
+      if (window.location.href.includes('nys=true')) {
+        await APIClient.createNYSANDLead(createdDietitianDTO.id);
       }
       setLoading(false);
 

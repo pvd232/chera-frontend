@@ -1672,6 +1672,19 @@ class APIClient {
       };
     }
   }
+  async createNYSANDLead(dietitianId) {
+    const requestUrl = this.baseUrl + '/nysand_lead';
+    const requestBody = { dietitian_id: dietitianId };
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
+  }
 }
 
 let API = new APIClient();
