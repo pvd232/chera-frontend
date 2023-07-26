@@ -8,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import { useOpen } from './hooks/useOpen.ts';
-//import { useNavigate } from 'react-router-dom';
 import aboutDropDown from './scss/AboutDropDown.module.scss';
 import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
 import { useAuth0 } from '@auth0/auth0-react';

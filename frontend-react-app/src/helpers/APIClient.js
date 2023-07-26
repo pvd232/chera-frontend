@@ -607,7 +607,8 @@ class APIClient {
     if (response.status === 404) {
       return false;
     } else {
-      return true;
+      const dietitianData = await response.json();
+      return dietitianData;
     }
   }
 
@@ -1638,7 +1639,11 @@ class APIClient {
     return paymentIntentDataJSON;
   }
   async checkDieteticRegistrationNumber(dieteticRegistrationNumber) {
-    if (this.env === 'debug' || this.env === 'staging') {
+    if (
+      this.env === 'debug' ||
+      this.env === 'staging' ||
+      this.env === 'production'
+    ) {
       return true;
     }
     const requestUrl = this.baseUrl + '/test_dietetic';
@@ -1729,6 +1734,19 @@ class APIClient {
         uspsAddress: addressResult.uspsData,
       };
     }
+  }
+  async createNYSANDLead(dietitianId) {
+    const requestUrl = this.baseUrl + '/nysand_lead';
+    const requestBody = { dietitian_id: dietitianId };
+    const requestParams = {
+      method: 'POST',
+      body: JSON.stringify(requestBody),
+      mode: this.mode,
+      cache: 'default',
+    };
+
+    await this.fetchWrapper(requestUrl, requestParams);
+    return;
   }
 }
 
