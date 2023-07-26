@@ -1,4 +1,5 @@
 import NutrientItem from '../../../../../ui_data_containers/NutrientItem';
+
 export const getNutrientsDataSource = (nutrients) => {
   const nutrientItems = Array.from(nutrients.values())
     .map(

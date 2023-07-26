@@ -20,6 +20,7 @@ const MediaCard = React.memo(
               <CardActions>
                 <Grid container className={mediaCard.iconButtonContainer}>
                   <NutritionDetails
+                    isSnackCard={props.isSnackCard ?? false}
                     mealPlanMeal={props.mealPlanMeal}
                     name={props.name}
                   ></NutritionDetails>

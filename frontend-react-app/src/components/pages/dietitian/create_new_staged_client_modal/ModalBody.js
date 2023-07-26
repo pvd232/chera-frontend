@@ -137,12 +137,12 @@ const ModalBody = (props) => {
                   />
 
                   <InputLabel className={modalBody.inputLabel}>
-                    Client Target Weight
+                    Client Genetic Weight
                   </InputLabel>
                   <TextField
                     required
                     fullWidth
-                    label={'Target Weight'}
+                    label={'Genetic Weight'}
                     id="targetWeight"
                     type="number"
                     inputProps={{
@@ -150,7 +150,7 @@ const ModalBody = (props) => {
                       min: 0,
                       max: 1000,
                     }}
-                    placeholder="Target Weight"
+                    placeholder="Genetic Weight"
                     value={
                       props.formValue.targetWeight
                         ? parseInt(props.formValue.targetWeight)
@@ -171,14 +171,14 @@ const ModalBody = (props) => {
                   />
 
                   <InputLabel className={modalBody.inputLabel}>
-                    Client Meal Plan
+                    Client Portion Size
                   </InputLabel>
                   <FormControl>
                     <InputLabel className={modalBody.inputLabel}>
-                      Meal Plan
+                      Portion Size
                     </InputLabel>
                     <Select
-                      label="Meal Plan"
+                      label="Portion Size"
                       required
                       id="mealPlanId"
                       value={props.formValue.mealPlanId}
@@ -190,9 +190,7 @@ const ModalBody = (props) => {
                           id={`mealPlan-${i}`}
                           value={mealPlan.id}
                         >
-                          {`${capitalize(mealPlan.name)}: ${
-                            mealPlan.statedCaloricLowerBound
-                          }-${mealPlan.statedCaloricUpperBound} calories`}
+                          {`${mealPlan.dinnerCalories} kCal`}
                         </MenuItem>
                       ))}
                     </Select>
@@ -202,10 +200,10 @@ const ModalBody = (props) => {
                   </InputLabel>
                   <FormControl>
                     <InputLabel className={modalBody.inputLabel}>
-                      Eating Disorder
+                      Diagnosis
                     </InputLabel>
                     <Select
-                      label="Eating Disorder"
+                      label="Diagnosis"
                       required
                       id="eatingDisorderId"
                       value={props.formValue.eatingDisorderId}

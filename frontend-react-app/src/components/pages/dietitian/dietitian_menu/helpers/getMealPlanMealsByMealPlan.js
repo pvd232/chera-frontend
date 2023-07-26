@@ -9,8 +9,7 @@ export const getMealPlanMealsByMealPlan = (mealPlanMeals) => {
       }
     });
     return mealPlanMealMap;
+  } else {
+    return false;
   }
-else {
-  return false
-}  
 };
