@@ -1,13 +1,8 @@
 const dietitianFAQsArray = [
   {
-    question: 'Where can I access portion sizes and nutrition data?',
+    question: 'What is your geographic coverage?',
     answer:
-      'After signing up for a Chera account, you can access portion sizes and nutrition data for all of our meals and snacks in your dashboard.',
-  },
-  {
-    question: "Can I update my client's portion size?",
-    answer:
-      "Throughout a client's care, you have the flexibility to modify their portion size at any time to accommodate their changing needs.",
+      'We deliver to anywhere in the continental United States! We are working on expanding our coverage to Alaska and Hawaii.',
   },
   {
     question: 'How do I invite my clients to join Chera?',
@@ -22,6 +17,21 @@ const dietitianFAQsArray = [
   {
     question: 'Do I have to pay to create an account?',
     answer: 'No, it is free to sign up and invite clients.',
+  },
+  {
+    question: 'Where can I access portion sizes and nutrition data?',
+    answer:
+      'After signing up for a Chera account, you can access portion sizes and nutrition data for all of our meals and snacks in your dashboard.',
+  },
+  {
+    question: "Can I update my client's portion size?",
+    answer:
+      "Throughout a client's care, you have the flexibility to modify their portion size at any time to accommodate their changing needs.",
+  },
+  {
+    question: 'Do snacks have portion sizes?',
+    answer:
+      'No, all snacks are ~150-250 calories and are not portioned. Snacks are meant to be eaten in addition to meals.',
   },
 ];
 export default dietitianFAQsArray;
