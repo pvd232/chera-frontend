@@ -11,8 +11,6 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import APIClient from '../../../helpers/APIClient';
 import BlackButton from '../../shared_components/BlackButton.ts';
-import { useWindowWidth } from '../../hooks/useWindowWidth';
-import ScreenSize from '../../../types/enums/ScreenSize';
 import StagedClientPaymentConfirmed from './StagedClientPaymentConfirmed';
 import EditClientMealPlanModal from './EditClientMealPlanModal';
 import CreateNewStagedClientModal from './create_new_staged_client_modal/CreateNewStagedClientModal';
@@ -24,8 +22,6 @@ import { getClientItems } from './helpers/getClientItems';
 import { getStagedClientItems } from './helpers/getStagedClientItems';
 import dietitianHome from './scss/DietitianHome.module.scss';
 const DietititanHome = (props) => {
-  const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < ScreenSize.xs;
   const [clients, setClients] = useClients();
   const [stagedClients, setStagedClients] = useStagedClients();
 

@@ -42,7 +42,7 @@ const HowItWorks = (props) => (
         customTheme={props.customTheme}
         headerText={'Select your meals'}
         bodyText={
-          "Choose meals from your program's menu, or have them pre-selected by your dietitian. All our meals come pre-cooked and ready to go."
+          'Choose meals from the menu, or have them pre-selected by your dietitian. All our meals come pre-cooked and ready to go.'
         }
         symbolName={'dinner_dining_outlined'}
         primaryFontSize={6.5}
@@ -51,7 +51,7 @@ const HowItWorks = (props) => (
       <LogisticsStep
         customTheme={props.customTheme}
         headerText={'We cook and deliver meals'}
-        bodyText={'Meals are shipped directly to your doorstep on Sundays.'}
+        bodyText={'Meals are shipped directly to your doorstep on Mondays.'}
         symbolName={'delivery_dining_outlined'}
         primaryFontSize={6.5}
         secondaryFontSize={5.5}
@@ -60,7 +60,7 @@ const HowItWorks = (props) => (
         customTheme={props.customTheme}
         headerText={'Heat up, sit back and enjoy'}
         bodyText={
-          'Easy-to-follow instructions + microwave safe packaging = ready to go in minutes! Skip a week or cancel anytime.'
+          'Easy instructions + microwave safe packaging = ready to go in minutes! Skip a week or cancel anytime.'
         }
         symbolName={'sentiment_very_satisfied_outlined'}
         primaryFontSize={6.5}

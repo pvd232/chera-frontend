@@ -12,7 +12,6 @@ import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
-import capitalize from '../../../helpers/capitalize';
 import APIClient from '../../../helpers/APIClient';
 import BlackButton from '../../shared_components/BlackButton.ts';
 import Transition from '../../shared_components/Transition';
