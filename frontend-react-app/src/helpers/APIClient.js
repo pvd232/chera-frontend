@@ -438,6 +438,47 @@ class APIClient {
   }
 
   // Dietitian methods
+
+  async getSpecificMealNutrientStatsObject(mealPlanId, mealId) {
+    const requestUrl =
+      this.baseUrl +
+      `/meal_nutrient_stats?meal_plan_id=${mealPlanId}&meal_id=${mealId}`;
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const mealPlanMealsData = await response.json();
+    return mealPlanMealsData;
+  }
+  async getSpecificMealNutrientStatsObjects(
+    mealPlanId = false,
+    mealPlanNumber = false
+  ) {
+    const requestUrl = (() => {
+      if (mealPlanId) {
+        return this.baseUrl + `/meal_nutrient_stats?meal_plan_id=${mealPlanId}`;
+      } else {
+        return (
+          this.baseUrl +
+          `/meal_nutrient_stats?meal_plan_number=${mealPlanNumber}`
+        );
+      }
+    })();
+
+    const request = new Request(requestUrl);
+    const requestParams = {
+      method: 'GET',
+      mode: this.mode,
+      cache: 'default',
+    };
+    const response = await this.fetchWrapper(request, requestParams);
+    const mealPlanMealsData = await response.json();
+    return mealPlanMealsData;
+  }
   async getMealNutrientStats(dietitian) {
     const requestUrl = this.baseUrl + '/email/meal_sample';
 
@@ -694,7 +735,16 @@ class APIClient {
     };
     const response = await this.fetchWrapper(request, requestParams);
     const mealPlanData = await response.json();
-    return mealPlanData;
+    const filteredMealPlans = mealPlanData.filter(
+      (mealPlan) =>
+        mealPlan.dinner_calories === 400 ||
+        mealPlan.dinner_calories === 600 ||
+        mealPlan.dinner_calories === 800
+    );
+    const oddFilteredMealPlans = filteredMealPlans.filter(
+      (mealPlan) => mealPlan.number % 2 === 1
+    );
+    return oddFilteredMealPlans;
   }
   async getEatingDisorders() {
     const requestUrl = `${this.baseUrl}/eating_disorder`;

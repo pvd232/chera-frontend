@@ -1,14 +1,14 @@
 import lazy from '../../helpers/lazy';
 export default class FoodNutrientStatsDTO {
-  constructor(
-    foodNutrientJSON,
-    nutrientDailyValueDTOFactory
-  ) {
+  constructor(foodNutrientJSON, nutrientDailyValueDTOFactory) {
+    this.id = foodNutrientJSON.id;
     this.mealPlanId = foodNutrientJSON.meal_plan_id;
     this.carbKcal = foodNutrientJSON.carb_k_cal;
     this.proteinKcal = foodNutrientJSON.protein_k_cal;
     this.fatKcal = foodNutrientJSON.fat_k_cal;
     this.kCal = foodNutrientJSON.k_cal;
+    this.active = foodNutrientJSON.active;
+    this.weight = foodNutrientJSON.weight;
     this.recipeData = foodNutrientJSON.recipe;
     this.nutrientsData = foodNutrientJSON.nutrients;
     this.nutrientDailyValueDTOFactory = nutrientDailyValueDTOFactory;
@@ -80,8 +80,8 @@ export default class FoodNutrientStatsDTO {
       protein_k_cal: this.proteinKcal,
       fat_k_cal: this.fatKcal,
       k_cal: this.kCal,
+      weight: this.weight,
       active: this.active,
-      associated_meal_plan: this.associatedMealPlan.toJSON(),
       recipe: this.recipe.map((recipeIngredient) => recipeIngredient),
       nutrients: Array.from(this.nutrients.values()).map((nutrient) =>
         nutrient.toJSON()

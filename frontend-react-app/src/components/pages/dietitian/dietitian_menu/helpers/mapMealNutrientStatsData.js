@@ -3,7 +3,7 @@ import MealDietaryRestrictionDTOFactory from '../../../../../data_models/factori
 import NutrientDailyValueDTOFactory from '../../../../../data_models/factories/dto/NutrientDailyValueDTOFactory';
 import MealNutrientStatsDTO from '../../../../../data_models/dto/MealNutrientStatsDTO';
 
-export const mapMealNutrientStatsData = async (mealNutrientStatsData) => {
+export const mapMealNutrientStatsData = (mealNutrientStatsData) => {
   return mealNutrientStatsData.map(
     (mealNutrientStatsData) =>
       new MealNutrientStatsDTO(

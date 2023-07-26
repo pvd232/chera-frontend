@@ -1,16 +1,22 @@
 import checkProperties from '../../helpers/checkProperties';
 export default class NutrientDailyValueDTO {
   constructor(nutrientDailyValueObject) {
+    this.id = nutrientDailyValueObject.id;
+    this.name = nutrientDailyValueObject.name;
     this.nutrientId = nutrientDailyValueObject.nutrient_id;
-    this.dailyValue = nutrientDailyValueObject.daily_value;
-    this.nutrientUnit = nutrientDailyValueObject.nutrient_unit;
+    this.amount = nutrientDailyValueObject.amount;
+    this.dailyValueAmount = nutrientDailyValueObject.daily_value_amount;
+    this.unit = nutrientDailyValueObject.unit;
     this.properlyInitialized = (() => checkProperties(this))();
   }
   toJSON() {
     return {
-      nutrient_id: this.id,
-      daily_value: this.mealTime,
-      nutrient_unit: this.name,
+      id: this.id,
+      name: this.name,
+      nutrient_id: this.nutrientId,
+      amount: this.amount,
+      daily_value_amount: this.dailyValueAmount,
+      unit: this.unit,
     };
   }
 }

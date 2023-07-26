@@ -1,4 +1,4 @@
-import { useState, useEffect, cloneElement, useReducer } from 'react';
+import { useState, useEffect, cloneElement } from 'react';
 import APIClient from '../../../../helpers/APIClient';
 import CacheManager from '../../../../helpers/CacheManager';
 import MealPlanDTO from '../../../../data_models/dto/MealPlanDTO';
@@ -8,9 +8,6 @@ import MealDietaryRestrictionFactory from '../../../../data_models/factories/mod
 import ExtendedMeal from '../../../../data_models/model/ExtendedMeal';
 import ExtendedMealDTO from '../../../../data_models/dto/ExtendedMealDTO';
 import CircularProgressPage from '../../../shared_components/CircularProgressPage';
-
-import { mapExtendedMealPlanMealData } from './helpers/mapExtendedMealPlanMealData';
-import { mapExtendedMealPlanSnackData } from './helpers/mapExtendedMealPlanSnackData';
 import { mapMealNutrientStatsData } from './helpers/mapMealNutrientStatsData';
 import { mapSnackNutrientStatsData } from './helpers/mapSnackNutrientStatsData';
 
@@ -18,18 +15,9 @@ const DietitianMenuContainer = (props) => {
   const [mealPlans, setMealPlans] = useState(false);
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [specificMealPlanMeals, setSpecificMealPlanMeals] = useState(false);
-  const [specificMealPlanSnacks, setSpecificMealPlanSnacks] = useState(false);
   const [mealNutrientStats, setMealNutrientStats] = useState(false);
   const [snackNutrientStats, setSnackNutrientStats] = useState(false);
-  const [unspecificFood, setUnspecificFood] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      // if the client secret exists then this page is being rerendered and all of these values have been inputted
 
-      mealPlanMeals: false,
-      mealPlanSnacks: false,
-    }
-  );
   useEffect(() => {
     let mounted = true;
     APIClient.getExtendedMeals().then((extendedMealData) => {
@@ -59,45 +47,21 @@ const DietitianMenuContainer = (props) => {
         const mealPlans = mealPlanDTOs.map(
           (mealPlanDTO) => new MealPlan(mealPlanDTO)
         );
+
         setMealPlans(mealPlans);
       }
     });
-    APIClient.getSpecificExtendedMealPlanSnacks(false, 5).then(
-      (mealPlanSnacksData) => {
-        if (mounted) {
-          const extendedMealPlanSnackDTOs =
-            mapExtendedMealPlanSnackData(mealPlanSnacksData);
-          setSpecificMealPlanSnacks(extendedMealPlanSnackDTOs);
-        }
-      }
-    );
-    APIClient.getSpecificExtendedMealPlanMeals(false, 5).then(
+
+    APIClient.getSpecificMealNutrientStatsObjects(false, 5).then(
       (mealPlanMealsData) => {
         if (mounted) {
           const extendedMealPlanMealDTOs =
-            mapExtendedMealPlanMealData(mealPlanMealsData);
+            mapMealNutrientStatsData(mealPlanMealsData);
           setSpecificMealPlanMeals(extendedMealPlanMealDTOs);
         }
       }
     );
-    const mealPlanSnacksPromise = CacheManager.shared.mealPlanSnacks;
-    const mealPlanMealsPromise = CacheManager.shared.mealPlanMeals;
-    Promise.all([mealPlanSnacksPromise, mealPlanMealsPromise]).then(
-      (responses) => {
-        const mealPlanSnacksData = responses[0];
-        const mealPlanMealsData = responses[1];
-        if (mounted) {
-          const extendedMealPlanSnackDTOs =
-            mapExtendedMealPlanSnackData(mealPlanSnacksData);
-          const extendedMealPlanMealDTOs =
-            mapExtendedMealPlanMealData(mealPlanMealsData);
-          setUnspecificFood({
-            unspecificMealPlanSnacks: extendedMealPlanSnackDTOs,
-            unspecificMealPlanMeals: extendedMealPlanMealDTOs,
-          });
-        }
-      }
-    );
+
     const mealNutrientStatsPromise = CacheManager.shared.mealNutrientStats;
     Promise.resolve(mealNutrientStatsPromise).then((mealNutrientStatsData) => {
       if (mounted) {
@@ -122,46 +86,29 @@ const DietitianMenuContainer = (props) => {
   }, []);
 
   if (
-    (mealPlans &&
-      extendedMeals &&
-      specificMealPlanMeals &&
-      !specificMealPlanSnacks &&
-      !unspecificFood.mealPlanMeals) ||
-    (mealPlans &&
-      extendedMeals &&
-      specificMealPlanMeals &&
-      specificMealPlanSnacks &&
-      !unspecificFood.mealPlanMeals) ||
-    (mealPlans &&
-      extendedMeals &&
-      specificMealPlanMeals &&
-      specificMealPlanSnacks &&
-      !unspecificFood.mealPlanMeals &&
-      mealNutrientStats &&
-      snackNutrientStats)
+    mealPlans &&
+    extendedMeals &&
+    specificMealPlanMeals &&
+    snackNutrientStats
   ) {
     const dataProps = {
       mealPlans: mealPlans,
       mealPlanMeals: specificMealPlanMeals,
-      mealPlanSnacks: specificMealPlanSnacks,
+      mealPlanSnacks: snackNutrientStats,
       extendedMeals: extendedMeals,
-      mealNutrientStats: mealNutrientStats,
-      snackNutrientStats: snackNutrientStats,
     };
     return cloneElement(props.childComponent, { ...dataProps });
   } else if (
     mealPlans &&
     extendedMeals &&
-    unspecificFood.mealPlanMeals &&
-    unspecificFood.mealPlanSnacks
+    mealNutrientStats &&
+    snackNutrientStats
   ) {
     const dataProps = {
       mealPlans: mealPlans,
-      mealPlanMeals: unspecificFood.mealPlanMeals,
-      mealPlanSnacks: unspecificFood.mealPlanSnacks,
+      mealPlanMeals: mealNutrientStats,
+      mealPlanSnacks: snackNutrientStats,
       extendedMeals: extendedMeals,
-      mealNutrientStats: mealNutrientStats,
-      snackNutrientStats: snackNutrientStats,
     };
     return cloneElement(props.childComponent, { ...dataProps });
   } else {

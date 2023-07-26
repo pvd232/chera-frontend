@@ -1,7 +1,12 @@
-export const getNutrientsDataSource = (nutrients) => {
-  const nutrientItems = Array.from(nutrients.values()).sort((a, b) =>
-    a.name.localeCompare(b.name)
-  );
+import NewNutrientItem from '../../../../../ui_data_containers/NewNutrientItem';
+
+export const newGetNutrientsDataSource = (nutrients) => {
+  const nutrientItems = Array.from(nutrients.values())
+    .map(
+      (extendedRecipeIngredientDTO) =>
+        new NewNutrientItem(extendedRecipeIngredientDTO)
+    )
+    .sort((a, b) => a.name.localeCompare(b.name));
   const filteredNutrientItems = nutrientItems.filter(
     (nutrientItem) =>
       nutrientItem.nutrientId !== 'protein' &&

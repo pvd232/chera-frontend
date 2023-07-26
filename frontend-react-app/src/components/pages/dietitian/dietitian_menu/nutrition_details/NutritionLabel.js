@@ -2,6 +2,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import '../../../../../static/scss/NutritionLabel.scss';
 import NutrientItem from '../../../../ui_data_containers/NutrientItem';
+import NewNutrientItem from '../../../../ui_data_containers/NewNutrientItem';
 import RowBorder from './RowBorder';
 
 const NutritionLabel = (props) => (
@@ -15,7 +16,7 @@ const NutritionLabel = (props) => (
         Servings per container: 1
       </Typography>
     </header>
-    <Grid container item >
+    <Grid container item>
       <Grid item>
         <Typography
           color={'black'}
@@ -52,8 +53,9 @@ const NutritionLabel = (props) => (
               >
                 Total Fat{' '}
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('fat')).amount
-                )}
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('fat'))
+                    .amount
+                )}{' '}
                 g
               </Typography>
             </Grid>
@@ -61,7 +63,7 @@ const NutritionLabel = (props) => (
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('fat'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('fat'))
                     .dailyValue * 100
                 )}
                 %
@@ -75,10 +77,10 @@ const NutritionLabel = (props) => (
                 <Typography color={'black'} fontSize={'.85rem'}>
                   Saturated Fat{' '}
                   {Math.round(
-                    new NutrientItem(
+                    new NewNutrientItem(
                       props.mealPlanMeal.getNutrient('saturated_fat')
                     ).amount
-                  )}
+                  )}{' '}
                   g
                 </Typography>
               </Grid>
@@ -86,7 +88,7 @@ const NutritionLabel = (props) => (
               <Grid item>
                 <Typography color={'black'} fontSize={'.85rem'}>
                   {Math.round(
-                    new NutrientItem(
+                    new NewNutrientItem(
                       props.mealPlanMeal.getNutrient('saturated_fat')
                     ).dailyValue * 100
                   )}
@@ -114,12 +116,12 @@ const NutritionLabel = (props) => (
               >
                 Cholesterol{' '}
                 {Math.round(
-                  new NutrientItem(
+                  new NewNutrientItem(
                     props.mealPlanMeal.getNutrient('cholesterol')
                   ).amount
-                )}
+                )}{' '}
                 {
-                  new NutrientItem(
+                  new NewNutrientItem(
                     props.mealPlanMeal.getNutrient('cholesterol')
                   ).unit
                 }
@@ -129,7 +131,7 @@ const NutritionLabel = (props) => (
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(
+                  new NewNutrientItem(
                     props.mealPlanMeal.getNutrient('cholesterol')
                   ).dailyValue * 100
                 )}
@@ -147,11 +149,11 @@ const NutritionLabel = (props) => (
               >
                 Sodium{' '}
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('sodium'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('sodium'))
                     .amount
-                )}
+                )}{' '}
                 {
-                  new NutrientItem(props.mealPlanMeal.getNutrient('sodium'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('sodium'))
                     .unit
                 }
               </Typography>
@@ -160,7 +162,7 @@ const NutritionLabel = (props) => (
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('sodium'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('sodium'))
                     .dailyValue * 100
                 )}
                 %
@@ -177,17 +179,20 @@ const NutritionLabel = (props) => (
               >
                 Total Carbohydrates{' '}
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('carb'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('carb'))
                     .amount
-                )}
-                {new NutrientItem(props.mealPlanMeal.getNutrient('carb')).unit}
+                )}{' '}
+                {
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('carb'))
+                    .unit
+                }
               </Typography>
             </Grid>
 
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('carb'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('carb'))
                     .dailyValue * 100
                 )}
                 %
@@ -201,12 +206,12 @@ const NutritionLabel = (props) => (
                 <Typography color={'black'} fontSize={'.85rem'}>
                   Dietary Fiber{' '}
                   {Math.round(
-                    new NutrientItem(
+                    new NewNutrientItem(
                       props.mealPlanMeal.getNutrient('dietary_fiber')
                     ).amount
-                  )}
+                  )}{' '}
                   {
-                    new NutrientItem(
+                    new NewNutrientItem(
                       props.mealPlanMeal.getNutrient('dietary_fiber')
                     ).unit
                   }
@@ -216,7 +221,7 @@ const NutritionLabel = (props) => (
               <Grid item>
                 <Typography color={'black'} fontSize={'.85rem'}>
                   {Math.round(
-                    new NutrientItem(
+                    new NewNutrientItem(
                       props.mealPlanMeal.getNutrient('dietary_fiber')
                     ).dailyValue * 100
                   )}
@@ -232,12 +237,12 @@ const NutritionLabel = (props) => (
               <Typography color={'black'} fontSize={'.85rem'}>
                 Sugars{' '}
                 {Math.round(
-                  new NutrientItem(
+                  new NewNutrientItem(
                     props.mealPlanMeal.getNutrient('dietary_fiber')
                   ).amount
-                )}
+                )}{' '}
                 {
-                  new NutrientItem(
+                  new NewNutrientItem(
                     props.mealPlanMeal.getNutrient('dietary_fiber')
                   ).unit
                 }
@@ -254,11 +259,11 @@ const NutritionLabel = (props) => (
               >
                 Protein{' '}
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('protein'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('protein'))
                     .amount
-                )}
+                )}{' '}
                 {
-                  new NutrientItem(props.mealPlanMeal.getNutrient('protein'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('protein'))
                     .unit
                 }
               </Typography>
@@ -267,7 +272,7 @@ const NutritionLabel = (props) => (
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('protein'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('protein'))
                     .dailyValue * 100
                 )}
                 %
@@ -281,12 +286,14 @@ const NutritionLabel = (props) => (
               <Typography color={'black'} fontSize={'.85rem'}>
                 Vitamin D{' '}
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('vitamin_d'))
-                    .amount
-                )}
+                  new NewNutrientItem(
+                    props.mealPlanMeal.getNutrient('vitamin_d')
+                  ).amount
+                )}{' '}
                 {
-                  new NutrientItem(props.mealPlanMeal.getNutrient('vitamin_d'))
-                    .unit
+                  new NewNutrientItem(
+                    props.mealPlanMeal.getNutrient('vitamin_d')
+                  ).unit
                 }
               </Typography>
             </Grid>
@@ -294,8 +301,9 @@ const NutritionLabel = (props) => (
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('vitamin_d'))
-                    .dailyValue * 100
+                  new NewNutrientItem(
+                    props.mealPlanMeal.getNutrient('vitamin_d')
+                  ).dailyValue * 100
                 )}
                 %
               </Typography>
@@ -307,11 +315,11 @@ const NutritionLabel = (props) => (
               <Typography color={'black'} fontSize={'.85rem'}>
                 Calcium{' '}
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('calcium'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('calcium'))
                     .amount
-                )}
+                )}{' '}
                 {
-                  new NutrientItem(props.mealPlanMeal.getNutrient('calcium'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('calcium'))
                     .unit
                 }
               </Typography>
@@ -320,7 +328,7 @@ const NutritionLabel = (props) => (
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('calcium'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('calcium'))
                     .dailyValue * 100
                 )}
                 %
@@ -333,17 +341,20 @@ const NutritionLabel = (props) => (
               <Typography color={'black'} fontSize={'.85rem'}>
                 Iron{' '}
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('iron'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('iron'))
                     .amount
-                )}
-                {new NutrientItem(props.mealPlanMeal.getNutrient('iron')).unit}
+                )}{' '}
+                {
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('iron'))
+                    .unit
+                }
               </Typography>
             </Grid>
 
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('iron'))
+                  new NewNutrientItem(props.mealPlanMeal.getNutrient('iron'))
                     .dailyValue * 100
                 )}
                 %
@@ -356,12 +367,13 @@ const NutritionLabel = (props) => (
               <Typography color={'black'} fontSize={'.85rem'}>
                 Potassium{' '}
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('potassium'))
-                    .amount
-                )}
+                  new NewNutrientItem(
+                    props.mealPlanMeal.getNutrient('potassium')
+                  ).amount
+                )}{' '}
                 {
-                  new NutrientItem(
-                    new NutrientItem(
+                  new NewNutrientItem(
+                    new NewNutrientItem(
                       props.mealPlanMeal.getNutrient('potassium')
                     )
                   ).unit
@@ -372,8 +384,9 @@ const NutritionLabel = (props) => (
             <Grid item>
               <Typography color={'black'} fontSize={'.85rem'}>
                 {Math.round(
-                  new NutrientItem(props.mealPlanMeal.getNutrient('potassium'))
-                    .dailyValue * 100
+                  new NewNutrientItem(
+                    props.mealPlanMeal.getNutrient('potassium')
+                  ).dailyValue * 100
                 )}
                 %
               </Typography>

@@ -15,31 +15,25 @@ import { getMealPlanMealsByMealTime } from './helpers/getMealPlanMealsByMealTime
 import { getMealPlanMealsByMeal } from './helpers/getMealPlanMealsByMeal';
 import { getMealPlanMealsByMealPlan } from './helpers/getMealPlanMealsByMealPlan';
 import { getMealPlanMealsByDietaryRestriction } from './helpers/getMealPlanMealsByDietaryRestriction';
-import { mapExtendedMealPlanMealData } from './helpers/mapExtendedMealPlanMealData';
+import { mapMealNutrientStatsData } from './helpers/mapMealNutrientStatsData';
+
 import MediaCard from './MediaCard';
-import { mapExtendedMealPlanSnackData } from './helpers/mapExtendedMealPlanSnackData';
 
 const DietitianMenu = (props) => {
   const customTheme = useTheme();
   const [filterMealPlanId, setFilterMealPlanId] = useState(
-    props.mealPlans[4].id
+    props.mealPlans[1].id
   );
-  const [filterSnackMealPlanId, setFilterSnackMealPlanId] = useState(
-    props.mealPlans[4].id
-  );
+
   const [filterMealTime, setFilterMealTime] = useState('all');
   const [filterDietaryRestrictions, setFilterDietaryRestrictions] =
     useState('all');
   const [filteredMealPlanMeals, setFilteredMealPlanMeals] = useState(
     getMealPlanMealsByMealPlan(props.mealPlanMeals).get(filterMealPlanId)
   );
-  const [filteredMealPlanSnacks, setFilteredMealPlanSnacks] = useState(
-    getMealPlanMealsByMealPlan(props.mealPlanSnacks)
-      ? getMealPlanMealsByMealPlan(props.mealPlanSnacks).get(filterMealPlanId)
-      : false
-  );
+
   const [mealsLoading, setMealsLoading] = useState(false);
-  const [snacksLoading, setSnacksLoading] = useState(false);
+
   const newHandleFilterChange = async (event) => {
     const allMealPlanMeals = props.mealPlanMeals;
     const mealPlanMealsByMealPlan = getMealPlanMealsByMealPlan(
@@ -81,30 +75,14 @@ const DietitianMenu = (props) => {
       } else {
         setMealsLoading(true);
         const mealPlanMealsData =
-          await APIClient.getSpecificExtendedMealPlanMeals(event.target.value);
+          await APIClient.getSpecificMealNutrientStatsObjects(
+            event.target.value
+          );
         const extendedMealPlanMealDTOs =
-          mapExtendedMealPlanMealData(mealPlanMealsData);
+          mapMealNutrientStatsData(mealPlanMealsData);
         setFilteredMealPlanMeals(extendedMealPlanMealDTOs);
         setMealsLoading(false);
       }
-    }
-  };
-  const handleSnackFilterChange = async (event) => {
-    const mealPlanSnacksByMealPlan = getMealPlanMealsByMealPlan(
-      props.mealPlanSnacks
-    );
-    setFilterSnackMealPlanId(event.target.value);
-    const snacksLoaded = mealPlanSnacksByMealPlan.get(event.target.value);
-    if (snacksLoaded) {
-      setFilteredMealPlanSnacks(snacksLoaded);
-    } else {
-      setSnacksLoading(true);
-      const mealPlanSnacksData =
-        await APIClient.getSpecificExtendedMealPlanSnacks(event.target.value);
-      const extendedMealPlanSnackDTOs =
-        mapExtendedMealPlanSnackData(mealPlanSnacksData);
-      setFilteredMealPlanSnacks(extendedMealPlanSnackDTOs);
-      setSnacksLoading(false);
     }
   };
 
@@ -137,9 +115,9 @@ const DietitianMenu = (props) => {
       >
         <Grid item>
           <FormControl>
-            <InputLabel>Meal Plan</InputLabel>
+            <InputLabel>Portion Size</InputLabel>
             <Select
-              label="Meal Plan"
+              label="Portion Size"
               required
               name="filterMealPlan"
               value={filterMealPlanId}
@@ -147,7 +125,7 @@ const DietitianMenu = (props) => {
             >
               {props.mealPlans.map((mealPlan, i) => (
                 <MenuItem value={mealPlan.id} sx={{ fontSize: '12px' }} key={i}>
-                  {`${mealPlan.number} (${mealPlan.statedCaloricLowerBound}-${mealPlan.statedCaloricUpperBound} kCal)`}
+                  {`${mealPlan.dinnerCalories} kCal`}
                 </MenuItem>
               ))}
             </Select>
@@ -224,65 +202,27 @@ const DietitianMenu = (props) => {
           Snacks
         </Typography>
       </Grid>
-      <Grid
-        item
-        container
-        xs={10}
-        spacing={2}
-        sx={{ height: 'min-content' }}
-        alignItems={'flex-end'}
-      >
-        <Grid item>
-          <FormControl>
-            <InputLabel>Meal Plan</InputLabel>
-            <Select
-              label="Meal Plan"
-              required
-              name="filterSnackMealPlan"
-              value={filterSnackMealPlanId}
-              onChange={handleSnackFilterChange}
-            >
-              {props.mealPlans.map((mealPlan, i) => (
-                <MenuItem value={mealPlan.id} sx={{ fontSize: '12px' }} key={i}>
-                  {`${mealPlan.number} (${mealPlan.statedCaloricLowerBound}-${mealPlan.statedCaloricUpperBound} kCal)`}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
+
       <Grid container item xs={10} paddingTop={'6vh'}>
-        {snacksLoading ? (
-          <Grid container item justifyContent={'center'}>
-            <CircularProgress />
-          </Grid>
-        ) : (
-          <Grid container item spacing={4}>
-            {filteredMealPlanSnacks ? (
-              sortFilteredMealPlanMeals(filteredMealPlanSnacks).map(
-                (mealPlanSnack, i) => {
-                  return (
-                    <Grid item key={i} md={4}>
-                      <MediaCard
-                        mealPlanMeal={mealPlanSnack}
-                        name={mealPlanSnack.associatedSnack.name}
-                        description={mealPlanSnack.associatedSnack.description}
-                        imageUrl={mealPlanSnack.associatedSnack.imageUrl}
-                        isSnackCard={true}
-                        key={i}
-                        shouldDisplayNutritionDetails={true}
-                      ></MediaCard>
-                    </Grid>
-                  );
-                }
-              )
-            ) : (
-              <Grid container item justifyContent={'center'}>
-                <CircularProgress />
-              </Grid>
-            )}
-          </Grid>
-        )}
+        <Grid container item spacing={4}>
+          {sortFilteredMealPlanMeals(props.mealPlanSnacks).map(
+            (mealPlanSnack, i) => {
+              return (
+                <Grid item key={i} md={4}>
+                  <MediaCard
+                    mealPlanMeal={mealPlanSnack}
+                    name={mealPlanSnack.associatedSnack.name}
+                    description={mealPlanSnack.associatedSnack.description}
+                    imageUrl={mealPlanSnack.associatedSnack.imageUrl}
+                    isSnackCard={true}
+                    key={i}
+                    shouldDisplayNutritionDetails={true}
+                  ></MediaCard>
+                </Grid>
+              );
+            }
+          )}
+        </Grid>
       </Grid>
     </Grid>
   );
