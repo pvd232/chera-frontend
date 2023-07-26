@@ -291,7 +291,7 @@ const CreateNewStagedClientModal = (props) => {
   );
   return (
     <div className={createNewStagedClientModal.rootDiv}>
-      {props.isSampleTrialPeriod ? (
+      {!props.isSampleTrialPeriod ? (
         <Grid container>
           <Grid
             item
@@ -333,7 +333,7 @@ const CreateNewStagedClientModal = (props) => {
           variant="contained"
           onClick={handleClickOpen}
           className={
-            !props.isSampleTrialPeriod
+            props.isSampleTrialPeriod
               ? createNewStagedClientModal.button
               : createNewStagedClientModal.buttonDisabled
           }

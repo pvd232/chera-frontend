@@ -6,13 +6,13 @@ export default class NutrientItem {
     this.nutrientId = extendedRecipeIngredientNutrientDTO.nutrientId;
     this.unit = extendedRecipeIngredientNutrientDTO.unit;
     this.amount = extendedRecipeIngredientNutrientDTO.amount;
-    this.usdaNutrientDailyValueAmount =
-      extendedRecipeIngredientNutrientDTO.usdaNutrientDailyValueAmount;
+    this.dailyValueAmount =
+      extendedRecipeIngredientNutrientDTO.dailyValueAmount;
     this.properlyInitialized = (() => checkProperties(this))();
   }
 
   get dailyValue() {
-    const valueToReturn = this.amount / this.usdaNutrientDailyValueAmount;
+    const valueToReturn = this.dailyValueAmount;
     if (Math.round(valueToReturn * 100) === 0) {
       // return 0.001 so that the bar chart will show a bar for this nutrient
       return 0.001;

@@ -116,7 +116,7 @@ const EditClientMealPlanModal = (props) => {
         <DialogContent className={editClientMealPlanModal.dialog}>
           <Stack className={editClientMealPlanModal.stack}>
             <Typography className={editClientMealPlanModal.header}>
-              Update your client's meal plan
+              Update your client's portion size
             </Typography>
             <Typography className={editClientMealPlanModal.subHeader}>
               Your change will be reflected in your client's upcoming meal
@@ -148,12 +148,12 @@ const EditClientMealPlanModal = (props) => {
                       <InputLabel
                         className={editClientMealPlanModal.inputLabel}
                       >
-                        Meal Plan
+                        Portion Size
                       </InputLabel>
                       <FormControl>
-                        <InputLabel>{props.clientItem.mealPlanName}</InputLabel>
+                        <InputLabel>Portion Size</InputLabel>
                         <Select
-                          label="Meal Plan"
+                          label="Portion"
                           required
                           id="editMealPlanId"
                           value={mealPlanId}
@@ -165,9 +165,7 @@ const EditClientMealPlanModal = (props) => {
                               id={`editMealPlan-${i}`}
                               value={mealPlan.id}
                             >
-                              {`${capitalize(mealPlan.name)}: ${
-                                mealPlan.statedCaloricLowerBound
-                              }-${mealPlan.statedCaloricUpperBound} calories`}
+                              {`${mealPlan.dinnerCalories} kCal`}
                             </MenuItem>
                           ))}
                         </Select>

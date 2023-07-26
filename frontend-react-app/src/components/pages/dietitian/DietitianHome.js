@@ -101,7 +101,7 @@ const DietititanHome = (props) => {
                 <TableRow>
                   <TableCell align="left">Name</TableCell>
                   <TableCell align="left">Email</TableCell>
-                  <TableCell align="left">Meal Plan</TableCell>
+                  <TableCell align="left">Portion Size</TableCell>
                   <TableCell align="left">Notes</TableCell>
                   <TableCell align="center">Account Created</TableCell>
                 </TableRow>
@@ -115,7 +115,7 @@ const DietititanHome = (props) => {
                     <TableCell align="left">{row.email}</TableCell>
                     <TableCell align="left">
                       <Grid item container>
-                        {isMobile ? row.mealPlanNumber : row.mealPlanName}
+                        {row.mealPlanCalories}
                       </Grid>
                       <div className={dietitianHome.editMealPlanContainer}>
                         <EditClientMealPlanModal
@@ -145,7 +145,7 @@ const DietititanHome = (props) => {
                     <TableCell align="left">{row.email}</TableCell>
                     <TableCell align="left">
                       <Grid item container>
-                        {isMobile ? row.mealPlanNumber : row.mealPlanName}
+                        {row.mealPlanCalories} kCal
                       </Grid>
                       <div className={dietitianHome.editMealPlanContainer}>
                         <EditClientMealPlanModal

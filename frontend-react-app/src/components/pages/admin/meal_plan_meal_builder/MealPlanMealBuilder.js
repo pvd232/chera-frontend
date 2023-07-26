@@ -163,7 +163,7 @@ const MealPlanMealBuilder = (props) => {
               <FormControl fullWidth>
                 <InputLabel>Meal Plan</InputLabel>
                 <Select
-                  label="Meal Plan"
+                  label="Meal Plan "
                   required
                   name="filterMealPlan"
                   value={filterMealPlanId}

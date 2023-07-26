@@ -15,8 +15,8 @@ const MealPlanRow = (props) => (
     <Grid item>
       <Typography className={mealPlanRow.headerText}>
         {props.mealPlan.number === 1
-          ? `Meal Plan ${props.mealPlan.number}: ${props.mealPlan.statedCaloricLowerBound}-${props.mealPlan.statedCaloricUpperBound} calories*`
-          : `Meal Plan ${props.mealPlan.number}: ${props.mealPlan.statedCaloricLowerBound}-${props.mealPlan.statedCaloricUpperBound} calories`}
+          ? `Meal Plan ${props.mealPlan.number}: ${props.mealPlan.statedCaloricLowerBound}-${props.mealPlan.statedCaloricUpperBound} kCal*`
+          : `Meal Plan ${props.mealPlan.number}: ${props.mealPlan.statedCaloricLowerBound}-${props.mealPlan.statedCaloricUpperBound} kCal`}
       </Typography>
     </Grid>
     <Grid item container className={mealPlanRow.contentContainer}>
@@ -36,7 +36,7 @@ const MealPlanRow = (props) => (
           />
         </>
         <Typography className={mealPlanRow.bodyText}>
-          {`Snacks: ${props.mealPlan.formattedNumberOfSnacks} snacks with ${props.mealPlan.perSnackCaloricLowerBound}-${props.mealPlan.perSnackCaloricUpperBound} calories each`}
+          {`Snacks: ${props.mealPlan.formattedNumberOfSnacks} snacks with ${props.mealPlan.perSnackCaloricLowerBound}-${props.mealPlan.perSnackCaloricUpperBound} kCal each`}
         </Typography>
       </CardContent>
     </Grid>

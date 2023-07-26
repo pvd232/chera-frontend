@@ -13,7 +13,6 @@ import DailyNutrientChart from './DailyNutrientChart';
 import MacrosPieChart from './MacrosPieChart';
 import MacrosLegend from './MacrosLegend';
 import { getNutrientsDataSource } from './helpers/getNutrientsDataSource';
-import { newGetNutrientsDataSource } from './helpers/newGetNutrientsDataSource';
 const NutritionDetails = (props) => {
   const customTheme = useTheme();
 
@@ -29,7 +28,7 @@ const NutritionDetails = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const nutrientDataSource = newGetNutrientsDataSource(
+  const nutrientDataSource = getNutrientsDataSource(
     props.mealPlanMeal.nutrients
   );
 
