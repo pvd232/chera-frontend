@@ -5,7 +5,12 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
-import { CircularProgress, Typography } from '@mui/material';
+import {
+  CircularProgress,
+  IconButton,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import capitalize from '../../../../helpers/capitalize';
 import LocalStorageManager from '../../../../helpers/LocalStorageManager';
 import APIClient from '../../../../helpers/APIClient';
@@ -18,6 +23,7 @@ import { getMealPlanMealsByDietaryRestriction } from './helpers/getMealPlanMeals
 import { mapMealNutrientStatsData } from './helpers/mapMealNutrientStatsData';
 
 import MediaCard from './MediaCard';
+import Info from '@mui/icons-material/Info';
 
 const DietitianMenu = (props) => {
   const customTheme = useTheme();
@@ -194,13 +200,26 @@ const DietitianMenu = (props) => {
         )}
       </Grid>
       <Grid container item xs={10} mt={'10vh'} mb={'3vh'}>
-        <Typography
-          fontSize={'2rem'}
-          textAlign={'center'}
-          color={customTheme.palette.olive.main}
-        >
-          Snacks
-        </Typography>
+        <Grid item>
+          <Typography
+            fontSize={'2rem'}
+            textAlign={'center'}
+            color={customTheme.palette.olive.main}
+          >
+            Snacks
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Tooltip title={'All snacks are 150-250 kCal'} placement="right">
+            <IconButton>
+              <Info
+                sx={{
+                  color: customTheme.palette.olive.main,
+                }}
+              />
+            </IconButton>
+          </Tooltip>
+        </Grid>
       </Grid>
 
       <Grid container item xs={10} paddingTop={'6vh'}>

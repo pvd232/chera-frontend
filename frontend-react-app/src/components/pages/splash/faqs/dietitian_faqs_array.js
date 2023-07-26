@@ -31,7 +31,7 @@ const dietitianFAQsArray = [
   {
     question: 'Do snacks have portion sizes?',
     answer:
-      'No, all snacks are ~150-250 calories and are not portioned. Snacks are meant to be eaten in addition to meals.',
+      'No, all snacks are roughly 1/3 the size of meals. Snacks are meant to be eaten in addition to meals.',
   },
 ];
 export default dietitianFAQsArray;
