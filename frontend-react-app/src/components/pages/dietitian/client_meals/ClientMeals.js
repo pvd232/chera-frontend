@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import CircularProgressPage from '../../../shared_components/CircularProgressPage';
 import ClientMealsTable from "./ClientMealsTable";
 import ClientSnacksTable from "./ClientSnacksTable";
 import createScheduledOrderMealCardItems from "../../client/client_home/helpers/createScheduledOrderMealCardItems";
@@ -24,7 +26,13 @@ import SnackDTOFactory from "../../../../data_models/factories/dto/SnackDTOFacto
 
 const ClientMeals = (props) => {
   const [filterClient, setFilterClient] = useState(
-    props.clients.clientArray ? props.clients.clientArray[0].id : ""
+    props.clients.clientArray.length > 0 ? props.clients.clientArray[0].id : ""
+  );
+
+  const [filterClientfirstName, setFilterClientfirstName] = useState(
+    props.clients.clientArray.length > 0
+      ? props.clients.clientArray[0].firstName
+      : ""
   );
 
   const [selectedDeliveryIndex, setSelectedDeliveryIndex] = useState(0);
@@ -118,6 +126,7 @@ const ClientMeals = (props) => {
     // nesting the dependent state object' setState function works! nesting is based on dependency order ie., everything is dependent on client filter, which filters meals that are entered into mealSubscription filter which filters schedule meals
     setFilterClient(event.target.value);
     const client = props.clients.clientMap.get(event.target.value);
+    setFilterClientfirstName(client.firstName);
     const mealSubscription = mealSubscriptionsByClientIdMap.get(client.id);
     const refreshedMeals = await refreshScheduledOrderMeals(
       mealSubscription.id
@@ -144,35 +153,58 @@ const ClientMeals = (props) => {
     setExtendedScheduledOrderSnacks(refreshedSnacks);
   };
 
-  return (
-    extendedScheduledOrderMeals.length > 0 &&
-    extendedScheduledOrderSnacks.length > 0 && (
-      <Grid container item xs={10} className={clientMeals.pageContainer}>
-        <ClientMealsTable
-          clients={props.clients?.clientArray ?? []}
-          filterClient={filterClient}
-          selectedDeliveryIndex={selectedDeliveryIndex}
-          currentScheduledOrderMeals={Array.from(
-            createScheduledOrderMealCardItems(
-              extendedScheduledOrderMeals,
-              selectedDeliveryIndex
-            ).values()
-          )}
-          handleFilterChange={(e) => handleFilterChange(e)}
-          handleChangeDeliveryIndex={(deliveryIndex) =>
-            handleChangeDeliveryIndex(deliveryIndex)
-          }
-        />
-        <ClientSnacksTable
-          currentScheduledOrderSnacks={Array.from(
-            createScheduledOrderSnackCardItems(
-              extendedScheduledOrderSnacks,
-              selectedDeliveryIndex
-            ).values()
-          )}
-        />
-      </Grid>
-    )
-  );
+  if(extendedScheduledOrderMeals.length > 0 && extendedScheduledOrderSnacks.length > 0){
+    return (
+      <>
+        {extendedScheduledOrderMeals.length > 0 &&
+        extendedScheduledOrderSnacks.length > 0 ? (
+          <Grid container item xs={10} className={clientMeals.pageContainer}>
+            <ClientMealsTable
+              clients={props.clients?.clientArray ?? []}
+              filterClient={filterClient}
+              filterClientfirstName={filterClientfirstName}
+              selectedDeliveryIndex={selectedDeliveryIndex}
+              currentScheduledOrderMeals={Array.from(
+                createScheduledOrderMealCardItems(
+                  extendedScheduledOrderMeals,
+                  selectedDeliveryIndex
+                ).values()
+              )}
+              handleFilterChange={(e) => handleFilterChange(e)}
+              handleChangeDeliveryIndex={(deliveryIndex) =>
+                handleChangeDeliveryIndex(deliveryIndex)
+              }
+            />
+            <ClientSnacksTable
+              filterClientfirstName={filterClientfirstName}
+              currentScheduledOrderSnacks={Array.from(
+                createScheduledOrderSnackCardItems(
+                  extendedScheduledOrderSnacks,
+                  selectedDeliveryIndex
+                ).values()
+              )}
+            />
+          </Grid>
+        ) : (
+          <>
+            <Grid
+              item
+              container
+              className={clientMeals.pageContainer}
+              style={{ height: "10%", justifyContent: "center" }}
+            >
+              <Grid item>
+                <Typography>
+                  Nothing to see here yet! Check back after your client registers.
+                </Typography>
+              </Grid>
+            </Grid>
+          </>
+        )}
+      </>
+    );
+  }else {
+    return <CircularProgressPage />;
+  } 
 };
 export default ClientMeals;

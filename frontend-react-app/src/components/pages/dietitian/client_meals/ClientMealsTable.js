@@ -38,7 +38,7 @@ const ClientMealsTable = (props) => {
     <Grid container item className={clientMealsTable.tableSubContainer}>
       <Grid container item>
         <Typography className={clientMealsTable.header}>
-          Client Weekly Scheduled Meals
+        {props.filterClientfirstName}'s Weekly Scheduled Meals
         </Typography>
       </Grid>
       <Grid item xs={8} lg={10}>

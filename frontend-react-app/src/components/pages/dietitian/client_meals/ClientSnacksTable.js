@@ -9,9 +9,9 @@ const ClientSnacksTable = (props) => {
         <Grid container item>
           <Typography
             className={clientMealsTable.header}
-            style={{ padding: "20px 0" }}
+            paddingTop={'5vh'}
           >
-            Client Weekly Scheduled Snacks
+            {props.filterClientfirstName}'s Weekly Scheduled Snacks
           </Typography>
         </Grid>
         {props.currentScheduledOrderSnacks.map(
@@ -21,6 +21,7 @@ const ClientSnacksTable = (props) => {
                 item
                 key={`gridChosenScheduledOrderMeal${i}`}
                 className={clientMealsTable.scheduleMealCardContainer}
+                paddingBottom={'5vh'}
               >
                 <ScheduleSnackCard
                   snackData={scheduledOrderSnackCardData}
