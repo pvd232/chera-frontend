@@ -6,6 +6,7 @@ export default class ClientItem {
     this.address = client.address ?? '';
     this.mealPlanName = client.mealPlan.name;
     this.mealPlanNumber = client.mealPlan.number;
+    this.mealPlanCalories = client.mealPlan.dinnerCalories;
     this.notes = client.notes;
     this.isStagedClient = isStagedClient;
     // StagedClient property only, default to true

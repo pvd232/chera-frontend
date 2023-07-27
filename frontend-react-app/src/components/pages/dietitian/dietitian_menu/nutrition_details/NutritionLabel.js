@@ -15,7 +15,7 @@ const NutritionLabel = (props) => (
         Servings per container: 1
       </Typography>
     </header>
-    <Grid container item >
+    <Grid container item>
       <Grid item>
         <Typography
           color={'black'}
@@ -53,7 +53,7 @@ const NutritionLabel = (props) => (
                 Total Fat{' '}
                 {Math.round(
                   new NutrientItem(props.mealPlanMeal.getNutrient('fat')).amount
-                )}
+                )}{' '}
                 g
               </Typography>
             </Grid>
@@ -78,7 +78,7 @@ const NutritionLabel = (props) => (
                     new NutrientItem(
                       props.mealPlanMeal.getNutrient('saturated_fat')
                     ).amount
-                  )}
+                  )}{' '}
                   g
                 </Typography>
               </Grid>
@@ -117,7 +117,7 @@ const NutritionLabel = (props) => (
                   new NutrientItem(
                     props.mealPlanMeal.getNutrient('cholesterol')
                   ).amount
-                )}
+                )}{' '}
                 {
                   new NutrientItem(
                     props.mealPlanMeal.getNutrient('cholesterol')
@@ -149,7 +149,7 @@ const NutritionLabel = (props) => (
                 {Math.round(
                   new NutrientItem(props.mealPlanMeal.getNutrient('sodium'))
                     .amount
-                )}
+                )}{' '}
                 {
                   new NutrientItem(props.mealPlanMeal.getNutrient('sodium'))
                     .unit
@@ -179,7 +179,7 @@ const NutritionLabel = (props) => (
                 {Math.round(
                   new NutrientItem(props.mealPlanMeal.getNutrient('carb'))
                     .amount
-                )}
+                )}{' '}
                 {new NutrientItem(props.mealPlanMeal.getNutrient('carb')).unit}
               </Typography>
             </Grid>
@@ -204,7 +204,7 @@ const NutritionLabel = (props) => (
                     new NutrientItem(
                       props.mealPlanMeal.getNutrient('dietary_fiber')
                     ).amount
-                  )}
+                  )}{' '}
                   {
                     new NutrientItem(
                       props.mealPlanMeal.getNutrient('dietary_fiber')
@@ -235,7 +235,7 @@ const NutritionLabel = (props) => (
                   new NutrientItem(
                     props.mealPlanMeal.getNutrient('dietary_fiber')
                   ).amount
-                )}
+                )}{' '}
                 {
                   new NutrientItem(
                     props.mealPlanMeal.getNutrient('dietary_fiber')
@@ -256,7 +256,7 @@ const NutritionLabel = (props) => (
                 {Math.round(
                   new NutrientItem(props.mealPlanMeal.getNutrient('protein'))
                     .amount
-                )}
+                )}{' '}
                 {
                   new NutrientItem(props.mealPlanMeal.getNutrient('protein'))
                     .unit
@@ -283,7 +283,7 @@ const NutritionLabel = (props) => (
                 {Math.round(
                   new NutrientItem(props.mealPlanMeal.getNutrient('vitamin_d'))
                     .amount
-                )}
+                )}{' '}
                 {
                   new NutrientItem(props.mealPlanMeal.getNutrient('vitamin_d'))
                     .unit
@@ -309,7 +309,7 @@ const NutritionLabel = (props) => (
                 {Math.round(
                   new NutrientItem(props.mealPlanMeal.getNutrient('calcium'))
                     .amount
-                )}
+                )}{' '}
                 {
                   new NutrientItem(props.mealPlanMeal.getNutrient('calcium'))
                     .unit
@@ -335,7 +335,7 @@ const NutritionLabel = (props) => (
                 {Math.round(
                   new NutrientItem(props.mealPlanMeal.getNutrient('iron'))
                     .amount
-                )}
+                )}{' '}
                 {new NutrientItem(props.mealPlanMeal.getNutrient('iron')).unit}
               </Typography>
             </Grid>
@@ -358,7 +358,7 @@ const NutritionLabel = (props) => (
                 {Math.round(
                   new NutrientItem(props.mealPlanMeal.getNutrient('potassium'))
                     .amount
-                )}
+                )}{' '}
                 {
                   new NutrientItem(
                     new NutrientItem(
@@ -384,13 +384,13 @@ const NutritionLabel = (props) => (
       </Grid>
     </Grid>
 
-    <Typography color={'black'} fontSize={'.7rem'}>
+    {/* <Typography color={'black'} fontSize={'.7rem'}>
       * Percent Daily Values are based on Meal Plan{' '}
       {props.mealPlanMeal.associatedMealPlan.number} <br /> (currently selected)
       which is a {props.mealPlanMeal.associatedMealPlan.statedCaloricLowerBound}{' '}
       – {props.mealPlanMeal.associatedMealPlan.statedCaloricUpperBound} calorie
       diet.
-    </Typography>
+    </Typography> */}
   </section>
 );
 export default NutritionLabel;

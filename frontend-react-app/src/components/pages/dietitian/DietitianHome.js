@@ -11,8 +11,6 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import APIClient from '../../../helpers/APIClient';
 import BlackButton from '../../shared_components/BlackButton.ts';
-import { useWindowWidth } from '../../hooks/useWindowWidth';
-import ScreenSize from '../../../types/enums/ScreenSize';
 import StagedClientPaymentConfirmed from './StagedClientPaymentConfirmed';
 import EditClientMealPlanModal from './EditClientMealPlanModal';
 import CreateNewStagedClientModal from './create_new_staged_client_modal/CreateNewStagedClientModal';
@@ -25,8 +23,6 @@ import { getStagedClientItems } from './helpers/getStagedClientItems';
 import dietitianHome from './scss/DietitianHome.module.scss';
 
 const DietititanHome = (props) => {
-  const windowWidth = useWindowWidth();
-  const isMobile = windowWidth < ScreenSize.xs;
   const [clients, setClients] = useClients();
   const [stagedClients, setStagedClients] = useStagedClients();
   
@@ -102,7 +98,7 @@ const DietititanHome = (props) => {
                 <TableRow>
                   <TableCell align="left">Name</TableCell>
                   <TableCell align="left">Email</TableCell>
-                  <TableCell align="left">Meal Plan</TableCell>
+                  <TableCell align="left">Portion Size</TableCell>
                   <TableCell align="left">Notes</TableCell>
                   <TableCell align="center">Account Created</TableCell>
                 </TableRow>
@@ -116,7 +112,7 @@ const DietititanHome = (props) => {
                     <TableCell align="left">{row.email}</TableCell>
                     <TableCell align="left">
                       <Grid item container>
-                        {isMobile ? row.mealPlanNumber : row.mealPlanName}
+                        {row.mealPlanCalories}
                       </Grid>
                       <div className={dietitianHome.editMealPlanContainer}>
                         <EditClientMealPlanModal
@@ -146,7 +142,7 @@ const DietititanHome = (props) => {
                     <TableCell align="left">{row.email}</TableCell>
                     <TableCell align="left">
                       <Grid item container>
-                        {isMobile ? row.mealPlanNumber : row.mealPlanName}
+                        {row.mealPlanCalories} kCal
                       </Grid>
                       <div className={dietitianHome.editMealPlanContainer}>
                         <EditClientMealPlanModal

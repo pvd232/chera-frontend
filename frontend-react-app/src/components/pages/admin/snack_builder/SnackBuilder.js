@@ -29,7 +29,6 @@ const SnackBuilder = () => {
   const [snackId, setSnackId] = useState(false);
   const [snackName, setSnackName] = useState('');
   const [snackDescription, setSnackDescription] = useState('');
-  const [snackPrice, setSnackPrice] = useState(0);
   const [imageUrl, setImageUrl] = useState('');
   const [snackIngredients, setSnackIngredients] = useState([]);
 
@@ -43,7 +42,6 @@ const SnackBuilder = () => {
     updateUSDAIngredients({
       mounted: mounted,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
-      setSnackPrice: setSnackPrice,
       setMealPlans: setMealPlans,
       setMealPlanSnacks: setMealPlanSnacks,
     });
@@ -72,7 +70,6 @@ const SnackBuilder = () => {
     const newSnackDTO = createSnackData(
       newSnackId,
       snackName,
-      snackPrice,
       snackDescription,
       imageUrl
     );
@@ -111,7 +108,6 @@ const SnackBuilder = () => {
       snackId: snackId,
       snackName: snackName,
       snackDescription: snackDescription,
-      snackPrice: snackPrice,
       imageUrl: imageUrl,
       snackIngredients: snackIngredients,
     };
@@ -119,7 +115,6 @@ const SnackBuilder = () => {
     updateUSDAIngredients({
       mounted: true,
       setExtendedUsdaIngredients: setExtendedUsdaIngredients,
-      setSnackPrice: setSnackPrice,
       setMealPlans: setMealPlans,
       setMealPlanSnacks: setMealPlanSnacks,
     }).then(() => setSaveButtonLoading(false));

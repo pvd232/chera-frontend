@@ -6,6 +6,12 @@ const getMealPlanMealsURL = () => {
 const getMealPlanSnacksURL = () => {
   return getBaseURL('api') + `/extended_meal_plan_snack`;
 };
+const getMealNutrientStatsURL = () => {
+  return getBaseURL('api') + `/meal_nutrient_stats`;
+};
+const getSnackNutrientStatsURL = () => {
+  return getBaseURL('api') + `/snack_nutrient_stats`;
+};
 export default class CacheManager {
   static shared = (() => {
     if (CacheManager._instance) {
@@ -21,6 +27,16 @@ export default class CacheManager {
       '_mealPlanSnacks',
       getMealPlanSnacksURL()
     );
+    lazyCache(
+      CacheManager.prototype,
+      '_mealNutrientStats',
+      getMealNutrientStatsURL()
+    );
+    lazyCache(
+      CacheManager.prototype,
+      '_snackNutrientStats',
+      getSnackNutrientStatsURL()
+    );
   }
   get mealPlanMeals() {
     return this._mealPlanMeals;
@@ -33,5 +49,17 @@ export default class CacheManager {
   }
   set mealPlanSnacks(value) {
     this._mealPlanSnacks = value;
+  }
+  get mealNutrientStats() {
+    return this._mealNutrientStats;
+  }
+  set mealNutrientStats(value) {
+    this._mealNutrientStats = value;
+  }
+  get snackNutrientStats() {
+    return this._snackNutrientStats;
+  }
+  set snackNutrientStats(value) {
+    this._snackNutrientStats = value;
   }
 }

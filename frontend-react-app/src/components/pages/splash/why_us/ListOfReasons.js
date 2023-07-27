@@ -41,7 +41,7 @@ const ListOfReasons = (props) => (
       setReasonOpen={() => props.setReasonOpen('fourth')}
       bulletPrimaryText={'Client Journey Tracking'}
       bulletSecondaryText={
-        'Our platform provides an easy-to-use dashboard to manage client meal plans, view client meals and snacks, and comprehensively monitor nutritional intake.'
+        'Our platform provides an easy-to-use dashboard to manage client portion size, view client meals and snacks, and comprehensively monitor nutritional intake.'
       }
       icon={'monitor_heart'}
     ></ReasonBullet>

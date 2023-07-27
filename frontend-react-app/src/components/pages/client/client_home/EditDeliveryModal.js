@@ -241,7 +241,7 @@ const EditDeliveryModal = (props) => {
                   <Grid item>
                     <Typography className={editDeliveryModal.modalBodyText}>
                       {props.paused
-                        ? 'Want to get back on your meal plan?'
+                        ? 'Want to get resume your subscription?'
                         : 'Need to take a break?'}
                     </Typography>
                   </Grid>

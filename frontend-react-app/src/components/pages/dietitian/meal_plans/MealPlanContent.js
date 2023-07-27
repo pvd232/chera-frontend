@@ -5,7 +5,7 @@ const MealPlanContent = (props) => (
   <Grid container className={mealPlanContent.container}>
     <Grid item>
       <Typography className={mealPlanContent.bodyText}>
-        {`${props.mealTime}: ${props.calories} calories`}
+        {`${props.mealTime}: ${props.calories} kCal`}
       </Typography>
     </Grid>
   </Grid>
