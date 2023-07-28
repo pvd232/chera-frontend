@@ -246,7 +246,14 @@ const CreateNewStagedClientModal = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-
+const isAdmin = () => {
+  if (props.dietitianId === 'daniel.fleury02@gmail.com' || props.dietitianId === 'azeng8232@gmail.com' || props.dietitianId==='peterdriscoll@cherahealth.com'){
+    return true
+  }
+  else {
+    return false
+  }
+}
   const UIContainer = {};
   UIContainer['SignUpSummary'] = (
     <SignUpSummary
@@ -291,7 +298,7 @@ const CreateNewStagedClientModal = (props) => {
   );
   return (
     <div className={createNewStagedClientModal.rootDiv}>
-{props.isSampleTrialPeriod ? (
+{props.isSampleTrialPeriod && !isAdmin() ? (
         <Grid container>
           <Grid
             item
@@ -317,11 +324,10 @@ const CreateNewStagedClientModal = (props) => {
               variant="contained"
               onClick={handleClickOpen}
               className={
-                !props.isSampleTrialPeriod
-                  ? createNewStagedClientModal.button
-                  : createNewStagedClientModal.buttonDisabled
+                
+                  createNewStagedClientModal.buttonDisabled
               }
-              disabled={props.isSampleTrialPeriod}
+              disabled={true}
             >
               + Add New Client
             </Button>
@@ -333,9 +339,7 @@ const CreateNewStagedClientModal = (props) => {
           variant="contained"
           onClick={handleClickOpen}
           className={
-            !props.isSampleTrialPeriod
-              ? createNewStagedClientModal.button
-              : createNewStagedClientModal.buttonDisabled
+            createNewStagedClientModal.button
           }
         >
           + Add New Client
