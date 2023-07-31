@@ -246,14 +246,17 @@ const CreateNewStagedClientModal = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-const isAdmin = () => {
-  if (props.dietitianId === 'daniel.fleury02@gmail.com' || props.dietitianId === 'azeng8232@gmail.com' || props.dietitianId==='peterdriscoll@cherahealth.com'){
-    return true
-  }
-  else {
-    return false
-  }
-}
+  const isAdmin = () => {
+    if (
+      props.dietitianId === 'daniel.fleury02@gmail.com' ||
+      props.dietitianId === 'azeng8232@gmail.com' ||
+      props.dietitianId === 'peterdriscoll@cherahealth.com'
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
   const UIContainer = {};
   UIContainer['SignUpSummary'] = (
     <SignUpSummary
@@ -298,7 +301,7 @@ const isAdmin = () => {
   );
   return (
     <div className={createNewStagedClientModal.rootDiv}>
-{props.isSampleTrialPeriod && !isAdmin() ? (
+      {props.isSampleTrialPeriod && !isAdmin() ? (
         <Grid container>
           <Grid
             item
@@ -309,7 +312,7 @@ const isAdmin = () => {
             <Grid item>
               <Tooltip
                 title={
-                  'We are currently in our sample trial period. We expect to have the platform fully functional by Friday, July 28th!'
+                  'We are currently in our sample trial period. We expect to have the platform fully functional by Wednesday, August 2nd!'
                 }
               >
                 <IconButton>
@@ -323,10 +326,7 @@ const isAdmin = () => {
               id="add-staged-client-button"
               variant="contained"
               onClick={handleClickOpen}
-              className={
-                
-                  createNewStagedClientModal.buttonDisabled
-              }
+              className={createNewStagedClientModal.buttonDisabled}
               disabled={true}
             >
               + Add New Client
@@ -338,14 +338,11 @@ const isAdmin = () => {
           id="add-staged-client-button"
           variant="contained"
           onClick={handleClickOpen}
-          className={
-            createNewStagedClientModal.button
-          }
+          className={createNewStagedClientModal.button}
         >
           + Add New Client
         </Button>
       )}
-
 
       <Dialog
         open={open}
