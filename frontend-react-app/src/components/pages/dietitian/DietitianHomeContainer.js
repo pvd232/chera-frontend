@@ -18,6 +18,7 @@ import ExtendedMealDTOFactory from '../../../data_models/factories/dto/ExtendedM
 import MealDietaryRestrictionDTOFactory from '../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
 import ExtendedMealFactory from '../../../data_models/factories/model/ExtendedMealFactory';
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
+import { useClients } from "./hooks/useClients";
 
 const DietitianHomeContainer = (props) => {
   const [scheduleMeals, setScheduleMeals] = useState(false);
@@ -30,6 +31,7 @@ const DietitianHomeContainer = (props) => {
   const searchParams = useSearchParams()[0];
   const [stagedClientId, setStagedClientId] = useState('');
   const [isSampleTrialPeriod, setIsSampleTrialPeriod] = useState('');
+  const clients = useClients()[0];
 
   useEffect(() => {
     let mounted = true;
@@ -173,6 +175,7 @@ const DietitianHomeContainer = (props) => {
       extendedMeals: extendedMeals,
       snacks: snacks,
       isSampleTrialPeriod: isSampleTrialPeriod,
+      clients: clients,
     };
     // Pass the dataProps to the child component
     return cloneElement(props.childComponent, { ...dataProps });
