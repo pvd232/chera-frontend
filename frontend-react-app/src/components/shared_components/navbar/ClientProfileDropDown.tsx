@@ -34,6 +34,10 @@ const ClientProfileDropDown = () => {
     navigate('/payment');
   };
 
+  const handleInvoices = () => {
+    navigate('/invoices');
+  };
+
   const handleUpdateAddress = () => {
     navigate('/update-address');
   };
@@ -130,6 +134,15 @@ const ClientProfileDropDown = () => {
                     >
                       <Typography className={aboutDropDown.text}>
                         Payment
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      id="invoices"
+                      onClick={handleInvoices}
+                      className={aboutDropDown.menuItem}
+                    >
+                      <Typography className={aboutDropDown.text}>
+                        Invoices
                       </Typography>
                     </MenuItem>
 

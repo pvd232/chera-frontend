@@ -29,6 +29,7 @@ import DietitianLinks from './components/shared_components/navbar/links/Dietitia
 import { Auth0Navigator } from './auth0/Auth0Navigator';
 import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
 import Payment from './components/pages/client/ClientPayment';
+import ClientInvoice from './components/pages/client/ClientInvoice';
 import PlanDetails from './components/pages/client/PlanDetails';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
@@ -207,6 +208,17 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={<Payment stripePromise={props.stripePromise} />}
+                links={<ClientLinks />}
+                homeUrl="/home"
+              />
+            }
+          />
+
+          <Route
+            path="/invoices"
+            element={
+              <Navbar
+                childComponent={<ClientInvoice stripePromise={props.stripePromise} />}
                 links={<ClientLinks />}
                 homeUrl="/home"
               />

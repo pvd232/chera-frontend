@@ -1,0 +1,83 @@
+@use '../../../../static/scss/index.scss' as theme;
+@use './Client.module.scss' as client;
+.rootContainer {
+  row-gap: 2vh;
+  justify-content: center;
+  .headerContainer {
+    flex-direction: column;
+    
+    margin-left:2rem;
+    .stack {
+      row-gap: 2vh;
+    }
+    
+    .themeHeader {
+      font-size: client.$headerFontSize;
+      color: theme.$fucia;
+    }
+    .errorText {
+      font-size: 1rem;
+    }
+  }
+
+  .saveChangesButton {
+    background-color: theme.$fucia;
+    color: white;
+    border-radius: theme.$buttonBorderRadius;
+    border: none;
+    text-transform: none;
+    size: 100px;
+  }
+  
+
+  .header {
+    color: theme.$fucia;
+    font-size: client.$headerFontSize;
+    font-weight: bold;
+  }
+
+  .invoiceTable {
+    align-items: center;
+    text-align: center;
+    
+    .th {
+      font-weight: bold;
+    }
+  }
+}
+
+.dialogButton {
+  font-size: client.$subHeaderFontSize;
+  background-color: theme.$fucia;
+  color: white;
+  border-radius: theme.$buttonBorderRadius;
+  border: none;
+  text-transform: none;
+  font-size: 1.5rem;
+  padding: 0.5rem;
+}
+
+.button {
+  color: theme.$fucia;
+  background-color: white;
+  border-color: theme.$fucia;
+  border: 10px;
+}
+
+th {
+  background-color: theme.$fuciaHover; 
+  font-size: 1.2rem;
+}
+
+td{
+  padding: 0.5rem;
+}
+
+.oddRow {
+  background-color: theme.$lightFucia; 
+  margin: 100px;
+}
+
+.evenRow {
+  background-color: white; 
+}
