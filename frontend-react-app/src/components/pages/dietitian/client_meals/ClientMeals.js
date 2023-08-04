@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import CircularProgressPage from '../../../shared_components/CircularProgressPage';
+import CircularProgressPage from "../../../shared_components/CircularProgressPage";
 import ClientMealsTable from "./ClientMealsTable";
 import ClientSnacksTable from "./ClientSnacksTable";
 import createScheduleMealCardItems from "./helpers/createScheduleMealCardItems";
@@ -38,82 +38,86 @@ const ClientMeals = (props) => {
 
   const [selectedDeliveryIndex, setSelectedDeliveryIndex] = useState(0);
 
+  const [loading, setLoading] = useState(true);
+
   const [extendedScheduledOrderMeals, setExtendedScheduledOrderMeals] =
     useState([]);
 
   const [extendedScheduledOrderSnacks, setExtendedScheduledOrderSnacks] =
     useState([]);
 
+  useEffect(() => {
+    let mounted = true;
+    if (filterClient) {
+      // Fetch mealSubscription first
+      APIClient.getClientMealSubscription(filterClient).then(
+        (mealSubscriptionJSON) => {
+          const mealSubscriptionDTO = new MealSubscriptionDTO(
+            mealSubscriptionJSON
+          );
+          const mealSubscription = new MealSubscription(mealSubscriptionDTO);
 
-    useEffect(() => {
-      let mounted = true;
-      if (filterClient) {
-        // Fetch mealSubscription first
-        APIClient.getClientMealSubscription(filterClient).then(
-          (mealSubscriptionJSON) => {
-            const mealSubscriptionDTO = new MealSubscriptionDTO(
-              mealSubscriptionJSON
-            );
-            const mealSubscription = new MealSubscription(mealSubscriptionDTO);
-  
-            // Once we have mealSubscription, fetch extendedScheduledOrderMeals
-            APIClient.getExtendedScheduledOrderMeals(mealSubscription.id).then(
-              (extendedScheduledOrderMealsData) => {
-                const extendedScheduledOrderMealDTOs =
-                  extendedScheduledOrderMealsData.map(
-                    (json) =>
-                      new ExtendedScheduledOrderMealDTO(
-                        json,
-                        new ExtendedMealDTOFactory(
-                          new MealDietaryRestrictionDTOFactory()
-                        )
+          // Once we have mealSubscription, fetch extendedScheduledOrderMeals
+          APIClient.getExtendedScheduledOrderMeals(mealSubscription.id).then(
+            (extendedScheduledOrderMealsData) => {
+              const extendedScheduledOrderMealDTOs =
+                extendedScheduledOrderMealsData.map(
+                  (json) =>
+                    new ExtendedScheduledOrderMealDTO(
+                      json,
+                      new ExtendedMealDTOFactory(
+                        new MealDietaryRestrictionDTOFactory()
                       )
-                  );
-                const extendedScheduledOrderMeals =
-                  extendedScheduledOrderMealDTOs.map(
-                    (extendedScheduledOrderMealDTO) =>
-                      ExtendedScheduledOrderMeal.constructFromExtendedScheduledOrderMealDTO(
-                        extendedScheduledOrderMealDTO,
-                        new ExtendedMealFactory(
-                          new MealDietaryRestrictionFactory()
-                        )
+                    )
+                );
+              const extendedScheduledOrderMeals =
+                extendedScheduledOrderMealDTOs.map(
+                  (extendedScheduledOrderMealDTO) =>
+                    ExtendedScheduledOrderMeal.constructFromExtendedScheduledOrderMealDTO(
+                      extendedScheduledOrderMealDTO,
+                      new ExtendedMealFactory(
+                        new MealDietaryRestrictionFactory()
                       )
-                  );
-                if (mounted) {
-                  setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
-                }
+                    )
+                );
+              if (mounted) {
+                setExtendedScheduledOrderMeals(extendedScheduledOrderMeals);
+                setLoading(false);
               }
-            );
-  
-            // Get extended scheduled order snacks
-            APIClient.getExtendedScheduledOrderSnacks(mealSubscription.id).then(
-              (extendedScheduledOrderSnackData) => {
-                const extendedScheduledOrderSnackDTOs =
-                  extendedScheduledOrderSnackData.map(
-                    (json) =>
-                      new ExtendedScheduledOrderSnackDTO(
-                        json,
-                        new SnackDTOFactory()
-                      )
-                  );
-  
-                const extendedScheduledOrderSnacks =
-                  extendedScheduledOrderSnackDTOs.map(
-                    (extendedScheduledOrderSnackDTO) =>
-                      ExtendedScheduledOrderSnack.constructFromExtendedScheduledOrderSnackDTO(
-                        extendedScheduledOrderSnackDTO,
-                        new SnackFactory()
-                      )
-                  );
-                if (mounted) {
-                  setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
-                }
+            }
+          );
+
+          // Get extended scheduled order snacks
+          APIClient.getExtendedScheduledOrderSnacks(mealSubscription.id).then(
+            (extendedScheduledOrderSnackData) => {
+              const extendedScheduledOrderSnackDTOs =
+                extendedScheduledOrderSnackData.map(
+                  (json) =>
+                    new ExtendedScheduledOrderSnackDTO(
+                      json,
+                      new SnackDTOFactory()
+                    )
+                );
+
+              const extendedScheduledOrderSnacks =
+                extendedScheduledOrderSnackDTOs.map(
+                  (extendedScheduledOrderSnackDTO) =>
+                    ExtendedScheduledOrderSnack.constructFromExtendedScheduledOrderSnackDTO(
+                      extendedScheduledOrderSnackDTO,
+                      new SnackFactory()
+                    )
+                );
+              if (mounted) {
+                setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
               }
-            );
-          }
-        );
-      }
-    }, [filterClient]);
+            }
+          );
+        }
+      );
+    } else {
+      setLoading(false);
+    }
+  }, [filterClient]);
 
   const mealSubscriptionsByClientIdMap = (() => {
     const map = new Map();
@@ -154,58 +158,55 @@ const ClientMeals = (props) => {
     setExtendedScheduledOrderSnacks(refreshedSnacks);
   };
 
-  if(extendedScheduledOrderMeals.length > 0 && extendedScheduledOrderSnacks.length > 0){
-    return (
-      <>
-        {extendedScheduledOrderMeals.length > 0 &&
-        extendedScheduledOrderSnacks.length > 0 ? (
-          <Grid container item xs={10} className={clientMeals.pageContainer}>
-            <ClientMealsTable
-              clients={props.clients?.clientArray ?? []}
-              filterClient={filterClient}
-              filterClientfirstName={filterClientfirstName}
-              selectedDeliveryIndex={selectedDeliveryIndex}
-              currentScheduledOrderMeals={Array.from(
-                createScheduledOrderMealCardItems(
-                  extendedScheduledOrderMeals,
-                  selectedDeliveryIndex
-                ).values()
-              )}
-              handleFilterChange={(e) => handleFilterChange(e)}
-              handleChangeDeliveryIndex={(deliveryIndex) =>
-                handleChangeDeliveryIndex(deliveryIndex)
-              }
-            />
-            <ClientSnacksTable
-              filterClientfirstName={filterClientfirstName}
-              currentScheduledOrderSnacks={Array.from(
-                createScheduledOrderSnackCardItems(
-                  extendedScheduledOrderSnacks,
-                  selectedDeliveryIndex
-                ).values()
-              )}
-            />
-          </Grid>
-        ) : (
-          <>
-            <Grid
-              item
-              container
-              className={clientMeals.pageContainer}
-              style={{ height: "10%", justifyContent: "center" }}
-            >
-              <Grid item>
-                <Typography>
-                  Nothing to see here yet! Check back after your client registers.
-                </Typography>
-              </Grid>
-            </Grid>
-          </>
-        )}
-      </>
-    );
-  }else {
+  if (loading) {
     return <CircularProgressPage />;
-  } 
+  } else if (extendedScheduledOrderMeals.length > 0) {
+    return (
+      <Grid container item xs={10} className={clientMeals.pageContainer}>
+        <ClientMealsTable
+          clients={props.clients?.clientArray ?? []}
+          filterClient={filterClient}
+          filterClientfirstName={filterClientfirstName}
+          selectedDeliveryIndex={selectedDeliveryIndex}
+          currentScheduledOrderMeals={Array.from(
+            createScheduledOrderMealCardItems(
+              extendedScheduledOrderMeals,
+              selectedDeliveryIndex
+            ).values()
+          )}
+          handleFilterChange={(e) => handleFilterChange(e)}
+          handleChangeDeliveryIndex={(deliveryIndex) =>
+            handleChangeDeliveryIndex(deliveryIndex)
+          }
+        />
+        {extendedScheduledOrderSnacks.length > 0 && (
+          <ClientSnacksTable
+            filterClientfirstName={filterClientfirstName}
+            currentScheduledOrderSnacks={Array.from(
+              createScheduledOrderSnackCardItems(
+                extendedScheduledOrderSnacks,
+                selectedDeliveryIndex
+              ).values()
+            )}
+          />
+        )}
+      </Grid>
+    );
+  } else {
+    return (
+      <Grid
+        item
+        container
+        className={clientMeals.pageContainer}
+        style={{ height: "10%", justifyContent: "center" }}
+      >
+        <Grid item>
+          <Typography>
+            Nothing to see here yet! Check back after your client registers.
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  }
 };
 export default ClientMeals;
