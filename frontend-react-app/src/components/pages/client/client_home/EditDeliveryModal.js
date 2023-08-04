@@ -1,18 +1,20 @@
-import { useState } from 'react';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import APIClient from '../../../../helpers/APIClient';
-import DeliveryDateUtility from '../../../../helpers/DeliveryDateUtility';
-import Transition from '../../../shared_components/Transition';
-import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
-import ClientMenu from '../../client_sign_up/client_menu/ClientMenu';
-import checkUpcomingDelivery from '../helpers/checkUpcomingDelivery';
-import { pastCutoffDate } from './helpers/pastCutoffDate';
-import editDeliveryModal from './scss/EditDeliveryModal.module.scss';
-import COGSDTO from '../../../../data_models/dto/COGSDTO';
+import { useState } from "react";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+import APIClient from "../../../../helpers/APIClient";
+import DeliveryDateUtility from "../../../../helpers/DeliveryDateUtility";
+import Transition from "../../../shared_components/Transition";
+import BlueCircularProgress from "../../../shared_components/BlueCircularProgress";
+import ClientMenu from "../../client_sign_up/client_menu/ClientMenu";
+import checkUpcomingDelivery from "../helpers/checkUpcomingDelivery";
+import { pastCutoffDate } from "./helpers/pastCutoffDate";
+import editDeliveryModal from "./scss/EditDeliveryModal.module.scss";
+import COGSDTO from "../../../../data_models/dto/COGSDTO";
+import useAuthHeader from "../../../../helpers/useAuthHeader";
+
 const EditDeliveryModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -21,6 +23,8 @@ const EditDeliveryModal = (props) => {
     useState(false);
 
   const [editMeals, setEditMeals] = useState(false);
+
+  const authHeader = useAuthHeader();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,24 +41,28 @@ const EditDeliveryModal = (props) => {
   const handleSkipWeek = async () => {
     setLoading(true);
     if (props.weekSkipped) {
-      // Unskip week in component then update scheduledOrderMeals in parent with call to props
-      await APIClient.unskipWeek(
-        props.mealSubscription.id,
-        props.mealSubscription.stripeSubscriptionId,
-        DeliveryDateUtility.getDeliveryDateFromIndex(
-          props.selectedDeliveryIndex
-        ).getTime() / 1000
-      );
+      if (authHeader) {
+        // Unskip week in component then update scheduledOrderMeals in parent with call to props
+        await APIClient.unskipWeek(
+          props.mealSubscription.id,
+          props.mealSubscription.stripeSubscriptionId,
+          DeliveryDateUtility.getDeliveryDateFromIndex(
+            props.selectedDeliveryIndex
+          ).getTime() / 1000
+        );
+      }
       props.unskipWeek();
       setLoading(false);
     } else {
-      await APIClient.skipWeek(
-        props.mealSubscription.id,
-        props.mealSubscription.stripeSubscriptionId,
-        DeliveryDateUtility.getDeliveryDateFromIndex(
-          props.selectedDeliveryIndex
-        ).getTime() / 1000
-      );
+      if (authHeader) {
+        await APIClient.skipWeek(
+          props.mealSubscription.id,
+          props.mealSubscription.stripeSubscriptionId,
+          DeliveryDateUtility.getDeliveryDateFromIndex(
+            props.selectedDeliveryIndex
+          ).getTime() / 1000
+        );
+      }
       props.skipWeek();
       setLoading(false);
     }
@@ -62,25 +70,31 @@ const EditDeliveryModal = (props) => {
 
   const handlePauseMealSubscription = async () => {
     setLoadingPauseSubscription(true);
-    // Update mealSubscription in backend
-    APIClient.pauseMealSubscription(props.mealSubscription.id).then(() => {
-      APIClient.pauseScheduledOrderMeals(props.mealSubscription.id).then(() => {
-        props.pauseMealSubscription();
-        setLoadingPauseSubscription(false);
+    if (authHeader) {
+      // Update mealSubscription in backend
+      APIClient.pauseMealSubscription(props.mealSubscription.id, authHeader).then(() => {
+        APIClient.pauseScheduledOrderMeals(props.mealSubscription.id,authHeader).then(
+          () => {
+            props.pauseMealSubscription();
+            setLoadingPauseSubscription(false);
+          }
+        );
       });
-    });
+    }
   };
   const handleUnpauseMealSubscription = async () => {
     setLoadingPauseSubscription(true);
+    if (authHeader) {
     // Update meal program in backend
-    APIClient.unpauseMealSubscription(props.mealSubscription.id).then(() => {
-      APIClient.unpauseScheduledOrderMeals(props.mealSubscription.id).then(
+    APIClient.unpauseMealSubscription(props.mealSubscription.id, authHeader).then(() => {
+      APIClient.unpauseScheduledOrderMeals(props.mealSubscription.id, authHeader).then(
         () => {
           props.unpauseMealSubscription();
           setLoadingPauseSubscription(false);
         }
       );
     });
+  }
   };
 
   const handleChangeMeals = async () => {
@@ -128,7 +142,7 @@ const EditDeliveryModal = (props) => {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
         fullWidth={true}
-        maxWidth={editMeals ? 'xl' : 'xs'}
+        maxWidth={editMeals ? "xl" : "xs"}
       >
         {!editMeals ? (
           <Grid container item className={editDeliveryModal.dialogContainer}>
@@ -147,7 +161,7 @@ const EditDeliveryModal = (props) => {
                   <Typography className={editDeliveryModal.modalBodyText}>
                     {props.paused &&
                     !checkUpcomingDelivery(props.extendedScheduledOrderMeals)
-                      ? 'Your subscription is paused. You have no upcoming deliveries.'
+                      ? "Your subscription is paused. You have no upcoming deliveries."
                       : "This week's delivery is estimated to arrive on:"}
                   </Typography>
                 </Grid>
@@ -164,14 +178,14 @@ const EditDeliveryModal = (props) => {
                             ).getDay()
                           ]
                         }
-                        {', '}
+                        {", "}
                         {
                           DeliveryDateUtility.months[
                             DeliveryDateUtility.getDeliveryDateFromIndex(
                               props.selectedDeliveryIndex
                             ).getMonth()
                           ]
-                        }{' '}
+                        }{" "}
                         {DeliveryDateUtility.getDeliveryDateFromIndex(
                           props.selectedDeliveryIndex
                         ).getDate()}
@@ -190,7 +204,7 @@ const EditDeliveryModal = (props) => {
                       {!props.paused
                         ? !pastCutoffDate(props.selectedDeliveryIndex) &&
                           props.weekSkipped
-                          ? 'Would you like to unskip your delivery for this week?'
+                          ? "Would you like to unskip your delivery for this week?"
                           : !pastCutoffDate(props.selectedDeliveryIndex) &&
                             !props.weekSkipped
                           ? "Can't make this week?"
@@ -199,8 +213,8 @@ const EditDeliveryModal = (props) => {
                           (checkUpcomingDelivery(
                             props.extendedScheduledOrderMeals
                           )
-                            ? 'Your weekly meals will be skipped indefinitely after this week.'
-                            : 'Your delivery will be skipped this week.')}
+                            ? "Your weekly meals will be skipped indefinitely after this week."
+                            : "Your delivery will be skipped this week.")}
                     </Typography>
                   </Grid>
 
@@ -208,16 +222,16 @@ const EditDeliveryModal = (props) => {
                     <Button
                       id="skip-week-button"
                       disabled={skipWeekButtonDisabled}
-                      variant={'contained'}
+                      variant={"contained"}
                       onClick={handleSkipWeek}
                       className={editDeliveryModal.dialogButton}
                     >
                       {loading ? (
                         <BlueCircularProgress />
                       ) : props.weekSkipped ? (
-                        'Unskip week'
+                        "Unskip week"
                       ) : (
-                        'Skip this week'
+                        "Skip this week"
                       )}
                     </Button>
                   </Grid>
@@ -241,8 +255,8 @@ const EditDeliveryModal = (props) => {
                   <Grid item>
                     <Typography className={editDeliveryModal.modalBodyText}>
                       {props.paused
-                        ? 'Want to get resume your subscription?'
-                        : 'Need to take a break?'}
+                        ? "Want to get resume your subscription?"
+                        : "Need to take a break?"}
                     </Typography>
                   </Grid>
 
@@ -257,7 +271,7 @@ const EditDeliveryModal = (props) => {
                         {loadingPauseSubscription ? (
                           <BlueCircularProgress />
                         ) : (
-                          'Pause subscription'
+                          "Pause subscription"
                         )}
                       </Button>
                     ) : (
@@ -270,7 +284,7 @@ const EditDeliveryModal = (props) => {
                         {loadingPauseSubscription ? (
                           <BlueCircularProgress />
                         ) : (
-                          'Unpause subscription'
+                          "Unpause subscription"
                         )}
                       </Button>
                     )}

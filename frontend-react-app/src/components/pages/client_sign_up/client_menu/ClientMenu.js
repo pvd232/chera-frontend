@@ -38,6 +38,7 @@ import ExtendedStagedScheduleSnack from '../../../../data_models/model/ExtendedS
 import checkOrderQuantity from './helpers/checkOrderQuantity';
 import checkMinimumMealQuantity from './helpers/checkMinimumMealQuantity';
 import { getMealPrice } from './helpers/getMealPrice';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
 
 const ClientMenu = (props) => {
   const customTheme = useTheme();
@@ -48,6 +49,7 @@ const ClientMenu = (props) => {
   const [extendedMeals, setExtendedMeals] = useState(props.extendedMeals);
   const [chosenScheduleMeals, setChosenScheduleMeals] = useState([]);
   const [chosenScheduleSnacks, setChosenScheduleSnacks] = useState([]);
+  const authHeader = useAuthHeader();
   const mealTimes = ['breakfast', 'lunch', 'dinner'];
   const mealsByDietaryRestrictionMap = (() => {
     const mealsByDietaryRestrictionMapToReturn = new Map();
@@ -354,21 +356,21 @@ const ClientMenu = (props) => {
           return [];
         }
       })();
-      if (props.changingMeals) {
+      if (props.changingMeals && authHeader) {
         //  Delete meals
         await APIClient.deleteScheduleMeals(
-          LocalStorageManager.shared.clientMealSubscription.id
+          LocalStorageManager.shared.clientMealSubscription.id, authHeader
         );
         await APIClient.deleteScheduledOrderMeals(
-          LocalStorageManager.shared.clientMealSubscription.id
+          LocalStorageManager.shared.clientMealSubscription.id, authHeader
         );
         if (props.hasSnacks) {
           // Delete snacks
           await APIClient.deleteScheduleSnacks(
-            LocalStorageManager.shared.clientMealSubscription.id
+            LocalStorageManager.shared.clientMealSubscription.id, authHeader
           );
           await APIClient.deleteScheduledOrderSnacks(
-            LocalStorageManager.shared.clientMealSubscription.id
+            LocalStorageManager.shared.clientMealSubscription.id, authHeader
           );
         }
 
@@ -376,7 +378,7 @@ const ClientMenu = (props) => {
         const scheduleMealDTOs = chosenScheduleMeals.map((scheduleMeal) =>
           ScheduleMealDTO.initializeFromScheduleMeal(scheduleMeal)
         );
-        await APIClient.createScheduleMeals(scheduleMealDTOs);
+        await APIClient.createScheduleMeals(scheduleMealDTOs, authHeader);
 
         const scheduledOrderMealDTOs = newScheduledOrderMeals.map(
           (scheduledOrderMeal) =>
@@ -385,13 +387,13 @@ const ClientMenu = (props) => {
             )
         );
 
-        await APIClient.createScheduledOrderMeals(scheduledOrderMealDTOs);
+        await APIClient.createScheduledOrderMeals(scheduledOrderMealDTOs, authHeader);
 
         // Create snacks
         const scheduleSnackDTOs = chosenScheduleSnacks.map((scheduleSnack) =>
           ScheduleSnackDTO.initializeFromScheduleSnack(scheduleSnack)
         );
-        await APIClient.createScheduleSnacks(scheduleSnackDTOs);
+        await APIClient.createScheduleSnacks(scheduleSnackDTOs, authHeader);
         const scheduledOrderSnackDTOs = scheduledOrderSnacks.map(
           (scheduledOrderSnack) =>
             ScheduledOrderSnackDTO.initializeFromScheduledOrderSnack(
@@ -399,13 +401,14 @@ const ClientMenu = (props) => {
             )
         );
 
-        await APIClient.createScheduledOrderSnacks(scheduledOrderSnackDTOs);
+        await APIClient.createScheduledOrderSnacks(scheduledOrderSnackDTOs, authHeader);
 
         // Update stripe subscription with new numMeals and numSnacks
         await APIClient.updateStripeSubscription(
           LocalStorageManager.shared.clientMealSubscription.id,
           chosenScheduleMeals.length,
-          chosenScheduleSnacks.length
+          chosenScheduleSnacks.length,
+          authHeader
         );
 
         timer.current = window.setTimeout(() => {

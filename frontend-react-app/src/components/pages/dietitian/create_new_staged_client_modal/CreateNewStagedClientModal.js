@@ -18,6 +18,8 @@ import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
 import createNewStagedClientModal from './scss/CreateNewStagedClientModal.module.scss';
 import { validateZipcode } from '../../client_sign_up/account_registration/helpers/validateZipcode';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
+
 const CreateNewStagedClientModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -35,6 +37,7 @@ const CreateNewStagedClientModal = (props) => {
   const [shippingRate, setShippingRate] = useState(false);
   const [zipcodeError, setZipcodeError] = useState(false);
   const [stagedClientId, setStagedClientId] = useState('');
+  const authHeader = useAuthHeader();
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -84,24 +87,26 @@ const CreateNewStagedClientModal = (props) => {
   };
 
   const validate = async (form) => {
-    const stagedClientIdExists = await APIClient.getStagedClient(formValue.id);
-    const clientIdExists = await APIClient.getClient(formValue.id);
-    const clientIdExistsAsDietitian = await APIClient.getDietitian(
-      formValue.id
-    );
+    if (authHeader){
+      const stagedClientIdExists = await APIClient.getStagedClient(formValue.id, authHeader);
+      const clientIdExists = await APIClient.getClient(formValue.id, authHeader);
+      const clientIdExistsAsDietitian = await APIClient.getDietitian(
+        formValue.id, authHeader
+      );
 
-    if (stagedClientIdExists || clientIdExistsAsDietitian || clientIdExists) {
-      setError(true);
-      return false;
-    }
-    const validZipcode = validateZipcode(zipcode);
-    if (!validZipcode) {
-      setZipcodeError(true);
-    }
+      if (stagedClientIdExists || clientIdExistsAsDietitian || clientIdExists) {
+        setError(true);
+        return false;
+      }
+      const validZipcode = validateZipcode(zipcode);
+      if (!validZipcode) {
+        setZipcodeError(true);
+      }
 
-    setError(false);
-    setZipcodeError(false);
-    return form.checkValidity();
+      setError(false);
+      setZipcodeError(false);
+      return form.checkValidity();
+    }
   };
 
   // Input handlers
@@ -115,17 +120,17 @@ const CreateNewStagedClientModal = (props) => {
     setStagedClientId(newStagedClient.id);
 
     // Regular client creation with no meals selected nor paid for
-    if (!formValue.mealsPreSelected) {
+    if (!formValue.mealsPreSelected && authHeader) {
       setLoading(true);
       const newStagedClientDTO =
         StagedClientDTO.initializeFromStagedClient(newStagedClient);
-      await APIClient.createStagedClient(newStagedClientDTO);
+      await APIClient.createStagedClient(newStagedClientDTO, authHeader);
       props.handleFinishCreatingStagedClient(newStagedClient);
       resetFormValues();
       setLoading(false);
       setOpen(false);
       // Dietitian is selecting client meals, and has already filled out their info on the form and picked their meals
-    } else if (formValue.mealsPreSelected && scheduleMeals) {
+    } else if (formValue.mealsPreSelected && scheduleMeals && authHeader) {
       // Meal price will be determined dynamically as the meals are being selected
       // Thus set the meal price after the dietitian has selected the meals
       setMealPrice(mealPrice);
@@ -143,9 +148,9 @@ const CreateNewStagedClientModal = (props) => {
       );
       const newStagedClientDTO =
         StagedClientDTO.initializeFromStagedClient(newStagedClient);
-      await APIClient.createStagedClient(newStagedClientDTO);
-      await APIClient.createStagedScheduleMeals(stagedScheduleMealDTOs);
-      await APIClient.createStagedScheduleSnacks(stagedScheduleSnackDTOs);
+      await APIClient.createStagedClient(newStagedClientDTO, authHeader);
+      await APIClient.createStagedScheduleMeals(stagedScheduleMealDTOs, authHeader);
+      await APIClient.createStagedScheduleSnacks(stagedScheduleSnackDTOs, authHeader);
 
       props.handleFinishCreatingStagedClient(newStagedClient);
 

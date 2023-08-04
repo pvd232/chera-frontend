@@ -11,29 +11,33 @@ import planImage from './../../../static/images/plan.png';
 import APIClient from '../../../helpers/APIClient';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import { useNavigate } from 'react-router-dom';
+import useAuthHeader from "../../../helpers/useAuthHeader";
+
 const PlanDetails = (props) => {
   const [confirmDeleteUsername, setConfirmDeleteUsername] = useState('');
   const [loadingDeleteSubscription, setLoadingDeleteSubscription] =
     useState(false);
   const navigate = useNavigate();
+  const authHeader = useAuthHeader();
 
   const handleDeleteSubscription = async () => {
     const client = LocalStorageManager.shared.client;
     const clientMeal = LocalStorageManager.shared.clientMealSubscription;
     confirmDeleteUsername === client.id
       ? (() => {
-          setLoadingDeleteSubscription(true);
-          APIClient.deleteScheduleMeals(clientMeal.id).then(() => {
-            APIClient.deleteScheduledOrderMeals(clientMeal.id).then(() => {
-              APIClient.deleteScheduleSnacks(clientMeal.id).then(() => {
-                APIClient.deleteScheduledOrderSnacks(clientMeal.id).then(() => {
+        setLoadingDeleteSubscription(true);
+        if (authHeader){
+          APIClient.deleteScheduleMeals(clientMeal.id, authHeader).then(() => {
+            APIClient.deleteScheduledOrderMeals(clientMeal.id, authHeader).then(() => {
+              APIClient.deleteScheduleSnacks(clientMeal.id, authHeader).then(() => {
+                APIClient.deleteScheduledOrderSnacks(clientMeal.id, authHeader).then(() => {
                   APIClient.deleteStripeSubscription(
-                    clientMeal.stripeSubscriptionId
+                    clientMeal.stripeSubscriptionId, authHeader
                   ).then(() => {
-                    APIClient.deleteStripeCustomer(client.stripeId).then(() => {
-                      APIClient.deactivateClient(client.id).then(() => {
+                    APIClient.deleteStripeCustomer(client.stripeId, authHeader).then(() => {
+                      APIClient.deactivateClient(client.id, authHeader).then(() => {
                         APIClient.deactivateMealSubscription(
-                          clientMeal.id
+                          clientMeal.id, authHeader
                         ).then(() => {
                           setLoadingDeleteSubscription(false);
                           navigate('/client-log-in');
@@ -45,6 +49,7 @@ const PlanDetails = (props) => {
               });
             });
           });
+        }
         })()
       : alert('Please enter your username to confirm deletion.');
   };

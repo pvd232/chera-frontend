@@ -13,9 +13,11 @@ import Discount from '../../../../data_models/model/Discount.js';
 import BlackButton from '../../../shared_components/BlackButton.ts';
 import getSubtotal from './getSubtotal.js';
 import getOrderSubtotal from '../client_menu/helpers/getOrderSubtotal.js';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
+
 const DiscountOrderSummary = (props) => {
   const customTheme = useTheme();
-
+  const authHeader = useAuthHeader();
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [orderDiscountAmount, setOrderDiscountAmount] = useState(0);
   const [discountCode, setDiscountCode] = useState('');
@@ -36,8 +38,8 @@ const DiscountOrderSummary = (props) => {
     getOrderSubtotal(props.mealPrice, props.scheduleMeals, props.scheduleSnacks)
   );
   const handleSubmit = async () => {
-    if (discountCode !== '') {
-      const discountStatus = await APIClient.verifyDiscount(discountCode);
+    if (discountCode !== '' && authHeader) {
+      const discountStatus = await APIClient.verifyDiscount(discountCode, authHeader);
       if (discountStatus) {
         const newDiscountDTO = new DiscountDTO(discountStatus);
         const newDiscount = new Discount(newDiscountDTO);
@@ -69,7 +71,8 @@ const DiscountOrderSummary = (props) => {
             props.scheduleSnacks.length,
             props.zipcode,
             props.stagedClientId,
-            newDiscount.code
+            newDiscount.code,
+            authHeader
           ).then((clientSecret) => {
             props.setPaymentIntentData(clientSecret);
           });

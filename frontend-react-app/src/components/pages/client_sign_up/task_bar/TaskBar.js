@@ -11,62 +11,64 @@ import Snack from '../../../../data_models/model/Snack';
 import LocalStorageManager from '../../../../helpers/LocalStorageManager';
 import TaskBarItem from './TaskBarItem';
 import TaskBarLine from './TaskBarLine';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
 
 const TaskBar = (props) => {
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [snacks, setSnacks] = useState(false);
   const [stagedClient, setStagedClient] = useState(false);
   const [taskIndex, setTaskIndex] = useState(0);
+  const authHeader = useAuthHeader();
 
   useEffect(() => {
     let mounted = true;
-
-    APIClient.getExtendedMeals().then((extendedMeals) => {
-      if (mounted) {
-        const extendedMealArray = [];
-        for (const extendedMeal of extendedMeals) {
-          const newExtendedMealDTO = new ExtendedMealDTO(
-            extendedMeal,
-            new MealDietaryRestrictionDTOFactory()
-          );
-          const newExtendedMeal = new ExtendedMeal(
-            newExtendedMealDTO,
-            new MealDietaryRestrictionFactory()
-          );
-          extendedMealArray.push(newExtendedMeal);
+    if(authHeader){
+      APIClient.getExtendedMeals(authHeader).then((extendedMeals) => {
+        if (mounted) {
+          const extendedMealArray = [];
+          for (const extendedMeal of extendedMeals) {
+            const newExtendedMealDTO = new ExtendedMealDTO(
+              extendedMeal,
+              new MealDietaryRestrictionDTOFactory()
+            );
+            const newExtendedMeal = new ExtendedMeal(
+              newExtendedMealDTO,
+              new MealDietaryRestrictionFactory()
+            );
+            extendedMealArray.push(newExtendedMeal);
+          }
+          setExtendedMeals(extendedMealArray);
         }
-        setExtendedMeals(extendedMealArray);
-      }
-    });
-    APIClient.getSnacks().then((snacks) => {
-      if (mounted) {
-        const snackArray = [];
-        for (const snack of snacks) {
-          const newSnackDTO = new SnackDTO(snack);
-          const newSnack = new Snack(newSnackDTO);
-          snackArray.push(newSnack);
+      });
+      APIClient.getSnacks(authHeader).then((snacks) => {
+        if (mounted) {
+          const snackArray = [];
+          for (const snack of snacks) {
+            const newSnackDTO = new SnackDTO(snack);
+            const newSnack = new Snack(newSnackDTO);
+            snackArray.push(newSnack);
+          }
+          setSnacks(snackArray);
         }
-        setSnacks(snackArray);
-      }
-    });
-    APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {
-      const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
-        (date) => parseFloat(date) * 1000
-      );
-      LocalStorageManager.shared.upcomingDeliveryDates =
-        upcomingDeliveryDatesArray;
-      const upcomingCutoffDatesArray = data.upcoming_cutoff_dates.map(
-        (date) => parseFloat(date) * 1000
-      );
-      LocalStorageManager.shared.upcomingCutoffDates = upcomingCutoffDatesArray;
-    });
+      });
+      APIClient.getCurrentWeekDeliveryandCutoffDates(authHeader).then((data) => {
+        const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
+          (date) => parseFloat(date) * 1000
+        );
+        LocalStorageManager.shared.upcomingDeliveryDates =
+          upcomingDeliveryDatesArray;
+        const upcomingCutoffDatesArray = data.upcoming_cutoff_dates.map(
+          (date) => parseFloat(date) * 1000
+        );
+        LocalStorageManager.shared.upcomingCutoffDates = upcomingCutoffDatesArray;
+      });    
     if (window.location.href.includes('staged_client_id')) {
       const params = new Proxy(new URLSearchParams(window.location.search), {
         get: (searchParams, prop) => searchParams.get(prop),
       });
       // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
       let stagedClientId = params.staged_client_id; // "some_value"
-      APIClient.getStagedClient(stagedClientId).then((stagedClientData) => {
+      APIClient.getStagedClient(stagedClientId, authHeader).then((stagedClientData) => {
         const returnedStagedClient = new StagedClientDTO(stagedClientData);
         // If client account was already created then get values created during previous incompleted registration
         if (returnedStagedClient.accountCreated) {
@@ -78,8 +80,9 @@ const TaskBar = (props) => {
         }
       });
     }
+  }
     return () => (mounted = false);
-  }, []);
+  }, [authHeader]);
 
   if (stagedClient && extendedMeals && snacks) {
     const signupProps = {

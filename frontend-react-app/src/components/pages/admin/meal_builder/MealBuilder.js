@@ -24,6 +24,8 @@ import MealCard from './MealCard';
 import updateUSDAIngredients from './helpers/updateUSDAIngredients';
 import createMealData from './helpers/createMealData';
 import getMeal from './helpers/getMeal';
+import useAuthHeader from "../../../../helpers/useAuthHeader";
+
 const MealBuilder = () => {
   const [mealPlanMeals, setMealPlanMeals] = useState([]);
   const [selectedMealIndex, setSelectedMealIndex] = useState(0);
@@ -41,18 +43,22 @@ const MealBuilder = () => {
   const [loading, setLoading] = useState(false);
   const [saveButtonLoading, setSaveButtonLoading] = useState(false);
   const [hasBeenSaved, setHasBeenSaved] = useState(false);
+  const authHeader = useAuthHeader();
 
   useEffect(() => {
     let mounted = true;
-    updateUSDAIngredients({
-      mounted: mounted,
-      setExtendedUsdaIngredients: setExtendedUsdaIngredients,
-      setDietaryRestrictions: setDietaryRestrictions,
-      setMealPlans: setMealPlans,
-      setMealPlanMeals: setMealPlanMeals,
-    });
+    if(authHeader){
+      updateUSDAIngredients({
+        mounted: mounted,
+        setExtendedUsdaIngredients: setExtendedUsdaIngredients,
+        setDietaryRestrictions: setDietaryRestrictions,
+        setMealPlans: setMealPlans,
+        setMealPlanMeals: setMealPlanMeals,
+        authHeader: authHeader
+      });
+    }
     return () => (mounted = false);
-  }, []);
+  }, [authHeader]);
   const handleUpdateMealIndex = (index) => {
     setSelectedMealIndex(index);
     setMealId(getMeal(mealPlanMeals, index).mealId);

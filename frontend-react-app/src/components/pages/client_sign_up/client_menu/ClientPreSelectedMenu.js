@@ -14,10 +14,13 @@ import getStagedScheduleMealPageData from './helpers/getStagedScheduleMealPageDa
 import SnackCard from './SnackCard';
 import SideBar from './SideBar';
 import OrderMealCard from './OrderMealCard';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
+
 
 const ClientPreSelectedMenu = (props) => {
   const customTheme = useTheme();
   const [loading, setLoading] = useState(false);
+  const authHeader = useAuthHeader();
 
   // Dont want to show error message when page loads
   const [extendedStagedScheduleMeals, setExtendedStagedScheduleMeals] =
@@ -26,17 +29,19 @@ const ClientPreSelectedMenu = (props) => {
 
   useEffect(() => {
     let mounted = true;
-    APIClient.getExtendedStagedScheduleMeals(props.stagedClientId).then(
-      (extendedStagedScheduleMealData) => {
-        const [extendedStagedScheduleMeals, stagedScheduleMealItems] =
-          getStagedScheduleMealPageData(extendedStagedScheduleMealData);
-        if (mounted) {
-          setExtendedStagedScheduleMeals(extendedStagedScheduleMeals);
-          setStagedScheduleMealItems(stagedScheduleMealItems);
+    if(authHeader){
+      APIClient.getExtendedStagedScheduleMeals(props.stagedClientId, authHeader).then(
+        (extendedStagedScheduleMealData) => {
+          const [extendedStagedScheduleMeals, stagedScheduleMealItems] =
+            getStagedScheduleMealPageData(extendedStagedScheduleMealData);
+          if (mounted) {
+            setExtendedStagedScheduleMeals(extendedStagedScheduleMeals);
+            setStagedScheduleMealItems(stagedScheduleMealItems);
+          }
         }
-      }
-    );
-  }, [props.stagedClientId]);
+      );
+    }
+  }, [props.stagedClientId, authHeader]);
 
   const timer = useRef();
 

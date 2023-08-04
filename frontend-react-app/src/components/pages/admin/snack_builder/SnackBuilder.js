@@ -22,6 +22,7 @@ import SnackCard from '../meal_builder/MealCard';
 import updateUSDAIngredients from './helpers/updateUSDAIngredients';
 import createSnackData from './helpers/createSnackData';
 import getSnack from './helpers/getSnack';
+import useAuthHeader from "../../../../helpers/useAuthHeader";
 
 const SnackBuilder = () => {
   const [mealPlanSnacks, setMealPlanSnacks] = useState([]);
@@ -36,18 +37,21 @@ const SnackBuilder = () => {
   const [mealPlans, setMealPlans] = useState([]);
   const [loading, setLoading] = useState(false);
   const [saveButtonLoading, setSaveButtonLoading] = useState(false);
+  const authHeader = useAuthHeader();
 
   useEffect(() => {
     let mounted = true;
-    updateUSDAIngredients({
-      mounted: mounted,
-      setExtendedUsdaIngredients: setExtendedUsdaIngredients,
-      setMealPlans: setMealPlans,
-      setMealPlanSnacks: setMealPlanSnacks,
-    });
-
+    if (authHeader){
+      updateUSDAIngredients({
+        mounted: mounted,
+        setExtendedUsdaIngredients: setExtendedUsdaIngredients,
+        setMealPlans: setMealPlans,
+        setMealPlanSnacks: setMealPlanSnacks,
+        authHeader: authHeader
+      });
+    }
     return () => (mounted = false);
-  }, []);
+  }, [authHeader]);
 
   const handleUpdateSnackIndex = (index) => {
     setSelectedSnackIndex(index);

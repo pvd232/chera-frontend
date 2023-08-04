@@ -19,6 +19,7 @@ import MealDietaryRestrictionDTOFactory from '../../../data_models/factories/dto
 import ExtendedMealFactory from '../../../data_models/factories/model/ExtendedMealFactory';
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
 import { useClients } from "./hooks/useClients";
+import useAuthHeader from '../../../helpers/useAuthHeader';
 
 const DietitianHomeContainer = (props) => {
   const [scheduleMeals, setScheduleMeals] = useState(false);
@@ -27,6 +28,7 @@ const DietitianHomeContainer = (props) => {
   const [eatingDisorders, setEatingDisorders] = useState([]);
   const [extendedMeals, setExtendedMeals] = useState(false);
   const [snacks, setSnacks] = useState(false);
+  const authHeader = useAuthHeader();
 
   const searchParams = useSearchParams()[0];
   const [stagedClientId, setStagedClientId] = useState('');
@@ -35,124 +37,126 @@ const DietitianHomeContainer = (props) => {
 
   useEffect(() => {
     let mounted = true;
-    APIClient.getDietitianExtendedScheduleMeals(
-      LocalStorageManager.shared.dietitian.id
-    ).then((extendedScheduleMealsData) => {
-      if (extendedScheduleMealsData) {
-        const extendedScheduleMealArray = [];
-        for (const extendedScheduleMeal of extendedScheduleMealsData) {
-          const newExtendedScheduleMealDTO = new ExtendedScheduleMealDTO(
-            extendedScheduleMeal,
-            new ExtendedMealDTOFactory(new MealDietaryRestrictionDTOFactory())
-          );
-          const newExtendedScheduleMeal =
-            ExtendedScheduleMeal.constructFromExtendedScheduleMealDTO(
-              newExtendedScheduleMealDTO,
-              new ExtendedMealFactory(new MealDietaryRestrictionFactory())
+    if(authHeader){
+      APIClient.getDietitianExtendedScheduleMeals(
+        LocalStorageManager.shared.dietitian.id, authHeader
+      ).then((extendedScheduleMealsData) => {
+        if (extendedScheduleMealsData) {
+          const extendedScheduleMealArray = [];
+          for (const extendedScheduleMeal of extendedScheduleMealsData) {
+            const newExtendedScheduleMealDTO = new ExtendedScheduleMealDTO(
+              extendedScheduleMeal,
+              new ExtendedMealDTOFactory(new MealDietaryRestrictionDTOFactory())
             );
-          extendedScheduleMealArray.push(newExtendedScheduleMeal);
+            const newExtendedScheduleMeal =
+              ExtendedScheduleMeal.constructFromExtendedScheduleMealDTO(
+                newExtendedScheduleMealDTO,
+                new ExtendedMealFactory(new MealDietaryRestrictionFactory())
+              );
+            extendedScheduleMealArray.push(newExtendedScheduleMeal);
+          }
+          if (mounted) {
+            setScheduleMeals(extendedScheduleMealArray);
+          }
+        } else {
+          setScheduleMeals([]);
         }
-        if (mounted) {
-          setScheduleMeals(extendedScheduleMealArray);
-        }
-      } else {
-        setScheduleMeals([]);
-      }
-    });
-    APIClient.getDietitianMealSubscriptions(
-      LocalStorageManager.shared.dietitian.id
-    ).then((mealSubscriptionData) => {
-      if (mealSubscriptionData) {
-        const mealSubscriptionsMap = new Map();
-
-        mealSubscriptionData
-          .map(
-            (mealSubscriptionJSON) =>
-              new MealSubscriptionDTO(mealSubscriptionJSON)
-          )
-          .forEach((mealSubscriptionDTO) => {
-            const mealSubscription = new MealSubscription(mealSubscriptionDTO);
-            mealSubscriptionsMap.set(mealSubscription.id, mealSubscription);
-          });
-        if (mounted) {
-          setMealSubscriptions(mealSubscriptionsMap);
-        }
-      } else {
-        setMealSubscriptions([]);
-      }
-    });
-    APIClient.getEatingDisorders().then((eatingDisordersData) => {
-      if (mounted) {
-        const eatingDisorderDTOs = eatingDisordersData.map(
-          (eatingDisorderData) => new EatingDisorderDTO(eatingDisorderData)
-        );
-        const eatingDisorders = eatingDisorderDTOs.map(
-          (eatingDisorderDTO) => new EatingDisorder(eatingDisorderDTO)
-        );
-        setEatingDisorders(eatingDisorders);
-      }
-    });
-    APIClient.getMealPlans().then((mealPlansData) => {
-      if (mounted) {
-        const mealPlanDTOs = mealPlansData.map(
-          (mealPlanData) => new MealPlanDTO(mealPlanData)
-        );
-        const mealPlansMap = new Map();
-        const mealPlansArray = mealPlanDTOs.map((mealPlanDTO) => {
-          const newMealPlan = new MealPlan(mealPlanDTO);
-          mealPlansMap.set(mealPlanDTO.id, newMealPlan);
-          return newMealPlan;
-        });
-
-        setMealPlans({
-          mealPlansMap: mealPlansMap,
-          mealPlansArray: mealPlansArray,
-        });
-      }
-    });
-    APIClient.getExtendedMeals().then((extendedMealsData) => {
-      if (mounted) {
-        const extendedMealDTOs = extendedMealsData.map(
-          (json) =>
-            new ExtendedMealDTO(json, new MealDietaryRestrictionDTOFactory())
-        );
-        const extendedMeals = extendedMealDTOs.map(
-          (extendedMealDTO) =>
-            new ExtendedMeal(
-              extendedMealDTO,
-              new MealDietaryRestrictionFactory()
+      });
+      APIClient.getDietitianMealSubscriptions(
+        LocalStorageManager.shared.dietitian.id, authHeader
+      ).then((mealSubscriptionData) => {
+        if (mealSubscriptionData) {
+          const mealSubscriptionsMap = new Map();
+  
+          mealSubscriptionData
+            .map(
+              (mealSubscriptionJSON) =>
+                new MealSubscriptionDTO(mealSubscriptionJSON)
             )
+            .forEach((mealSubscriptionDTO) => {
+              const mealSubscription = new MealSubscription(mealSubscriptionDTO);
+              mealSubscriptionsMap.set(mealSubscription.id, mealSubscription);
+            });
+          if (mounted) {
+            setMealSubscriptions(mealSubscriptionsMap);
+          }
+        } else {
+          setMealSubscriptions([]);
+        }
+      });
+      APIClient.getEatingDisorders(authHeader).then((eatingDisordersData) => {
+        if (mounted) {
+          const eatingDisorderDTOs = eatingDisordersData.map(
+            (eatingDisorderData) => new EatingDisorderDTO(eatingDisorderData)
+          );
+          const eatingDisorders = eatingDisorderDTOs.map(
+            (eatingDisorderDTO) => new EatingDisorder(eatingDisorderDTO)
+          );
+          setEatingDisorders(eatingDisorders);
+        }
+      });
+      APIClient.getMealPlans(authHeader).then((mealPlansData) => {
+        if (mounted) {
+          const mealPlanDTOs = mealPlansData.map(
+            (mealPlanData) => new MealPlanDTO(mealPlanData)
+          );
+          const mealPlansMap = new Map();
+          const mealPlansArray = mealPlanDTOs.map((mealPlanDTO) => {
+            const newMealPlan = new MealPlan(mealPlanDTO);
+            mealPlansMap.set(mealPlanDTO.id, newMealPlan);
+            return newMealPlan;
+          });
+  
+          setMealPlans({
+            mealPlansMap: mealPlansMap,
+            mealPlansArray: mealPlansArray,
+          });
+        }
+      });
+      APIClient.getExtendedMeals(authHeader).then((extendedMealsData) => {
+        if (mounted) {
+          const extendedMealDTOs = extendedMealsData.map(
+            (json) =>
+              new ExtendedMealDTO(json, new MealDietaryRestrictionDTOFactory())
+          );
+          const extendedMeals = extendedMealDTOs.map(
+            (extendedMealDTO) =>
+              new ExtendedMeal(
+                extendedMealDTO,
+                new MealDietaryRestrictionFactory()
+              )
+          );
+          setExtendedMeals(extendedMeals);
+        }
+      });
+      APIClient.getSnacks(authHeader).then((snacksData) => {
+        if (mounted) {
+          const snackDTOs = snacksData.map((json) => new SnackDTO(json));
+          const snacks = snackDTOs.map((snackDTO) => new Snack(snackDTO));
+          setSnacks(snacks);
+        }
+      });
+      APIClient.getCurrentWeekDeliveryandCutoffDates(authHeader).then((data) => {
+        const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
+          (date) => parseFloat(date) * 1000
         );
-        setExtendedMeals(extendedMeals);
-      }
-    });
-    APIClient.getSnacks().then((snacksData) => {
-      if (mounted) {
-        const snackDTOs = snacksData.map((json) => new SnackDTO(json));
-        const snacks = snackDTOs.map((snackDTO) => new Snack(snackDTO));
-        setSnacks(snacks);
-      }
-    });
-    APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {
-      const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
-        (date) => parseFloat(date) * 1000
-      );
-      LocalStorageManager.shared.upcomingDeliveryDates =
-        upcomingDeliveryDatesArray;
-      const upcomingCutoffDatesArray = data.upcoming_cutoff_dates.map(
-        (date) => parseFloat(date) * 1000
-      );
-      LocalStorageManager.shared.upcomingCutoffDates = upcomingCutoffDatesArray;
-    });
-    APIClient.getIsSampleTrialPeriod().then((isSampleTrialPeriod) => {
-      setIsSampleTrialPeriod(isSampleTrialPeriod);
-    });
+        LocalStorageManager.shared.upcomingDeliveryDates =
+          upcomingDeliveryDatesArray;
+        const upcomingCutoffDatesArray = data.upcoming_cutoff_dates.map(
+          (date) => parseFloat(date) * 1000
+        );
+        LocalStorageManager.shared.upcomingCutoffDates = upcomingCutoffDatesArray;
+      });
+      APIClient.getIsSampleTrialPeriod(authHeader).then((isSampleTrialPeriod) => {
+        setIsSampleTrialPeriod(isSampleTrialPeriod);
+      });
+    }
     const stagedClientId = searchParams.get('stagedClientId');
     if (stagedClientId) {
       setStagedClientId(stagedClientId);
     }
     return () => (mounted = false);
-  }, [props, searchParams]);
+  }, [props, searchParams, authHeader]);
 
   if (
     scheduleMeals &&

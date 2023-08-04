@@ -3,8 +3,8 @@ import ExtendedClientDTO from '../../../../data_models/dto/ExtendedClientDTO';
 import ExtendedClient from '../../../../data_models/model/ExtendedClient';
 import MealPlanDTOFactory from '../../../../data_models/factories/dto/MealPlanDTOFactory';
 import MealPlanFactory from '../../../../data_models/factories/model/MealPlanFactory';
-export const getExtendedClients = async (dietitianId) => {
-  const extendedClientData = await APIClient.getExtendedClients(dietitianId);
+export const getExtendedClients = async (dietitianId, headers) => {
+  const extendedClientData = await APIClient.getExtendedClients(dietitianId, headers);
   if (extendedClientData) {
     const extendedClientArray = [];
     const clientMap = new Map();

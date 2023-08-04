@@ -7,43 +7,48 @@ import ExtendedMealDTO from '../../../../data_models/dto/ExtendedMealDTO';
 import ExtendedMeal from '../../../../data_models/model/ExtendedMeal';
 import MealDietaryRestrictionFactory from '../../../../data_models/factories/model/MealDietaryRestrictionFactory';
 import CircularProgressPage from '../../../shared_components/CircularProgressPage';
+import useAuthHeader from "../../../../helpers/useAuthHeader";
+
 const MealPlanMealBuilderContainer = (props) => {
   const [mealPlans, setMealPlans] = useState(false);
   const [meals, setMeals] = useState(false);
+  const authHeader = useAuthHeader();
   useEffect(() => {
     let mounted = true;
-    APIClient.getExtendedMeals().then((extendedMealData) => {
-      if (mounted) {
-        const extendedMealDTOs = extendedMealData.map(
-          (extendedMealData) =>
-            new ExtendedMealDTO(
-              extendedMealData,
-              new MealDietaryRestrictionDTOFactory()
-            )
-        );
-        const extendedMeals = extendedMealDTOs.map(
-          (extendedMealDTO) =>
-            new ExtendedMeal(
-              extendedMealDTO,
-              new MealDietaryRestrictionFactory()
-            )
-        );
-        setMeals(extendedMeals);
-      }
-    });
-    APIClient.getMealPlans().then((mealPlansData) => {
-      if (mounted) {
-        const mealPlanDTOs = mealPlansData.map(
-          (mealPlanData) => new MealPlanDTO(mealPlanData)
-        );
-        const mealPlans = mealPlanDTOs.map(
-          (mealPlanDTO) => new MealPlan(mealPlanDTO)
-        );
-        setMealPlans(mealPlans);
-      }
-    });
+    if(authHeader){
+      APIClient.getExtendedMeals(authHeader).then((extendedMealData) => {
+        if (mounted) {
+          const extendedMealDTOs = extendedMealData.map(
+            (extendedMealData) =>
+              new ExtendedMealDTO(
+                extendedMealData,
+                new MealDietaryRestrictionDTOFactory()
+              )
+          );
+          const extendedMeals = extendedMealDTOs.map(
+            (extendedMealDTO) =>
+              new ExtendedMeal(
+                extendedMealDTO,
+                new MealDietaryRestrictionFactory()
+              )
+          );
+          setMeals(extendedMeals);
+        }
+      });
+      APIClient.getMealPlans(authHeader).then((mealPlansData) => {
+        if (mounted) {
+          const mealPlanDTOs = mealPlansData.map(
+            (mealPlanData) => new MealPlanDTO(mealPlanData)
+          );
+          const mealPlans = mealPlanDTOs.map(
+            (mealPlanDTO) => new MealPlan(mealPlanDTO)
+          );
+          setMealPlans(mealPlans);
+        }
+      });
+    }
     return () => (mounted = false);
-  }, []);
+  }, [authHeader]);
 
   if (mealPlans && meals) {
     const dataProps = {

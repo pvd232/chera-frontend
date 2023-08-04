@@ -8,12 +8,14 @@ import Card from '@mui/material/Card';
 import FormHelperText from '@mui/material/FormHelperText';
 import APIClient from '../../../../helpers/APIClient';
 import ButtonContainer from './ButtonContainer';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
 const PaymentForm = (props) => {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState('');
+  const authHeader = useAuthHeader();
   const handleSubmit = async () => {
-    if (props.dietitianPrepaying) {
+    if (props.dietitianPrepaying && authHeader) {
       await APIClient.createDietitianPrePayment(
         props.numMeals,
         props.numSnacks,
@@ -21,7 +23,8 @@ const PaymentForm = (props) => {
         props.dietitianId,
         props.stripePaymentIntentId,
         props.zipcode,
-        props.discountCode
+        props.discountCode,
+        authHeader
       );
     } else {
       await props.handleSubmit();

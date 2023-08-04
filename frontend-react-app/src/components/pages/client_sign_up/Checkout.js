@@ -4,29 +4,35 @@ import { useState } from 'react';
 import DeliveryForm from './DeliveryForm.js';
 import APIClient from '../../../helpers/APIClient.js';
 import DiscountOrderSummary from './discount_order_summary/DiscountOrderSummary.js';
+import useAuthHeader from '../../../helpers/useAuthHeader';
 
 const Checkout = (props) => {
   const [editAddress, setEditAddress] = useState(
     // if the client secret exists then this page is being rerendered and the address has already been inputted and is not being edited
     true
   );
+  const authHeader = useAuthHeader();
+
   const handleSubmit = async (newClient) => {
-    const subscriptionData = await APIClient.createStripeSubscription(
-      props.scheduleMeals.length,
-      props.scheduleSnacks.length,
-      // Use the zipcode the client inputted, encase they did so incorrectly in the AccountRegistration page
-      newClient.zipcode,
-      newClient.id,
-      LocalStorageManager.shared.discount
-        ? LocalStorageManager.shared.discount.code
-        : '',
-      props.stagedClient.mealsPrepaid ? true : false
-    );
-    newClient.stripeId = subscriptionData.client_stripe_id;
-    props.setClient(newClient);
-    props.setClientSecret(subscriptionData.client_secret);
-    props.setStripeSubscriptionId(subscriptionData.stripe_subscription_id);
-    props.updateTaskIndex();
+    if(authHeader){
+      const subscriptionData = await APIClient.createStripeSubscription(
+        props.scheduleMeals.length,
+        props.scheduleSnacks.length,
+        // Use the zipcode the client inputted, encase they did so incorrectly in the AccountRegistration page
+        newClient.zipcode,
+        newClient.id,
+        LocalStorageManager.shared.discount
+          ? LocalStorageManager.shared.discount.code
+          : '',
+        props.stagedClient.mealsPrepaid ? true : false,
+        authHeader
+      );
+      newClient.stripeId = subscriptionData.client_stripe_id;
+      props.setClient(newClient);
+      props.setClientSecret(subscriptionData.client_secret);
+      props.setStripeSubscriptionId(subscriptionData.stripe_subscription_id);
+      props.updateTaskIndex();
+    }
   };
 
   return (

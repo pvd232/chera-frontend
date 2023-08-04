@@ -21,6 +21,7 @@ import Payment from './Payment.js';
 import Checkout from './Checkout.js';
 import ClientMenu from './client_menu/ClientMenu';
 import AccountRegistration from './account_registration/AccountRegistration';
+import useAuthHeader from "../../../helpers/useAuthHeader";
 
 const SignUpPage = (props) => {
   const [clientSecret, setClientSecret] = useState(false);
@@ -38,6 +39,8 @@ const SignUpPage = (props) => {
   const [zipcode, setZipcode] = useState(false);
   const [cogs, setCogs] = useState(false);
   const [mealPrice, setMealPrice] = useState(false);
+  const authHeader = useAuthHeader();
+
 
   const taskIndexArray = [
     'AccountRegistration',
@@ -47,120 +50,123 @@ const SignUpPage = (props) => {
   ];
 
   const handleSubmit = async () => {
-    const rehydratedClientDTO = ClientDTO.initializeFromForm(client);
+    if(authHeader){
+      const rehydratedClientDTO = ClientDTO.initializeFromForm(client);
 
-    const returnedClientData = await APIClient.createClient(
-      rehydratedClientDTO
-    );
-    if (!rehydratedClientDTO) {
-      alert(APIClient.networkErrorMessage);
-    }
-    const returnedClientDTO = new ClientDTO(returnedClientData);
-    const returnedClient = new Client(returnedClientDTO);
-    LocalStorageManager.shared.client = returnedClient;
-
-    const newMealSubscription = new MealSubscription(mealSubscription);
-    newMealSubscription.stripeSubscriptionId = stripeSubscriptionId;
-    newMealSubscription.dietitianId = returnedClient.dietitianId;
-
-    newMealSubscription.shippingRate = shippingRate;
-
-    const newMealSubscriptionDTO =
-      MealSubscriptionDTO.initializeFromMealSubscription(newMealSubscription);
-    const createdSubscription = await APIClient.createMealSubscription(
-      newMealSubscriptionDTO
-    );
-    LocalStorageManager.shared.clientMealSubscription = createdSubscription;
-
-    if (orderDiscount) {
-      await APIClient.createOrderDiscount(orderDiscount);
-    }
-
-    const scheduleMealDTOs = scheduleMeals.map((scheduleMeal) =>
-      ScheduleMealDTO.initializeFromScheduleMeal(scheduleMeal)
-    );
-
-    await APIClient.createScheduleMeals(scheduleMealDTOs);
-
-    const scheduledOrderMealDTOs = scheduledOrderMeals.map(
-      (scheduledOrderMeal) =>
-        ScheduledOrderMealDTO.initializeFromScheduledOrderMeal(
-          scheduledOrderMeal
-        )
-    );
-
-    await APIClient.createScheduledOrderMeals(scheduledOrderMealDTOs);
-    if (scheduleSnacks.length > 0) {
-      const scheduleSnackDTOs = scheduleSnacks.map((scheduleSnack) =>
-        ScheduleSnackDTO.initializeFromScheduleSnack(scheduleSnack)
+      const returnedClientData = await APIClient.createClient(
+        rehydratedClientDTO, authHeader
       );
-      await APIClient.createScheduleSnacks(scheduleSnackDTOs);
-      const scheduledOrderSnackDTOs = scheduledOrderSnacks.map(
-        (scheduledOrderSnack) =>
-          ScheduledOrderSnackDTO.initializeFromScheduledOrderSnack(
-            scheduledOrderSnack
+      if (!rehydratedClientDTO) {
+        alert(APIClient.networkErrorMessage);
+      }
+      const returnedClientDTO = new ClientDTO(returnedClientData);
+      const returnedClient = new Client(returnedClientDTO);
+      LocalStorageManager.shared.client = returnedClient;
+
+      const newMealSubscription = new MealSubscription(mealSubscription);
+      newMealSubscription.stripeSubscriptionId = stripeSubscriptionId;
+      newMealSubscription.dietitianId = returnedClient.dietitianId;
+
+      newMealSubscription.shippingRate = shippingRate;
+
+      const newMealSubscriptionDTO =
+        MealSubscriptionDTO.initializeFromMealSubscription(newMealSubscription);
+      const createdSubscription = await APIClient.createMealSubscription(
+        newMealSubscriptionDTO, authHeader
+      );
+      LocalStorageManager.shared.clientMealSubscription = createdSubscription;
+
+      if (orderDiscount) {
+        await APIClient.createOrderDiscount(orderDiscount, authHeader);
+      }
+
+      const scheduleMealDTOs = scheduleMeals.map((scheduleMeal) =>
+        ScheduleMealDTO.initializeFromScheduleMeal(scheduleMeal)
+      );
+
+      await APIClient.createScheduleMeals(scheduleMealDTOs, authHeader);
+
+      const scheduledOrderMealDTOs = scheduledOrderMeals.map(
+        (scheduledOrderMeal) =>
+          ScheduledOrderMealDTO.initializeFromScheduledOrderMeal(
+            scheduledOrderMeal
           )
       );
-      await APIClient.createScheduledOrderSnacks(scheduledOrderSnackDTOs);
-    }
 
-    // Create first invoice
-    const newMealSubscriptionInvoiceId = uuid();
-    const newMealSubscriptionInvoice =
-      MealSubscriptionInvoice.createInitialInvoice({
-        mealSubscriptionInvoiceId: newMealSubscriptionInvoiceId,
-        mealSubscriptionId: createdSubscription.id,
-        deliveryDate: scheduledOrderMealDTOs[0].deliveryDate,
-      });
+      await APIClient.createScheduledOrderMeals(scheduledOrderMealDTOs, authHeader);
+      if (scheduleSnacks.length > 0) {
+        const scheduleSnackDTOs = scheduleSnacks.map((scheduleSnack) =>
+          ScheduleSnackDTO.initializeFromScheduleSnack(scheduleSnack)
+        );
+        await APIClient.createScheduleSnacks(scheduleSnackDTOs, authHeader);
+        const scheduledOrderSnackDTOs = scheduledOrderSnacks.map(
+          (scheduledOrderSnack) =>
+            ScheduledOrderSnackDTO.initializeFromScheduledOrderSnack(
+              scheduledOrderSnack
+            )
+        );
+        await APIClient.createScheduledOrderSnacks(scheduledOrderSnackDTOs, authHeader);
+      }
 
-    const firstWeekScheduledOrderMeals = scheduledOrderMeals.filter(
-      (scheduledOrderMeal) =>
-        scheduledOrderMeal.deliveryDate.getTime() ===
-        newMealSubscriptionInvoice.deliveryDate.getTime()
-    );
-    // Create first order meals
-    const initialOrderMeals = createInitialOrderMeals(
-      newMealSubscriptionInvoice.id,
-      firstWeekScheduledOrderMeals
-    );
+      // Create first invoice
+      const newMealSubscriptionInvoiceId = uuid();
+      const newMealSubscriptionInvoice =
+        MealSubscriptionInvoice.createInitialInvoice({
+          mealSubscriptionInvoiceId: newMealSubscriptionInvoiceId,
+          mealSubscriptionId: createdSubscription.id,
+          deliveryDate: scheduledOrderMealDTOs[0].deliveryDate,
+        });
 
-    // Post first invoice to the backend
-    const mealSubscriptionInvoiceDTO =
-      MealSubscriptionInvoiceDTO.initializeFromMealSubscriptionInvoice(
-        newMealSubscriptionInvoice
-      );
-
-    await APIClient.createMealSubscriptionInvoice(
-      mealSubscriptionInvoiceDTO,
-      discountCode
-    );
-
-    const orderMealDTOArray = [];
-    for (const orderMeal of initialOrderMeals) {
-      const orderMealDTO = OrderMealDTO.initializeFromOrderMeal(orderMeal);
-      orderMealDTOArray.push(orderMealDTO);
-    }
-
-    await APIClient.createOrderMeals(orderMealDTOArray);
-
-    // Create first order snacks
-    if (scheduleSnacks.length > 0) {
-      const firstWeekScheduledOrderSnacks = scheduledOrderSnacks.filter(
-        (scheduledOrderSnack) =>
-          scheduledOrderSnack.deliveryDate.getTime() ===
+      const firstWeekScheduledOrderMeals = scheduledOrderMeals.filter(
+        (scheduledOrderMeal) =>
+          scheduledOrderMeal.deliveryDate.getTime() ===
           newMealSubscriptionInvoice.deliveryDate.getTime()
       );
-      const initialOrderSnacks = createInitialOrderSnacks(
+      // Create first order meals
+      const initialOrderMeals = createInitialOrderMeals(
         newMealSubscriptionInvoice.id,
-        firstWeekScheduledOrderSnacks
+        firstWeekScheduledOrderMeals
       );
-      const orderSnackDTOArray = [];
-      for (const orderSnack of initialOrderSnacks) {
-        const orderSnackDTO =
-          OrderSnackDTO.initializeFromOrderSnack(orderSnack);
-        orderSnackDTOArray.push(orderSnackDTO);
+
+      // Post first invoice to the backend
+      const mealSubscriptionInvoiceDTO =
+        MealSubscriptionInvoiceDTO.initializeFromMealSubscriptionInvoice(
+          newMealSubscriptionInvoice
+        );
+
+      await APIClient.createMealSubscriptionInvoice(
+        mealSubscriptionInvoiceDTO,
+        discountCode, 
+        authHeader
+      );
+
+      const orderMealDTOArray = [];
+      for (const orderMeal of initialOrderMeals) {
+        const orderMealDTO = OrderMealDTO.initializeFromOrderMeal(orderMeal);
+        orderMealDTOArray.push(orderMealDTO);
       }
-      await APIClient.createOrderSnacks(orderSnackDTOArray);
+
+      await APIClient.createOrderMeals(orderMealDTOArray, authHeader);
+
+      // Create first order snacks
+      if (scheduleSnacks.length > 0) {
+        const firstWeekScheduledOrderSnacks = scheduledOrderSnacks.filter(
+          (scheduledOrderSnack) =>
+            scheduledOrderSnack.deliveryDate.getTime() ===
+            newMealSubscriptionInvoice.deliveryDate.getTime()
+        );
+        const initialOrderSnacks = createInitialOrderSnacks(
+          newMealSubscriptionInvoice.id,
+          firstWeekScheduledOrderSnacks
+        );
+        const orderSnackDTOArray = [];
+        for (const orderSnack of initialOrderSnacks) {
+          const orderSnackDTO =
+            OrderSnackDTO.initializeFromOrderSnack(orderSnack);
+          orderSnackDTOArray.push(orderSnackDTO);
+        }
+        await APIClient.createOrderSnacks(orderSnackDTOArray, authHeader);
+      }
     }
     return;
   };

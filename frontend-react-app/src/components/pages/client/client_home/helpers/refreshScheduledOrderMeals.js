@@ -6,9 +6,9 @@ import ExtendedScheduledOrderMeal from '../../../../../data_models/model/Extende
 import ExtendedScheduledOrderMealDTO from '../../../../../data_models/dto/ExtendedScheduledOrderMealDTO';
 import MealDietaryRestrictionFactory from '../../../../../data_models/factories/model/MealDietaryRestrictionFactory';
 
-const refreshScheduledOrderMeals = async (mealSubscriptionId) => {
+const refreshScheduledOrderMeals = async (mealSubscriptionId, headers) => {
   const extendedScheduledOrderMealsData =
-    await APIClient.getExtendedScheduledOrderMeals(mealSubscriptionId);
+    await APIClient.getExtendedScheduledOrderMeals(mealSubscriptionId, headers);
 
   const extendedScheduledOrderMealDTOs = extendedScheduledOrderMealsData.map(
     (json) =>

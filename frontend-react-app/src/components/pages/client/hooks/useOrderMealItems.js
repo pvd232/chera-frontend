@@ -10,14 +10,18 @@ import ExtendedOrderMealDTO from '../../../../data_models/dto/ExtendedOrderMealD
 import PreviousDeliveryItem from '../../../ui_data_containers/PreviousDeliveryItem';
 import createScheduledOrderMealCardItems from '../client_home/helpers/createScheduledOrderMealCardItems';
 import APIClient from '../../../../helpers/APIClient';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
+
 export const useOrderMealItems = () => {
   const [previousOrderMeals, setPreviousOrderMeals] = useState(false);
+  const authHeader = useAuthHeader();
 
   useEffect(() => {
     let mounted = true;
 
+    if(authHeader){
     APIClient.getClientExtendedOrderMeals(
-      LocalStorageManager.shared.clientMealSubscription.id
+      LocalStorageManager.shared.clientMealSubscription.id, authHeader
     ).then((extendedOrderMealsData) => {
       if (mounted) {
         const extendedOrderMealDTOs = extendedOrderMealsData.map(
@@ -84,7 +88,8 @@ export const useOrderMealItems = () => {
         setPreviousOrderMeals(orderMealItems);
       }
     });
+  }
     return () => (mounted = false);
-  }, []);
+  }, [authHeader]);
   return previousOrderMeals;
 };

@@ -24,6 +24,7 @@ import refreshScheduledOrderMeals from "../../client/client_home/helpers/refresh
 import refreshScheduledOrderSnacks from "../../client/client_home/helpers/refreshScheduledOrderSnacks";
 import createScheduledOrderMealCardItems from "../../client/client_home/helpers/createScheduledOrderMealCardItems";
 import createScheduledOrderSnackCardItems from "../../client/client_home/helpers/createScheduledOrderSnackCardItems";
+import useAuthHeader from '../../../../helpers/useAuthHeader';
 
 const ClientMeals = (props) => {
   const [filterClient, setFilterClient] = useState(
@@ -44,12 +45,14 @@ const ClientMeals = (props) => {
   const [extendedScheduledOrderSnacks, setExtendedScheduledOrderSnacks] =
     useState([]);
 
+  const authHeader = useAuthHeader();
+
 
     useEffect(() => {
       let mounted = true;
-      if (filterClient) {
+      if (filterClient && authHeader) {
         // Fetch mealSubscription first
-        APIClient.getClientMealSubscription(filterClient).then(
+        APIClient.getClientMealSubscription(filterClient, authHeader).then(
           (mealSubscriptionJSON) => {
             const mealSubscriptionDTO = new MealSubscriptionDTO(
               mealSubscriptionJSON
@@ -57,7 +60,7 @@ const ClientMeals = (props) => {
             const mealSubscription = new MealSubscription(mealSubscriptionDTO);
   
             // Once we have mealSubscription, fetch extendedScheduledOrderMeals
-            APIClient.getExtendedScheduledOrderMeals(mealSubscription.id).then(
+            APIClient.getExtendedScheduledOrderMeals(mealSubscription.id, authHeader).then(
               (extendedScheduledOrderMealsData) => {
                 const extendedScheduledOrderMealDTOs =
                   extendedScheduledOrderMealsData.map(
@@ -86,7 +89,7 @@ const ClientMeals = (props) => {
             );
   
             // Get extended scheduled order snacks
-            APIClient.getExtendedScheduledOrderSnacks(mealSubscription.id).then(
+            APIClient.getExtendedScheduledOrderSnacks(mealSubscription.id, authHeader).then(
               (extendedScheduledOrderSnackData) => {
                 const extendedScheduledOrderSnackDTOs =
                   extendedScheduledOrderSnackData.map(
@@ -113,7 +116,7 @@ const ClientMeals = (props) => {
           }
         );
       }
-    }, [filterClient]);
+    }, [filterClient, authHeader]);
 
   const mealSubscriptionsByClientIdMap = (() => {
     const map = new Map();

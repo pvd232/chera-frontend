@@ -20,9 +20,11 @@ import StagedClient from '../../../data_models/model/StagedClient';
 import StagedClientDTO from '../../../data_models/dto/StagedClientDTO';
 import ClientDTO from '../../../data_models/dto/ClientDTO';
 import editClientMealPlanModal from './scss/EditClientMealPlanModal.module.scss';
+import useAuthHeader from "../../../helpers/useAuthHeader";
 const EditClientMealPlanModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const authHeader = useAuthHeader();
 
   const [mealPlanId, setMealPlanId] = useState('');
   const validate = async (form) => {
@@ -37,12 +39,12 @@ const EditClientMealPlanModal = (props) => {
       const currentStagedClientDTO =
         StagedClientDTO.initializeFromStagedClient(currentStagedClient);
       currentStagedClientDTO.mealPlanId = mealPlanId;
-      await APIClient.updateStagedClient(currentStagedClientDTO);
+      await APIClient.updateStagedClient(currentStagedClientDTO, authHeader);
     } else {
       const currentClient = new Client(props.clientItem.client);
       const currentClientDTO = ClientDTO.initializeFromForm(currentClient);
       currentClientDTO.mealPlanId = mealPlanId;
-      await APIClient.updateClient(currentClientDTO);
+      await APIClient.updateClient(currentClientDTO, authHeader);
     }
     props.handleFinishEditingMealPlan();
 

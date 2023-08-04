@@ -5,28 +5,34 @@ import APIClient from '../../../helpers/APIClient';
 import CircularProgressPage from '../../shared_components/CircularProgressPage';
 import PaymentForm from '../client_sign_up/payment_form/PaymentForm';
 import DiscountOrderSummary from '../client_sign_up/discount_order_summary/DiscountOrderSummary';
+import useAuthHeader from '../../../helpers/useAuthHeader';
 
 const SignUpSummary = (props) => {
   const [clientSecret, setClientSecret] = useState('');
   const [stripePaymentIntentId, setStripePaymentIntentId] = useState('');
   const [discountCode, setDiscountCode] = useState(false);
 
+  const authHeader = useAuthHeader();
+
   useEffect(() => {
     let mounted = true;
-    APIClient.createPaymentIntent(
-      props.numMeals,
-      props.numSnacks,
-      props.zipcode,
-      props.stagedClientId,
-      false
-    ).then((paymentIntentData) => {
-      if (mounted && paymentIntentData) {
-        setClientSecret(paymentIntentData.client_secret);
-        setStripePaymentIntentId(paymentIntentData.stripe_payment_intent_id);
-      }
-    });
+    if(authHeader){
+      APIClient.createPaymentIntent(
+        props.numMeals,
+        props.numSnacks,
+        props.zipcode,
+        props.stagedClientId,
+        false,
+        authHeader
+      ).then((paymentIntentData) => {
+        if (mounted && paymentIntentData) {
+          setClientSecret(paymentIntentData.client_secret);
+          setStripePaymentIntentId(paymentIntentData.stripe_payment_intent_id);
+        }
+      });
+    }
     return () => (mounted = false);
-  }, [props.numMeals, props.numSnacks, props.zipcode, props.stagedClientId]);
+  }, [props.numMeals, props.numSnacks, props.zipcode, props.stagedClientId, authHeader]);
 
   const appearance = {
     theme: 'stripe',

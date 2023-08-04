@@ -3,9 +3,9 @@ import ExtendedStagedClientDTO from '../../../../data_models/dto/ExtendedStagedC
 import ExtendedStagedClient from '../../../../data_models/model/ExtendedStagedClient';
 import MealPlanDTOFactory from '../../../../data_models/factories/dto/MealPlanDTOFactory';
 import MealPlanFactory from '../../../../data_models/factories/model/MealPlanFactory';
-export const getExtendedStagedClients = async (dietitianId) => {
+export const getExtendedStagedClients = async (dietitianId, headers) => {
   const extendedStagedClientData = await APIClient.getExtendedStagedClients(
-    dietitianId
+    dietitianId, headers
   );
   if (extendedStagedClientData) {
     const filteredExtendedStagedClientData = extendedStagedClientData.filter(

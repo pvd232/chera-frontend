@@ -8,6 +8,7 @@ import DietitianDTO from "../../../data_models/dto/DietitianDTO";
 import Dietitian from "../../../data_models/model/Dietitian";
 import Client from '../../../data_models/model/Client';
 import ClientDTO from '../../../data_models/dto/ClientDTO';
+import useAuthHeader from '../../../helpers/useAuthHeader';
 
 const LoadingPage = () => {
   const { user, isAuthenticated } = useAuth0();
@@ -15,12 +16,13 @@ const LoadingPage = () => {
   const [clientData, setClientData] = useState(false);
   const [stagedClientData, setStagedClientData] = useState(false);
   const [dietitianData, setdietitianData] = useState(false);
+  const authHeader = useAuthHeader();
 
   useEffect(() => {
-    if (user && isAuthenticated) {
+    if (user && isAuthenticated && authHeader) {
       const email = user.email;
 
-      APIClient.getClient(email).then((clientData) => {
+      APIClient.getClient(email, authHeader).then((clientData) => {
         setClientData(clientData);
         if (clientData) {
           if (!LocalStorageManager.shared.client) {
@@ -30,12 +32,12 @@ const LoadingPage = () => {
             navigate("/home");
           }
         } else {
-          APIClient.getStagedClient(email).then((stagedUserData) => {
+          APIClient.getStagedClient(email, authHeader).then((stagedUserData) => {
             setStagedClientData(stagedUserData);
             if (stagedUserData) {
               navigate("/"); //need to redirect to client sign up page instead!
             } else {
-              APIClient.getDietitian(email)
+              APIClient.getDietitian(email, authHeader)
                 .then((dietitianData) => {
                   setdietitianData(dietitianData);
                   if (dietitianData === false) {
@@ -58,7 +60,7 @@ const LoadingPage = () => {
         }
       });
     }
-  }, [user, isAuthenticated, navigate]);
+  }, [user, isAuthenticated, navigate, authHeader]);
 
   if (clientData && LocalStorageManager.shared.client){
     navigate("/home");

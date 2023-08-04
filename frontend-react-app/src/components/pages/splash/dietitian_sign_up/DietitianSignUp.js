@@ -26,6 +26,8 @@ import ErrorMessage from './ErrorMessage';
 import RegistrationErrorMessage from './RegistrationErrorMessage';
 import CustomTextField from '../../../shared_components/CustomTextField';
 import { useSample } from './hooks/useSample';
+import useAuthHeader from '../../../../helpers/useAuthHeader';
+
 const DietitianSignUp = () => {
   const { loginWithRedirect } = useAuth0();
   const [sample, setSample] = useSample();
@@ -35,6 +37,7 @@ const DietitianSignUp = () => {
   const [addressValueError, setAddressValueError] = useState(false);
   const [suiteError, setSuiteError] = useState(false);
   const [sampleSuiteError, setSampleSuiteError] = useState(false);
+  const authHeader = useAuthHeader();
 
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
@@ -103,10 +106,10 @@ const DietitianSignUp = () => {
 
     const form = event.target;
     const validated = await validate(form);
-    if (validated) {
+    if (validated && authHeader) {
       const dietitianDTO = DietitianDTO.initializeFromForm(formValue);
       const returnedDietitianData = await APIClient.createDietitian(
-        dietitianDTO
+        dietitianDTO, authHeader
       );
       if (!returnedDietitianData) {
         alert(APIClient.networkErrorMessage);
@@ -116,12 +119,13 @@ const DietitianSignUp = () => {
       if (sample) {
         await APIClient.createMealSampleShipment(
           createdDietitianDTO,
-          sampleFormValue
+          sampleFormValue,
+          authHeader
         );
-        await APIClient.sendMealSampleConfirmationEmail(createdDietitianDTO);
+        await APIClient.sendMealSampleConfirmationEmail(createdDietitianDTO, authHeader);
       }
       if (window.location.href.includes('nys=true')) {
-        await APIClient.createNYSANDLead(createdDietitianDTO.id);
+        await APIClient.createNYSANDLead(createdDietitianDTO.id, authHeader);
       }
       setLoading(false);
 
@@ -184,36 +188,38 @@ const DietitianSignUp = () => {
     }
   };
   const validate = async (form) => {
-    const dietitianAlreadyExists = await APIClient.getDietitian(formValue.id);
-    if (dietitianAlreadyExists) {
-      setError(true);
-      return false;
-    } else {
-      setError(false);
-    }
-    const dieteticRegistrationNumber = form.dieteticRegistrationNumber.value;
-    const registrationStatus = await APIClient.checkDieteticRegistrationNumber(
-      dieteticRegistrationNumber
-    );
-    if (!registrationStatus) {
-      setRegistrationError(true);
-      return false;
-    } else {
-      setRegistrationError(false);
-    }
-
-    if (formValue.suite !== '' && suiteError !== '') {
-      const addressParts = formValue.address.split(',');
-      const newStreet = addressParts[0] + ' ' + formValue.suite;
-      addressParts[0] = newStreet;
-      const newAddress = addressParts.join(',');
-      const validAddress = await validateAddress(getAddressObject(newAddress));
-
-      if (validAddress.addressStatus !== 'valid') {
+    if(authHeader){
+      const dietitianAlreadyExists = await APIClient.getDietitian(formValue.id, authHeader);
+      if (dietitianAlreadyExists) {
+        setError(true);
         return false;
+      } else {
+        setError(false);
       }
+
+      const dieteticRegistrationNumber = form.dieteticRegistrationNumber.value;
+      const registrationStatus = await APIClient.checkDieteticRegistrationNumber(
+        dieteticRegistrationNumber, authHeader
+      );
+      if (!registrationStatus) {
+        setRegistrationError(true);
+        return false;
+      } else {
+        setRegistrationError(false);
+      }
+      if (formValue.suite !== '' && suiteError !== '') {
+        const addressParts = formValue.address.split(',');
+        const newStreet = addressParts[0] + ' ' + formValue.suite;
+        addressParts[0] = newStreet;
+        const newAddress = addressParts.join(',');
+        const validAddress = await validateAddress(getAddressObject(newAddress));
+
+        if (validAddress.addressStatus !== 'valid') {
+          return false;
+        }
+      }
+      return form.checkValidity();
     }
-    return form.checkValidity();
   };
 
   return (

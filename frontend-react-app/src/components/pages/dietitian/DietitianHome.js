@@ -21,25 +21,31 @@ import { getExtendedClients } from './helpers/getExtendedClients';
 import { getClientItems } from './helpers/getClientItems';
 import { getStagedClientItems } from './helpers/getStagedClientItems';
 import dietitianHome from './scss/DietitianHome.module.scss';
+import useAuthHeader from '../../../helpers/useAuthHeader';
 
 const DietititanHome = (props) => {
   const [clients, setClients] = useClients();
   const [stagedClients, setStagedClients] = useStagedClients();
+  const authHeader = useAuthHeader();
   
   const handleFinishCreatingStagedClient = async () => {
-    const extendedStagedClients = await getExtendedStagedClients(
-      props.dietitianId
-    );
-    setStagedClients(extendedStagedClients);
+    if(authHeader){
+      const extendedStagedClients = await getExtendedStagedClients(
+        props.dietitianId, authHeader
+      );
+      setStagedClients(extendedStagedClients);
+    }
   };
 
   const handleFinishEditingMealPlan = async () => {
-    const extendedClients = await getExtendedClients(props.dietitianId);
+    if(authHeader){
+      const extendedClients = await getExtendedClients(props.dietitianId, authHeader);
     setClients(extendedClients);
     const extendedStagedClients = await getExtendedStagedClients(
-      props.dietitianId
+      props.dietitianId, authHeader
     );
     setStagedClients(extendedStagedClients);
+    }
   };
   const handleClickReminderButton = (i, row) => {
     setStagedClients((prevStagedClients) => {
@@ -47,13 +53,15 @@ const DietititanHome = (props) => {
       newStagedClients[i].isLoading = true;
       return newStagedClients;
     });
-    APIClient.sendReminderEmail(row.client.id).then(() => {
-      setStagedClients((prevStagedClients) => {
-        const newStagedClients = [...prevStagedClients];
-        prevStagedClients[i].isLoading = false;
-        return newStagedClients;
+    if(authHeader){
+      APIClient.sendReminderEmail(row.client.id, authHeader).then(() => {
+        setStagedClients((prevStagedClients) => {
+          const newStagedClients = [...prevStagedClients];
+          prevStagedClients[i].isLoading = false;
+          return newStagedClients;
+        });
       });
-    });
+    }
   };
   return (
     <Grid

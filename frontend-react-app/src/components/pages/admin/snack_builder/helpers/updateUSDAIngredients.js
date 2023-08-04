@@ -10,6 +10,7 @@ export default async function updateUSDAIngredients({
   setExtendedUsdaIngredients,
   setMealPlans,
   setMealPlanSnacks,
+  authHeader
 }) {
   const extendedUSDAIngredientData =
     await APIClient.getExtendedUSDAIngredients();
@@ -40,7 +41,7 @@ export default async function updateUSDAIngredients({
     setExtendedUsdaIngredients(extendedIngredientsMap);
   }
 
-  const mealPlans = await APIClient.getMealPlans();
+  const mealPlans = await APIClient.getMealPlans(authHeader);
   if (mounted) {
     setMealPlans(mealPlans);
   }

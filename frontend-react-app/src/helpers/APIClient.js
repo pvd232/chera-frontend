@@ -64,7 +64,7 @@ class APIClient {
     });
     return response;
   }
-  async getIsSampleTrialPeriod() {
+  async getIsSampleTrialPeriod(headers) {
     const requestUrl = this.baseUrl + `/dietitian/sample_trial_period`;
 
     const request = new Request(requestUrl);
@@ -72,12 +72,13 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseData = await response.json();
     return responseData;
   }
-  async getCurrentWeekDeliveryandCutoffDates() {
+  async getCurrentWeekDeliveryandCutoffDates(headers) {
     const requestUrl = this.baseUrl + `/delivery_date`;
 
     const request = new Request(requestUrl);
@@ -85,13 +86,14 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseData = await response.json();
     return responseData;
   }
 
-  async getExtendedScheduledOrderMeals(mealSubscriptionId) {
+  async getExtendedScheduledOrderMeals(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/extended_scheduled_order_meal?meal_subscription_id=${mealSubscriptionId}`;
@@ -101,6 +103,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseData = await response.json();
@@ -341,7 +344,7 @@ class APIClient {
     return;
   }
 
-  async getExtendedStagedScheduleMeals(stagedClientId) {
+  async getExtendedStagedScheduleMeals(stagedClientId, headers) {
     const requestUrl = `${this.baseUrl}/extended_staged_schedule_meal?staged_client_id=${stagedClientId}`;
 
     const request = new Request(requestUrl);
@@ -349,6 +352,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const extendedStagedScheduleMealObjects = await response.json();
@@ -456,7 +460,8 @@ class APIClient {
   }
   async getSpecificMealNutrientStatsObjects(
     mealPlanId = false,
-    mealPlanNumber = false
+    mealPlanNumber = false, 
+    headers
   ) {
     const requestUrl = (() => {
       if (mealPlanId) {
@@ -474,6 +479,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const mealPlanMealsData = await response.json();
@@ -492,7 +498,7 @@ class APIClient {
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
-  async sendMealSampleConfirmationEmail(dietitian) {
+  async sendMealSampleConfirmationEmail(dietitian, headers) {
     const requestUrl = this.baseUrl + '/email/meal_sample';
 
     const requestParams = {
@@ -500,12 +506,13 @@ class APIClient {
       body: JSON.stringify(dietitian),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
-  async createMealSampleShipment(dietitian, shippingAddress) {
+  async createMealSampleShipment(dietitian, shippingAddress, headers) {
     const requestUrl = this.baseUrl + '/shippo/meal_sample_shipment';
     const requestBody = {
       dietitian: dietitian,
@@ -516,6 +523,7 @@ class APIClient {
       body: JSON.stringify(requestBody),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
@@ -535,20 +543,21 @@ class APIClient {
     return nutrientsData;
   }
 
-  async createStagedScheduleMeals(stagedScheduleMeals) {
+  async createStagedScheduleMeals(stagedScheduleMeals, headers) {
     const requestUrl = this.baseUrl + '/staged_schedule_meal';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(stagedScheduleMeals),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
 
-  async updateStagedClient(clientData) {
+  async updateStagedClient(clientData, headers) {
     const requestUrl = this.baseUrl + '/staged_client';
 
     const request = new Request(requestUrl);
@@ -557,6 +566,7 @@ class APIClient {
       body: JSON.stringify(clientData),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     await this.fetchWrapper(request, requestParams);
     return;
@@ -569,7 +579,8 @@ class APIClient {
     dietitianId,
     stripePaymentIntentId,
     zipcode,
-    discountCode = false
+    discountCode = false,
+    headers
   ) {
     const requestUrl = this.baseUrl + '/dietitian_prepayment';
     const requestData = {
@@ -586,13 +597,14 @@ class APIClient {
       body: JSON.stringify(requestData),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
 
-  async getDietitian(dietitianId) {
+  async getDietitian(dietitianId, headers) {
     const requestUrl = `${this.baseUrl}/dietitian/${dietitianId}`;
 
     const request = new Request(requestUrl);
@@ -600,6 +612,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
@@ -612,7 +625,7 @@ class APIClient {
     }
   }
 
-  async createDietitian(dietitian) {
+  async createDietitian(dietitian, headers) {
     const requestUrl = this.baseUrl + '/dietitian';
 
     const request = new Request(requestUrl);
@@ -621,13 +634,14 @@ class APIClient {
       body: JSON.stringify(dietitian),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const createdDietitianJSON = await response.json();
     return createdDietitianJSON;
   }
 
-  async getExtendedStagedClients(dietitianId) {
+  async getExtendedStagedClients(dietitianId, headers) {
     const requestUrl = `${this.baseUrl}/extended_staged_client?dietitian_id=${dietitianId}`;
     const request = new Request(requestUrl);
 
@@ -635,6 +649,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     const response = await this.fetchWrapper(request, requestParams);
@@ -646,7 +661,7 @@ class APIClient {
     }
   }
 
-  async getStagedClient(stagedClientId) {
+  async getStagedClient(stagedClientId, headers) {
     const requestUrl = `${this.baseUrl}/staged_client/${stagedClientId}`;
 
     const request = new Request(requestUrl);
@@ -654,6 +669,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
@@ -664,7 +680,7 @@ class APIClient {
     const responseData = await response.json();
     return responseData;
   }
-  async getClient(clientId) {
+  async getClient(clientId, headers) {
     const requestUrl = `${this.baseUrl}/client/${clientId}`;
 
     const request = new Request(requestUrl);
@@ -672,6 +688,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
@@ -683,12 +700,16 @@ class APIClient {
     return responseData;
   }
 
-  async sendReminderEmail(stagedClientId) {
+  async sendReminderEmail(stagedClientId, headers) {
     const requestUrl = this.baseUrl + '/staged_client/reminder';
 
     const requestHeaders = new Headers();
 
     requestHeaders.set('staged-client-id', stagedClientId);
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -701,7 +722,7 @@ class APIClient {
     return;
   }
 
-  async createStagedClient(stagedClient) {
+  async createStagedClient(stagedClient, headers) {
     const requestUrl = this.baseUrl + '/staged_client';
 
     const request = new Request(requestUrl);
@@ -710,6 +731,7 @@ class APIClient {
       body: JSON.stringify(stagedClient),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     await this.fetchWrapper(request, requestParams);
     return;
@@ -726,13 +748,14 @@ class APIClient {
     const mealPlanData = await response.json();
     return mealPlanData;
   }
-  async getMealPlans() {
+  async getMealPlans(headers) {
     const requestUrl = `${this.baseUrl}/meal_plan`;
     const request = new Request(requestUrl);
     const requestParams = {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const mealPlanData = await response.json();
@@ -747,20 +770,21 @@ class APIClient {
     );
     return oddFilteredMealPlans;
   }
-  async getEatingDisorders() {
+  async getEatingDisorders(headers) {
     const requestUrl = `${this.baseUrl}/eating_disorder`;
     const request = new Request(requestUrl);
     const requestParams = {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const eatingDisorderData = await response.json();
     return eatingDisorderData;
   }
 
-  async getExtendedClients(dietitianId) {
+  async getExtendedClients(dietitianId, headers) {
     const requestUrl = `${this.baseUrl}/extended_client?dietitian_id=${dietitianId}`;
 
     const request = new Request(requestUrl);
@@ -768,6 +792,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     if (response.status === 204) {
@@ -778,7 +803,7 @@ class APIClient {
     }
   }
 
-  async getDietitianExtendedScheduleMeals(dietitianId) {
+  async getDietitianExtendedScheduleMeals(dietitianId, headers) {
     const requestUrl =
       this.baseUrl + `/extended_schedule_meal?dietitian_id=${dietitianId}`;
 
@@ -787,6 +812,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     if (response.status === 204) {
@@ -797,7 +823,7 @@ class APIClient {
     }
   }
 
-  async getDietitianMealSubscriptions(dietitianId) {
+  async getDietitianMealSubscriptions(dietitianId, headers) {
     const requestUrl =
       this.baseUrl + `/meal_subscription?dietitian_id=${dietitianId}`;
 
@@ -806,6 +832,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     if (response.status === 204) {
@@ -830,7 +857,7 @@ class APIClient {
     const cogsData = await response.json();
     return cogsData;
   }
-  async createMealSubscription(mealSubscription) {
+  async createMealSubscription(mealSubscription, headers) {
     const requestUrl = this.baseUrl + '/meal_subscription';
 
     const requestParams = {
@@ -838,6 +865,7 @@ class APIClient {
       body: JSON.stringify(mealSubscription),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     const response = await this.fetchWrapper(requestUrl, requestParams);
@@ -846,12 +874,16 @@ class APIClient {
     return returnedMealSubscriptionData;
   }
 
-  async deactivateMealSubscription(mealSubscriptionId) {
+  async deactivateMealSubscription(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl + `/meal_subscription/${mealSubscriptionId}`;
 
     const requestHeaders = new Headers();
     requestHeaders.set('update', 'deactivate');
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
 
     const requestParams = {
       method: 'PUT',
@@ -862,13 +894,14 @@ class APIClient {
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
-  async createOrderDiscount(orderDiscount) {
+  async createOrderDiscount(orderDiscount, headers) {
     const requestUrl = this.baseUrl + '/order_discount';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(orderDiscount),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
@@ -877,7 +910,8 @@ class APIClient {
   async updateStripeSubscription(
     mealSubscriptionId,
     numberOfMeals,
-    numberOfSnacks
+    numberOfSnacks,
+    headers
   ) {
     const requestUrl =
       this.baseUrl +
@@ -886,6 +920,10 @@ class APIClient {
     const requestHeaders = new Headers();
     requestHeaders.set('number-of-meals', numberOfMeals);
     requestHeaders.set('number-of-snacks', numberOfSnacks);
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -897,7 +935,7 @@ class APIClient {
     await this.fetchWrapper(request, requestParams);
     return;
   }
-  async deleteStripeCustomer(stripeCustomerId) {
+  async deleteStripeCustomer(stripeCustomerId, headers) {
     const requestUrl = this.baseUrl + `/stripe/customer/${stripeCustomerId}`;
 
     const request = new Request(requestUrl);
@@ -905,6 +943,7 @@ class APIClient {
       method: 'DELETE',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     await this.fetchWrapper(request, requestParams);
     return;
@@ -915,7 +954,8 @@ class APIClient {
     zipcode,
     clientId,
     discountCode,
-    prepaid
+    prepaid, 
+    headers
   ) {
     const requestUrl = this.baseUrl + '/stripe/subscription';
 
@@ -934,13 +974,14 @@ class APIClient {
       body: JSON.stringify(requestBody),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
     const stripeData = await response.json();
     return stripeData;
   }
-  async deleteStripeSubscription(stripeSubscriptionId) {
+  async deleteStripeSubscription(stripeSubscriptionId, headers) {
     // const requestUrl =
     //   this.baseUrl + `/stripe/subscription/${stripeSubscriptionId}`;
     const requestUrl =
@@ -952,6 +993,7 @@ class APIClient {
       method: 'DELETE',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     if (response.status === 204) {
@@ -962,7 +1004,7 @@ class APIClient {
     }
   }
 
-  async checkIfFirstWeek(mealSubscriptionId) {
+  async checkIfFirstWeek(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl + `/meal_subscription/${mealSubscriptionId}/first_week`;
     const request = new Request(requestUrl);
@@ -970,13 +1012,14 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const isFirstWeek = await response.json();
     return isFirstWeek;
   }
 
-  async skipWeek(mealSubscriptionId, stripeSubscriptionId, deliveryDate) {
+  async skipWeek(mealSubscriptionId, stripeSubscriptionId, deliveryDate, headers) {
     const requestUrl = this.baseUrl + '/meal_subscription/skip_week';
     const skippingData = {
       meal_subscription_id: mealSubscriptionId,
@@ -990,11 +1033,12 @@ class APIClient {
       body: JSON.stringify(skippingData),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     await this.fetchWrapper(request, requestParams);
     return;
   }
-  async unskipWeek(mealSubscriptionId, stripeSubscriptionId, deliveryDate) {
+  async unskipWeek(mealSubscriptionId, stripeSubscriptionId, deliveryDate, headers) {
     const requestUrl = this.baseUrl + '/meal_subscription/skip_week';
     const skippingData = {
       meal_subscription_id: mealSubscriptionId,
@@ -1008,6 +1052,7 @@ class APIClient {
       body: JSON.stringify(skippingData),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     await this.fetchWrapper(request, requestParams);
     return;
@@ -1027,7 +1072,7 @@ class APIClient {
     const extendedScheduleMealData = await response.json();
     return extendedScheduleMealData;
   }
-  async createClient(clientData) {
+  async createClient(clientData, headers) {
     const requestUrl = this.baseUrl + '/client';
 
     const request = new Request(requestUrl);
@@ -1036,12 +1081,13 @@ class APIClient {
       body: JSON.stringify(clientData),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const clientJSON = await response.json();
     return clientJSON;
   }
-  async deactivateClient(clientId) {
+  async deactivateClient(clientId, headers) {
     const requestUrl = this.baseUrl + `/client/${clientId}`;
 
     const request = new Request(requestUrl);
@@ -1049,6 +1095,7 @@ class APIClient {
       method: 'PUT',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     if (response.status === 204) {
@@ -1058,7 +1105,7 @@ class APIClient {
       return clientJSON;
     }
   }
-  async updateClient(clientData) {
+  async updateClient(clientData, headers) {
     const requestUrl = this.baseUrl + '/client';
 
     const request = new Request(requestUrl);
@@ -1067,11 +1114,12 @@ class APIClient {
       body: JSON.stringify(clientData),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     await this.fetchWrapper(request, requestParams);
     return;
   }
-  async updateClientAddress(clientAddressData) {
+  async updateClientAddress(clientAddressData, headers) {
     const requestUrl = this.baseUrl + '/client/update_address';
 
     const request = new Request(requestUrl);
@@ -1080,11 +1128,12 @@ class APIClient {
       body: JSON.stringify(clientAddressData),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     await this.fetchWrapper(request, requestParams);
     return;
   }
-  async getClientMealSubscription(clientId) {
+  async getClientMealSubscription(clientId, headers) {
     const requestUrl =
       this.baseUrl + `/meal_subscription?client_id=${clientId}`;
 
@@ -1092,17 +1141,22 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(requestUrl, requestParams);
     const returnedMealSubscriptionData = await response.json();
     return returnedMealSubscriptionData;
   }
-  async pauseMealSubscription(mealSubscriptionId) {
+  async pauseMealSubscription(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl + `/meal_subscription/${mealSubscriptionId}`;
 
     const requestHeaders = new Headers();
     requestHeaders.set('update', 'pause');
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
 
     const requestParams = {
       method: 'PUT',
@@ -1113,12 +1167,16 @@ class APIClient {
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
-  async unpauseMealSubscription(mealSubscriptionId) {
+  async unpauseMealSubscription(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl + `/meal_subscription/${mealSubscriptionId}`;
 
     const requestHeaders = new Headers();
     requestHeaders.set('update', 'unpause');
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
 
     const requestParams = {
       method: 'PUT',
@@ -1132,12 +1190,17 @@ class APIClient {
 
   async createMealSubscriptionInvoice(
     mealSubscriptionInvoice,
-    discountCode = false
+    discountCode = false,
+    headers
   ) {
     const requestHeaders = new Headers();
 
     if (discountCode) {
       requestHeaders.set('discount-code', discountCode);
+    }
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
     }
 
     const requestUrl = this.baseUrl + '/meal_subscription_invoice';
@@ -1154,37 +1217,43 @@ class APIClient {
     return data;
   }
 
-  async createScheduleMeals(scheduleMeals) {
+  async createScheduleMeals(scheduleMeals, headers) {
     const requestUrl = this.baseUrl + '/schedule_meal';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(scheduleMeals),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
 
-  async createScheduledOrderMeals(scheduledOrderMeals) {
+  async createScheduledOrderMeals(scheduledOrderMeals, headers) {
     const requestUrl = this.baseUrl + '/scheduled_order_meal';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(scheduledOrderMeals),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
   // Handle changes to scheduled order meals on home page
-  async updateScheduledOrderMeals(updatedScheduledOrderMeals) {
+  async updateScheduledOrderMeals(updatedScheduledOrderMeals, headers) {
     const requestUrl = this.baseUrl + '/scheduled_order_meal';
     const requestHeaders = new Headers();
 
     requestHeaders.set('deactivate', 'no');
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
 
     const requestParams = {
       method: 'PUT',
@@ -1198,13 +1267,18 @@ class APIClient {
     return;
   }
 
-  async unpauseScheduledOrderMeals(mealSubscriptionId) {
+  async unpauseScheduledOrderMeals(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/scheduled_order_meal?meal_subscription_id=${mealSubscriptionId}`;
 
     const requestHeaders = new Headers();
     requestHeaders.set('update', 'unpause');
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
+
     const requestParams = {
       method: 'PUT',
       headers: requestHeaders,
@@ -1216,7 +1290,7 @@ class APIClient {
     return;
   }
 
-  async pauseScheduledOrderMeals(mealSubscriptionId) {
+  async pauseScheduledOrderMeals(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/scheduled_order_meal?meal_subscription_id=${mealSubscriptionId}`;
@@ -1224,6 +1298,10 @@ class APIClient {
     const requestHeaders = new Headers();
     requestHeaders.set('update', 'pause');
 
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
+
     const requestParams = {
       method: 'PUT',
       headers: requestHeaders,
@@ -1235,25 +1313,23 @@ class APIClient {
     return;
   }
 
-  async deleteScheduledOrderMeals(mealSubscriptionId) {
+  async deleteScheduledOrderMeals(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/scheduled_order_meal?meal_subscription_id=${mealSubscriptionId}`;
 
-    const requestHeaders = new Headers();
-
     const requestParams = {
       method: 'DELETE',
-      headers: requestHeaders,
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
 
-  async deleteScheduleMeals(mealSubscriptionId) {
+  async deleteScheduleMeals(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/schedule_meal?meal_subscription_id=${mealSubscriptionId}`;
@@ -1262,26 +1338,28 @@ class APIClient {
       method: 'DELETE',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
 
-  async createOrderMeals(orderMeals) {
+  async createOrderMeals(orderMeals, headers) {
     const requestUrl = this.baseUrl + '/order_meal';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(orderMeals),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
 
-  async getExtendedMeals() {
+  async getExtendedMeals(headers) {
     const requestUrl = this.baseUrl + '/extended_meal';
 
     const request = new Request(requestUrl);
@@ -1289,6 +1367,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
@@ -1328,7 +1407,7 @@ class APIClient {
     return mealsData;
   }
 
-  async getSnacks() {
+  async getSnacks(headers) {
     const requestUrl = this.baseUrl + '/snack';
 
     const request = new Request(requestUrl);
@@ -1336,6 +1415,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
@@ -1343,7 +1423,7 @@ class APIClient {
 
     return snacksData;
   }
-  async getExtendedScheduledOrderSnacks(mealSubscriptionId) {
+  async getExtendedScheduledOrderSnacks(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/extended_scheduled_order_snack?meal_subscription_id=${mealSubscriptionId}`;
@@ -1353,72 +1433,78 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseData = await response.json();
     return responseData;
   }
-  async createScheduleSnacks(scheduleSnacks) {
+  async createScheduleSnacks(scheduleSnacks, headers) {
     const requestUrl = this.baseUrl + '/schedule_snack';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(scheduleSnacks),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
 
-  async createScheduledOrderSnacks(scheduledOrderSnacks) {
+  async createScheduledOrderSnacks(scheduledOrderSnacks, headers) {
     const requestUrl = this.baseUrl + '/scheduled_order_snack';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(scheduledOrderSnacks),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
 
-  async createOrderSnacks(orderSnacks) {
+  async createOrderSnacks(orderSnacks, headers) {
     const requestUrl = this.baseUrl + '/order_snack';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(orderSnacks),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
-  async deleteScheduledOrderSnacks(mealSubscriptionId) {
+  async deleteScheduledOrderSnacks(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/scheduled_order_snack?meal_subscription_id=${mealSubscriptionId}`;
 
-    const requestHeaders = new Headers();
-
     const requestParams = {
       method: 'DELETE',
-      headers: requestHeaders,
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
   // Handle changes to scheduled order meals on home page
-  async updateScheduledOrderSnacks(updatedScheduledOrderSnacks) {
+  async updateScheduledOrderSnacks(updatedScheduledOrderSnacks, headers) {
     const requestUrl = this.baseUrl + '/scheduled_order_snack';
     const requestHeaders = new Headers();
 
     requestHeaders.set('deactivate', 'no');
+
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
 
     const requestParams = {
       method: 'PUT',
@@ -1467,7 +1553,7 @@ class APIClient {
     await this.fetchWrapper(requestUrl, requestParams);
     return;
   }
-  async deleteScheduleSnacks(mealSubscriptionId) {
+  async deleteScheduleSnacks(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/schedule_snack?meal_subscription_id=${mealSubscriptionId}`;
@@ -1476,6 +1562,7 @@ class APIClient {
       method: 'DELETE',
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
@@ -1494,13 +1581,14 @@ class APIClient {
     const extendedStagedScheduleSnackObjects = await response.json();
     return extendedStagedScheduleSnackObjects;
   }
-  async createStagedScheduleSnacks(stagedScheduleSnacks) {
+  async createStagedScheduleSnacks(stagedScheduleSnacks, headers) {
     const requestUrl = this.baseUrl + '/staged_schedule_snack';
     const requestParams = {
       method: 'POST',
       body: JSON.stringify(stagedScheduleSnacks),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
@@ -1511,7 +1599,7 @@ class APIClient {
     return this.frontEndBaseUrl + '/home';
   }
 
-  async getClientExtendedOrderMeals(mealSubscriptionId) {
+  async getClientExtendedOrderMeals(mealSubscriptionId, headers) {
     const requestUrl =
       this.baseUrl +
       `/extended_order_meal?meal_subscription_id=${mealSubscriptionId}`;
@@ -1520,6 +1608,7 @@ class APIClient {
       method: 'GET',
       mode: this.mode,
       cache: 'default',
+      headers: headers 
     };
     const response = await this.fetchWrapper(request, requestParams);
     const responseData = await response.json();
@@ -1590,12 +1679,15 @@ class APIClient {
     return salesTax;
   }
 
-  async verifyDiscount(discountCode) {
+  async verifyDiscount(discountCode, headers) {
     const requestUrl = this.baseUrl + '/discount';
     const request = new Request(requestUrl);
 
     const requestHeaders = new Headers();
     requestHeaders.set('discount', discountCode);
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
 
     const requestParams = {
       method: 'GET',
@@ -1617,7 +1709,8 @@ class APIClient {
     numSnacks,
     zipcode,
     staged_client_id,
-    discountCode
+    discountCode,
+    headers
   ) {
     const requestUrl = this.baseUrl + '/stripe/payment_intent';
     const request = new Request(requestUrl);
@@ -1628,6 +1721,10 @@ class APIClient {
     requestHeaders.set('zipcode', zipcode);
     requestHeaders.set('staged_client_id', staged_client_id);
     requestHeaders.set('discount_code', !discountCode ? '' : discountCode);
+    if (headers && headers.has('Authorization')) {
+      requestHeaders.set('Authorization', headers.get('Authorization'));
+    }
+
     const requestParams = {
       method: 'POST',
       headers: requestHeaders,
@@ -1638,7 +1735,7 @@ class APIClient {
     const paymentIntentDataJSON = await response.json();
     return paymentIntentDataJSON;
   }
-  async checkDieteticRegistrationNumber(dieteticRegistrationNumber) {
+  async checkDieteticRegistrationNumber(dieteticRegistrationNumber, headers) {
     if (
       this.env === 'debug' ||
       this.env === 'staging' ||
@@ -1654,6 +1751,7 @@ class APIClient {
       body: JSON.stringify(dieteticRegistrationNumber),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
     const response = await this.fetchWrapper(request, requestParams);
 
@@ -1735,7 +1833,7 @@ class APIClient {
       };
     }
   }
-  async createNYSANDLead(dietitianId) {
+  async createNYSANDLead(dietitianId, headers) {
     const requestUrl = this.baseUrl + '/nysand_lead';
     const requestBody = { dietitian_id: dietitianId };
     const requestParams = {
@@ -1743,6 +1841,7 @@ class APIClient {
       body: JSON.stringify(requestBody),
       mode: this.mode,
       cache: 'default',
+      headers: headers
     };
 
     await this.fetchWrapper(requestUrl, requestParams);
