@@ -25,7 +25,7 @@ import dietitianHome from './scss/DietitianHome.module.scss';
 const DietititanHome = (props) => {
   const [clients, setClients] = useClients();
   const [stagedClients, setStagedClients] = useStagedClients();
-  
+
   const handleFinishCreatingStagedClient = async () => {
     const extendedStagedClients = await getExtendedStagedClients(
       props.dietitianId
@@ -90,108 +90,129 @@ const DietititanHome = (props) => {
             ></CreateNewStagedClientModal>
           </Grid>
         </Grid>
-
-        <Grid container item id="clients-table">
-          <TableContainer component={Paper}>
-            <Table className={dietitianHome.table}>
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">Name</TableCell>
-                  <TableCell align="left">Email</TableCell>
-                  <TableCell align="left">Portion Size</TableCell>
-                  <TableCell align="left">Notes</TableCell>
-                  <TableCell align="center">Account Created</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody id="client-items">
-                {getClientItems(clients?.clientArray ?? []).map((row, i) => (
-                  <TableRow key={i} id="client-items">
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="left">{row.email}</TableCell>
-                    <TableCell align="left">
-                      <Grid item container>
-                        {row.mealPlanCalories}
-                      </Grid>
-                      <div className={dietitianHome.editMealPlanContainer}>
-                        <EditClientMealPlanModal
-                          buttonIndex={i}
-                          clientItem={row}
-                          handleFinishEditingMealPlan={
-                            handleFinishEditingMealPlan
-                          }
-                          isStagedClient={row.isStagedClient}
-                          mealPlans={props.mealPlans.mealPlansArray}
-                        />
-                      </div>
-                    </TableCell>
-                    <TableCell align="left">{row.notes}</TableCell>
-                    <TableCell align="center">
-                      <Icon className={dietitianHome.accountCreatedIcon}>
-                        check
-                      </Icon>
-                    </TableCell>
+        {stagedClients.length > 0 && (
+          <Grid container item id="clients-table">
+            <TableContainer component={Paper}>
+              <Table className={dietitianHome.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left">Name</TableCell>
+                    <TableCell align="left">Email</TableCell>
+                    <TableCell align="left">Portion Size</TableCell>
+                    <TableCell align="left">Notes</TableCell>
+                    <TableCell align="center">Account Created</TableCell>
                   </TableRow>
-                ))}
-                {getStagedClientItems(stagedClients).map((row, i) => (
-                  <TableRow key={i} id="staged-client-items">
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="left">{row.email}</TableCell>
-                    <TableCell align="left">
-                      <Grid item container>
-                        {row.mealPlanCalories} kCal
-                      </Grid>
-                      <div className={dietitianHome.editMealPlanContainer}>
-                        <EditClientMealPlanModal
-                          buttonIndex={i}
-                          clientItem={row}
-                          handleFinishEditingMealPlan={
-                            handleFinishEditingMealPlan
-                          }
-                          isStagedClient={row.isStagedClient}
-                          mealPlans={props.mealPlans.mealPlansArray}
-                        />
-                      </div>
-                    </TableCell>
-                    <TableCell align="left">{row.notes}</TableCell>
-                    <TableCell align="center">
-                      {row.accountCreated ? (
+                </TableHead>
+                <TableBody id="client-items">
+                  {getClientItems(clients?.clientArray ?? []).map((row, i) => (
+                    <TableRow key={i} id="client-items">
+                      <TableCell component="th" scope="row">
+                        {row.name}
+                      </TableCell>
+                      <TableCell align="left">{row.email}</TableCell>
+                      <TableCell align="left">
+                        <Grid item container>
+                          {row.mealPlanCalories}
+                        </Grid>
+                        <div className={dietitianHome.editMealPlanContainer}>
+                          <EditClientMealPlanModal
+                            buttonIndex={i}
+                            clientItem={row}
+                            handleFinishEditingMealPlan={
+                              handleFinishEditingMealPlan
+                            }
+                            isStagedClient={row.isStagedClient}
+                            mealPlans={props.mealPlans.mealPlansArray}
+                          />
+                        </div>
+                      </TableCell>
+                      <TableCell align="left">{row.notes}</TableCell>
+                      <TableCell align="center">
                         <Icon className={dietitianHome.accountCreatedIcon}>
                           check
                         </Icon>
-                      ) : (
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {getStagedClientItems(stagedClients).map((row, i) => (
+                    <TableRow key={i} id="staged-client-items">
+                      <TableCell component="th" scope="row">
+                        {row.name}
+                      </TableCell>
+                      <TableCell align="left">{row.email}</TableCell>
+                      <TableCell align="left">
                         <Grid
+                          item
                           container
-                          className={dietitianHome.sendReminderContainer}
+                          justifyContent={'center'}
+                          alignItems={'center'}
                         >
-                          <Grid item>
-                            <BlackButton
-                              variant="contained"
-                              className={dietitianHome.sendReminderButton}
-                              onClick={() => handleClickReminderButton(i, row)}
+                          <Grid item sx={{ marginRight: 'auto' }}>
+                            {row.mealPlanCalories} kCal
+                          </Grid>
+
+                          <Grid
+                            item
+                            sx={{
+                              marginRight: '33%',
+                            }}
+                          >
+                            <div
+                              className={dietitianHome.editMealPlanContainer}
                             >
-                              {stagedClients[i]?.isLoading ? (
-                                <CircularProgress
-                                  className={dietitianHome.loadingIcon}
-                                  size={24}
-                                />
-                              ) : (
-                                'Send Reminder'
-                              )}
-                            </BlackButton>
+                              <EditClientMealPlanModal
+                                buttonIndex={i}
+                                clientItem={row}
+                                handleFinishEditingMealPlan={
+                                  handleFinishEditingMealPlan
+                                }
+                                isStagedClient={row.isStagedClient}
+                                mealPlans={props.mealPlans.mealPlansArray}
+                              />
+                            </div>
                           </Grid>
                         </Grid>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
+                      </TableCell>
+                      <TableCell align="left">{row.notes}</TableCell>
+                      <TableCell align="center">
+                        {row.accountCreated ? (
+                          <Icon className={dietitianHome.accountCreatedIcon}>
+                            check
+                          </Icon>
+                        ) : (
+                          <Grid
+                            container
+                            className={dietitianHome.sendReminderContainer}
+                          >
+                            <Grid item>
+                              <BlackButton
+                                variant="contained"
+                                className={dietitianHome.sendReminderButton}
+                                onClick={() =>
+                                  handleClickReminderButton(i, row)
+                                }
+                              >
+                                {stagedClients[i]?.isLoading ? (
+                                  <CircularProgress
+                                    className={dietitianHome.loadingIcon}
+                                    size={24}
+                                  />
+                                ) : (
+                                  'Send Reminder'
+                                )}
+                              </BlackButton>
+                            </Grid>
+                          </Grid>
+                        )}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Grid>
+        )}
+
         {props.paymentConfirmed && (
           <StagedClientPaymentConfirmed
             paymentConfirmed={props.paymentConfirmed}

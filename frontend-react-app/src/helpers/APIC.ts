@@ -32,19 +32,17 @@ class APIClient {
     return 'An error occured. Please check your network connection and try again.';
   }
 
-
   async getClientPaymentMethod(clientID: string): Promise<any> {
-    const requestUrl = this.baseUrl + `/stripe/payment_method/${clientID}` ;
-  
+    const requestUrl = this.baseUrl + `/stripe/payment_method/${clientID}`;
+
     const request = new Request(requestUrl);
     const requestParams: RequestInit = {
       method: 'GET',
       mode: this.mode as RequestMode,
       cache: 'default',
     };
-  
+
     const response = await this.fetchWrapper(request, requestParams);
-    console.log(response);
     if (response instanceof Response) {
       const responseData = await response.json();
       return responseData;
@@ -53,18 +51,23 @@ class APIClient {
     }
   }
 
-  async updateClientPaymentMethod(clientID: string, subscriptionID: string, paymentMethod: string): Promise<any> {
-    const requestUrl = this.baseUrl + `/stripe/update_payment_method/${clientID}/${subscriptionID}/${paymentMethod}` ;
-  
+  async updateClientPaymentMethod(
+    clientID: string,
+    subscriptionID: string,
+    paymentMethod: string
+  ): Promise<any> {
+    const requestUrl =
+      this.baseUrl +
+      `/stripe/update_payment_method/${clientID}/${subscriptionID}/${paymentMethod}`;
+
     const request = new Request(requestUrl);
     const requestParams: RequestInit = {
       method: 'POST',
       mode: this.mode as RequestMode,
       cache: 'default',
     };
-  
+
     const response = await this.fetchWrapper(request, requestParams);
-    console.log(response);
     if (response instanceof Response) {
       const responseData = await response.json();
       return responseData;
@@ -74,17 +77,16 @@ class APIClient {
   }
 
   async getClientLastPaymentStatus(clientID: string): Promise<any> {
-    const requestUrl = this.baseUrl + `/stripe/check_last_payment/${clientID}/` ;
-  
+    const requestUrl = this.baseUrl + `/stripe/check_last_payment/${clientID}/`;
+
     const request = new Request(requestUrl);
     const requestParams: RequestInit = {
       method: 'GET',
       mode: this.mode as RequestMode,
       cache: 'default',
     };
-  
+
     const response = await this.fetchWrapper(request, requestParams);
-    console.log(response);
     if (response instanceof Response) {
       const responseData = await response.json();
       return responseData;
@@ -94,17 +96,17 @@ class APIClient {
   }
 
   async getClientPaymentInvoices(clientID: string): Promise<any> {
-    const requestUrl = this.baseUrl + `/stripe/get_client_payment_invoices/${clientID}/` ;
-  
+    const requestUrl =
+      this.baseUrl + `/stripe/get_client_payment_invoices/${clientID}/`;
+
     const request = new Request(requestUrl);
     const requestParams: RequestInit = {
       method: 'GET',
       mode: this.mode as RequestMode,
       cache: 'default',
     };
-  
+
     const response = await this.fetchWrapper(request, requestParams);
-    console.log(response);
     if (response instanceof Response) {
       const responseData = await response.json();
       return responseData;
@@ -112,9 +114,11 @@ class APIClient {
       throw new Error('Invalid response');
     }
   }
-  
 
-  async fetchWrapper(request: RequestInfo | URL, requestParams: RequestInit | undefined) {
+  async fetchWrapper(
+    request: RequestInfo | URL,
+    requestParams: RequestInit | undefined
+  ) {
     const response = await fetch(request, requestParams).catch((error) => {
       if (this.env === 'debug' || this.env === 'staging') {
         if (typeof error.json === 'function') {
@@ -179,9 +183,7 @@ const getBaseURL: GetBaseURL = (service: string) => {
       return `https://${window.location.host}`;
     }
   }
-}
-
-  
+};
 
 let API = new APIClient();
 export default API;

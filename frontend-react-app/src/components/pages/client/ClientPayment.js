@@ -1,25 +1,26 @@
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { CardElement, Elements, useElements, useStripe } from '@stripe/react-stripe-js';
+import {
+  CardElement,
+  Elements,
+  useElements,
+  useStripe,
+} from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
 import APIC from '../../../helpers/APIC';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import { useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/material';
-import clientPayment from './scss/ClientPayment.module.scss'
+import clientPayment from './scss/ClientPayment.module.scss';
 import { Button } from '@mui/material';
-
 
 const CardForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const navigate = useNavigate();
 
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(LocalStorageManager.shared.clientMealSubscription);
-
 
     if (!stripe || !elements) {
       // Stripe.js has not loaded yet
@@ -36,10 +37,11 @@ const CardForm = () => {
     if (error) {
       console.error(error);
     } else {
-      console.log('Payment Method:', paymentMethod);
-      const resp = await APIC.updateClientPaymentMethod(LocalStorageManager.shared.client.stripeId, LocalStorageManager.shared.clientMealSubscription.stripeSubscriptionId, paymentMethod.id);
-      console.log(resp)
-      navigate('/home');
+      APIC.updateClientPaymentMethod(
+        LocalStorageManager.shared.client.stripeId,
+        LocalStorageManager.shared.clientMealSubscription.stripeSubscriptionId,
+        paymentMethod.id
+      ).then(navigate('/home'));
     }
   };
 
@@ -47,9 +49,14 @@ const CardForm = () => {
     <form id="card-form" onSubmit={handleSubmit} style={{ width: '300px' }}>
       <div id="card-element" style={{ display: 'grid', gap: '10px' }}>
         <CardElement />
-        
       </div>
-      <Button variant={'contained'} className={clientPayment.button} type="submit">Submit</Button>
+      <Button
+        variant={'contained'}
+        className={clientPayment.button}
+        type="submit"
+      >
+        Submit
+      </Button>
     </form>
   );
 };
@@ -59,27 +66,23 @@ const ClientPayment = (props) => {
   const [curPaymentExpYear, setcurPaymentExpYear] = useState('');
   useEffect(() => {
     const fetchClientPaymentMethod = async () => {
-      const resp = await APIC.getClientPaymentMethod(LocalStorageManager.shared.client.stripeId);
-      console.log(resp);
-      setcurPaymentLast4(resp.last4)
-      setcurPaymentExpMonth(resp.exp_month)
-      setcurPaymentExpYear(resp.exp_year)
+      const resp = await APIC.getClientPaymentMethod(
+        LocalStorageManager.shared.client.stripeId
+      );
+      setcurPaymentLast4(resp.last4);
+      setcurPaymentExpMonth(resp.exp_month);
+      setcurPaymentExpYear(resp.exp_year);
     };
     fetchClientPaymentMethod();
   }, []);
 
-
   return (
     <Grid container className={clientPayment.rootContainer}>
       <Grid container item className={clientPayment.headerContainer}>
-        <Typography className={clientPayment.header} >
-          Payment
-        </Typography>
+        <Typography className={clientPayment.header}>Payment</Typography>
         <Grid item>
           <Stack className={clientPayment.stack}>
-            <Typography  >
-              Your Current Payment Method
-            </Typography>
+            <Typography>Your Current Payment Method</Typography>
             Card: **** **** **** {curPaymentLast4}
             <br />
             Expiry: {curPaymentExpMonth} / {curPaymentExpYear}

@@ -66,7 +66,31 @@ const ModalBody = (props) => {
                     value={props.formValue.firstName}
                     onChange={props.handleInput}
                   />
-
+                  <InputLabel className={modalBody.inputLabel}>
+                    Client Diagnosis
+                  </InputLabel>
+                  <FormControl>
+                    <InputLabel className={modalBody.inputLabel}>
+                      Diagnosis
+                    </InputLabel>
+                    <Select
+                      label="Diagnosis"
+                      required
+                      id="eatingDisorderId"
+                      value={props.formValue.eatingDisorderId}
+                      onChange={props.handleEatingDisorderInput}
+                    >
+                      {props.eatingDisorders.map((eatingDisorder, i) => (
+                        <MenuItem
+                          key={`eatingDisorder-${i}`}
+                          id={`eatingDisorder-${i}`}
+                          value={eatingDisorder.id}
+                        >
+                          {capitalize(eatingDisorder.name)}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                   <InputLabel className={modalBody.inputLabel}>
                     Client Age
                   </InputLabel>
@@ -85,6 +109,7 @@ const ModalBody = (props) => {
                       props.formValue.age ? parseFloat(props.formValue.age) : ''
                     }
                     onChange={props.handleInput}
+                    onWheel={(e) => e.target.blur()}
                   />
 
                   <InputLabel className={modalBody.inputLabel}>
@@ -134,6 +159,7 @@ const ModalBody = (props) => {
                         : ''
                     }
                     onChange={props.handleInput}
+                    onWheel={(e) => e.target.blur()}
                   />
 
                   <InputLabel className={modalBody.inputLabel}>
@@ -157,19 +183,8 @@ const ModalBody = (props) => {
                         : ''
                     }
                     onChange={props.handleInput}
+                    onWheel={(e) => e.target.blur()}
                   />
-
-                  <InputLabel className={modalBody.inputLabel}>
-                    Client Notes
-                  </InputLabel>
-                  <TextField
-                    fullWidth
-                    label={'Notes'}
-                    id="notes"
-                    value={props.formValue.notes}
-                    onChange={props.handleInput}
-                  />
-
                   <InputLabel className={modalBody.inputLabel}>
                     Client Portion Size
                   </InputLabel>
@@ -196,30 +211,15 @@ const ModalBody = (props) => {
                     </Select>
                   </FormControl>
                   <InputLabel className={modalBody.inputLabel}>
-                    Client Diagnosis
+                    Client Notes
                   </InputLabel>
-                  <FormControl>
-                    <InputLabel className={modalBody.inputLabel}>
-                      Diagnosis
-                    </InputLabel>
-                    <Select
-                      label="Diagnosis"
-                      required
-                      id="eatingDisorderId"
-                      value={props.formValue.eatingDisorderId}
-                      onChange={props.handleEatingDisorderInput}
-                    >
-                      {props.eatingDisorders.map((eatingDisorder, i) => (
-                        <MenuItem
-                          key={`eatingDisorder-${i}`}
-                          id={`eatingDisorder-${i}`}
-                          value={eatingDisorder.id}
-                        >
-                          {capitalize(eatingDisorder.name)}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
+                  <TextField
+                    fullWidth
+                    label={'Notes'}
+                    id="notes"
+                    value={props.formValue.notes}
+                    onChange={props.handleInput}
+                  />
                   {/* <FormGroup>
                             <FormControlLabel
                             control={

@@ -1,0 +1,27 @@
+.veggieSwitch {
+  .MuiSwitch-switchBase {
+    color: #a5d6a7;
+    &.Mui-checked {
+      color: #4caf50;
+      + .MuiSwitch-track {
+        background-color: #4caf50;
+      }
+      & + .MuiSwitch-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 0;
+        background-color: #4caf50;
+        position: relative;
+        &:before {
+          content: '\\2713';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%) rotate(90deg);
+          color: white;
+          font-size: 1em;
+        }
+      }
+    }
+  }
+}

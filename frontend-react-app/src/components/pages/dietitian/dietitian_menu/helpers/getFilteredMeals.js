@@ -1,37 +1,22 @@
 export default function getFilteredMealPlanMeals({
   allMealPlanMeals,
   mealPlanMealsByMealPlan,
-  mealPlanMealsByMealTime,
   mealPlanMealsByDietaryRestriction,
   filterMealPlanId,
-  filterMealTime,
-  filterDietaryRestrictions,
+  vegetarian,
 }) {
   const dietFilteredMealsArray =
-    filterDietaryRestrictions === 'all'
+    vegetarian === 'all'
       ? allMealPlanMeals
-      : mealPlanMealsByDietaryRestriction.get(filterDietaryRestrictions);
+      : mealPlanMealsByDietaryRestriction.get(vegetarian);
   const dietFilteredMealsMap = new Map();
   dietFilteredMealsArray.forEach((item) => {
     if (!dietFilteredMealsMap.has(item.id)) {
       dietFilteredMealsMap.set(item.id, item);
     }
   });
-  const timeFilterdMealArray =
-    filterMealTime === 'all'
-      ? allMealPlanMeals
-      : mealPlanMealsByMealTime.get(filterMealTime);
-  const timeFilteredMealsMap = new Map();
-  timeFilterdMealArray.forEach((item) => {
-    if (!timeFilteredMealsMap.has(item.id)) {
-      timeFilteredMealsMap.set(item.id, item);
-    }
-  });
 
-  const mealPlanFilteredArray =
-    filterMealPlanId === 'all'
-      ? allMealPlanMeals
-      : mealPlanMealsByMealPlan.get(filterMealPlanId);
+  const mealPlanFilteredArray = mealPlanMealsByMealPlan.get(filterMealPlanId);
   if (mealPlanFilteredArray) {
     const mealPlanFilteredMealsMap = new Map();
     mealPlanFilteredArray.forEach((item) => {
@@ -43,7 +28,6 @@ export default function getFilteredMealPlanMeals({
     allMealPlanMeals.forEach((item) => {
       if (
         dietFilteredMealsMap.has(item.id) &&
-        timeFilteredMealsMap.has(item.id) &&
         mealPlanFilteredMealsMap.has(item.id)
       ) {
         filteredMealPlanMealsArray.push(item);
