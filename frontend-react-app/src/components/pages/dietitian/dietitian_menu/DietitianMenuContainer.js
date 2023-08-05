@@ -14,7 +14,8 @@ import { mapSnackNutrientStatsData } from './helpers/mapSnackNutrientStatsData';
 const DietitianMenuContainer = (props) => {
   const [mealPlans, setMealPlans] = useState(false);
   const [extendedMeals, setExtendedMeals] = useState(false);
-  const [specificMealPlanMeals, setSpecificMealPlanMeals] = useState(false);
+  const [specificMealNutrientStats, setSpecificMealNutrientStats] =
+    useState(false);
   const [mealNutrientStats, setMealNutrientStats] = useState(false);
   const [snackNutrientStats, setSnackNutrientStats] = useState(false);
 
@@ -57,7 +58,7 @@ const DietitianMenuContainer = (props) => {
         if (mounted) {
           const extendedMealPlanMealDTOs =
             mapMealNutrientStatsData(mealPlanMealsData);
-          setSpecificMealPlanMeals(extendedMealPlanMealDTOs);
+          setSpecificMealNutrientStats(extendedMealPlanMealDTOs);
         }
       }
     );
@@ -88,12 +89,14 @@ const DietitianMenuContainer = (props) => {
   if (
     mealPlans &&
     extendedMeals &&
-    specificMealPlanMeals &&
+    specificMealNutrientStats &&
+    !mealNutrientStats &&
     snackNutrientStats
   ) {
+    const updatedMealNutrientStats = mapMealNutrientStatsData(specificMealNutrientStats, extendedMeals)
     const dataProps = {
       mealPlans: mealPlans,
-      mealPlanMeals: specificMealPlanMeals,
+      mealPlanMeals: updatedMealNutrientStats,
       mealPlanSnacks: snackNutrientStats,
       extendedMeals: extendedMeals,
     };
@@ -104,11 +107,14 @@ const DietitianMenuContainer = (props) => {
     mealNutrientStats &&
     snackNutrientStats
   ) {
+    const updatedMealNutrientStats = mapMealNutrientStatsData(mealNutrientStats, extendedMeals)
+
     const dataProps = {
       mealPlans: mealPlans,
-      mealPlanMeals: mealNutrientStats,
+      mealPlanMeals: updatedMealNutrientStats,
       mealPlanSnacks: snackNutrientStats,
       extendedMeals: extendedMeals,
+      
     };
     return cloneElement(props.childComponent, { ...dataProps });
   } else {

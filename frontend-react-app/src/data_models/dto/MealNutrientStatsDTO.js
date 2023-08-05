@@ -1,34 +1,35 @@
 import FoodNutrientStatsDTO from './FoodNutrientStatsDTO.js';
 export default class MealNutrientStatsDTO extends FoodNutrientStatsDTO {
-  constructor(
-    foodNutrientStatsJSON,
-    nutrientDailyValueDTOFactory,
-    extendedMealDTOFactory
-  ) {
+  constructor(foodNutrientStatsJSON, nutrientDailyValueDTOFactory) {
     super(foodNutrientStatsJSON, nutrientDailyValueDTOFactory);
-    this.associatedMeal = extendedMealDTOFactory.injectInstance(
-      foodNutrientStatsJSON.associated_meal
-    );
+    this.mealId = foodNutrientStatsJSON.meal_id;
+  }
+  get associatedMeal() {
+    return this._associatedMeal;
+  }
+  set associatedMeal(newAssociatedMeal) {
+    this._associatedMeal = newAssociatedMeal;
   }
   get name() {
-    return this.associatedMeal.name;
+    return this._associatedMeal.name;
   }
   get mealTime() {
-    return this.associatedMeal.mealTime;
+    return this._associatedMeal.mealTime;
   }
+
   get imageUrl() {
-    return this.associatedMeal.imageUrl;
+    return this._associatedMeal.imageUrl;
   }
   get dietaryRestrictions() {
-    return this.associatedMeal.dietaryRestrictions;
+    return this._associatedMeal.dietaryRestrictions;
   }
   get description() {
-    return this.associatedMeal.description;
+    return this._associatedMeal.description;
   }
   toJSON() {
     return {
       ...super.toJSON(),
-      associated_meal: this.associatedMeal.toJSON(),
+      associated_meal: this._associatedMeal.toJSON(),
     };
   }
 }

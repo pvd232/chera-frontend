@@ -6,34 +6,31 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
 import {
+  Box,
   CircularProgress,
+  FormControlLabel,
+  FormGroup,
   IconButton,
   Tooltip,
   Typography,
 } from '@mui/material';
-import capitalize from '../../../../helpers/capitalize';
-import LocalStorageManager from '../../../../helpers/LocalStorageManager';
 import APIClient from '../../../../helpers/APIClient';
 import getFilteredMeals from './helpers/getFilteredMeals';
 import { sortFilteredMealPlanMeals } from './helpers/sortFilteredMealPlanMeals';
-import { getMealPlanMealsByMealTime } from './helpers/getMealPlanMealsByMealTime';
 import { getMealPlanMealsByMeal } from './helpers/getMealPlanMealsByMeal';
 import { getMealPlanMealsByMealPlan } from './helpers/getMealPlanMealsByMealPlan';
 import { getMealPlanMealsByDietaryRestriction } from './helpers/getMealPlanMealsByDietaryRestriction';
 import { mapMealNutrientStatsData } from './helpers/mapMealNutrientStatsData';
-
 import MediaCard from './MediaCard';
 import Info from '@mui/icons-material/Info';
-
+import VeggieSwitch from './VeggieSwitch';
 const DietitianMenu = (props) => {
   const customTheme = useTheme();
   const [filterMealPlanId, setFilterMealPlanId] = useState(
     props.mealPlans[1].id
   );
 
-  const [filterMealTime, setFilterMealTime] = useState('all');
-  const [filterDietaryRestrictions, setFilterDietaryRestrictions] =
-    useState('all');
+  const [vegetarian, setVegetarian] = useState('all');
   const [filteredMealPlanMeals, setFilteredMealPlanMeals] = useState(
     getMealPlanMealsByMealPlan(props.mealPlanMeals).get(filterMealPlanId)
   );
@@ -42,14 +39,9 @@ const DietitianMenu = (props) => {
 
   const newHandleFilterChange = async (event) => {
     const allMealPlanMeals = props.mealPlanMeals;
-    const mealPlanMealsByMealPlan = getMealPlanMealsByMealPlan(
-      props.mealPlanMeals
-    );
-    const mealPlanMealsByMeal = getMealPlanMealsByMeal(props.mealPlanMeals);
-    const mealPlanMealsByMealTime = getMealPlanMealsByMealTime(
-      props.extendedMeals,
-      mealPlanMealsByMeal
-    );
+    const mealPlanMealsByMealPlan =
+      getMealPlanMealsByMealPlan(allMealPlanMeals);
+    const mealPlanMealsByMeal = getMealPlanMealsByMeal(allMealPlanMeals);
     const mealPlanMealsByDietaryRestriction =
       getMealPlanMealsByDietaryRestriction(
         props.extendedMeals,
@@ -58,21 +50,11 @@ const DietitianMenu = (props) => {
     const filterMealParameters = {
       allMealPlanMeals,
       mealPlanMealsByMealPlan,
-      mealPlanMealsByMealTime,
       mealPlanMealsByDietaryRestriction,
       filterMealPlanId,
-      filterMealTime,
-      filterDietaryRestrictions,
+      vegetarian,
     };
-    if (event.target.name === 'filterMealTime') {
-      setFilterMealTime(event.target.value);
-      filterMealParameters.filterMealTime = event.target.value;
-      setFilteredMealPlanMeals(getFilteredMeals(filterMealParameters));
-    } else if (event.target.name === 'filterDietaryRestrictions') {
-      setFilterDietaryRestrictions(event.target.value);
-      filterMealParameters.filterDietaryRestrictions = event.target.value;
-      setFilteredMealPlanMeals(getFilteredMeals(filterMealParameters));
-    } else if (event.target.name === 'filterMealPlan') {
+    if (event.target.name === 'filterMealPlan') {
       setFilterMealPlanId(event.target.value);
       filterMealParameters.filterMealPlanId = event.target.value;
       const mealsLoaded = getFilteredMeals(filterMealParameters);
@@ -89,9 +71,18 @@ const DietitianMenu = (props) => {
         setFilteredMealPlanMeals(extendedMealPlanMealDTOs);
         setMealsLoading(false);
       }
+    } else if (event.target.name === 'filterVegetarian') {
+      if (vegetarian === 'all') {
+        setVegetarian('vegetarian');
+        filterMealParameters.vegetarian = 'vegetarian';
+      } else {
+        setVegetarian('all');
+        filterMealParameters.vegetarian = 'all';
+      }
+      const mealsLoaded = getFilteredMeals(filterMealParameters);
+      setFilteredMealPlanMeals(mealsLoaded);
     }
   };
-
   return (
     <Grid
       container
@@ -116,6 +107,7 @@ const DietitianMenu = (props) => {
         container
         xs={10}
         spacing={2}
+        columnGap={'3vh'}
         sx={{ height: 'min-content' }}
         alignItems={'flex-end'}
       >
@@ -137,39 +129,25 @@ const DietitianMenu = (props) => {
             </Select>
           </FormControl>
         </Grid>
+
         <Grid item>
-          <FormControl fullWidth>
-            <InputLabel>Time</InputLabel>
-            <Select
-              label="Time"
-              required
-              name="filterMealTime"
-              value={filterMealTime}
-              onChange={newHandleFilterChange}
-            >
-              {LocalStorageManager.shared.mealTimes.map((mealTime, i) => (
-                <MenuItem value={mealTime} key={i}>
-                  {capitalize(mealTime)}
-                </MenuItem>
-              ))}
-              {<MenuItem value={'all'}>All</MenuItem>}
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={'auto'}>
-          <FormControl fullWidth>
-            <InputLabel>Other</InputLabel>
-            <Select
-              label="Other"
-              required
-              name="filterDietaryRestrictions"
-              value={filterDietaryRestrictions}
-              onChange={newHandleFilterChange}
-            >
-              <MenuItem value={'vegetarian'}>Vegetarian</MenuItem>
-              <MenuItem value={'all'}>All</MenuItem>
-            </Select>
-          </FormControl>
+          <FormGroup>
+            <Box flexDirection="column" display="flex" alignItems="center">
+              <Box>
+                <Typography>Veggie</Typography>
+              </Box>
+              <FormControlLabel
+                control={
+                  <VeggieSwitch
+                    name="filterVegetarian"
+                    checked={vegetarian !== 'all'}
+                    value={vegetarian}
+                    onChange={newHandleFilterChange}
+                  />
+                }
+              />
+            </Box>
+          </FormGroup>
         </Grid>
       </Grid>
       <Grid container item xs={10} paddingTop={'6vh'}>
@@ -191,7 +169,7 @@ const DietitianMenu = (props) => {
                       mealTime={mealPlanMeal.associatedMeal.mealTime}
                       key={i}
                       shouldDisplayNutritionDetails={true}
-                    ></MediaCard>
+                    />
                   </Grid>
                 );
               }
