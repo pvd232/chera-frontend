@@ -32,6 +32,7 @@ import Payment from './components/pages/client/ClientPayment';
 import ClientInvoice from './components/pages/client/ClientInvoice';
 import PlanDetails from './components/pages/client/PlanDetails';
 import Privacy from './components/pages/splash/Privacy';
+import TermsOfService from './components/pages/splash/TermsOfService';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -262,6 +263,16 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={<Privacy />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/terms-of-service"
+            element={
+              <Navbar
+                childComponent={<TermsOfService />}
                 links={<SplashLinks />}
                 homeUrl="/"
               />

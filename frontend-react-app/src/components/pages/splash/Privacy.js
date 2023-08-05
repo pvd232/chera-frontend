@@ -9,9 +9,9 @@ const Privacy = () => (
       marginBottom: '20vh',
     }}
   >
-    <Grid container item justifyContent={'center'}>
+    <Grid container item justifyContent={'center'} mb={'5vh'}>
       <Grid item>
-        <Typography>Privacy Policy</Typography>
+        <Typography fontWeight={'bold'}>Privacy Policy</Typography>
       </Grid>
     </Grid>
     <Grid container item justifyContent={'center'}>
