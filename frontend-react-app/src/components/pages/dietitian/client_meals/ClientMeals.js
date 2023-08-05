@@ -1,39 +1,37 @@
-import { useState, useEffect } from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import CircularProgressPage from "../../../shared_components/CircularProgressPage";
-import ClientMealsTable from "./ClientMealsTable";
-import ClientSnacksTable from "./ClientSnacksTable";
-import createScheduleMealCardItems from "./helpers/createScheduleMealCardItems";
-import { useClients } from "../hooks/useClients";
-import clientMeals from "./scss/ClientMeals.module.scss";
-import APIClient from "../../../../helpers/APIClient";
-import MealSubscriptionDTO from "../../../../data_models/dto/MealSubscriptionDTO";
-import MealSubscription from "../../../../data_models/model/MealSubscription";
-import ExtendedMealFactory from "../../../../data_models/factories/model/ExtendedMealFactory";
-import ExtendedScheduledOrderMeal from "../../../../data_models/model/ExtendedScheduledOrderMeal";
-import ExtendedScheduledOrderMealDTO from "../../../../data_models/dto/ExtendedScheduledOrderMealDTO";
-import ExtendedMealDTOFactory from "../../../../data_models/factories/dto/ExtendedMealDTOFactory";
-import MealDietaryRestrictionDTOFactory from "../../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory";
-import MealDietaryRestrictionFactory from "../../../../data_models/factories/model/MealDietaryRestrictionFactory";
-import ExtendedScheduledOrderSnackDTO from "../../../../data_models/dto/ExtendedScheduledOrderSnackDTO";
-import ExtendedScheduledOrderSnack from "../../../../data_models/model/ExtendedScheduledOrderSnack";
-import SnackFactory from "../../../../data_models/factories/model/SnackFactory";
-import SnackDTOFactory from "../../../../data_models/factories/dto/SnackDTOFactory";
-import refreshScheduledOrderMeals from "../../client/client_home/helpers/refreshScheduledOrderMeals";
-import refreshScheduledOrderSnacks from "../../client/client_home/helpers/refreshScheduledOrderSnacks";
-import createScheduledOrderMealCardItems from "../../client/client_home/helpers/createScheduledOrderMealCardItems";
-import createScheduledOrderSnackCardItems from "../../client/client_home/helpers/createScheduledOrderSnackCardItems";
+import { useState, useEffect } from 'react';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import CircularProgressPage from '../../../shared_components/CircularProgressPage';
+import ClientMealsTable from './ClientMealsTable';
+import ClientSnacksTable from './ClientSnacksTable';
+import clientMeals from './scss/ClientMeals.module.scss';
+import APIClient from '../../../../helpers/APIClient';
+import MealSubscriptionDTO from '../../../../data_models/dto/MealSubscriptionDTO';
+import MealSubscription from '../../../../data_models/model/MealSubscription';
+import ExtendedMealFactory from '../../../../data_models/factories/model/ExtendedMealFactory';
+import ExtendedScheduledOrderMeal from '../../../../data_models/model/ExtendedScheduledOrderMeal';
+import ExtendedScheduledOrderMealDTO from '../../../../data_models/dto/ExtendedScheduledOrderMealDTO';
+import ExtendedMealDTOFactory from '../../../../data_models/factories/dto/ExtendedMealDTOFactory';
+import MealDietaryRestrictionDTOFactory from '../../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
+import MealDietaryRestrictionFactory from '../../../../data_models/factories/model/MealDietaryRestrictionFactory';
+import ExtendedScheduledOrderSnackDTO from '../../../../data_models/dto/ExtendedScheduledOrderSnackDTO';
+import ExtendedScheduledOrderSnack from '../../../../data_models/model/ExtendedScheduledOrderSnack';
+import SnackFactory from '../../../../data_models/factories/model/SnackFactory';
+import SnackDTOFactory from '../../../../data_models/factories/dto/SnackDTOFactory';
+import refreshScheduledOrderMeals from '../../client/client_home/helpers/refreshScheduledOrderMeals';
+import refreshScheduledOrderSnacks from '../../client/client_home/helpers/refreshScheduledOrderSnacks';
+import createScheduledOrderMealCardItems from '../../client/client_home/helpers/createScheduledOrderMealCardItems';
+import createScheduledOrderSnackCardItems from '../../client/client_home/helpers/createScheduledOrderSnackCardItems';
 
 const ClientMeals = (props) => {
   const [filterClient, setFilterClient] = useState(
-    props.clients.clientArray.length > 0 ? props.clients.clientArray[0].id : ""
+    props.clients.clientArray.length > 0 ? props.clients.clientArray[0].id : ''
   );
 
   const [filterClientfirstName, setFilterClientfirstName] = useState(
     props.clients.clientArray.length > 0
       ? props.clients.clientArray[0].firstName
-      : ""
+      : ''
   );
 
   const [selectedDeliveryIndex, setSelectedDeliveryIndex] = useState(0);
@@ -198,7 +196,7 @@ const ClientMeals = (props) => {
         item
         container
         className={clientMeals.pageContainer}
-        style={{ height: "10%", justifyContent: "center" }}
+        style={{ height: '10%', justifyContent: 'center' }}
       >
         <Grid item>
           <Typography>

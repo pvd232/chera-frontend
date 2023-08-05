@@ -31,6 +31,7 @@ import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
 import Payment from './components/pages/client/ClientPayment';
 import ClientInvoice from './components/pages/client/ClientInvoice';
 import PlanDetails from './components/pages/client/PlanDetails';
+import Privacy from './components/pages/splash/Privacy';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -76,10 +77,7 @@ const Main = (props) => {
           <Route
             path="/dietitian-sign-up"
             element={
-              <Navbar
-                childComponent={<DietitianSignUp />}
-                homeUrl="/"
-              />
+              <Navbar childComponent={<DietitianSignUp />} homeUrl="/" />
             }
           />
           <Route
@@ -218,7 +216,9 @@ const Main = (props) => {
             path="/invoices"
             element={
               <Navbar
-                childComponent={<ClientInvoice stripePromise={props.stripePromise} />}
+                childComponent={
+                  <ClientInvoice stripePromise={props.stripePromise} />
+                }
                 links={<ClientLinks />}
                 homeUrl="/home"
               />
@@ -240,10 +240,7 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={
-                  <DietitianMenuContainer
-                    stripePromise={props.stripePromise}
-                    childComponent={<DietitianMenu />}
-                  />
+                  <DietitianMenuContainer childComponent={<DietitianMenu />} />
                 }
                 links={<DietitianLinks />}
                 homeUrl="/d-home"
@@ -255,6 +252,16 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={<Resources />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/privacy-policy"
+            element={
+              <Navbar
+                childComponent={<Privacy />}
                 links={<SplashLinks />}
                 homeUrl="/"
               />
