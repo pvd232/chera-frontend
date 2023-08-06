@@ -2,11 +2,10 @@
 @use '../../../scss/Client.module.scss' as client;
 
 .container {
-  justify-content: flex-start;
   column-gap: 10vh;
   row-gap: 5vh;
   .headerContainer {
-    justify-content: flex-start;
+    align-items: center;
     .header {
       font-size: client.$headerFontSize;
       text-align: center;

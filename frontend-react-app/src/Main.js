@@ -30,7 +30,7 @@ import { Auth0Navigator } from './auth0/Auth0Navigator';
 import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
 import Payment from './components/pages/client/ClientPayment';
 import ClientInvoice from './components/pages/client/ClientInvoice';
-import PlanDetails from './components/pages/client/PlanDetails';
+import AccountManagement from './components/pages/client/AccountManagement';
 import Privacy from './components/pages/splash/Privacy';
 import TermsOfService from './components/pages/splash/TermsOfService';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
@@ -227,10 +227,10 @@ const Main = (props) => {
           />
 
           <Route
-            path="/plan-details"
+            path="/account-management"
             element={
               <Navbar
-                childComponent={<PlanDetails domain={'client'} />}
+                childComponent={<AccountManagement domain={'client'} />}
                 links={<ClientLinks />}
                 homeUrl="/home"
               />

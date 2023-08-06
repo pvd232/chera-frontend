@@ -1355,8 +1355,12 @@ class APIClient {
       cache: 'default',
     };
     const response = await this.fetchWrapper(request, requestParams);
-    const responseData = await response.json();
-    return responseData;
+    if (response.status === 204) {
+      return false;
+    } else {
+      const responseData = await response.json();
+      return responseData;
+    }
   }
   async createScheduleSnacks(scheduleSnacks) {
     const requestUrl = this.baseUrl + '/schedule_snack';

@@ -1,0 +1,44 @@
+@use '../../../../static/scss/index.scss' as theme;
+@use './Client.module.scss' as client;
+.pageContainer {
+  padding-top: 5vh;
+  justify-content: center;
+  height: fit-content;
+  row-gap: 5vh;
+  .childContainer {
+    justify-content: center;
+  }
+  .header {
+    color: theme.$fucia;
+    font-size: client.$headerFontSize;
+    font-weight: bold;
+  }
+  .contentContainer {
+    .cardContainer {
+      flex-direction: row;
+      row-gap: 3vh;
+      column-gap: 2vh;
+      .buttonContainer {
+        column-gap: 2vh;
+        align-items: center;
+      }
+      .closeAccountText {
+        font-size: client.$subHeaderFontSize;
+        font-weight: bold;
+        margin-bottom: 1vh;
+      }
+
+      .confirmUsernameField {
+        font-size: client.$buttonFontSize;
+      }
+
+      .closeAccountLink {
+        background-color: theme.$fucia;
+        color: white;
+        font-size: client.$linkFontSize;
+        width: 100%;
+        text-transform: none;
+      }
+    }
+  }
+}

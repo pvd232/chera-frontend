@@ -100,7 +100,7 @@ const ClientHome = (props) => {
     // Get extended scheduled order snacks
     APIClient.getExtendedScheduledOrderSnacks(props.mealSubscription.id).then(
       (extendedScheduledOrderSnackData) => {
-        if (mounted) {
+        if (extendedScheduledOrderSnackData) {
           const extendedScheduledOrderSnackDTOs =
             extendedScheduledOrderSnackData.map(
               (json) =>
@@ -115,14 +115,15 @@ const ClientHome = (props) => {
                   new SnackFactory()
                 )
             );
-
-          setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
-          setOtherSnacks(
-            getOtherSnacks(
-              getUniqueSnacksMap(extendedScheduledOrderSnacks),
-              props.snacks
-            )
-          );
+          if (mounted) {
+            setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
+            setOtherSnacks(
+              getOtherSnacks(
+                getUniqueSnacksMap(extendedScheduledOrderSnacks),
+                props.snacks
+              )
+            );
+          }
         }
       }
     );

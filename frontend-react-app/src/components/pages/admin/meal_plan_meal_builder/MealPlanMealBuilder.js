@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextField } from '@mui/material';
+import { CircularProgress, TextField } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -16,7 +16,6 @@ import USDANutrientDailyValueDTOFactory from '../../../../data_models/factories/
 import ExtendedRecipeIngredientNutrientDTOFactory from '../../../../data_models/factories/dto/ExtendedRecipeIngredientNutrientDTOFactory';
 import RowBorder from '../../dietitian/dietitian_menu/nutrition_details/RowBorder';
 import BlackButton from '../../../shared_components/BlackButton';
-import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import MealPlanMealRow from './MealPlanMealRow';
 import CircularProgressPage from '../../../shared_components/CircularProgressPage';
 import { getMealPlanMeal } from './helpers/getMealPlanMeal';
@@ -239,7 +238,7 @@ const MealPlanMealBuilder = (props) => {
               onClick={handleSubmit}
               sx={{ width: '100%', padding: '1vh' }}
             >
-              {loading ? <BlueCircularProgress /> : 'Submit'}
+              {loading ? <CircularProgress size={24} /> : 'Submit'}
             </BlackButton>
           </Grid>
         </Grid>

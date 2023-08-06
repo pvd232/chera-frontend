@@ -132,7 +132,12 @@ const DietitianMenu = (props) => {
 
         <Grid item>
           <FormGroup>
-            <Box flexDirection="column" display="flex" alignItems="center">
+            <Box
+              flexDirection="column"
+              display="flex"
+              alignItems="center"
+              justifyContent={'center'}
+            >
               <Box>
                 <Typography>Veggie</Typography>
               </Box>
@@ -145,6 +150,7 @@ const DietitianMenu = (props) => {
                     onChange={newHandleFilterChange}
                   />
                 }
+                sx={{ marginRight: '0px' }}
               />
             </Box>
           </FormGroup>

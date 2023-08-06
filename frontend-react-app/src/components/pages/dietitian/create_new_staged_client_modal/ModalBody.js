@@ -7,13 +7,12 @@ import FormGroup from '@mui/material/FormGroup';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Select from '@mui/material/Select';
+import { Button, CircularProgress } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import capitalize from '../../../../helpers/capitalize';
-import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import modalBody from './scss/ModalBody.module.scss';
-import { Button } from '@mui/material';
 const ModalBody = (props) => {
   const genderOptions = ['male', 'female', 'non-binary', 'other'];
   const zipcodeIsHidden = (() => {
@@ -281,7 +280,7 @@ const ModalBody = (props) => {
                     className={modalBody.submitButton}
                   >
                     {props.loading ? (
-                      <BlueCircularProgress />
+                      <CircularProgress size={24} sx={{ color: 'white' }} />
                     ) : props.formValue.mealsPreSelected ? (
                       'Continue to Select Meals'
                     ) : (
