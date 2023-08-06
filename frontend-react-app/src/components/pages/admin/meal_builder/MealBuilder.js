@@ -17,7 +17,6 @@ import capitalize from '../../../../helpers/capitalize';
 import LocalStorageManager from '../../../../helpers/LocalStorageManager.ts';
 import MealPlanMealDTO from '../../../../data_models/dto/MealPlanMealDTO';
 import RecipeIngredientDTO from '../../../../data_models/dto/RecipeIngredientDTO';
-import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import IngredientRow from './IngredientRow';
 import OrangeSwitch from './OrangeSwitch';
 import MealCard from './MealCard';
@@ -360,7 +359,7 @@ const MealBuilder = () => {
             onClick={handleSubmit}
             sx={{ width: '100%', padding: '1vh' }}
           >
-            {loading ? <BlueCircularProgress /> : 'Submit'}
+            {loading ? <CircularProgress size={24} /> : 'Submit'}
           </BlackButton>
         </Grid>
       </Grid>

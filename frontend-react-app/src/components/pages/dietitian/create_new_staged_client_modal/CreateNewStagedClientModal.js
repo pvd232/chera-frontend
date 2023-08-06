@@ -116,7 +116,6 @@ const CreateNewStagedClientModal = (props) => {
 
     // Regular client creation with no meals selected nor paid for
     if (!formValue.mealsPreSelected) {
-      setLoading(true);
       const newStagedClientDTO =
         StagedClientDTO.initializeFromStagedClient(newStagedClient);
       await APIClient.createStagedClient(newStagedClientDTO);
@@ -148,6 +147,7 @@ const CreateNewStagedClientModal = (props) => {
       await APIClient.createStagedScheduleSnacks(stagedScheduleSnackDTOs);
 
       props.handleFinishCreatingStagedClient(newStagedClient);
+      setLoading(false);
 
       if (formValue.mealsPrepaid) {
         // Pass extendedScheduleMeals to DiscountOrderSummary page via props
@@ -160,13 +160,11 @@ const CreateNewStagedClientModal = (props) => {
       } else {
         setOpen(false);
         resetFormValues();
-        setLoading(false);
         setShowMenu(false);
         setPage('SignUp');
       }
     } else {
       // Dietitian is selecting client meals, and has just filled out their info on the form
-      setLoading(true);
       const shippingRate = await APIClient.getShippingRate(zipcode);
       const cogsData = await APIClient.getCOGS();
       const cogsDTOs = cogsData.map((cog) => {
@@ -181,6 +179,7 @@ const CreateNewStagedClientModal = (props) => {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     const form = event.target;
 
     // Check that all required values have been populated before triggering button click

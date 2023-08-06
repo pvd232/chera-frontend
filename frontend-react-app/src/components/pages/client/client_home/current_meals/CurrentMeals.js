@@ -36,7 +36,7 @@ const CurrentMeals = (props) => (
             </IconButton>
           </Tooltip>
         </Grid>
-      ) : props.isFirstDelivery ? (
+      ) : props.isFirstDelivery && props.currentDeliveryDateIndex === 0 ? (
         <Grid item>
           <Tooltip
             title={

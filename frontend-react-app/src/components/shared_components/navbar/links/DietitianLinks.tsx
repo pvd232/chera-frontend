@@ -15,14 +15,6 @@ const DietitianLinks = () => {
           Client meals
         </Typography>
       </Grid>
-      {/* <Grid item>
-        <Typography
-          className={dietitianLinks.link}
-          onClick={() => navigate('/meal-plans')}
-        >
-          Meal plans
-        </Typography>
-      </Grid> */}
       <Grid item>
         <Typography
           className={dietitianLinks.link}

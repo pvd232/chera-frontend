@@ -110,30 +110,12 @@ const ClientProfileDropDown = () => {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem
-                      id="client-plan-details"
-                      onClick={() => navigate('/plan-details')}
-                      className={aboutDropDown.menuItem}
-                    >
-                      <Typography className={aboutDropDown.text}>
-                        Plan Details
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem
-                      id="logout"
-                      onClick={handleLogout}
-                      className={aboutDropDown.menuItem}
-                    >
-                      <Typography className={aboutDropDown.text}>
-                        Log out
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem
                       id="payment"
                       onClick={handlePayment}
                       className={aboutDropDown.menuItem}
                     >
                       <Typography className={aboutDropDown.text}>
-                        Payment
+                        Payment Methods
                       </Typography>
                     </MenuItem>
                     <MenuItem
@@ -153,6 +135,24 @@ const ClientProfileDropDown = () => {
                     >
                       <Typography className={aboutDropDown.text}>
                         Update Address
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      id="account-management"
+                      onClick={() => navigate('/account-management')}
+                      className={aboutDropDown.menuItem}
+                    >
+                      <Typography className={aboutDropDown.text}>
+                        Account management
+                      </Typography>
+                    </MenuItem>
+                    <MenuItem
+                      id="logout"
+                      onClick={handleLogout}
+                      className={aboutDropDown.menuItem}
+                    >
+                      <Typography className={aboutDropDown.text}>
+                        Log out
                       </Typography>
                     </MenuItem>
                   </MenuList>

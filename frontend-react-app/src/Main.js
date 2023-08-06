@@ -30,7 +30,9 @@ import { Auth0Navigator } from './auth0/Auth0Navigator';
 import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
 import Payment from './components/pages/client/ClientPayment';
 import ClientInvoice from './components/pages/client/ClientInvoice';
-import PlanDetails from './components/pages/client/PlanDetails';
+import AccountManagement from './components/pages/client/AccountManagement';
+import Privacy from './components/pages/splash/Privacy';
+import TermsOfService from './components/pages/splash/TermsOfService';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -76,10 +78,7 @@ const Main = (props) => {
           <Route
             path="/dietitian-sign-up"
             element={
-              <Navbar
-                childComponent={<DietitianSignUp />}
-                homeUrl="/"
-              />
+              <Navbar childComponent={<DietitianSignUp />} homeUrl="/" />
             }
           />
           <Route
@@ -218,7 +217,9 @@ const Main = (props) => {
             path="/invoices"
             element={
               <Navbar
-                childComponent={<ClientInvoice stripePromise={props.stripePromise} />}
+                childComponent={
+                  <ClientInvoice stripePromise={props.stripePromise} />
+                }
                 links={<ClientLinks />}
                 homeUrl="/home"
               />
@@ -226,10 +227,10 @@ const Main = (props) => {
           />
 
           <Route
-            path="/plan-details"
+            path="/account-management"
             element={
               <Navbar
-                childComponent={<PlanDetails domain={'client'} />}
+                childComponent={<AccountManagement domain={'client'} />}
                 links={<ClientLinks />}
                 homeUrl="/home"
               />
@@ -240,10 +241,7 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={
-                  <DietitianMenuContainer
-                    stripePromise={props.stripePromise}
-                    childComponent={<DietitianMenu />}
-                  />
+                  <DietitianMenuContainer childComponent={<DietitianMenu />} />
                 }
                 links={<DietitianLinks />}
                 homeUrl="/d-home"
@@ -255,6 +253,26 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={<Resources />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/privacy-policy"
+            element={
+              <Navbar
+                childComponent={<Privacy />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/terms-of-service"
+            element={
+              <Navbar
+                childComponent={<TermsOfService />}
                 links={<SplashLinks />}
                 homeUrl="/"
               />

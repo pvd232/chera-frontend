@@ -5,7 +5,6 @@ import ScreenSize from '../../../../types/enums/ScreenSize';
 import styles from '../scss/SplashLinks.module.scss';
 import AboutDropDown from '../AboutDropDown';
 import MobileDropDown from '../MobileDropDown';
-import LogInDropDown from '../LogInDropDown';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const SplashLinks = () => {
@@ -44,7 +43,7 @@ const SplashLinks = () => {
           </Grid>
 
           <Grid item>
-          <Button
+            <Button
               variant="contained"
               className={styles.dietitianSignupButton}
               onClick={() =>

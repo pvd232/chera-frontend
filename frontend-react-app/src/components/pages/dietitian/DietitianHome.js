@@ -111,20 +111,32 @@ const DietititanHome = (props) => {
                       </TableCell>
                       <TableCell align="left">{row.email}</TableCell>
                       <TableCell align="left">
-                        <Grid item container>
-                          {row.mealPlanCalories}
+                        <Grid container>
+                          <Grid
+                            item
+                            container
+                            alignItems={'center'}
+                            columnGap={'2vw'}
+                          >
+                            <Grid item>{row.mealPlanCalories} kCal</Grid>
+
+                            <Grid item>
+                              <div
+                                className={dietitianHome.editMealPlanContainer}
+                              >
+                                <EditClientMealPlanModal
+                                  buttonIndex={i}
+                                  clientItem={row}
+                                  handleFinishEditingMealPlan={
+                                    handleFinishEditingMealPlan
+                                  }
+                                  isStagedClient={row.isStagedClient}
+                                  mealPlans={props.mealPlans.mealPlansArray}
+                                />
+                              </div>
+                            </Grid>
+                          </Grid>
                         </Grid>
-                        <div className={dietitianHome.editMealPlanContainer}>
-                          <EditClientMealPlanModal
-                            buttonIndex={i}
-                            clientItem={row}
-                            handleFinishEditingMealPlan={
-                              handleFinishEditingMealPlan
-                            }
-                            isStagedClient={row.isStagedClient}
-                            mealPlans={props.mealPlans.mealPlansArray}
-                          />
-                        </div>
                       </TableCell>
                       <TableCell align="left">{row.notes}</TableCell>
                       <TableCell align="center">
@@ -144,19 +156,12 @@ const DietititanHome = (props) => {
                         <Grid
                           item
                           container
-                          justifyContent={'center'}
                           alignItems={'center'}
+                          columnGap={'2vw'}
                         >
-                          <Grid item sx={{ marginRight: 'auto' }}>
-                            {row.mealPlanCalories} kCal
-                          </Grid>
+                          <Grid item>{row.mealPlanCalories} kCal</Grid>
 
-                          <Grid
-                            item
-                            sx={{
-                              marginRight: '33%',
-                            }}
-                          >
+                          <Grid item>
                             <div
                               className={dietitianHome.editMealPlanContainer}
                             >
@@ -173,7 +178,17 @@ const DietititanHome = (props) => {
                           </Grid>
                         </Grid>
                       </TableCell>
-                      <TableCell align="left">{row.notes}</TableCell>
+                      <TableCell align="left" sx={{ maxWidth: '25vw' }}>
+                        <Grid container item>
+                          <Grid item>
+                            <Typography
+                              sx={{ wordWrap: 'break-word', maxWidth: '23vw' }}
+                            >
+                              {row.notes}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </TableCell>
                       <TableCell align="center">
                         {row.accountCreated ? (
                           <Icon className={dietitianHome.accountCreatedIcon}>
@@ -196,6 +211,7 @@ const DietititanHome = (props) => {
                                   <CircularProgress
                                     className={dietitianHome.loadingIcon}
                                     size={24}
+                                    sx={{ color: 'white' }}
                                   />
                                 ) : (
                                   'Send Reminder'

@@ -25,6 +25,10 @@ function loadScript(src, position, id) {
 const autocompleteService = { current: null };
 const placeService = { current: null };
 
+async function initMap() {
+  return;
+}
+window.initMap = initMap;
 export default function SearchLocationInput(props) {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
@@ -34,7 +38,7 @@ export default function SearchLocationInput(props) {
   if (typeof window !== 'undefined' && !loaded.current) {
     if (!document.querySelector('#google-maps')) {
       loadScript(
-        `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places`,
+        `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`,
         document.querySelector('head'),
         'google-maps'
       );

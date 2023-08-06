@@ -27,6 +27,7 @@ export const Auth0Navigator = ({ children }) => {
   })();
 
   const redirectUri = window.location.origin + '/callback';
+  console.log('redirectUri', redirectUri);
 
   const audience = (() => {
     if (env === 'development') {
