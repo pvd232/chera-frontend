@@ -1,4 +1,5 @@
 import { useReducer, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
@@ -39,7 +40,8 @@ const DietitianSignUp = () => {
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
-      id: '',
+      id: uuidv4(),
+      email: '',
       firstName: '',
       lastName: '',
       dieteticRegistrationNumber: '',
@@ -99,7 +101,7 @@ const DietitianSignUp = () => {
     setLoading(true);
 
     formValue.gotSample = sample;
-    formValue.id = user.email;
+    formValue.email = user.email;
 
     const form = event.target;
     const validated = await validate(form);
@@ -247,6 +249,17 @@ const DietitianSignUp = () => {
                         id="lastName"
                         onChange={handleInput}
                         value={formValue.lastName}
+                      />
+                    </FormControl>
+                    <FormControl variant="filled">
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="Phone number"
+                        id="phoneNumber"
+                        type="tel"
+                        onChange={handleInput}
+                        value={formValue.phoneNumber}
                       />
                     </FormControl>
                     <FormControl variant="filled">

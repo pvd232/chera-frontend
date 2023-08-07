@@ -30,16 +30,6 @@ const HowItWorks = (props) => (
     <Stack direction={'column'} rowGap={0}>
       <LogisticsStep
         customTheme={props.customTheme}
-        headerText={'Get a referral'}
-        bodyText={
-          "Your dietitian has already referred you and selected a meal program that's right for you!"
-        }
-        symbolName={'menu_book_outlined'}
-        primaryFontSize={6.5}
-        secondaryFontSize={5.5}
-      ></LogisticsStep>
-      <LogisticsStep
-        customTheme={props.customTheme}
         headerText={'Select your meals'}
         bodyText={
           'Choose meals from the menu, or have them pre-selected by your dietitian. All our meals come pre-cooked and ready to go.'
@@ -47,7 +37,7 @@ const HowItWorks = (props) => (
         symbolName={'dinner_dining_outlined'}
         primaryFontSize={6.5}
         secondaryFontSize={5.5}
-      ></LogisticsStep>
+      />
       <LogisticsStep
         customTheme={props.customTheme}
         headerText={'We cook and deliver meals'}
@@ -55,7 +45,7 @@ const HowItWorks = (props) => (
         symbolName={'delivery_dining_outlined'}
         primaryFontSize={6.5}
         secondaryFontSize={5.5}
-      ></LogisticsStep>
+      />
       <LogisticsStep
         customTheme={props.customTheme}
         headerText={'Heat up, sit back and enjoy'}
@@ -65,7 +55,7 @@ const HowItWorks = (props) => (
         symbolName={'sentiment_very_satisfied_outlined'}
         primaryFontSize={6.5}
         secondaryFontSize={5.5}
-      ></LogisticsStep>
+      />
     </Stack>
   </Grid>
 );

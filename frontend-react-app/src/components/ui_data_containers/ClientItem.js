@@ -1,7 +1,8 @@
 import checkProperties from '../../helpers/checkProperties';
 export default class ClientItem {
   constructor(client, isStagedClient) {
-    this.email = client.id;
+    this.id = client.id;
+    this.email = client.email;
     this.name = client.formattedName;
     this.address = client.address ?? '';
     this.mealPlanName = client.mealPlan.name;

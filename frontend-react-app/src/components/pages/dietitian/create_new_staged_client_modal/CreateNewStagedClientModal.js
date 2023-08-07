@@ -1,5 +1,6 @@
-import Grid from '@mui/material/Grid';
 import { useState, useReducer } from 'react';
+import Grid from '@mui/material/Grid';
+import { v4 as uuidv4 } from 'uuid';
 import Button from '@mui/material/Button';
 import Icon from '@mui/material/Icon';
 import Dialog from '@mui/material/Dialog';
@@ -40,7 +41,9 @@ const CreateNewStagedClientModal = (props) => {
     {
       // if the client secret exists then this page is being rerendered and all of these values have been inputted
 
-      id: '',
+      id: uuidv4(),
+      email: '',
+      dietitianId: props.dietitianId,
       firstName: '',
       mealPlanId: '',
       eatingDisorderId: '',
@@ -49,7 +52,6 @@ const CreateNewStagedClientModal = (props) => {
       age: 0,
       gender: '',
       notes: '',
-      dietitianId: props.dietitianId,
       active: true,
       accountCreated: false,
       datetime: Date.now(),
@@ -61,9 +63,9 @@ const CreateNewStagedClientModal = (props) => {
 
   const resetFormValues = () => {
     const resetFormValues = {
-      // if the client secret exists then this page is being rerendered and all of these values have been inputted
-
-      id: '',
+      id: uuidv4(),
+      email: '',
+      dietitianId: props.dietitianId,
       firstName: '',
       mealPlanId: '',
       eatingDisorderId: '',
@@ -72,7 +74,6 @@ const CreateNewStagedClientModal = (props) => {
       age: 0,
       gender: '',
       notes: '',
-      dietitianId: props.dietitianId,
       active: true,
       accountCreated: false,
       datetime: Date.now(),
@@ -110,7 +111,6 @@ const CreateNewStagedClientModal = (props) => {
     scheduleSnacks,
     mealPrice = false
   ) => {
-    // Make sure initializing Staged Client with new property works - shouldnt have to do anything here
     const newStagedClient = new StagedClient(formValue);
     setStagedClientId(newStagedClient.id);
 

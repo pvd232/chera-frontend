@@ -726,7 +726,7 @@ class APIClient {
     const mealPlanData = await response.json();
     return mealPlanData;
   }
-  async getMealPlans() {
+  async getMealPlans(includeDeprecated = false) {
     const requestUrl = `${this.baseUrl}/meal_plan`;
     const request = new Request(requestUrl);
     const requestParams = {
@@ -736,12 +736,19 @@ class APIClient {
     };
     const response = await this.fetchWrapper(request, requestParams);
     const mealPlanData = await response.json();
-    const filteredMealPlans = mealPlanData.filter(
-      (mealPlan) =>
-        mealPlan.dinner_calories === 400 ||
-        mealPlan.dinner_calories === 600 ||
-        mealPlan.dinner_calories === 800
-    );
+    const filteredMealPlans = (() => {
+      if (!includeDeprecated) {
+        return mealPlanData.filter(
+          (mealPlan) =>
+            mealPlan.dinner_calories === 400 ||
+            mealPlan.dinner_calories === 600 ||
+            mealPlan.dinner_calories === 800
+        );
+      } else {
+        return mealPlanData;
+      }
+    })();
+
     const oddFilteredMealPlans = filteredMealPlans.filter(
       (mealPlan) => mealPlan.number % 2 === 1
     );
@@ -913,14 +920,14 @@ class APIClient {
     numberOfMeals,
     numberOfSnacks,
     zipcode,
-    clientId,
+    clientEmail,
     discountCode,
     prepaid
   ) {
     const requestUrl = this.baseUrl + '/stripe/subscription';
 
     const requestBody = {
-      client_id: clientId,
+      client_email: clientEmail,
       number_of_meals: numberOfMeals,
       number_of_snacks: numberOfSnacks,
       zipcode: zipcode,

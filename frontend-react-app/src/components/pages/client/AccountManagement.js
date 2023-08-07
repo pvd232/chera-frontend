@@ -20,7 +20,7 @@ const AccountManagement = () => {
     const client = LocalStorageManager.shared.client;
     const clientMeal = LocalStorageManager.shared.clientMealSubscription;
 
-    confirmDeleteUsername === client.id
+    confirmDeleteUsername === client.email
       ? (() => {
           setLoadingDeleteSubscription(true);
           APIClient.deleteScheduleMeals(clientMeal.id).then(() => {
