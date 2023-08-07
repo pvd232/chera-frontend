@@ -311,7 +311,7 @@ const CreateNewStagedClientModal = (props) => {
             <Grid item>
               <Tooltip
                 title={
-                  'We are currently in our sample trial period. We expect to have the platform fully functional by Friday, August 4th!'
+                  'The platform will be fully functional by EOD today (August7th)! We will be sending you an email with more details.'
                 }
               >
                 <IconButton>
