@@ -29,52 +29,6 @@ import CustomTextField from '../../../shared_components/CustomTextField';
 import { useSample } from './hooks/useSample';
 const DietitianSignUp = () => {
   const { loginWithRedirect } = useAuth0();
-  const [sample, setSample] = useSample();
-  const [error, setError] = useState(false);
-  const [registrationError, setRegistrationError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [addressValueError, setAddressValueError] = useState(false);
-  const [suiteError, setSuiteError] = useState(false);
-  const [sampleSuiteError, setSampleSuiteError] = useState(false);
-
-  const [formValue, setFormValue] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      id: uuidv4(),
-      email: '',
-      firstName: '',
-      lastName: '',
-      dieteticRegistrationNumber: '',
-      street: '',
-      suite: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      address: '',
-      clinicUrl: '',
-      numberOfEDClients: 0,
-      percentIntensiveOutpatient: 0,
-      percentRegularOutpatient: 0,
-      datetime: Date.now(),
-      gotSample: '',
-      clients: [],
-      active: true,
-      admin: false,
-    }
-  );
-
-  const [sampleFormValue, setSampleFormValue] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      street: '',
-      suite: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      address: '',
-    }
-  );
-
   const { user } = useAuth0();
   if (!user) {
     const returnUrl = (() => {
@@ -95,6 +49,52 @@ const DietitianSignUp = () => {
       },
     });
   }
+
+  const [sample, setSample] = useSample();
+  const [error, setError] = useState(false);
+  const [registrationError, setRegistrationError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [addressValueError, setAddressValueError] = useState(false);
+  const [suiteError, setSuiteError] = useState(false);
+  const [sampleSuiteError, setSampleSuiteError] = useState(false);
+
+  const [formValue, setFormValue] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      id: uuidv4(),
+      email: user.email,
+      firstName: '',
+      lastName: '',
+      dieteticRegistrationNumber: '',
+      street: '',
+      suite: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      address: '',
+      clinicUrl: '',
+      numberOfEDClients: 0,
+      percentIntensiveOutpatient: 0,
+      percentRegularOutpatient: 0,
+      datetime: Date.now(),
+      gotSample: true,
+      clients: [],
+      active: true,
+      admin: false,
+    }
+  );
+
+  const [sampleFormValue, setSampleFormValue] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      street: '',
+      suite: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      address: '',
+    }
+  );
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -186,7 +186,9 @@ const DietitianSignUp = () => {
     }
   };
   const validate = async (form) => {
-    const dietitianAlreadyExists = await APIClient.getDietitian(formValue.id);
+    const dietitianAlreadyExists = await APIClient.getDietitian(
+      formValue.email
+    );
     if (dietitianAlreadyExists) {
       setError(true);
       return false;

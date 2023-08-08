@@ -24,9 +24,9 @@ const LoadingPage = () => {
           LocalStorageManager.shared.client = client;
           navigate('/home');
         } else {
-          APIClient.getStagedClient(email).then((stagedUserData) => {
+          APIClient.getStagedClient(false, email).then((stagedUserData) => {
             if (stagedUserData) {
-              navigate('/'); //need to redirect to client sign up page instead!
+              navigate(`/client_sign_up?staged_client_id=${stagedUserData.id}`); //need to redirect to client sign up page instead!
             } else {
               APIClient.getDietitian(email).then((dietitianData) => {
                 if (!dietitianData) {
@@ -43,6 +43,8 @@ const LoadingPage = () => {
           });
         }
       });
+    } else {
+      navigate('/');
     }
   }, [user, isAuthenticated, navigate]);
 

@@ -19,6 +19,7 @@ import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
 import createNewStagedClientModal from './scss/CreateNewStagedClientModal.module.scss';
 import { validateZipcode } from '../../client_sign_up/account_registration/helpers/validateZipcode';
+
 const CreateNewStagedClientModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -85,13 +86,15 @@ const CreateNewStagedClientModal = (props) => {
   };
 
   const validate = async (form) => {
-    const stagedClientIdExists = await APIClient.getStagedClient(formValue.id);
-    const clientIdExists = await APIClient.getClient(formValue.id);
-    const clientIdExistsAsDietitian = await APIClient.getDietitian(
-      formValue.id
+    const stagedClientExists = await APIClient.getStagedClient(
+      formValue.email
+    );
+    const clientExists = await APIClient.getClient(formValue.email);
+    const clientExistsAsDietitian = await APIClient.getDietitian(
+      formValue.email
     );
 
-    if (stagedClientIdExists || clientIdExistsAsDietitian || clientIdExists) {
+    if (stagedClientExists || clientExistsAsDietitian || clientExists) {
       setError(true);
       return false;
     }

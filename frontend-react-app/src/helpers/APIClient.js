@@ -592,8 +592,8 @@ class APIClient {
     return;
   }
 
-  async getDietitian(dietitianId) {
-    const requestUrl = `${this.baseUrl}/dietitian/${dietitianId}`;
+  async getDietitian(dietitianEmail) {
+    const requestUrl = `${this.baseUrl}/dietitian/${dietitianEmail}`;
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -646,8 +646,14 @@ class APIClient {
     }
   }
 
-  async getStagedClient(stagedClientId) {
-    const requestUrl = `${this.baseUrl}/staged_client/${stagedClientId}`;
+  async getStagedClient(stagedClientId = false, stagedClientEmail = false) {
+    const requestUrl = (() => {
+      if (stagedClientId) {
+        return `${this.baseUrl}/staged_client/${stagedClientId}`;
+      } else {
+        return `${this.baseUrl}/staged_client?email=${stagedClientEmail}`;
+      }
+    })();
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -660,12 +666,14 @@ class APIClient {
     // Staged client does not exist
     if (response.status === 404) {
       return false;
+    } else {
+      const responseData = await response.json();
+      console.log('responseData', responseData);
+      return responseData;
     }
-    const responseData = await response.json();
-    return responseData;
   }
-  async getClient(clientId) {
-    const requestUrl = `${this.baseUrl}/client/${clientId}`;
+  async getClient(clientEmail) {
+    const requestUrl = `${this.baseUrl}/client/${clientEmail}`;
 
     const request = new Request(requestUrl);
     const requestParams = {
@@ -675,12 +683,12 @@ class APIClient {
     };
     const response = await this.fetchWrapper(request, requestParams);
 
-    // Staged client does not exist
     if (response.status === 404) {
       return false;
+    } else {
+      const responseData = await response.json();
+      return responseData;
     }
-    const responseData = await response.json();
-    return responseData;
   }
 
   async sendReminderEmail(stagedClientId) {
