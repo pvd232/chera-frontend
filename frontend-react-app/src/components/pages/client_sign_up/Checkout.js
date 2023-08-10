@@ -16,7 +16,7 @@ const Checkout = (props) => {
       props.scheduleSnacks.length,
       // Use the zipcode the client inputted, encase they did so incorrectly in the AccountRegistration page
       newClient.zipcode,
-      newClient.id,
+      newClient.email,
       LocalStorageManager.shared.discount
         ? LocalStorageManager.shared.discount.code
         : '',
@@ -54,6 +54,7 @@ const Checkout = (props) => {
           }}
           editAddress={editAddress}
           handleSubmit={(newClient) => handleSubmit(newClient)}
+          email={props.stagedClient.email}
           stagedClientId={props.stagedClient.id}
           dietitianId={props.stagedClient.dietitianId}
           mealPlanId={props.stagedClient.mealPlanId}

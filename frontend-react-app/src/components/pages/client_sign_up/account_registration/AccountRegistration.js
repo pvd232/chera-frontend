@@ -23,6 +23,7 @@ const AccountRegistration = (props) => {
       // if the client secret exists then this page is being rerendered and all of these values have been inputted
 
       id: props.stagedClientId,
+      email: props.email,
       zipcode: '',
     }
   );
@@ -51,7 +52,7 @@ const AccountRegistration = (props) => {
       const mealSubscriptionObject = {
         id: uuid(),
         clientId: formValue.id,
-        dietitianId: props.dietitianId,
+        dietitianId: props.dietitianId ?? '',
         stripeSubscriptionId: '',
         shippingRate: props.shippingRate,
         datetime: Date.now(),
@@ -112,15 +113,23 @@ const AccountRegistration = (props) => {
                 >
                   Sign up
                 </Typography>
-
                 <HowItWorks customTheme={customTheme} />
-                <Grid item lg={6} xs={12} sx={{ marginTop: '4vh' }}>
+
+                <Grid item lg={6} xs={12}>
                   <Stack direction={'column'} rowGap={3}>
+                    <Typography
+                      fontSize={'1.1rem'}
+                      marginLeft={'10%'}
+                      fontWeight={'bold'}
+                      color={customTheme.palette.olive.main}
+                    >
+                      More about you
+                    </Typography>
                     <CustomTextField
                       required
                       fullWidth
                       label={'Email'}
-                      id="id"
+                      id="email"
                       sx={{
                         marginLeft: 'auto',
                         marginRight: 'auto',
@@ -130,7 +139,7 @@ const AccountRegistration = (props) => {
                         style: { fontSize: customTheme.fontEqualizer(14) },
                       }} // font size of input text
                       disabled={true}
-                      value={formValue.id}
+                      value={formValue.email}
                     />
 
                     <>

@@ -2,7 +2,8 @@ import checkProperties from '../../helpers/checkProperties';
 export default class ClientDTO {
   constructor(clientData) {
     this.id = clientData.id;
-    this.dietitianId = clientData.dietitian_id;
+    this.email = clientData.email;
+    this.dietitianId = clientData.dietitian_id ?? '';
     this.mealPlanId = clientData.meal_plan_id;
     this.stripeId = clientData.stripe_id;
     this.firstName = clientData.first_name;
@@ -23,6 +24,7 @@ export default class ClientDTO {
   static initializeFromForm(client) {
     return new ClientDTO({
       id: client.id,
+      email: client.email,
       dietitian_id: client.dietitianId,
       meal_plan_id: client.mealPlanId,
       stripe_id: client.stripeId,
@@ -44,6 +46,7 @@ export default class ClientDTO {
   toJSON() {
     return {
       id: this.id,
+      email: this.email,
       dietitian_id: this.dietitianId,
       meal_plan_id: this.mealPlanId,
       stripe_id: this.stripeId,

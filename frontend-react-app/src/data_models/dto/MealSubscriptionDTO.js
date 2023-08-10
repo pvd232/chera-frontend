@@ -3,7 +3,7 @@ export default class MealSubscriptionDTO {
   constructor(mealSubscriptionJSON) {
     this.id = mealSubscriptionJSON.id;
     this.clientId = mealSubscriptionJSON.client_id;
-    this.dietitianId = mealSubscriptionJSON.dietitian_id;
+    this.dietitianId = mealSubscriptionJSON.dietitian_id ?? '';
     this.stripeSubscriptionId = mealSubscriptionJSON.stripe_subscription_id;
     this.shippingRate = mealSubscriptionJSON.shipping_rate;
     this.datetime = mealSubscriptionJSON.datetime * 1000;
@@ -27,7 +27,7 @@ export default class MealSubscriptionDTO {
     return new MealSubscriptionDTO({
       id: mealSubscription.id,
       client_id: mealSubscription.clientId,
-      dietitian_id: mealSubscription.dietitianId,
+      dietitian_id: mealSubscription.dietitianId ?? '',
       stripe_subscription_id: mealSubscription.stripeSubscriptionId,
       shipping_rate: mealSubscription.shippingRate,
       datetime: mealSubscription.datetime / 1000,

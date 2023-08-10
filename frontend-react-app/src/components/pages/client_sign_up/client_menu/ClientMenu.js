@@ -18,7 +18,6 @@ import ScheduleSnack from '../../../../data_models/model/ScheduleSnack';
 import ScheduleSnackDTO from '../../../../data_models/dto/ScheduleSnackDTO';
 import ScheduledOrderSnackDTO from '../../../../data_models/dto/ScheduledOrderSnackDTO';
 import ExtendedScheduleSnack from '../../../../data_models/model/ExtendedScheduleSnack';
-
 import ExtendedMealFactory from '../../../../data_models/factories/model/ExtendedMealFactory';
 import MealDietaryRestrictionFactory from '../../../../data_models/factories/model/MealDietaryRestrictionFactory';
 import createScheduledOrderMeals from '../helpers/createScheduledOrderMeals';
@@ -35,9 +34,11 @@ import StagedScheduleMeal from '../../../../data_models/model/StagedScheduleMeal
 import ExtendedStagedScheduleMeal from '../../../../data_models/model/ExtendedStagedScheduleMeal';
 import StagedScheduleSnack from '../../../../data_models/model/StagedScheduleSnack';
 import ExtendedStagedScheduleSnack from '../../../../data_models/model/ExtendedStagedScheduleSnack';
-import checkOrderQuantity from './helpers/checkOrderQuantity';
 import checkMinimumMealQuantity from './helpers/checkMinimumMealQuantity';
 import { getMealPrice } from './helpers/getMealPrice';
+import { getEvenCogsNumItems } from './helpers/getEvenCogsNumItems';
+import { getLcdNumItems } from './helpers/getLcdNumItems';
+import { getNumBoxes } from './helpers/getNumBoxes';
 
 const ClientMenu = (props) => {
   const customTheme = useTheme();
@@ -188,7 +189,6 @@ const ClientMenu = (props) => {
     setChosenScheduleMeals((prevChosenMeal) => {
       const newScheduleMeal = (() => {
         const scheduleMealId = uuid();
-
         // Dynamically construct the correct type of schedule meal based on whether the dietitian is choosing meals for a client or for a meal subscription
         if (props.dietitianChoosingClientMeals) {
           return new StagedScheduleMeal({
@@ -322,20 +322,42 @@ const ClientMenu = (props) => {
 
   const handleSubmit = async () => {
     setEditing(false);
-    if (
-      !checkOrderQuantity(false, chosenScheduleMeals, chosenScheduleSnacks) ||
-      !checkMinimumMealQuantity(false, chosenScheduleMeals)
-    ) {
+    if (!checkMinimumMealQuantity(false, chosenScheduleMeals)) {
       return false;
     }
     if (!loading) {
       setLoading(true);
     }
+    const minNumItems = props.cogs.reduce((lowest, current) => {
+      return current.numMeals < lowest.numMeals ? current : lowest;
+    }).numMeals;
+
+    const maxNumItems = props.cogs.reduce((highest, current) => {
+      return current.numMeals > highest.numMeals ? current : highest;
+    }).numMeals;
+
+    const minCogsPerBox = props.cogs.reduce((lowest, current) => {
+      return current.costPerBox < lowest.costPerBox ? current : lowest;
+    });
+
+    const correctedEvenItems = getEvenCogsNumItems(
+      chosenScheduleMeals.length,
+      chosenScheduleSnacks.length,
+      minNumItems
+    );
+    const lcdTotalItems = getLcdNumItems(
+      correctedEvenItems,
+      minNumItems,
+      maxNumItems,
+      minCogsPerBox.numMeals
+    );
+    const numBoxes = getNumBoxes(correctedEvenItems, minNumItems);
     const mealPrice = getMealPrice(
       props.cogs,
       props.shippingRate,
-      chosenScheduleMeals.length,
-      chosenScheduleSnacks.length
+      correctedEvenItems,
+      lcdTotalItems,
+      numBoxes
     );
     if (!props.dietitianChoosingClientMeals) {
       // Client choosing meals
@@ -536,66 +558,14 @@ const ClientMenu = (props) => {
               }}
             >
               {`You must select a minimum of ${
-                props.cogs[0].numMeals
+                props.cogs.reduce((lowest, current) => {
+                  return current.numMeals < lowest.numMeals ? current : lowest;
+                }).numMeals
               } meals. Please add ${
-                props.cogs[0].numMeals - chosenScheduleMeals.length
+                props.cogs.reduce((lowest, current) => {
+                  return current.numMeals < lowest.numMeals ? current : lowest;
+                }).numMeals - chosenScheduleMeals.length
               } more`}
-            </FormHelperText>
-            <FormHelperText
-              hidden={
-                checkMinimumMealQuantity(editing, chosenScheduleMeals) &&
-                !checkOrderQuantity(
-                  editing,
-                  chosenScheduleMeals,
-                  chosenScheduleSnacks
-                )
-                  ? false
-                  : true
-              }
-              error={true}
-              sx={{
-                fontSize: '1rem',
-              }}
-            >
-              {'You must select an even number of meals + snacks.'}
-            </FormHelperText>
-            <FormHelperText
-              hidden={
-                checkMinimumMealQuantity(editing, chosenScheduleMeals) &&
-                !checkOrderQuantity(
-                  editing,
-                  chosenScheduleMeals,
-                  chosenScheduleSnacks
-                )
-                  ? false
-                  : true
-              }
-              error={true}
-              sx={{
-                fontSize: '1rem',
-              }}
-            >
-              {
-                ' 2 snacks are packed in 1 meal container (Ex: 6 meals + 2 snacks = 7 meal containers).'
-              }
-            </FormHelperText>
-            <FormHelperText
-              hidden={
-                checkMinimumMealQuantity(editing, chosenScheduleMeals) &&
-                !checkOrderQuantity(
-                  editing,
-                  chosenScheduleMeals,
-                  chosenScheduleSnacks
-                )
-                  ? false
-                  : true
-              }
-              error={true}
-              sx={{
-                fontSize: '1rem',
-              }}
-            >
-              {'Please add 1 more meal, or add 2 more snacks.'}
             </FormHelperText>
           </Grid>
         </Grid>
@@ -652,7 +622,7 @@ const ClientMenu = (props) => {
       </Grid>
 
       {/* Side Bar */}
-      <Grid item lg={2.5} md={3.5} xs={12} >
+      <Grid item lg={2.5} md={3.5} xs={12}>
         <SideBar
           chosenScheduleMeals={chosenScheduleMeals}
           chosenScheduleSnacks={chosenScheduleSnacks}

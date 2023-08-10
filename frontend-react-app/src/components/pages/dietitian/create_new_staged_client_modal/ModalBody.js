@@ -44,9 +44,9 @@ const ModalBody = (props) => {
                     required
                     fullWidth
                     label={'Email'}
-                    id="id"
+                    id="email"
                     type="email"
-                    value={props.formValue.id}
+                    value={props.formValue.email}
                     onChange={props.handleInput}
                     error={props.error}
                     helperText={
@@ -100,9 +100,9 @@ const ModalBody = (props) => {
                     id="age"
                     type="number"
                     inputProps={{
-                      step: 0.01,
+                      step: 1,
                       min: 0,
-                      max: 1000,
+                      max: 100,
                     }}
                     value={
                       props.formValue.age ? parseFloat(props.formValue.age) : ''

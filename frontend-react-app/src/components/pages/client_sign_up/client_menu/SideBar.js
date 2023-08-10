@@ -8,6 +8,8 @@ import BlackButton from '../../../shared_components/BlackButton.ts';
 import getOrderSubtotal from './helpers/getOrderSubtotal';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import { getMealPrice } from './helpers/getMealPrice';
+import { getLcdNumItems } from './helpers/getLcdNumItems';
+import { getNumBoxes } from './helpers/getNumBoxes';
 
 const SideBar = (props) => {
   const breakfastMeals = props.chosenScheduleMeals.filter(
@@ -33,6 +35,102 @@ const SideBar = (props) => {
       meals: dinnerMeals,
     },
   ];
+  const minCostPerMeal = props.cogs.reduce((lowest, current) => {
+    return current.costPerMeal < lowest.costPerMeal ? current : lowest;
+  });
+  const itemsPerBox = minCostPerMeal.numMeals;
+  const minPricePerMeal = getMealPrice(
+    props.cogs,
+    props.shippingRate,
+    itemsPerBox,
+    itemsPerBox,
+    getNumBoxes(itemsPerBox, itemsPerBox)
+  );
+  const minNumMeals = props.cogs.reduce((lowest, current) => {
+    return current.numMeals < lowest.numMeals ? current : lowest;
+  }).numMeals;
+
+  const maxNumMeals = props.cogs.reduce((highest, current) => {
+    return current.numMeals > highest.numMeals ? current : highest;
+  }).numMeals;
+
+  // Meals + snacks / 2
+  const currentNumItems = (() => {
+    if (
+      props.chosenScheduleMeals.length + props.chosenScheduleSnacks.length ===
+      0
+    ) {
+      return minNumMeals;
+    } else {
+      return (
+        props.chosenScheduleMeals.length + props.chosenScheduleSnacks.length / 2
+      );
+    }
+  })();
+
+  const totalFoodItemsForCogs = getLcdNumItems(
+    currentNumItems,
+    minNumMeals,
+    maxNumMeals,
+    itemsPerBox
+  );
+
+  const mealPriceTable = props.cogs.map((cog) => {
+    const multiplier = (() => {
+      if (currentNumItems > maxNumMeals) {
+        return Math.floor(currentNumItems / itemsPerBox);
+      } else {
+        return 0;
+      }
+    })();
+    return {
+      numMeals: cog.numMeals + multiplier * itemsPerBox,
+      pricePerMeal: getMealPrice(
+        props.cogs,
+        props.shippingRate,
+        cog.numMeals + multiplier * itemsPerBox,
+        getLcdNumItems(
+          cog.numMeals + multiplier * itemsPerBox,
+          minNumMeals,
+          maxNumMeals,
+          itemsPerBox
+        ),
+        getNumBoxes(cog.numMeals + multiplier * itemsPerBox, itemsPerBox)
+      ),
+    };
+  });
+  const numBoxes = getNumBoxes(currentNumItems, itemsPerBox);
+  const currentPricePerMeal = getMealPrice(
+    props.cogs,
+    props.shippingRate,
+    currentNumItems,
+    totalFoodItemsForCogs,
+    numBoxes
+  );
+  const isLowest = currentPricePerMeal === minPricePerMeal;
+  const mealsToAdd = (() => {
+    // If currentNumItems is greater than itemsPerBox, then we need to find the next number of meals with the same low price as itemsPerBox
+    const closestNumMealsForLowestPrice = (() =>
+      // Find the next lowest price per meal
+      // If there is no next lowest price per meal, then we need to add the num meals for two times the itemsPerBox
+      {
+        const lowestPricedMeals = mealPriceTable.filter((meal) => {
+          return meal.pricePerMeal === minPricePerMeal;
+        });
+        const validMeals = lowestPricedMeals.filter((meal) => {
+          return meal.numMeals > currentNumItems;
+        });
+
+        if (validMeals.length > 0) {
+          return validMeals.reduce((prev, curr) => {
+            return curr.numMeals < prev.numMeals ? curr : prev;
+          }).numMeals;
+        } else {
+          return itemsPerBox * (Math.floor(currentNumItems / itemsPerBox) + 1);
+        }
+      })();
+    return Math.abs(currentNumItems - closestNumMealsForLowestPrice);
+  })();
   return (
     <Grid container paddingLeft={'2vw'}>
       <Grid item xs={12}>
@@ -212,24 +310,49 @@ const SideBar = (props) => {
           }}
           rowSpacing={2}
         >
-          <Grid item xs={12}>
-            <Typography fontSize={'1rem'} textAlign={'left'}>
-              {`${props.chosenScheduleMeals.length} meals`}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography fontSize={'1rem'} textAlign={'left'}>
-              {`${props.chosenScheduleSnacks.length} snacks`}
-            </Typography>
-          </Grid>
+          {props.chosenScheduleMeals.length > 0 && (
+            <Grid item xs={12}>
+              <Typography fontSize={'1rem'} textAlign={'left'}>
+                {`${props.chosenScheduleMeals.length} meals`}
+              </Typography>
+            </Grid>
+          )}
+
+          {props.chosenScheduleMeals.length > 0 &&
+            currentNumItems >= minNumMeals &&
+            !isLowest && (
+              <Grid item xs={12}>
+                <Typography
+                  fontSize={'1rem'}
+                  textAlign={'left'}
+                  variant="body2"
+                  sx={{
+                    color: `${props.customTheme.palette.olive.main}`,
+                  }}
+                >
+                  {`Add ${mealsToAdd} meal${
+                    mealsToAdd > 1 ? 's' : ''
+                  } to get a discount!`}
+                </Typography>
+              </Grid>
+            )}
+          {props.chosenScheduleSnacks.length > 0 && (
+            <Grid item xs={12}>
+              <Typography fontSize={'1rem'} textAlign={'left'}>
+                {`${props.chosenScheduleSnacks.length} snacks`}
+              </Typography>
+            </Grid>
+          )}
+
           <Grid item xs={5}>
             <Typography fontSize={'1rem'} textAlign={'left'}>
               {`Total: $${getOrderSubtotal(
                 getMealPrice(
                   props.cogs,
                   props.shippingRate,
-                  props.chosenScheduleMeals.length,
-                  props.chosenScheduleSnacks.length
+                  currentNumItems,
+                  totalFoodItemsForCogs,
+                  numBoxes
                 ),
                 props.chosenScheduleMeals,
                 props.chosenScheduleSnacks

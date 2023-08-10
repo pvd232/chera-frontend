@@ -183,6 +183,7 @@ const SignUpPage = (props) => {
   ContainerObject['AccountRegistration'] = (
     <AccountRegistration
       stagedClientId={props.stagedClient.id}
+      email={props.stagedClient.email}
       dietitianId={props.stagedClient.dietitianId}
       shippingRate={shippingRate}
       updateMealSubscription={(newMealSubscription) => {

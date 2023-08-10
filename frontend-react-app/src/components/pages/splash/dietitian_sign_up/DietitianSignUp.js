@@ -1,4 +1,5 @@
 import { useReducer, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import CardContent from '@mui/material/CardContent';
@@ -28,51 +29,6 @@ import CustomTextField from '../../../shared_components/CustomTextField';
 import { useSample } from './hooks/useSample';
 const DietitianSignUp = () => {
   const { loginWithRedirect } = useAuth0();
-  const [sample, setSample] = useSample();
-  const [error, setError] = useState(false);
-  const [registrationError, setRegistrationError] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [addressValueError, setAddressValueError] = useState(false);
-  const [suiteError, setSuiteError] = useState(false);
-  const [sampleSuiteError, setSampleSuiteError] = useState(false);
-
-  const [formValue, setFormValue] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      id: '',
-      firstName: '',
-      lastName: '',
-      dieteticRegistrationNumber: '',
-      street: '',
-      suite: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      address: '',
-      clinicUrl: '',
-      numberOfEDClients: 0,
-      percentIntensiveOutpatient: 0,
-      percentRegularOutpatient: 0,
-      datetime: Date.now(),
-      gotSample: '',
-      clients: [],
-      active: true,
-      admin: false,
-    }
-  );
-
-  const [sampleFormValue, setSampleFormValue] = useReducer(
-    (state, newState) => ({ ...state, ...newState }),
-    {
-      street: '',
-      suite: '',
-      city: '',
-      state: '',
-      zipcode: '',
-      address: '',
-    }
-  );
-
   const { user } = useAuth0();
   if (!user) {
     const returnUrl = (() => {
@@ -94,12 +50,58 @@ const DietitianSignUp = () => {
     });
   }
 
+  const [sample, setSample] = useSample();
+  const [error, setError] = useState(false);
+  const [registrationError, setRegistrationError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [addressValueError, setAddressValueError] = useState(false);
+  const [suiteError, setSuiteError] = useState(false);
+  const [sampleSuiteError, setSampleSuiteError] = useState(false);
+
+  const [formValue, setFormValue] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      id: '',
+      email: user.email,
+      firstName: '',
+      lastName: '',
+      dieteticRegistrationNumber: '',
+      street: '',
+      suite: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      address: '',
+      clinicUrl: '',
+      numberOfEDClients: 0,
+      percentIntensiveOutpatient: 0,
+      percentRegularOutpatient: 0,
+      datetime: Date.now(),
+      gotSample: true,
+      clients: [],
+      active: true,
+      admin: false,
+    }
+  );
+
+  const [sampleFormValue, setSampleFormValue] = useReducer(
+    (state, newState) => ({ ...state, ...newState }),
+    {
+      street: '',
+      suite: '',
+      city: '',
+      state: '',
+      zipcode: '',
+      address: '',
+    }
+  );
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-
+    formValue.id = uuidv4();
     formValue.gotSample = sample;
-    formValue.id = user.email;
+    formValue.email = user.email;
 
     const form = event.target;
     const validated = await validate(form);
@@ -184,7 +186,9 @@ const DietitianSignUp = () => {
     }
   };
   const validate = async (form) => {
-    const dietitianAlreadyExists = await APIClient.getDietitian(formValue.id);
+    const dietitianAlreadyExists = await APIClient.getDietitian(
+      formValue.email
+    );
     if (dietitianAlreadyExists) {
       setError(true);
       return false;
@@ -247,6 +251,17 @@ const DietitianSignUp = () => {
                         id="lastName"
                         onChange={handleInput}
                         value={formValue.lastName}
+                      />
+                    </FormControl>
+                    <FormControl variant="filled">
+                      <CustomTextField
+                        required
+                        fullWidth
+                        label="Phone number"
+                        id="phoneNumber"
+                        type="tel"
+                        onChange={handleInput}
+                        value={formValue.phoneNumber}
                       />
                     </FormControl>
                     <FormControl variant="filled">

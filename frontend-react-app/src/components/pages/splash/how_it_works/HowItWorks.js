@@ -14,7 +14,7 @@ const HowItWorks = (props) => (
           customTheme={props.customTheme}
           headerText={'Dietitian refers client'}
           bodyText={
-            'Simple interface for adding clients and selecting a meal plan that best fits their needs.'
+            'Simple interface for adding clients and choosing a portion size that best fits their needs.'
           }
           symbolName={'format_list_numbered'}
         />
@@ -24,7 +24,7 @@ const HowItWorks = (props) => (
           customTheme={props.customTheme}
           headerText={'Pick weekly meals'}
           bodyText={
-            'Client creates account and chooses weekly meals and snacks. (Dietitian may also preselect meals)'
+            'Client (or their dietitian) picks meals + snacks - our menu updated weekly'
           }
           symbolName={'dinner_dining'}
         />

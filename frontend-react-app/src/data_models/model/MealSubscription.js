@@ -3,7 +3,7 @@ export default class MealSubscription {
   constructor(mealSubscriptionObject) {
     this.id = mealSubscriptionObject.id;
     this.clientId = mealSubscriptionObject.clientId;
-    this.dietitianId = mealSubscriptionObject.dietitianId;
+    this.dietitianId = mealSubscriptionObject.dietitianId ?? '';
     this.stripeSubscriptionId = mealSubscriptionObject.stripeSubscriptionId;
     this.shippingRate = mealSubscriptionObject.shippingRate;
     this.datetime = mealSubscriptionObject.datetime;

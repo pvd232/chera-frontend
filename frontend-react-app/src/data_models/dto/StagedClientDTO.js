@@ -2,15 +2,14 @@ import checkProperties from '../../helpers/checkProperties';
 export default class StagedClientDTO {
   constructor(stagedClient) {
     this.id = stagedClient.id;
+    this.email = stagedClient.email;
+    this.dietitianId = stagedClient.dietitian_id ?? '';
     this.firstName = stagedClient.first_name;
-
     this.currentWeight = stagedClient.current_weight;
     this.targetWeight = stagedClient.target_weight;
     this.age = stagedClient.age;
     this.gender = stagedClient.gender;
     this.eatingDisorderId = stagedClient.eating_disorder_id;
-
-    this.dietitianId = stagedClient.dietitian_id;
     this.mealPlanId = stagedClient.meal_plan_id;
     this.datetime = stagedClient.datetime;
     this.notes = stagedClient.notes;
@@ -25,13 +24,14 @@ export default class StagedClientDTO {
   static initializeFromStagedClient(stagedClient) {
     return new StagedClientDTO({
       id: stagedClient.id,
+      email: stagedClient.email,
+      dietitian_id: stagedClient.dietitianId,
       first_name: stagedClient.firstName,
       current_weight: stagedClient.currentWeight,
       target_weight: stagedClient.targetWeight,
       age: stagedClient.age,
       gender: stagedClient.gender,
       eating_disorder_id: stagedClient.eatingDisorderId,
-      dietitian_id: stagedClient.dietitianId,
       meal_plan_id: stagedClient.mealPlanId,
       datetime: stagedClient.datetime,
       notes: stagedClient.notes,
@@ -46,6 +46,7 @@ export default class StagedClientDTO {
   toJSON() {
     const data = {
       id: this.id,
+      email: this.email,
       first_name: this.firstName,
       current_weight: this.currentWeight,
       target_weight: this.targetWeight,

@@ -90,19 +90,19 @@ const DietititanHome = (props) => {
             ></CreateNewStagedClientModal>
           </Grid>
         </Grid>
-        {stagedClients.length > 0 && (
-          <Grid container item id="clients-table">
-            <TableContainer component={Paper}>
-              <Table className={dietitianHome.table}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Name</TableCell>
-                    <TableCell align="left">Email</TableCell>
-                    <TableCell align="left">Portion Size</TableCell>
-                    <TableCell align="left">Notes</TableCell>
-                    <TableCell align="center">Account Created</TableCell>
-                  </TableRow>
-                </TableHead>
+        <Grid container item id="clients-table">
+          <TableContainer component={Paper}>
+            <Table className={dietitianHome.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell align="left">Name</TableCell>
+                  <TableCell align="left">Email</TableCell>
+                  <TableCell align="left">Portion Size</TableCell>
+                  <TableCell align="left">Notes</TableCell>
+                  <TableCell align="center">Account Created</TableCell>
+                </TableRow>
+              </TableHead>
+              {stagedClients.length > 0 && (
                 <TableBody id="client-items">
                   {getClientItems(clients?.clientArray ?? []).map((row, i) => (
                     <TableRow key={i} id="client-items">
@@ -224,10 +224,10 @@ const DietititanHome = (props) => {
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        )}
+              )}
+            </Table>
+          </TableContainer>
+        </Grid>
 
         {props.paymentConfirmed && (
           <StagedClientPaymentConfirmed

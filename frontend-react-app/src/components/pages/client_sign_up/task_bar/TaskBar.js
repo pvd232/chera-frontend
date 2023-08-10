@@ -66,17 +66,19 @@ const TaskBar = (props) => {
       });
       // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
       let stagedClientId = params.staged_client_id; // "some_value"
-      APIClient.getStagedClient(stagedClientId).then((stagedClientData) => {
-        const returnedStagedClient = new StagedClientDTO(stagedClientData);
-        // If client account was already created then get values created during previous incompleted registration
-        if (returnedStagedClient.accountCreated) {
-          window.location.assign('client-login');
-        } else {
-          if (mounted) {
-            setStagedClient(returnedStagedClient);
+      APIClient.getStagedClient(stagedClientId, false).then(
+        (stagedClientData) => {
+          const returnedStagedClient = new StagedClientDTO(stagedClientData);
+          // If client account was already created then get values created during previous incompleted registration
+          if (returnedStagedClient.accountCreated) {
+            window.location.assign('client-login');
+          } else {
+            if (mounted) {
+              setStagedClient(returnedStagedClient);
+            }
           }
         }
-      });
+      );
     }
     return () => (mounted = false);
   }, []);

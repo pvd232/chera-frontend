@@ -1,5 +1,6 @@
-import Grid from '@mui/material/Grid';
 import { useState, useReducer } from 'react';
+import Grid from '@mui/material/Grid';
+import { v4 as uuidv4 } from 'uuid';
 import Button from '@mui/material/Button';
 import Icon from '@mui/material/Icon';
 import Dialog from '@mui/material/Dialog';
@@ -18,6 +19,7 @@ import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
 import createNewStagedClientModal from './scss/CreateNewStagedClientModal.module.scss';
 import { validateZipcode } from '../../client_sign_up/account_registration/helpers/validateZipcode';
+
 const CreateNewStagedClientModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -40,7 +42,9 @@ const CreateNewStagedClientModal = (props) => {
     {
       // if the client secret exists then this page is being rerendered and all of these values have been inputted
 
-      id: '',
+      id: uuidv4(),
+      email: '',
+      dietitianId: props.dietitianId,
       firstName: '',
       mealPlanId: '',
       eatingDisorderId: '',
@@ -49,7 +53,6 @@ const CreateNewStagedClientModal = (props) => {
       age: 0,
       gender: '',
       notes: '',
-      dietitianId: props.dietitianId,
       active: true,
       accountCreated: false,
       datetime: Date.now(),
@@ -61,9 +64,9 @@ const CreateNewStagedClientModal = (props) => {
 
   const resetFormValues = () => {
     const resetFormValues = {
-      // if the client secret exists then this page is being rerendered and all of these values have been inputted
-
-      id: '',
+      id: uuidv4(),
+      email: '',
+      dietitianId: props.dietitianId,
       firstName: '',
       mealPlanId: '',
       eatingDisorderId: '',
@@ -72,7 +75,6 @@ const CreateNewStagedClientModal = (props) => {
       age: 0,
       gender: '',
       notes: '',
-      dietitianId: props.dietitianId,
       active: true,
       accountCreated: false,
       datetime: Date.now(),
@@ -84,13 +86,15 @@ const CreateNewStagedClientModal = (props) => {
   };
 
   const validate = async (form) => {
-    const stagedClientIdExists = await APIClient.getStagedClient(formValue.id);
-    const clientIdExists = await APIClient.getClient(formValue.id);
-    const clientIdExistsAsDietitian = await APIClient.getDietitian(
-      formValue.id
+    const stagedClientExists = await APIClient.getStagedClient(
+      formValue.email
+    );
+    const clientExists = await APIClient.getClient(formValue.email);
+    const clientExistsAsDietitian = await APIClient.getDietitian(
+      formValue.email
     );
 
-    if (stagedClientIdExists || clientIdExistsAsDietitian || clientIdExists) {
+    if (stagedClientExists || clientExistsAsDietitian || clientExists) {
       setError(true);
       return false;
     }
@@ -110,7 +114,6 @@ const CreateNewStagedClientModal = (props) => {
     scheduleSnacks,
     mealPrice = false
   ) => {
-    // Make sure initializing Staged Client with new property works - shouldnt have to do anything here
     const newStagedClient = new StagedClient(formValue);
     setStagedClientId(newStagedClient.id);
 

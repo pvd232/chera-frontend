@@ -4,6 +4,8 @@ export default class Dietitian {
   constructor(dietitianObject) {
     if (dietitianObject) {
       this.id = dietitianObject.id;
+      this.email = dietitianObject.email;
+      this.phoneNumber = dietitianObject.phoneNumber;
       this.firstName = dietitianObject.firstName;
       this.lastName = dietitianObject.lastName;
       this.dieteticRegistrationNumber =
@@ -13,7 +15,6 @@ export default class Dietitian {
       this.clinicAddress = dietitianObject.clinicAddress;
       this.clinicUrl = dietitianObject.clinicUrl;
       this.numberOfEDClients = dietitianObject.numberOfEDClients;
-
       this.percentIntensiveOutpatient =
         dietitianObject.percentIntensiveOutpatient;
       this.percentRegularOutpatient = dietitianObject.percentRegularOutpatient;
@@ -23,6 +24,8 @@ export default class Dietitian {
       this.active = dietitianObject.active;
     } else {
       this.id = '';
+      this.email = '';
+      this.phoneNumber = '';
       this.firstName = '';
       this.lastName = '';
       this.dieteticRegistrationNumber = '';

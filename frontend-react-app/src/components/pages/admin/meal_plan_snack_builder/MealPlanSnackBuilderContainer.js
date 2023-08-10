@@ -19,7 +19,7 @@ const MealPlanSnackBuilderContainer = (props) => {
         setSnacks(snacks);
       }
     });
-    APIClient.getMealPlans().then((mealPlansData) => {
+    APIClient.getMealPlans(true).then((mealPlansData) => {
       if (mounted) {
         const mealPlanDTOs = mealPlansData.map(
           (mealPlanData) => new MealPlanDTO(mealPlanData)
