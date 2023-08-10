@@ -26,7 +26,7 @@ export const Auth0Navigator = ({ children }) => {
     }
   })();
 
-  const redirectUri = window.location.origin + '/api/callback';
+  const redirectUri = window.location.origin + '/callback';
 
   const audience = (() => {
     if (env === 'development') {
