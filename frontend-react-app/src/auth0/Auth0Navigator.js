@@ -25,8 +25,10 @@ export const Auth0Navigator = ({ children }) => {
       return 'Uzd6Gt4tk8ihZhmwSRtSiT7MpaMeIbsF';
     }
   })();
-
+  console.log('clientId', clientId);
+  console.log('window.location.origin', window.location.origin);
   const redirectUri = window.location.origin + '/callback';
+  console.log('redirectUri', redirectUri);
   const audience = (() => {
     if (env === 'development') {
       return process.env.REACT_APP_AUTH0_AUDIENCE;
