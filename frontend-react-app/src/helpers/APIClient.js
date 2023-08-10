@@ -668,7 +668,6 @@ class APIClient {
       return false;
     } else {
       const responseData = await response.json();
-      console.log('responseData', responseData);
       return responseData;
     }
   }
