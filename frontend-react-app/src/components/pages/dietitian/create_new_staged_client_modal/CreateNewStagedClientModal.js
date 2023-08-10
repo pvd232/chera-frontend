@@ -87,6 +87,7 @@ const CreateNewStagedClientModal = (props) => {
 
   const validate = async (form) => {
     const stagedClientExists = await APIClient.getStagedClient(
+      false,
       formValue.email
     );
     const clientExists = await APIClient.getClient(formValue.email);
@@ -190,6 +191,7 @@ const CreateNewStagedClientModal = (props) => {
     if (validated) {
       handleButtonClick(false, false);
     } else {
+      setLoading(false);
       return false;
     }
   };
