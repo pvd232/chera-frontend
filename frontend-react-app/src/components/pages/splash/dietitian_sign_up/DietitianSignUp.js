@@ -61,7 +61,7 @@ const DietitianSignUp = () => {
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
-      id: uuidv4(),
+      id: '',
       email: user.email,
       firstName: '',
       lastName: '',
@@ -99,7 +99,7 @@ const DietitianSignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-
+    formValue.id = uuidv4();
     formValue.gotSample = sample;
     formValue.email = user.email;
 
