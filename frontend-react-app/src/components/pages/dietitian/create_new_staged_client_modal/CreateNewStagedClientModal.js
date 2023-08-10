@@ -191,6 +191,7 @@ const CreateNewStagedClientModal = (props) => {
     if (validated) {
       handleButtonClick(false, false);
     } else {
+      setLoading(false);
       return false;
     }
   };
