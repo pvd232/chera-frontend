@@ -36,8 +36,6 @@ import StagedScheduleSnack from '../../../../data_models/model/StagedScheduleSna
 import ExtendedStagedScheduleSnack from '../../../../data_models/model/ExtendedStagedScheduleSnack';
 import checkMinimumMealQuantity from './helpers/checkMinimumMealQuantity';
 import { getMealPrice } from './helpers/getMealPrice';
-import { getEvenCogsNumItems } from './helpers/getEvenCogsNumItems';
-import { getLcdNumItems } from './helpers/getLcdNumItems';
 import { getNumBoxes } from './helpers/getNumBoxes';
 
 const ClientMenu = (props) => {
@@ -332,31 +330,22 @@ const ClientMenu = (props) => {
       return current.numMeals < lowest.numMeals ? current : lowest;
     }).numMeals;
 
-    const maxNumItems = props.cogs.reduce((highest, current) => {
-      return current.numMeals > highest.numMeals ? current : highest;
-    }).numMeals;
+    const numItems = (() => {
+      if (
+        chosenScheduleMeals.length + chosenScheduleSnacks.length <=
+        minNumItems
+      ) {
+        return minNumItems;
+      } else {
+        return chosenScheduleMeals.length + chosenScheduleSnacks.length / 2;
+      }
+    })();
 
-    const minCogsPerBox = props.cogs.reduce((lowest, current) => {
-      return current.costPerBox < lowest.costPerBox ? current : lowest;
-    });
-
-    const correctedEvenItems = getEvenCogsNumItems(
-      chosenScheduleMeals.length,
-      chosenScheduleSnacks.length,
-      minNumItems
-    );
-    const lcdTotalItems = getLcdNumItems(
-      correctedEvenItems,
-      minNumItems,
-      maxNumItems,
-      minCogsPerBox.numMeals
-    );
-    const numBoxes = getNumBoxes(correctedEvenItems, minNumItems);
+    const numBoxes = getNumBoxes(numItems, minNumItems);
     const mealPrice = getMealPrice(
       props.cogs,
       props.shippingRate,
-      correctedEvenItems,
-      lcdTotalItems,
+      numItems,
       numBoxes
     );
     if (!props.dietitianChoosingClientMeals) {

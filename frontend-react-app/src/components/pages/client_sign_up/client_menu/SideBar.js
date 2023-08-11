@@ -8,7 +8,6 @@ import BlackButton from '../../../shared_components/BlackButton.ts';
 import getOrderSubtotal from './helpers/getOrderSubtotal';
 import BlueCircularProgress from '../../../shared_components/BlueCircularProgress';
 import { getMealPrice } from './helpers/getMealPrice';
-import { getLcdNumItems } from './helpers/getLcdNumItems';
 import { getNumBoxes } from './helpers/getNumBoxes';
 
 const SideBar = (props) => {
@@ -57,8 +56,8 @@ const SideBar = (props) => {
   // Meals + snacks / 2
   const currentNumItems = (() => {
     if (
-      props.chosenScheduleMeals.length + props.chosenScheduleSnacks.length ===
-      0
+      props.chosenScheduleMeals.length + props.chosenScheduleSnacks.length <=
+      minNumMeals
     ) {
       return minNumMeals;
     } else {
@@ -67,13 +66,6 @@ const SideBar = (props) => {
       );
     }
   })();
-
-  const totalFoodItemsForCogs = getLcdNumItems(
-    currentNumItems,
-    minNumMeals,
-    maxNumMeals,
-    itemsPerBox
-  );
 
   const mealPriceTable = props.cogs.map((cog) => {
     const multiplier = (() => {
@@ -88,23 +80,17 @@ const SideBar = (props) => {
       pricePerMeal: getMealPrice(
         props.cogs,
         props.shippingRate,
-        cog.numMeals + multiplier * itemsPerBox,
-        getLcdNumItems(
-          cog.numMeals + multiplier * itemsPerBox,
-          minNumMeals,
-          maxNumMeals,
-          itemsPerBox
-        ),
+        currentNumItems,
         getNumBoxes(cog.numMeals + multiplier * itemsPerBox, itemsPerBox)
       ),
     };
   });
+
   const numBoxes = getNumBoxes(currentNumItems, itemsPerBox);
   const currentPricePerMeal = getMealPrice(
     props.cogs,
     props.shippingRate,
     currentNumItems,
-    totalFoodItemsForCogs,
     numBoxes
   );
   const isLowest = currentPricePerMeal === minPricePerMeal;
@@ -351,7 +337,6 @@ const SideBar = (props) => {
                   props.cogs,
                   props.shippingRate,
                   currentNumItems,
-                  totalFoodItemsForCogs,
                   numBoxes
                 ),
                 props.chosenScheduleMeals,
