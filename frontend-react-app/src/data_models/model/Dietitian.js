@@ -13,11 +13,7 @@ export default class Dietitian {
       this.clinicCity = dietitianObject.clinicCity;
       this.clinicState = dietitianObject.clinicState;
       this.clinicAddress = dietitianObject.clinicAddress;
-      this.clinicUrl = dietitianObject.clinicUrl;
       this.numberOfEDClients = dietitianObject.numberOfEDClients;
-      this.percentIntensiveOutpatient =
-        dietitianObject.percentIntensiveOutpatient;
-      this.percentRegularOutpatient = dietitianObject.percentRegularOutpatient;
       this.datetime = dietitianObject.datetime;
       this.gotSample = dietitianObject.gotSample;
       this.admin = dietitianObject.admin;
@@ -32,10 +28,7 @@ export default class Dietitian {
       this.clinicCity = '';
       this.clinicState = '';
       this.clinicAddress = dietitianObject.clinicAddress;
-      this.clinicUrl = '';
       this.numberOfEDClients = '';
-      this.percentIntensiveOutpatient = '';
-      this.percentRegularOutpatient = '';
       this.datetime = '';
       this.gotSample = false;
       this.admin = false;
