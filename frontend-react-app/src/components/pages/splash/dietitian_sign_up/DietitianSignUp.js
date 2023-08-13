@@ -77,7 +77,6 @@ const DietitianSignUp = () => {
       gotSample: true,
       clients: [],
       active: true,
-      admin: false,
     }
   );
 
@@ -104,6 +103,7 @@ const DietitianSignUp = () => {
     const validated = await validate(form);
     if (validated) {
       const dietitianDTO = DietitianDTO.initializeFromForm(formValue);
+      console.log('dietitianDTO', dietitianDTO);
       const returnedDietitianData = await APIClient.createDietitian(
         dietitianDTO
       );
@@ -183,14 +183,14 @@ const DietitianSignUp = () => {
     }
   };
   const validate = async (form) => {
+    setError(false);
+    setRegistrationError(false);
     const dietitianAlreadyExists = await APIClient.getDietitian(
       formValue.email
     );
     if (dietitianAlreadyExists) {
       setError(true);
       return false;
-    } else {
-      setError(false);
     }
     const dieteticRegistrationNumber = form.dieteticRegistrationNumber.value;
     const registrationStatus = await APIClient.checkDieteticRegistrationNumber(
@@ -199,8 +199,6 @@ const DietitianSignUp = () => {
     if (!registrationStatus) {
       setRegistrationError(true);
       return false;
-    } else {
-      setRegistrationError(false);
     }
 
     if (formValue.suite !== '' && suiteError !== '') {

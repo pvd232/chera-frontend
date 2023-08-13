@@ -16,7 +16,6 @@ export default class Dietitian {
       this.numberOfEDClients = dietitianObject.numberOfEDClients;
       this.datetime = dietitianObject.datetime;
       this.gotSample = dietitianObject.gotSample;
-      this.admin = dietitianObject.admin;
       this.active = dietitianObject.active;
     } else {
       this.id = '';
@@ -31,7 +30,6 @@ export default class Dietitian {
       this.numberOfEDClients = '';
       this.datetime = '';
       this.gotSample = false;
-      this.admin = false;
       this.active = true;
     }
     this.properlyInitialized = (() => checkProperties(this))();

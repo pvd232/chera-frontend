@@ -16,7 +16,6 @@ export default class DietitianDTO {
     this.datetime = dietitianObject.datetime * 1000;
     this.gotSample = dietitianObject.got_sample;
     this.active = dietitianObject.active;
-    this.admin = dietitianObject.admin;
     this.properlyInitialized = (() => checkProperties(this))();
   }
 
@@ -35,7 +34,6 @@ export default class DietitianDTO {
       datetime: formData.datetime / 1000,
       got_sample: formData.gotSample,
       active: formData.active,
-      admin: formData.admin,
     });
   }
 
@@ -54,7 +52,6 @@ export default class DietitianDTO {
       datetime: this.datetime / 1000,
       got_sample: this.gotSample,
       active: this.active,
-      admin: this.admin,
     };
     return data;
   }

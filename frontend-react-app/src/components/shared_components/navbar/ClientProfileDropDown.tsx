@@ -134,7 +134,7 @@ const ClientProfileDropDown = () => {
                       className={aboutDropDown.menuItem}
                     >
                       <Typography className={aboutDropDown.text}>
-                        Update Address
+                        Shipping Address
                       </Typography>
                     </MenuItem>
                     <MenuItem
