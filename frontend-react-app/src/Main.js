@@ -106,7 +106,23 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={
-                  <DietitianMenuContainer childComponent={<DietitianMenu />} />
+                  <DietitianMenuContainer
+                    childComponent={<DietitianMenu splash={false} />}
+                  />
+                }
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/splash-menu"
+            element={
+              <Navbar
+                childComponent={
+                  <DietitianMenuContainer
+                    childComponent={<DietitianMenu splash={true} />}
+                  />
                 }
                 links={<SplashLinks />}
                 homeUrl="/"
