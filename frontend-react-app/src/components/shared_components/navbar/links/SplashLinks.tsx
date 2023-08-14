@@ -25,7 +25,7 @@ const SplashLinks = () => {
           <Grid item>
             <Typography
               className={styles.link}
-              onClick={() => navigate('/sample-menu')}
+              onClick={() => navigate('/splash-menu')}
             >
               Weekly Menu
             </Typography>

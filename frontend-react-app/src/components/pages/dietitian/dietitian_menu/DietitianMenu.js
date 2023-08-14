@@ -174,7 +174,7 @@ const DietitianMenu = (props) => {
                       imageUrl={mealPlanMeal.associatedMeal.imageUrl}
                       mealTime={mealPlanMeal.associatedMeal.mealTime}
                       key={i}
-                      shouldDisplayNutritionDetails={true}
+                      shouldDisplayNutritionDetails={!props.splash}
                     />
                   </Grid>
                 );
@@ -219,7 +219,7 @@ const DietitianMenu = (props) => {
                     imageUrl={mealPlanSnack.associatedSnack.imageUrl}
                     isSnackCard={true}
                     key={i}
-                    shouldDisplayNutritionDetails={true}
+                    shouldDisplayNutritionDetails={!props.splash}
                   ></MediaCard>
                 </Grid>
               );
