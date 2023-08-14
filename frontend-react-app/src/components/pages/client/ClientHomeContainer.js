@@ -57,7 +57,7 @@ const ClientHomeContainer = () => {
       }
     });
 
-    APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {
+    APIClient.getCurrentWeekDeliveryandCutoffDates(false).then((data) => {
       const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
         (date) => parseFloat(date) * 1000
       );

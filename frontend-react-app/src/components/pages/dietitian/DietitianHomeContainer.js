@@ -18,7 +18,7 @@ import ExtendedMealDTOFactory from '../../../data_models/factories/dto/ExtendedM
 import MealDietaryRestrictionDTOFactory from '../../../data_models/factories/dto/MealDietaryRestrictionDTOFactory';
 import ExtendedMealFactory from '../../../data_models/factories/model/ExtendedMealFactory';
 import MealDietaryRestrictionFactory from '../../../data_models/factories/model/MealDietaryRestrictionFactory';
-import { useClients } from "./hooks/useClients";
+import { useClients } from './hooks/useClients';
 
 const DietitianHomeContainer = (props) => {
   const [scheduleMeals, setScheduleMeals] = useState(false);
@@ -133,7 +133,7 @@ const DietitianHomeContainer = (props) => {
         setSnacks(snacks);
       }
     });
-    APIClient.getCurrentWeekDeliveryandCutoffDates().then((data) => {
+    APIClient.getCurrentWeekDeliveryandCutoffDates(false).then((data) => {
       const upcomingDeliveryDatesArray = data.upcoming_delivery_dates.map(
         (date) => parseFloat(date) * 1000
       );

@@ -77,12 +77,15 @@ class APIClient {
     const responseData = await response.json();
     return responseData;
   }
-  async getCurrentWeekDeliveryandCutoffDates() {
+  async getCurrentWeekDeliveryandCutoffDates(signUp = false) {
     const requestUrl = this.baseUrl + `/delivery_date`;
 
     const request = new Request(requestUrl);
+    const requestHeaders = new Headers();
+    requestHeaders.set('sign-up', signUp);
     const requestParams = {
       method: 'GET',
+      headers: requestHeaders,
       mode: this.mode,
       cache: 'default',
     };
