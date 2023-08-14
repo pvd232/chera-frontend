@@ -1,19 +1,25 @@
-@use '../../../../static/scss/index.scss' as theme;
-@use './Client.module.scss' as client;
+@use '../../../../../../static/scss/index.scss' as theme;
+@use '../../../scss/Client.module.scss' as client;
 .rootContainer {
-  row-gap: 2vh;
+  margin-top: 5vh;
+  max-height: 40vh;
   justify-content: center;
+  row-gap: 5vh;
   .headerContainer {
     flex-direction: column;
-
-    margin-left: 2rem;
+    .header {
+      color: theme.$fucia;
+      font-size: client.$headerFontSize;
+      font-weight: bold;
+    }
+  }
+  .contentContainer {
+    row-gap: 10vh;
+    .contentHeader {
+      font-weight: bold;
+    }
     .stack {
       row-gap: 2vh;
-    }
-
-    .themeHeader {
-      font-size: client.$headerFontSize;
-      color: theme.$fucia;
     }
     .errorText {
       font-size: 1rem;
@@ -27,12 +33,6 @@
     border: none;
     text-transform: none;
     size: 100px;
-  }
-
-  .header {
-    color: theme.$fucia;
-    font-size: client.$headerFontSize;
-    font-weight: bold;
   }
 
   .invoiceTable {
@@ -68,13 +68,6 @@
       text-transform: none;
       font-size: 1.5rem;
       padding: 0.5rem;
-    }
-
-    .button {
-      color: theme.$fucia;
-      background-color: white;
-      border-color: theme.$fucia;
-      border: 10px;
     }
   }
 }

@@ -1,0 +1,62 @@
+@use '../../../../../../static/scss/index.scss' as theme;
+@use '../../../scss/Client.module.scss' as client;
+.rootContainer {
+  margin-top: 5vh;
+  justify-content: center;
+  // So that page won't stretch to fill view height
+  display: inline-block;
+  .childContainer {
+    row-gap: 5vh;
+    .headerContainer {
+      flex-direction: column;
+      .header {
+        color: theme.$fucia;
+        font-size: client.$headerFontSize;
+        font-weight: bold;
+      }
+    }
+    .contentContainer {
+      align-items: center;
+      text-align: center;
+      .invoiceTable {
+        width: 100%;
+      }
+      .th {
+        font-weight: bold;
+      }
+      .rowHeader {
+        background-color: theme.$fuciaHover;
+        font-size: 1.2rem;
+      }
+      .rowData {
+        padding: 0.5rem;
+        .success {
+          color: green;
+        }
+        .failure {
+          color: red;
+        }
+      }
+      .oddRow {
+        background-color: theme.$lightFucia;
+        margin: 100px;
+      }
+      .evenRow {
+        background-color: white;
+      }
+      .button {
+        color: theme.$fucia;
+        background-color: white;
+        border-color: theme.$fucia;
+        border: 10px;
+      }
+    }
+    .loadingContainer {
+      justify-content: center;
+      align-items: center;
+      .progress {
+        color: theme.$fucia;
+      }
+    }
+  }
+}

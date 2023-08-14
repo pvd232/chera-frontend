@@ -101,7 +101,7 @@ const CurrentMeals = (props) => (
             }
             key={`clientMeal${i}`}
             cantMakeChanges={props.cantMakeChanges}
-          ></ScheduledOrderMealCard>
+          />
         </Grid>
       ))}
     </Grid>

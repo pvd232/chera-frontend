@@ -32,8 +32,10 @@ class APIClient {
     return 'An error occured. Please check your network connection and try again.';
   }
 
-  async getClientPaymentMethod(clientID: string): Promise<any> {
-    const requestUrl = this.baseUrl + `/stripe/payment_method/${clientID}`;
+  async getClientPaymentMethod(stripeCustomerId: string): Promise<any> {
+    const requestUrl =
+      this.baseUrl +
+      `/stripe/payment_method?stripe_customer_id=${stripeCustomerId}`;
 
     const request = new Request(requestUrl);
     const requestParams: RequestInit = {
@@ -52,32 +54,32 @@ class APIClient {
   }
 
   async updateClientPaymentMethod(
-    clientID: string,
-    subscriptionID: string,
-    paymentMethod: string
+    stripeCustomerId: string,
+    stripeSubscriptionId: string,
+    stripePaymentMethodId: string
   ): Promise<any> {
     const requestUrl =
       this.baseUrl +
-      `/stripe/update_payment_method/${clientID}/${subscriptionID}/${paymentMethod}`;
+      `/stripe/payment_method?stripe_customer_id=${stripeCustomerId}`;
+    const requestHeaders = new Headers();
+    requestHeaders.append('stripe-subscription-id', stripeSubscriptionId);
+    requestHeaders.append('stripe-payment-method-id', stripePaymentMethodId);
 
     const request = new Request(requestUrl);
     const requestParams: RequestInit = {
-      method: 'POST',
+      method: 'PUT',
+      headers: requestHeaders,
       mode: this.mode as RequestMode,
       cache: 'default',
     };
 
-    const response = await this.fetchWrapper(request, requestParams);
-    if (response instanceof Response) {
-      const responseData = await response.json();
-      return responseData;
-    } else {
-      throw new Error('Invalid response');
-    }
+    await this.fetchWrapper(request, requestParams);
+    return;
   }
 
-  async getClientLastPaymentStatus(clientID: string): Promise<any> {
-    const requestUrl = this.baseUrl + `/stripe/check_last_payment/${clientID}/`;
+  async getClientLastPaymentStatus(stripeCustomerId: string): Promise<any> {
+    const requestUrl =
+      this.baseUrl + `/stripe/check_last_payment/${stripeCustomerId}/`;
 
     const request = new Request(requestUrl);
     const requestParams: RequestInit = {

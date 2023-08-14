@@ -1086,7 +1086,7 @@ class APIClient {
     return;
   }
   async updateClientAddress(clientAddressData) {
-    const requestUrl = this.baseUrl + '/client/update_address';
+    const requestUrl = this.baseUrl + '/client/address';
 
     const request = new Request(requestUrl);
     const requestParams = {

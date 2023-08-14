@@ -1,0 +1,46 @@
+@use '../../../../../../static/scss/index.scss' as theme;
+@use '../../../scss/Client.module.scss' as client;
+.rootContainer {
+  // So that page won't stretch to fill view height
+  display: inline-block;
+  margin-top: 10vh;
+  .childContainer {
+    row-gap: 5vh;
+    .headerContainer {
+      .pageHeader {
+        color: theme.$fucia;
+        font-size: client.$headerFontSize;
+        font-weight: bold;
+      }
+    }
+    .formContainer {
+      .contentContainer {
+        row-gap: 5vh;
+        .bodyHeader {
+          font-weight: bold;
+        }
+        .currentAddressContainer {
+          row-gap: 1vh;
+        }
+        .updateAddressContainer {
+          flex-direction: column;
+          row-gap: 3vh;
+          align-items: flex-start;
+          .formFields {
+            justify-content: space-between;
+          }
+          .submitButton {
+            font-size: 1rem;
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            color: white;
+            background-color: theme.$fucia;
+            text-transform: none;
+            .progress {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+}

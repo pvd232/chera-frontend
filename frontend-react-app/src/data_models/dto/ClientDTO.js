@@ -43,6 +43,9 @@ export default class ClientDTO {
       active: client.active,
     });
   }
+  static initializeFromClient(client){
+    return this.initializeFromForm(client);
+  };
   toJSON() {
     return {
       id: this.id,
