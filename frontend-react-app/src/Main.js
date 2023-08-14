@@ -122,6 +122,7 @@ const Main = (props) => {
                 childComponent={
                   <DietitianMenuContainer
                     childComponent={<DietitianMenu splash={true} />}
+                    splash={true}
                   />
                 }
                 links={<SplashLinks />}

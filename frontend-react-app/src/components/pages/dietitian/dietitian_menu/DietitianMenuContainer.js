@@ -40,38 +40,6 @@ const DietitianMenuContainer = (props) => {
         setExtendedMeals(extendedMeals);
       }
     });
-    APIClient.getMealPlans().then((mealPlansData) => {
-      if (mounted) {
-        const mealPlanDTOs = mealPlansData.map(
-          (mealPlanData) => new MealPlanDTO(mealPlanData)
-        );
-        const mealPlans = mealPlanDTOs.map(
-          (mealPlanDTO) => new MealPlan(mealPlanDTO)
-        );
-
-        setMealPlans(mealPlans);
-      }
-    });
-
-    APIClient.getSpecificMealNutrientStatsObjects(false, 5).then(
-      (mealPlanMealsData) => {
-        if (mounted) {
-          const extendedMealPlanMealDTOs =
-            mapMealNutrientStatsData(mealPlanMealsData);
-          setSpecificMealNutrientStats(extendedMealPlanMealDTOs);
-        }
-      }
-    );
-
-    const mealNutrientStatsPromise = CacheManager.shared.mealNutrientStats;
-    Promise.resolve(mealNutrientStatsPromise).then((mealNutrientStatsData) => {
-      if (mounted) {
-        const mealNutrientStatsDTOs = mapMealNutrientStatsData(
-          mealNutrientStatsData
-        );
-        setMealNutrientStats(mealNutrientStatsDTOs);
-      }
-    });
     const snackNutrientStatsPromise = CacheManager.shared.snackNutrientStats;
     Promise.resolve(snackNutrientStatsPromise).then(
       (snackNutrientStatsData) => {
@@ -83,42 +51,95 @@ const DietitianMenuContainer = (props) => {
         }
       }
     );
+    if (!props.splash) {
+      APIClient.getMealPlans().then((mealPlansData) => {
+        if (mounted) {
+          const mealPlanDTOs = mealPlansData.map(
+            (mealPlanData) => new MealPlanDTO(mealPlanData)
+          );
+          const mealPlans = mealPlanDTOs.map(
+            (mealPlanDTO) => new MealPlan(mealPlanDTO)
+          );
+
+          setMealPlans(mealPlans);
+        }
+      });
+
+      APIClient.getSpecificMealNutrientStatsObjects(false, 5).then(
+        (mealPlanMealsData) => {
+          if (mounted) {
+            const extendedMealPlanMealDTOs =
+              mapMealNutrientStatsData(mealPlanMealsData);
+            setSpecificMealNutrientStats(extendedMealPlanMealDTOs);
+          }
+        }
+      );
+
+      const mealNutrientStatsPromise = CacheManager.shared.mealNutrientStats;
+      Promise.resolve(mealNutrientStatsPromise).then(
+        (mealNutrientStatsData) => {
+          if (mounted) {
+            const mealNutrientStatsDTOs = mapMealNutrientStatsData(
+              mealNutrientStatsData
+            );
+            setMealNutrientStats(mealNutrientStatsDTOs);
+          }
+        }
+      );
+    }
+
     return () => (mounted = false);
-  }, []);
+  }, [props.splash]);
+  if (!props.splash) {
+    if (
+      mealPlans &&
+      extendedMeals &&
+      specificMealNutrientStats &&
+      !mealNutrientStats &&
+      snackNutrientStats
+    ) {
+      const updatedMealNutrientStats = mapMealNutrientStatsData(
+        specificMealNutrientStats,
+        extendedMeals
+      );
+      const dataProps = {
+        mealPlans: mealPlans,
+        mealPlanMeals: updatedMealNutrientStats,
+        mealPlanSnacks: snackNutrientStats,
+        extendedMeals: extendedMeals,
+      };
+      return cloneElement(props.childComponent, { ...dataProps });
+    } else if (
+      mealPlans &&
+      extendedMeals &&
+      mealNutrientStats &&
+      snackNutrientStats
+    ) {
+      const updatedMealNutrientStats = mapMealNutrientStatsData(
+        mealNutrientStats,
+        extendedMeals
+      );
 
-  if (
-    mealPlans &&
-    extendedMeals &&
-    specificMealNutrientStats &&
-    !mealNutrientStats &&
-    snackNutrientStats
-  ) {
-    const updatedMealNutrientStats = mapMealNutrientStatsData(specificMealNutrientStats, extendedMeals)
-    const dataProps = {
-      mealPlans: mealPlans,
-      mealPlanMeals: updatedMealNutrientStats,
-      mealPlanSnacks: snackNutrientStats,
-      extendedMeals: extendedMeals,
-    };
-    return cloneElement(props.childComponent, { ...dataProps });
-  } else if (
-    mealPlans &&
-    extendedMeals &&
-    mealNutrientStats &&
-    snackNutrientStats
-  ) {
-    const updatedMealNutrientStats = mapMealNutrientStatsData(mealNutrientStats, extendedMeals)
-
-    const dataProps = {
-      mealPlans: mealPlans,
-      mealPlanMeals: updatedMealNutrientStats,
-      mealPlanSnacks: snackNutrientStats,
-      extendedMeals: extendedMeals,
-      
-    };
-    return cloneElement(props.childComponent, { ...dataProps });
+      const dataProps = {
+        mealPlans: mealPlans,
+        mealPlanMeals: updatedMealNutrientStats,
+        mealPlanSnacks: snackNutrientStats,
+        extendedMeals: extendedMeals,
+      };
+      return cloneElement(props.childComponent, { ...dataProps });
+    } else {
+      return <CircularProgressPage />;
+    }
   } else {
-    return <CircularProgressPage />;
+    if (extendedMeals && snackNutrientStats) {
+      const dataProps = {
+        extendedMeals: extendedMeals,
+        mealPlanSnacks: snackNutrientStats,
+      };
+      return cloneElement(props.childComponent, { ...dataProps });
+    } else {
+      return <CircularProgressPage />;
+    }
   }
 };
 export default DietitianMenuContainer;

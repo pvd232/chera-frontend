@@ -45,8 +45,12 @@ const MediaCard = React.memo(
     );
   },
   (prevProps, props) => {
-    if (prevProps.mealPlanMeal.id !== props.mealPlanMeal.id) {
-      return false;
+    if (prevProps.shouldDisplayNutritionDetails) {
+      if (prevProps.mealPlanMeal.id !== props.mealPlanMeal.id) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
       return true;
     }
