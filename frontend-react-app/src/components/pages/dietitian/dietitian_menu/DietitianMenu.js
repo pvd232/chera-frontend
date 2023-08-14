@@ -92,8 +92,9 @@ const DietitianMenu = (props) => {
       alignItems={'flex-start'}
       backgroundColor={customTheme.palette.fucia.secondary}
       justifyContent={'center'}
+      rowGap={'3vh'}
     >
-      <Grid container item xs={10} mb={'3vh'}>
+      <Grid container item xs={10}>
         <Typography
           fontSize={'2rem'}
           textAlign={'center'}
@@ -102,61 +103,67 @@ const DietitianMenu = (props) => {
           Meals
         </Typography>
       </Grid>
-      <Grid
-        item
-        container
-        xs={10}
-        spacing={2}
-        columnGap={'3vh'}
-        sx={{ height: 'min-content' }}
-        alignItems={'flex-end'}
-      >
-        <Grid item>
-          <FormControl>
-            <InputLabel>Portion Size</InputLabel>
-            <Select
-              label="Portion Size"
-              required
-              name="filterMealPlan"
-              value={filterMealPlanId}
-              onChange={newHandleFilterChange}
-            >
-              {props.mealPlans.map((mealPlan, i) => (
-                <MenuItem value={mealPlan.id} sx={{ fontSize: '12px' }} key={i}>
-                  {`${mealPlan.dinnerCalories} kCal`}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
 
-        <Grid item>
-          <FormGroup>
-            <Box
-              flexDirection="column"
-              display="flex"
-              alignItems="center"
-              justifyContent={'center'}
-            >
-              <Box>
-                <Typography>Veggie</Typography>
+      {!props.splash && (
+        <Grid
+          item
+          container
+          xs={10}
+          spacing={2}
+          columnGap={'3vh'}
+          sx={{ height: 'min-content' }}
+          alignItems={'flex-end'}
+        >
+          <Grid item>
+            <FormControl>
+              <InputLabel>Portion Size</InputLabel>
+              <Select
+                label="Portion Size"
+                required
+                name="filterMealPlan"
+                value={filterMealPlanId}
+                onChange={newHandleFilterChange}
+              >
+                {props.mealPlans.map((mealPlan, i) => (
+                  <MenuItem
+                    value={mealPlan.id}
+                    sx={{ fontSize: '12px' }}
+                    key={i}
+                  >
+                    {`${mealPlan.dinnerCalories} kCal`}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item>
+            <FormGroup>
+              <Box
+                flexDirection="column"
+                display="flex"
+                alignItems="center"
+                justifyContent={'center'}
+              >
+                <Box>
+                  <Typography>Veggie</Typography>
+                </Box>
+                <FormControlLabel
+                  control={
+                    <VeggieSwitch
+                      name="filterVegetarian"
+                      checked={vegetarian !== 'all'}
+                      value={vegetarian}
+                      onChange={newHandleFilterChange}
+                    />
+                  }
+                  sx={{ marginRight: '0px' }}
+                />
               </Box>
-              <FormControlLabel
-                control={
-                  <VeggieSwitch
-                    name="filterVegetarian"
-                    checked={vegetarian !== 'all'}
-                    value={vegetarian}
-                    onChange={newHandleFilterChange}
-                  />
-                }
-                sx={{ marginRight: '0px' }}
-              />
-            </Box>
-          </FormGroup>
+            </FormGroup>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container item xs={10} paddingTop={'6vh'}>
+      )}
+      <Grid container item xs={10}>
         {mealsLoading ? (
           <Grid container item justifyContent={'center'}>
             <CircularProgress />
@@ -183,7 +190,7 @@ const DietitianMenu = (props) => {
           </Grid>
         )}
       </Grid>
-      <Grid container item xs={10} mt={'10vh'} mb={'3vh'}>
+      <Grid container item xs={10} mt={'10vh'}>
         <Grid item>
           <Typography
             fontSize={'2rem'}
@@ -194,19 +201,21 @@ const DietitianMenu = (props) => {
           </Typography>
         </Grid>
         <Grid item>
-          <Tooltip title={'All snacks are 150-250 kCal'} placement="right">
-            <IconButton>
-              <Info
-                sx={{
-                  color: customTheme.palette.olive.main,
-                }}
-              />
-            </IconButton>
-          </Tooltip>
+          {!props.splash && (
+            <Tooltip title={'All snacks are 150-250 kCal'} placement="right">
+              <IconButton>
+                <Info
+                  sx={{
+                    color: customTheme.palette.olive.main,
+                  }}
+                />
+              </IconButton>
+            </Tooltip>
+          )}
         </Grid>
       </Grid>
 
-      <Grid container item xs={10} paddingTop={'6vh'}>
+      <Grid container item xs={10}>
         <Grid container item spacing={4}>
           {sortFilteredMealPlanMeals(props.mealPlanSnacks).map(
             (mealPlanSnack, i) => {
