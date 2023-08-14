@@ -12,15 +12,10 @@ export default class DietitianDTO {
     this.clinicCity = dietitianObject.clinic_city;
     this.clinicState = dietitianObject.clinic_state;
     this.clinicAddress = dietitianObject.clinic_address;
-    this.clinicUrl = dietitianObject.clinic_url;
     this.numberOfEDClients = dietitianObject.number_of_ed_clients;
-    this.percentIntensiveOutpatient =
-      dietitianObject.percent_intensive_outpatient;
-    this.percentRegularOutpatient = dietitianObject.percent_regular_outpatient;
     this.datetime = dietitianObject.datetime * 1000;
     this.gotSample = dietitianObject.got_sample;
     this.active = dietitianObject.active;
-    this.admin = dietitianObject.admin;
     this.properlyInitialized = (() => checkProperties(this))();
   }
 
@@ -35,14 +30,10 @@ export default class DietitianDTO {
       clinic_city: formData.city,
       clinic_state: formData.state,
       clinic_address: formData.address,
-      clinic_url: formData.clinicUrl,
       number_of_ed_clients: formData.numberOfEDClients,
-      percent_intensive_outpatient: formData.percentIntensiveOutpatient,
-      percent_regular_outpatient: formData.percentRegularOutpatient,
       datetime: formData.datetime / 1000,
       got_sample: formData.gotSample,
       active: formData.active,
-      admin: formData.admin,
     });
   }
 
@@ -57,14 +48,10 @@ export default class DietitianDTO {
       clinic_city: this.clinicCity,
       clinic_state: this.clinicState,
       clinic_address: this.clinicAddress,
-      clinic_url: this.clinicUrl,
       number_of_ed_clients: this.numberOfEDClients,
-      percent_intensive_outpatient: this.percentIntensiveOutpatient,
-      percent_regular_outpatient: this.percentRegularOutpatient,
       datetime: this.datetime / 1000,
       got_sample: this.gotSample,
       active: this.active,
-      admin: this.admin,
     };
     return data;
   }

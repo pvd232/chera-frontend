@@ -27,9 +27,9 @@ import FAQs from './components/pages/splash/faqs/FAQs';
 import DietitianSignUp from './components/pages/splash/dietitian_sign_up/DietitianSignUp';
 import DietitianLinks from './components/shared_components/navbar/links/DietitianLinks';
 import { Auth0Navigator } from './auth0/Auth0Navigator';
-import UpdateAddress from './components/pages/client/client_home/UpdateAddress';
-import Payment from './components/pages/client/ClientPayment';
-import ClientInvoice from './components/pages/client/ClientInvoice';
+import UpdateAddress from './components/pages/client/client_home/update_address/UpdateAddress';
+import PaymentMethods from './components/pages/client/client_home/payment_methods/PaymentMethods';
+import ClientInvoice from './components/pages/client/client_home/client_invoice/ClientInvoice';
 import AccountManagement from './components/pages/client/AccountManagement';
 import Privacy from './components/pages/splash/Privacy';
 import TermsOfService from './components/pages/splash/TermsOfService';
@@ -54,7 +54,7 @@ const Main = (props) => {
             path="/"
             element={
               <Navbar
-                childComponent={<Splash></Splash>}
+                childComponent={<Splash />}
                 links={<SplashLinks />}
                 homeUrl={'/'}
               />
@@ -83,7 +83,13 @@ const Main = (props) => {
           />
           <Route
             path="/update-address"
-            element={<Navbar childComponent={<UpdateAddress />} homeUrl="/" />}
+            element={
+              <Navbar
+                childComponent={<UpdateAddress />}
+                links={<ClientLinks />}
+                homeUrl="/home"
+              />
+            }
           />
           <Route
             path="/faqs"
@@ -203,10 +209,12 @@ const Main = (props) => {
           />
 
           <Route
-            path="/payment"
+            path="/payment-methods"
             element={
               <Navbar
-                childComponent={<Payment stripePromise={props.stripePromise} />}
+                childComponent={
+                  <PaymentMethods stripePromise={props.stripePromise} />
+                }
                 links={<ClientLinks />}
                 homeUrl="/home"
               />

@@ -27,13 +27,13 @@ const FAQs = () => {
   return (
     <Grid container item className={styles.FAQsPageContainer}>
       <Grid container item xs={10} className={styles.childContainer}>
-        <Grid container item lg={6} xs={10} className={styles.LHS}>
+        <Grid container item lg={5} xs={10} className={styles.LHS}>
           <Grid item>
             <Typography className={styles.header}>FAQs</Typography>
           </Grid>
           <Grid item>
             <Typography className={styles.subheader}>
-              If you have more questions, please reach out to us!
+              If you have more questions, please reach out!
             </Typography>
           </Grid>
 
@@ -41,7 +41,7 @@ const FAQs = () => {
             contact@cherahealth.com
           </a>
         </Grid>
-        <Grid item container xl={8} lg={6} xs={11} className={styles.RHS}>
+        <Grid item container lg={7} xs={11} className={styles.RHS}>
           <Grid container item className={styles.segmentContainer}>
             <Grid item>
               <Typography className={styles.header}>

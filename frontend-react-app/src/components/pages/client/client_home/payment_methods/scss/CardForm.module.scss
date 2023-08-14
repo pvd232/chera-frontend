@@ -1,0 +1,19 @@
+@use '../../../../../../static/scss/index.scss' as theme;
+@use '../../../scss/Client.module.scss' as client;
+.updateCardContainer {
+  min-width: 250px;
+  .stack {
+    row-gap: 3vh;
+    .stripeCard {
+      display: grid;
+      gap: 1rem;
+    }
+    .submitButton {
+      color: white;
+      background-color: theme.$fucia;
+      .progress {
+        color: white;
+      }
+    }
+  }
+}

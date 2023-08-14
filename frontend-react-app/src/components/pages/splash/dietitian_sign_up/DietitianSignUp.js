@@ -72,15 +72,11 @@ const DietitianSignUp = () => {
       state: '',
       zipcode: '',
       address: '',
-      clinicUrl: '',
       numberOfEDClients: 0,
-      percentIntensiveOutpatient: 0,
-      percentRegularOutpatient: 0,
       datetime: Date.now(),
       gotSample: true,
       clients: [],
       active: true,
-      admin: false,
     }
   );
 
@@ -107,6 +103,7 @@ const DietitianSignUp = () => {
     const validated = await validate(form);
     if (validated) {
       const dietitianDTO = DietitianDTO.initializeFromForm(formValue);
+      console.log('dietitianDTO', dietitianDTO);
       const returnedDietitianData = await APIClient.createDietitian(
         dietitianDTO
       );
@@ -186,14 +183,14 @@ const DietitianSignUp = () => {
     }
   };
   const validate = async (form) => {
+    setError(false);
+    setRegistrationError(false);
     const dietitianAlreadyExists = await APIClient.getDietitian(
       formValue.email
     );
     if (dietitianAlreadyExists) {
       setError(true);
       return false;
-    } else {
-      setError(false);
     }
     const dieteticRegistrationNumber = form.dieteticRegistrationNumber.value;
     const registrationStatus = await APIClient.checkDieteticRegistrationNumber(
@@ -202,8 +199,6 @@ const DietitianSignUp = () => {
     if (!registrationStatus) {
       setRegistrationError(true);
       return false;
-    } else {
-      setRegistrationError(false);
     }
 
     if (formValue.suite !== '' && suiteError !== '') {
@@ -313,48 +308,11 @@ const DietitianSignUp = () => {
                       <CustomTextField
                         required
                         fullWidth
-                        label="Clinic website url"
-                        id="clinicUrl"
-                        type="url"
-                        onChange={handleInput}
-                        value={formValue.clinicUrl}
-                        autoComplete={'off'}
-                      />
-                    </FormControl>
-                    <FormControl variant="filled">
-                      <CustomTextField
-                        required
-                        fullWidth
-                        label="Number of ED clients you treat"
+                        label="Number of outpatient ED clients you treat"
                         id="numberOfEDClients"
                         type="number"
                         onChange={handleInput}
                         value={formValue.numberOfEDClients}
-                        autoComplete={'off'}
-                      />
-                    </FormControl>
-
-                    <FormControl variant="filled">
-                      <CustomTextField
-                        required
-                        fullWidth
-                        label="Percent of your ED clients intensive outpatient (Ex: 40)"
-                        id="percentIntensiveOutpatient"
-                        type="number"
-                        onChange={handleInput}
-                        value={formValue.percentIntensiveOutpatient}
-                        autoComplete={'off'}
-                      />
-                    </FormControl>
-                    <FormControl variant="filled">
-                      <CustomTextField
-                        required
-                        fullWidth
-                        label="Percent of your ED clients regular outpatient (ex: 60)"
-                        id="percentRegularOutpatient"
-                        type="number"
-                        onChange={handleInput}
-                        value={formValue.percentRegularOutpatient}
                         autoComplete={'off'}
                       />
                     </FormControl>
@@ -377,7 +335,7 @@ const DietitianSignUp = () => {
                               />
                             </>
                           }
-                          label="Receive Free Shipment of Sample Meals"
+                          label="Receive Free Order of Sample Meals"
                           className={styles.sampleCheckbox}
                         />
                         <FormControl variant="filled">

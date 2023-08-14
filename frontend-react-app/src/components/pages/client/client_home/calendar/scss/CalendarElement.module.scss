@@ -17,6 +17,7 @@
   font-size: client.$subHeaderFontSize;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+  padding-bottom: 0.5rem;
 }
 .gridRegular {
   @include gridBase;

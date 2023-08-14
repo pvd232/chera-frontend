@@ -8,7 +8,6 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
 import { useOpen } from './hooks/useOpen.ts';
-//import { useNavigate } from 'react-router-dom';
 import aboutDropDown from './scss/AboutDropDown.module.scss';
 import LocalStorageManager from '../../../helpers/LocalStorageManager.ts';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -31,7 +30,7 @@ const ClientProfileDropDown = () => {
   };
 
   const handlePayment = () => {
-    navigate('/payment');
+    navigate('/payment-methods');
   };
 
   const handleInvoices = () => {
@@ -115,7 +114,7 @@ const ClientProfileDropDown = () => {
                       className={aboutDropDown.menuItem}
                     >
                       <Typography className={aboutDropDown.text}>
-                        Payment Methods
+                        Payment methods
                       </Typography>
                     </MenuItem>
                     <MenuItem
@@ -134,7 +133,7 @@ const ClientProfileDropDown = () => {
                       className={aboutDropDown.menuItem}
                     >
                       <Typography className={aboutDropDown.text}>
-                        Update Address
+                        Shipping address
                       </Typography>
                     </MenuItem>
                     <MenuItem

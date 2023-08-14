@@ -15,7 +15,13 @@ const CalendarElement = (props) => (
   >
     <Grid container className={calendarElement.contentContainer}>
       <Grid item className={calendarElement.dateHeader}>
-        Sunday
+        {`${
+          DeliveryDateUtility.weekdays[
+            DeliveryDateUtility.getDeliveryDateFromIndex(
+              props.deliveryDayIndex
+            ).getDay()
+          ]
+        }`}
       </Grid>
       <Grid item className={calendarElement.dateHeader}>
         {`${DeliveryDateUtility.getDeliveryDateFromIndex(

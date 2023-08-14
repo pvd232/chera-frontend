@@ -9,7 +9,7 @@
     column-gap: 3vh;
   }
   .mealCardsContainer {
-    column-gap: 10vh;
+    column-gap: 5vh;
     row-gap: 5vh;
     .cardContainer {
       @include theme.xs {
