@@ -6,11 +6,13 @@ import styles from '../scss/SplashLinks.module.scss';
 import AboutDropDown from '../AboutDropDown';
 import MobileDropDown from '../MobileDropDown';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const SplashLinks = () => {
   const windowWidth = useWindowWidth();
   const { loginWithRedirect } = useAuth0();
-
+  const navigate = useNavigate();
   const isMobile = windowWidth < ScreenSize.xs;
   return (
     <Grid container item className={styles.splashLinksContainer}>
@@ -20,6 +22,14 @@ const SplashLinks = () => {
         </Grid>
       ) : (
         <>
+          <Grid item>
+            <Typography
+              className={styles.link}
+              onClick={() => navigate('/sample-menu')}
+            >
+              Weekly Menu
+            </Typography>
+          </Grid>
           <Grid item>
             <AboutDropDown />
           </Grid>
