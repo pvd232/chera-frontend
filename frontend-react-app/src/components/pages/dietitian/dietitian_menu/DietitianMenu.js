@@ -27,12 +27,14 @@ import VeggieSwitch from './VeggieSwitch';
 const DietitianMenu = (props) => {
   const customTheme = useTheme();
   const [filterMealPlanId, setFilterMealPlanId] = useState(
-    props.mealPlans[1].id
+    props.mealPlans ? props.mealPlans[1].id : ''
   );
 
   const [vegetarian, setVegetarian] = useState('all');
   const [filteredMealPlanMeals, setFilteredMealPlanMeals] = useState(
-    getMealPlanMealsByMealPlan(props.mealPlanMeals).get(filterMealPlanId)
+    getMealPlanMealsByMealPlan(props.mealPlanMeals ?? props.extendedMeals).get(
+      filterMealPlanId
+    )
   );
 
   const [mealsLoading, setMealsLoading] = useState(false);
@@ -88,7 +90,7 @@ const DietitianMenu = (props) => {
       container
       paddingTop={'5vh'}
       paddingBottom={'10vh'}
-      // this gets rid of extra 'purple' space in view layout in chrome dev tools.
+      // Gets rid of extra 'purple' space in view layout in chrome dev tools.
       alignItems={'flex-start'}
       backgroundColor={customTheme.palette.fucia.secondary}
       justifyContent={'center'}
@@ -167,6 +169,26 @@ const DietitianMenu = (props) => {
         {mealsLoading ? (
           <Grid container item justifyContent={'center'}>
             <CircularProgress />
+          </Grid>
+        ) : props.splash ? (
+          <Grid container item spacing={4}>
+            {sortFilteredMealPlanMeals(props.extendedMeals).map(
+              (extendedMeal, i) => {
+                return (
+                  <Grid item key={i} md={4}>
+                    <MediaCard
+                      mealPlanMeal={extendedMeal}
+                      name={extendedMeal.name}
+                      description={extendedMeal.description}
+                      imageUrl={extendedMeal.imageUrl}
+                      mealTime={extendedMeal.mealTime}
+                      key={i}
+                      shouldDisplayNutritionDetails={false}
+                    />
+                  </Grid>
+                );
+              }
+            )}
           </Grid>
         ) : (
           <Grid container item spacing={4}>
