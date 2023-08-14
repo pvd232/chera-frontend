@@ -39,10 +39,10 @@ const ClientMeals = (props) => {
   const [loading, setLoading] = useState(true);
 
   const [extendedScheduledOrderMeals, setExtendedScheduledOrderMeals] =
-    useState([]);
+    useState(null);
 
   const [extendedScheduledOrderSnacks, setExtendedScheduledOrderSnacks] =
-    useState([]);
+    useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -88,25 +88,27 @@ const ClientMeals = (props) => {
           // Get extended scheduled order snacks
           APIClient.getExtendedScheduledOrderSnacks(mealSubscription.id).then(
             (extendedScheduledOrderSnackData) => {
-              const extendedScheduledOrderSnackDTOs =
-                extendedScheduledOrderSnackData.map(
-                  (json) =>
-                    new ExtendedScheduledOrderSnackDTO(
-                      json,
-                      new SnackDTOFactory()
-                    )
-                );
+              if (extendedScheduledOrderSnackData) {
+                const extendedScheduledOrderSnackDTOs =
+                  extendedScheduledOrderSnackData.map(
+                    (json) =>
+                      new ExtendedScheduledOrderSnackDTO(
+                        json,
+                        new SnackDTOFactory()
+                      )
+                  );
 
-              const extendedScheduledOrderSnacks =
-                extendedScheduledOrderSnackDTOs.map(
-                  (extendedScheduledOrderSnackDTO) =>
-                    ExtendedScheduledOrderSnack.constructFromExtendedScheduledOrderSnackDTO(
-                      extendedScheduledOrderSnackDTO,
-                      new SnackFactory()
-                    )
-                );
-              if (mounted) {
-                setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
+                const extendedScheduledOrderSnacks =
+                  extendedScheduledOrderSnackDTOs.map(
+                    (extendedScheduledOrderSnackDTO) =>
+                      ExtendedScheduledOrderSnack.constructFromExtendedScheduledOrderSnackDTO(
+                        extendedScheduledOrderSnackDTO,
+                        new SnackFactory()
+                      )
+                  );
+                if (mounted) {
+                  setExtendedScheduledOrderSnacks(extendedScheduledOrderSnacks);
+                }
               }
             }
           );
@@ -158,7 +160,7 @@ const ClientMeals = (props) => {
 
   if (loading) {
     return <CircularProgressPage />;
-  } else if (extendedScheduledOrderMeals.length > 0) {
+  } else if (extendedScheduledOrderMeals) {
     return (
       <Grid container item xs={10} className={clientMeals.pageContainer}>
         <ClientMealsTable
@@ -177,7 +179,7 @@ const ClientMeals = (props) => {
             handleChangeDeliveryIndex(deliveryIndex)
           }
         />
-        {extendedScheduledOrderSnacks.length > 0 && (
+        {extendedScheduledOrderSnacks && (
           <ClientSnacksTable
             filterClientfirstName={filterClientfirstName}
             currentScheduledOrderSnacks={Array.from(

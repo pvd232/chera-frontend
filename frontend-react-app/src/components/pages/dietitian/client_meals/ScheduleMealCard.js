@@ -1,9 +1,9 @@
-import React from "react";
-import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
-import scheduledOrderMealCard from "../../client/client_home/current_meals/scss/ScheduledOrderMealCard.module.scss";
-import { FoodCard } from "../../../shared_components/FoodCard";
-import scheduleMealCard from "./scss/ScheduleMealCard.module.scss";
+import React from 'react';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import scheduledOrderMealCard from '../../client/client_home/current_meals/scss/ScheduledOrderMealCard.module.scss';
+import { FoodCard } from '../../../shared_components/FoodCard';
+import scheduleMealCard from './scss/ScheduleMealCard.module.scss';
 const ScheduleMealCard = (props) => {
   return (
     <FoodCard
@@ -24,7 +24,7 @@ const ScheduleMealCard = (props) => {
             className={scheduledOrderMealCard.childContainer}
           >
             <Grid container item className={scheduleMealCard.contentContainer}>
-              <Typography>{props.mealData.quantity} in your box</Typography>
+              <Typography>{props.mealData.quantity} meals</Typography>
             </Grid>
           </Grid>
         </Grid>
