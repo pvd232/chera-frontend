@@ -1,4 +1,4 @@
-export const getMealPrice = (cogs, shippingRate, numItems, numBoxes) => {
+export const getMealPrice = (cogs, shippingRate, numItems, mealPriceTable) => {
   const matchingCogs = (() => {
     const exactMatch = cogs.find((cog) => {
       return numItems === cog.numMeals;
@@ -16,7 +16,8 @@ export const getMealPrice = (cogs, shippingRate, numItems, numBoxes) => {
     });
   })();
   const mealCOGS = matchingCogs.costPerMeal;
-  const totalShippingCost = shippingRate * numBoxes;
+
+  const totalShippingCost = shippingRate * matchingCogs.numBoxes;
   const shippingCostPerMeal = totalShippingCost / numItems;
   const mealPrice = Math.round(mealCOGS + shippingCostPerMeal) + 1;
   return mealPrice;

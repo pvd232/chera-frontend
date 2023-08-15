@@ -184,6 +184,12 @@ const ClientMenu = (props) => {
   };
 
   const handleAddMeal = (meal) => {
+    const maxMeals = props.cogs.reduce((highest, current) => {
+      return current.numMeals > highest.numMeals ? current : highest;
+    }).numMeals;
+    if (chosenScheduleMeals.length >= maxMeals) {
+      return;
+    }
     setChosenScheduleMeals((prevChosenMeal) => {
       const newScheduleMeal = (() => {
         const scheduleMealId = uuid();
