@@ -248,6 +248,7 @@ const MealBuilder = () => {
                           event.target.value
                             .toLowerCase()
                             .replace('&', 'and')
+                            .replace("n'", 'and')
                             .split(' ')
                             .join('_') +
                           '.jpg'

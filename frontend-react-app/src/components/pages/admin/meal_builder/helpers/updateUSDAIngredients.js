@@ -45,7 +45,7 @@ export default async function updateUSDAIngredients({
   if (mounted) {
     setDietaryRestrictions(dietaryRestrictions);
   }
-  const mealPlans = await APIClient.getMealPlans();
+  const mealPlans = await APIClient.getMealPlans(true);
   if (mounted) {
     setMealPlans(mealPlans);
   }
