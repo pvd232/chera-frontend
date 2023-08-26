@@ -5,19 +5,6 @@ import styles from './scss/WhyUs.module.scss';
 const ListOfReasons = (props) => (
   <Grid item xs={12} className={styles.listOfReasonsContainer}>
     <ReasonBullet
-      reasonOpen={props.reasonOpen.first}
-      setReasonOpen={() => props.setReasonOpen('first')}
-      bulletPrimaryText={
-        props.xsScreen
-          ? 'Simplified Meal Planning'
-          : 'Simplified Meal Planning & Delivery'
-      }
-      bulletSecondaryText={
-        'By making meal planning easier for dietitians and their clients, we aim to support recovery and impede relapse.'
-      }
-      icon={'checklist'}
-    ></ReasonBullet>
-    <ReasonBullet
       reasonOpen={props.reasonOpen.second}
       setReasonOpen={() => props.setReasonOpen('second')}
       bulletPrimaryText={'Thoughtful Labeling '}
@@ -27,24 +14,50 @@ const ListOfReasons = (props) => (
       icon={'redeem'}
     ></ReasonBullet>
     <ReasonBullet
+      reasonOpen={props.reasonOpen.sixth}
+      setReasonOpen={() => props.setReasonOpen('sixth')}
+      bulletPrimaryText={
+        props.xsScreen
+          ? 'Gourmet Prepared Food'
+          : 'Gourmet, Fully Prepared Meals & Snacks'
+      }
+      bulletSecondaryText={
+        'All our food is homemade, gourmet, and fully prepared + freezer friendly.'
+      }
+      icon={'dinner_dining'}
+    />
+    <ReasonBullet
+      reasonOpen={props.reasonOpen.first}
+      setReasonOpen={() => props.setReasonOpen('first')}
+      bulletPrimaryText={
+        props.xsScreen
+          ? 'Collaborative Meal Planning'
+          : 'Collaborative Meal Planning & Delivery'
+      }
+      bulletSecondaryText={
+        'By making it easier for dietitians and clients to collaboratively build meal plans, we aim to support recovery and impede relapse.'
+      }
+      icon={'checklist'}
+    />
+    <ReasonBullet
       reasonOpen={props.reasonOpen.third}
       setReasonOpen={() => props.setReasonOpen('third')}
-      bulletPrimaryText={'Personalized Meals'}
+      bulletPrimaryText={'Personalized Portion Sizes'}
       bulletSecondaryText={
-        'We fine tune our meal and snack serving sizes according to the precise nutritional needs of our clients.'
+        'We fine tune our meal portion sizes to your precise nutritional needs.'
       }
       icon={'tune'}
-    ></ReasonBullet>
+    />
 
     <ReasonBullet
       reasonOpen={props.reasonOpen.fourth}
       setReasonOpen={() => props.setReasonOpen('fourth')}
       bulletPrimaryText={'Client Journey Tracking'}
       bulletSecondaryText={
-        'Our platform provides an easy-to-use dashboard to manage client portion size, view client meals and snacks, and comprehensively monitor nutritional intake.'
+        'We provide a simple dashboard for dietitians to manage clients and comprehensively monitor their nutritional intake.'
       }
       icon={'monitor_heart'}
-    ></ReasonBullet>
+    />
     <ReasonBullet
       reasonOpen={props.reasonOpen.fifth}
       setReasonOpen={() => props.setReasonOpen('fifth')}
@@ -57,18 +70,7 @@ const ListOfReasons = (props) => (
         'All our meals and snacks are all dietitian approved, and were served to hundreds of nutritional experts at FNCE 2022.'
       }
       icon={'verified'}
-    ></ReasonBullet>
-    <ReasonBullet
-      reasonOpen={props.reasonOpen.sixth}
-      setReasonOpen={() => props.setReasonOpen('sixth')}
-      bulletPrimaryText={
-        props.xsScreen ? 'Fully Prepared Food' : 'Fully Prepared Meals & Snacks'
-      }
-      bulletSecondaryText={
-        'Our meals and snacks come fully prepared and are freezer friendly.'
-      }
-      icon={'dinner_dining'}
-    ></ReasonBullet>
+    />
   </Grid>
 );
 export default ListOfReasons;
