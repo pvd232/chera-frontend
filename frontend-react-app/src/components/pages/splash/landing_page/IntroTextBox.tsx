@@ -18,7 +18,7 @@ const IntroTextBox = () => {
       xs={10}
     >
       <Grid item id="introTextBoxHeader">
-        <Typography className={styles.header}>Mindful</Typography>
+        <Typography className={styles.header}>Anti-diet</Typography>
         <Typography className={styles.header}>
           {!isMobile ? 'meal delivery for' : 'meal delivery'}
         </Typography>
