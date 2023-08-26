@@ -10,6 +10,9 @@
       font-size: dietitianHome.$headerFontSize;
       color: theme.$fucia;
     }
+    .filterContainer {
+      column-gap: 3vw;
+    }
     .scheduleMealCardContainer {
       margin-right: 2vh;
       @include theme.xs {

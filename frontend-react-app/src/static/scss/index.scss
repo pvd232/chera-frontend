@@ -4,6 +4,10 @@ body {
   padding: 0 !important;
   scrollbar-gutter: stable;
   max-width: 100vw;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
 }
 
 // FONTS

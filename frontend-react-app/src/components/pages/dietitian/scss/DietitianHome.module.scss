@@ -7,10 +7,16 @@ $bodyFontSize: 1rem;
   padding-top: 10vh;
   align-items: flex-start;
   justify-content: center;
+  @include theme.xs {
+    padding-top: 5vh;
+  }
   .contentSubContainer {
     row-gap: 10vh;
     justify-content: center;
     margin-bottom: 10vh;
+    @include theme.xs {
+      row-gap: 5vh;
+    }
     .headerContainer {
       justify-content: flex-end;
       align-items: flex-end;
@@ -19,6 +25,9 @@ $bodyFontSize: 1rem;
         .header {
           font-size: $headerFontSize;
           color: theme.$fucia;
+          @include theme.xs {
+            font-size: 1.5rem;
+          }
         }
       }
       .addStagedClientItem {

@@ -1,4 +1,7 @@
 import React from 'react';
+import { useOpen } from './hooks/useOpen';
+import { useNavigate } from 'react-router-dom';
+import { useAuth0 } from '@auth0/auth0-react';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import Typography from '@mui/material/Typography';
@@ -7,14 +10,14 @@ import Grow from '@mui/material/Grow';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuList from '@mui/material/MenuList';
-import { useOpen } from './hooks/useOpen';
-import styles from './scss/AboutDropDown.module.scss';
-import { useNavigate } from 'react-router-dom';
 import MenuIcon from '@mui/icons-material/Menu';
-const MobileDropDown = () => {
+import styles from './scss/AboutDropDown.module.scss';
+
+const SplashMobileDropDown = () => {
   const anchorRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = useOpen(anchorRef);
   const navigate = useNavigate();
+  const { loginWithRedirect } = useAuth0();
 
   const handleNavigate = (event: React.MouseEvent<HTMLElement>) => {
     const id = event.currentTarget.id;
@@ -26,13 +29,22 @@ const MobileDropDown = () => {
         navigate('/faqs');
         break;
       case 'dietitian-sign-up':
-        navigate('/dietitian-sign-up');
+        loginWithRedirect({
+          authorizationParams: {
+            screen_hint: 'signup',
+          },
+          appState: {
+            returnTo: '/dietitian-sign-up',
+          },
+        });
+
         break;
-      case 'client-log-in':
-        navigate('/client-log-in');
-        break;
-      case 'dietitian-log-in':
-        navigate('/dietitian-log-in');
+      case 'log-in':
+        loginWithRedirect({
+          appState: {
+            returnTo: '/loading',
+          },
+        });
         break;
       default:
         break;
@@ -105,22 +117,11 @@ const MobileDropDown = () => {
                       <Typography className={styles.text}>Sign up</Typography>
                     </MenuItem>
                     <MenuItem
-                      id="client-log-in"
+                      id="log-in"
                       onClick={handleNavigate}
                       className={styles.menuItem}
                     >
-                      <Typography className={styles.text}>
-                        Client log in
-                      </Typography>
-                    </MenuItem>
-                    <MenuItem
-                      id="dietitian-log-in"
-                      onClick={handleNavigate}
-                      className={styles.menuItem}
-                    >
-                      <Typography className={styles.text}>
-                        Dietitian log in
-                      </Typography>
+                      <Typography className={styles.text}>Log in</Typography>
                     </MenuItem>
                     <MenuItem
                       id="resources"
@@ -148,4 +149,4 @@ const MobileDropDown = () => {
     </Grid>
   );
 };
-export default MobileDropDown;
+export default SplashMobileDropDown;

@@ -3,10 +3,16 @@
 .pageContainer {
   padding-top: 5vh;
   justify-content: center;
-  .header {
-    color: theme.$fucia;
-    font-size: client.$headerFontSize;
-    font-weight: bold;
+  @include theme.xs {
+    padding-top: 10vh;
+  }
+  .headerContainer {
+    justify-content: center;
+    .header {
+      color: theme.$fucia;
+      font-size: client.$headerFontSize;
+      font-weight: bold;
+    }
   }
   .contentContainer {
     .cardContainer {

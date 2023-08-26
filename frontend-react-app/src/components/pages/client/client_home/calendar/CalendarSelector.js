@@ -2,7 +2,14 @@ import Grid from '@mui/material/Grid';
 import CalendarElement from './CalendarElement';
 import calendarSelector from './scss/CalendarSelector.module.scss';
 const CalendarSelector = (props) => (
-  <Grid container item lg={4} xs={10} className={calendarSelector.container}>
+  <Grid
+    container
+    item
+    lg={4}
+    sm={8}
+    xs={12}
+    className={calendarSelector.container}
+  >
     <CalendarElement
       deliveryDayIndex={0}
       selectedDeliveryIndex={props.selectedDeliveryIndex}

@@ -10,8 +10,14 @@
   margin-top: 2vh;
   .childContainer {
     position: absolute;
-    bottom: 5vh;
+    bottom: 3vh;
     justify-content: center;
+    @include theme.sm {
+      bottom: 2vh;
+    }
+    @include theme.xs {
+      bottom: 2vh;
+    }
     .iconButtonContainer {
       column-gap: 2vh;
       align-items: center;

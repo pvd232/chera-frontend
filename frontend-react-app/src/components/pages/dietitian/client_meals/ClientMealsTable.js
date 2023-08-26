@@ -25,9 +25,9 @@ const ClientMealsTable = (props) => {
             's Weekly Scheduled Meals
           </Typography>
         </Grid>
-        <Grid item xs={8} lg={10}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} md={4} lg={4}>
+        <Grid container>
+          <Grid container className={clientMealsTable.filterContainer}>
+            <Grid item lg={2.5} xs={7}>
               <FormControl fullWidth>
                 <InputLabel>Client</InputLabel>
                 <Select
@@ -47,7 +47,7 @@ const ClientMealsTable = (props) => {
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={12} md={4} lg={4}>
+            <Grid>
               <FormControl fullWidth>
                 <InputLabel>Date</InputLabel>
                 <Select

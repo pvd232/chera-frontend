@@ -35,11 +35,9 @@ const IntroTextBox = () => {
         ) : (
           <>
             <Typography className={styles.subheader}>
-              Chera is designed
+              Chera is designed to make recovery
             </Typography>
-            <Typography className={styles.subheader}>
-              to make recovery,
-            </Typography>
+
             <Typography className={styles.subheader}>
               simpler, kinder, and more accessible
             </Typography>
