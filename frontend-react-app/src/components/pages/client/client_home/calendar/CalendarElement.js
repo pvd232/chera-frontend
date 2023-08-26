@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Grid';
 import DeliveryDateUtility from '../../../../../helpers/DeliveryDateUtility';
 import calendarElement from './scss/CalendarElement.module.scss';
+import { Typography } from '@mui/material';
 const CalendarElement = (props) => (
   <Grid
     id={`calendarElement${props.deliveryDayIndex}`}
@@ -15,18 +16,22 @@ const CalendarElement = (props) => (
   >
     <Grid container className={calendarElement.contentContainer}>
       <Grid item className={calendarElement.dateHeader}>
-        {`${
-          DeliveryDateUtility.weekdays[
-            DeliveryDateUtility.getDeliveryDateFromIndex(
-              props.deliveryDayIndex
-            ).getDay()
-          ]
-        }`}
+        <Typography>
+          {`${
+            DeliveryDateUtility.weekdays[
+              DeliveryDateUtility.getDeliveryDateFromIndex(
+                props.deliveryDayIndex
+              ).getDay()
+            ]
+          }`}
+        </Typography>
       </Grid>
       <Grid item className={calendarElement.dateHeader}>
-        {`${DeliveryDateUtility.getDeliveryDateFromIndex(
-          props.deliveryDayIndex
-        ).getDate()}`}
+        <Typography>
+          {`${DeliveryDateUtility.getDeliveryDateFromIndex(
+            props.deliveryDayIndex
+          ).getDate()}`}
+        </Typography>
       </Grid>
       <Grid
         item
@@ -36,13 +41,15 @@ const CalendarElement = (props) => (
             : calendarElement.monthContainerRegular
         }
       >
-        {`${
-          DeliveryDateUtility.months[
-            DeliveryDateUtility.getDeliveryDateFromIndex(
-              props.deliveryDayIndex
-            ).getMonth()
-          ]
-        }`}
+        <Typography>
+          {`${
+            DeliveryDateUtility.months[
+              DeliveryDateUtility.getDeliveryDateFromIndex(
+                props.deliveryDayIndex
+              ).getMonth()
+            ]
+          }`}
+        </Typography>
       </Grid>
     </Grid>
   </Grid>

@@ -13,6 +13,9 @@ import checkUpcomingDelivery from '../helpers/checkUpcomingDelivery';
 import { pastCutoffDate } from './helpers/pastCutoffDate';
 import editDeliveryModal from './scss/EditDeliveryModal.module.scss';
 import COGSDTO from '../../../../data_models/dto/COGSDTO';
+import SettingsIcon from '@mui/icons-material/Settings';
+import { useWindowWidth } from '../../../hooks/useWindowWidth';
+import ScreenSize from '../../../../types/enums/ScreenSize';
 const EditDeliveryModal = (props) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -21,7 +24,8 @@ const EditDeliveryModal = (props) => {
     useState(false);
 
   const [editMeals, setEditMeals] = useState(false);
-
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth <= ScreenSize.xs;
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -119,7 +123,7 @@ const EditDeliveryModal = (props) => {
         }}
         className={editDeliveryModal.button}
       >
-        {props.buttonText}
+        {!isMobile ? props.buttonText : <SettingsIcon />}
       </Button>
       <Dialog
         open={open}
@@ -275,52 +279,6 @@ const EditDeliveryModal = (props) => {
                       </Button>
                     )}
                   </Grid>
-                  {/* Will enable these after testing */}
-                  {/* <Grid item>
-                    <Typography className={editDeliveryModal.modalBodyText}>
-                      Account deletion is permanent.
-                    </Typography>
-                  </Grid> */}
-                  {/* <Grid item>
-                    {confirmDeleteSubscription ? (
-                      <FormGroup>
-                        <FormControlLabel>
-                          <Typography
-                            className={editDeliveryModal.modalBodyText}
-                          >
-                            Deleting your subscription will delete your account
-                            and cancel all future deliveries. It cannot be
-                            undone. Please enter your username to confirm.
-                          </Typography>
-                        </FormControlLabel>
-
-                        <TextField
-                          id="confirm-delete-subscription"
-                          value={confirmDeleteUsername}
-                          onChange={(e) =>
-                            setConfirmDeleteUsername(e.target.value)
-                          }
-                        ></TextField>
-                      </FormGroup>
-                    ) : null}
-                    <Button
-                      id="deactivate-subscription-button"
-                      disabled={props.paused}
-                      onClick={
-                        confirmDeleteSubscription
-                          ? () => handleDeleteSubscription()
-                          : () => setConfirmDeleteSubscription(true)
-                      }
-                      variant="contained"
-                      className={editDeliveryModal.dialogButton}
-                    >
-                      {loadingDeleteSubscription ? (
-                        <BlueCircularProgress />
-                      ) : (
-                        'Delete subscription'
-                      )}
-                    </Button>
-                  </Grid> */}
                 </Grid>
               </Grid>
             </DialogContent>

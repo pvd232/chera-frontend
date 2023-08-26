@@ -13,19 +13,26 @@
   border: none;
   border-radius: theme.$buttonBorderRadius;
   text-transform: none;
+  padding-left: 1vw;
+  padding-right: 1vw;
+  font-size: 1rem;
+  @include theme.xs {
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
 }
 .rootDiv {
   .button {
     @include buttonBase;
+    .buttonText {
+      font-size: 0.8rem;
+    }
   }
   .buttonDisabled {
     @include buttonBase;
     background-color: rgba(0, 0, 0, 0.12);
     color: rgba(0, 0, 0, 0.26);
     cursor: not-allowed;
-  }
-  .toolTip {
-    color: theme.$fucia;
   }
 }
 .themeColoredContainer {

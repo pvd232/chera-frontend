@@ -4,6 +4,9 @@
   align-items: center;
   justify-content: flex-end;
   column-gap: 5vh;
+  @include theme.xs {
+    justify-content: center;
+  }
   .link {
     font-size: theme.$linkFontSize;
     color: theme.$fucia;

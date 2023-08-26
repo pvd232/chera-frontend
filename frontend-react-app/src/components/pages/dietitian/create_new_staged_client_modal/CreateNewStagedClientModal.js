@@ -1,12 +1,12 @@
 import { useState, useReducer } from 'react';
 import Grid from '@mui/material/Grid';
 import { v4 as uuidv4 } from 'uuid';
-import Button from '@mui/material/Button';
 import Icon from '@mui/material/Icon';
 import Dialog from '@mui/material/Dialog';
 import Tooltip from '@mui/material/Tooltip';
 import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import RedeemIcon from '@mui/icons-material/Redeem';
 import APIClient from '../../../../helpers/APIClient';
 import Transition from '../../../shared_components/Transition';
 import StagedClient from '../../../../data_models/model/StagedClient';
@@ -19,6 +19,9 @@ import SignUpSummary from '../SignUpSummary';
 import ModalBody from './ModalBody';
 import createNewStagedClientModal from './scss/CreateNewStagedClientModal.module.scss';
 import { validateZipcode } from '../../client_sign_up/account_registration/helpers/validateZipcode';
+import { Typography } from '@mui/material';
+import { useWindowWidth } from '../../../hooks/useWindowWidth';
+import ScreenSize from '../../../../types/enums/ScreenSize';
 
 const CreateNewStagedClientModal = (props) => {
   const [open, setOpen] = useState(false);
@@ -37,6 +40,10 @@ const CreateNewStagedClientModal = (props) => {
   const [shippingRate, setShippingRate] = useState(false);
   const [zipcodeError, setZipcodeError] = useState(false);
   const [stagedClientId, setStagedClientId] = useState('');
+
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth < ScreenSize.xs;
+
   const [formValue, setFormValue] = useReducer(
     (state, newState) => ({ ...state, ...newState }),
     {
@@ -250,17 +257,7 @@ const CreateNewStagedClientModal = (props) => {
   const handleClose = () => {
     setOpen(false);
   };
-  const isAdmin = () => {
-    if (
-      props.dietitianId === 'daniel.fleury02@gmail.com' ||
-      props.dietitianId === 'azeng8232@gmail.com' ||
-      props.dietitianId === 'peterdriscoll@cherahealth.com'
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+
   const UIContainer = {};
   UIContainer['SignUpSummary'] = (
     <SignUpSummary
@@ -305,49 +302,33 @@ const CreateNewStagedClientModal = (props) => {
   );
   return (
     <div className={createNewStagedClientModal.rootDiv}>
-      {props.isSampleTrialPeriod && !isAdmin() ? (
-        <Grid container>
-          <Grid
-            item
-            container
-            justifyContent={'flex-end'}
-            alignItems={'flex-end'}
+      <Grid container>
+        <Grid item>
+          <IconButton
+            id="add-staged-client-button"
+            variant="contained"
+            onClick={handleClickOpen}
+            className={createNewStagedClientModal.button}
           >
-            <Grid item>
-              <Tooltip
-                title={
-                  'The platform will be fully functional by EOD today (August 7th)! We will be sending you an email with more details.'
-                }
-              >
-                <IconButton>
-                  <InfoIcon className={createNewStagedClientModal.toolTip} />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Button
-              id="add-staged-client-button"
-              variant="contained"
-              onClick={handleClickOpen}
-              className={createNewStagedClientModal.buttonDisabled}
-              disabled={true}
-            >
-              + Add New Client
-            </Button>
-          </Grid>
+            <RedeemIcon />
+            &nbsp;
+            <Typography className={createNewStagedClientModal.buttonText}>
+              {!isMobile ? 'Refer a Client' : ''}
+            </Typography>
+          </IconButton>
         </Grid>
-      ) : (
-        <Button
-          id="add-staged-client-button"
-          variant="contained"
-          onClick={handleClickOpen}
-          className={createNewStagedClientModal.button}
-        >
-          + Add New Client
-        </Button>
-      )}
-
+        <Grid item>
+          <Tooltip
+            title={'New clients will get their first week of meals free!'}
+          >
+            <IconButton>
+              <InfoOutlinedIcon
+                className={createNewStagedClientModal.toolTip}
+              />
+            </IconButton>
+          </Tooltip>
+        </Grid>
+      </Grid>
       <Dialog
         open={open}
         TransitionComponent={Transition}

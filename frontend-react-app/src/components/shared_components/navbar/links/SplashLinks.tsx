@@ -1,12 +1,12 @@
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 import { useWindowWidth } from '../../../hooks/useWindowWidth';
 import ScreenSize from '../../../../types/enums/ScreenSize';
 import styles from '../scss/SplashLinks.module.scss';
 import AboutDropDown from '../AboutDropDown';
-import MobileDropDown from '../MobileDropDown';
+import SplashMobileDropDown from '../SplashMobileDropDown';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const SplashLinks = () => {
@@ -17,8 +17,12 @@ const SplashLinks = () => {
   return (
     <Grid container item className={styles.splashLinksContainer}>
       {isMobile ? (
-        <Grid item id="mobile-dropdown-grid-item">
-          <MobileDropDown />
+        <Grid
+          item
+          id="mobile-dropdown-grid-item"
+          className={styles.mobileDropdownContainer}
+        >
+          <SplashMobileDropDown />
         </Grid>
       ) : (
         <>
@@ -35,6 +39,7 @@ const SplashLinks = () => {
           </Grid>
           <Grid item>
             <Button
+              id="dietitian-sign-up"
               variant="contained"
               className={styles.dietitianSignupButton}
               onClick={() =>
@@ -54,6 +59,7 @@ const SplashLinks = () => {
 
           <Grid item>
             <Button
+              id="log-in"
               variant="contained"
               className={styles.dietitianSignupButton}
               onClick={() =>

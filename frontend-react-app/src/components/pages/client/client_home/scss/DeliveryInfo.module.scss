@@ -11,6 +11,9 @@
     }
     .header {
       font-size: client.$subHeaderFontSize;
+      @include theme.xs {
+        font-size: 1rem;
+      }
     }
     .themeHeader {
       font-size: client.$headerFontSize;
@@ -21,6 +24,7 @@
     }
   }
   .modalButtonContainer {
+    padding-top: 1vh;
     row-gap: 2vh;
     flex-direction: column;
     align-items: flex-end;

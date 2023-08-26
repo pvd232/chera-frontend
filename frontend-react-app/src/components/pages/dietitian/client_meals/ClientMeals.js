@@ -194,12 +194,7 @@ const ClientMeals = (props) => {
     );
   } else {
     return (
-      <Grid
-        item
-        container
-        className={clientMeals.pageContainer}
-        style={{ height: '10%', justifyContent: 'center' }}
-      >
+      <Grid item container className={clientMeals.pageContainer}>
         <Grid item>
           <Typography>
             Nothing to see here yet! Check back after your client registers.

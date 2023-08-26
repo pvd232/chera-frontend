@@ -24,7 +24,7 @@ const HowItWorks = (props) => (
           customTheme={props.customTheme}
           headerText={'Pick weekly meals'}
           bodyText={
-            'Client (or their dietitian) picks meals + snacks - our menu updated weekly'
+            'Client (or their dietitian) builds their meal plan. Our menu is updated weekly'
           }
           symbolName={'dinner_dining'}
         />
@@ -34,7 +34,7 @@ const HowItWorks = (props) => (
           customTheme={props.customTheme}
           headerText={'We cook and deliver meals'}
           bodyText={
-            'Personalized, dietitian approved meals, thoughtfully labeled and home delivered.'
+            'Gourmet, dietitian-approved meals, thoughtfully labeled and home delivered.'
           }
           symbolName={'delivery_dining_outlined'}
         />

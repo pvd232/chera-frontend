@@ -7,13 +7,18 @@
   top: 12%;
   row-gap: 2.75vh;
   color: theme.$fucia;
+  @include theme.xs {
+    top: 4%;
+    row-gap: 5vh;
+  }
   .header {
     font-family: theme.$defaultFontBold;
     line-height: 150%;
     font-size: 3.7rem;
     @include theme.xs {
-      @include splash.splash-page-header;
       text-align: left;
+      line-height: 150%;
+      font-size: 2.5rem;
     }
   }
   .subheader {

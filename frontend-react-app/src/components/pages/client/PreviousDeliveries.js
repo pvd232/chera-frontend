@@ -5,35 +5,35 @@ import DeliveryDateUtility from '../../../helpers/DeliveryDateUtility';
 import DietitianClientMealCard from '../../shared_components/DietitianClientMealCard';
 import CircularProgressPage from '../../shared_components/CircularProgressPage';
 import { useOrderMealItems } from './hooks/useOrderMealItems';
-import previousDeliveries from './scss/PreviousDeliveries.module.scss';
+import styles from './scss/PreviousDeliveries.module.scss';
 const PreviousDeliveries = () => {
   const previousOrderMeals = useOrderMealItems();
   if (previousOrderMeals) {
     return (
-      <Grid container item className={previousDeliveries.pageContainer} xs={10}>
-        <Grid item container justifyContent={'center'}>
+      <Grid container item className={styles.pageContainer} xs={10}>
+        <Grid item container className={styles.headerContainer}>
           <Typography
             id={'previous-deliveries-header'}
-            className={previousDeliveries.header}
+            className={styles.header}
           >
             Your Orders
           </Typography>
         </Grid>
 
         {previousOrderMeals.length > 0 ? (
-          <Grid container item className={previousDeliveries.contentContainer}>
+          <Grid container item className={styles.contentContainer}>
             {previousOrderMeals.map((orderMealCardItem) => (
-              <Grid container item className={previousDeliveries.cardContainer}>
+              <Grid container item className={styles.cardContainer}>
                 <Grid item>
-                  <Stack className={previousDeliveries.stack}>
+                  <Stack className={styles.stack}>
                     <Typography
-                      className={previousDeliveries.deliverDateText}
+                      className={styles.deliverDateText}
                     >{`Delivered on Sunday, ${
                       DeliveryDateUtility.months[
                         orderMealCardItem.deliveryDate.getMonth()
                       ]
                     } ${orderMealCardItem.deliveryDate.getDate()}`}</Typography>
-                    <Typography className={previousDeliveries.deliverDateText}>
+                    <Typography className={styles.deliverDateText}>
                       {orderMealCardItem.quantity} total meals
                     </Typography>
                   </Stack>
@@ -48,11 +48,7 @@ const PreviousDeliveries = () => {
           </Grid>
         ) : (
           <>
-            <Grid
-              item
-              container
-              className={previousDeliveries.noDeliveriesHeaderContainer}
-            >
+            <Grid item container className={styles.noDeliveriesHeaderContainer}>
               <Grid item>
                 <Typography>
                   Nothing to see here yet! Check back after your first delivery.
@@ -60,11 +56,7 @@ const PreviousDeliveries = () => {
               </Grid>
             </Grid>
 
-            <Grid
-              item
-              container
-              className={previousDeliveries.noDeliveriesFiller}
-            ></Grid>
+            <Grid item container className={styles.noDeliveriesFiller}></Grid>
           </>
         )}
       </Grid>

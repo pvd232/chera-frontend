@@ -29,11 +29,12 @@
             .contentTopContainer {
               justify-content: center;
               .contentContainer {
-                justify-content: space-between;
+                column-gap: 3vw;
                 align-items: center;
-                // padding-right: 2vh;
                 @include theme.xs {
                   padding: 0;
+                  justify-content: center;
+                  row-gap: 2vh;
                 }
                 .logoText {
                   color: theme.$fucia;
@@ -41,9 +42,8 @@
                   font-family: 'Sansita Bold';
                   cursor: pointer;
                 }
-                .linksContainer {
-                  justify-content: space-around;
-                  column-gap: 3.5vh;
+                .profileDropDown {
+                  margin-left: auto;
                 }
               }
             }

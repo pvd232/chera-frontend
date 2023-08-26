@@ -6,7 +6,7 @@ import {
   TextField,
   CircularProgress,
 } from '@mui/material';
-import accountManagement from './scss/AccountManagement.module.scss';
+import styles from './scss/AccountManagement.module.scss';
 import APIClient from '../../../helpers/APIClient';
 import LocalStorageManager from '../../../helpers/LocalStorageManager';
 import { useNavigate } from 'react-router-dom';
@@ -51,22 +51,19 @@ const AccountManagement = () => {
   };
 
   return (
-    <Grid container item className={accountManagement.pageContainer} xs={10}>
-      <Grid item container className={accountManagement.childContainer}>
-        <Typography
-          id={'account-management-header'}
-          className={accountManagement.header}
-        >
+    <Grid container item className={styles.pageContainer} xs={10}>
+      <Grid item container className={styles.childContainer}>
+        <Typography id={'account-management-header'} className={styles.header}>
           Manage Your Account
         </Typography>
       </Grid>
 
       {/* Close Account Section */}
-      <Grid container item className={accountManagement.contentContainer}>
-        <Grid container item className={accountManagement.cardContainer}>
+      <Grid container item className={styles.contentContainer}>
+        <Grid container item className={styles.cardContainer}>
           <Grid item container>
             <Grid item>
-              <Typography className={accountManagement.closeAccountText}>
+              <Typography className={styles.closeAccountText}>
                 Close Account
               </Typography>
               <Typography>
@@ -74,15 +71,10 @@ const AccountManagement = () => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid
-            container
-            item
-            lg={6}
-            className={accountManagement.buttonContainer}
-          >
+          <Grid container item lg={6} className={styles.buttonContainer}>
             <Grid item>
               <TextField
-                className={accountManagement.confirmUsernameField}
+                className={styles.confirmUsernameField}
                 label="Confirm email"
                 value={confirmDeleteUsername}
                 onChange={(event) =>
@@ -92,11 +84,11 @@ const AccountManagement = () => {
             </Grid>
             <Grid item xs={3}>
               <Button
-                className={accountManagement.closeAccountLink}
+                className={styles.closeAccountLink}
                 onClick={handleDeleteSubscription}
               >
                 {loadingDeleteSubscription ? (
-                  <CircularProgress size={24} sx={{ color: 'white' }} />
+                  <CircularProgress size={24} className={styles.progress} />
                 ) : (
                   'Close account'
                 )}

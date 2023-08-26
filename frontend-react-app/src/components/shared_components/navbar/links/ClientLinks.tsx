@@ -1,4 +1,3 @@
-import ClientProfileDropDown from '../ClientProfileDropDown';
 import { Grid, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import clientLinks from '../scss/ClientLinks.module.scss';
@@ -21,11 +20,8 @@ const ClientLinks = () => {
           className={clientLinks.link}
           onClick={() => navigate('/previous-deliveries')}
         >
-          Previous deliveries
+          Past deliveries
         </Typography>
-      </Grid>
-      <Grid item>
-        <ClientProfileDropDown />
       </Grid>
     </Grid>
   );

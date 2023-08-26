@@ -63,9 +63,9 @@ const Orb = (props: OrbProps) => {
     },
     [xsScreen, props.fill, windowWidth]
   );
-  useTick((delta) => {
-    const yDelta = 0.4;
-    const xDelta = 0.4;
+  useTick((_delta) => {
+    const yDelta = 0.25;
+    const xDelta = 0.25;
     const scaleDelta = 0.001;
     const updatedValues = (() => {
       // If the orb has moved to it's destination, update the destination

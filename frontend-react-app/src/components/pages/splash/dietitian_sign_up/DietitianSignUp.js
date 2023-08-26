@@ -322,7 +322,7 @@ const DietitianSignUp = () => {
                           control={
                             <>
                               <Tooltip
-                                title="You will receive 1 sample of both our Chicken Pesto Pasta, and our Peanut Noodles with Tofu"
+                                title="You will receive 1 600 kCal portion size sample of both our Chicken Pesto Pasta, and our Greek Turkey Meatballs with Orzo & Roasted Veggies."
                                 placement="right"
                               >
                                 <IconButton>

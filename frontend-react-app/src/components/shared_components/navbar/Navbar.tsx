@@ -6,9 +6,24 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { NavbarProps } from './types/NavbarProps.ts';
 import navbar from './scss/Navbar.module.scss';
+import { useWindowWidth } from '../../hooks/useWindowWidth.ts';
+import ScreenSize from '../../../types/enums/ScreenSize.ts';
 
 const Navbar = (props: NavbarProps) => {
   const navigate = useNavigate();
+  const windowWidth = useWindowWidth();
+  const isMobile = windowWidth <= ScreenSize.xs;
+  const shouldShowProfileDropDown = () => {
+    if (!isMobile) {
+      return true;
+      // Client navbar does not have hamburger menu, so the profile dropdown should always be shown
+    } else if (isMobile && props.profileDropDown && props.homeUrl === '/home') {
+      return true;
+    } else {
+      // Dietitian mobile navbar has hamburger menu, so the profile dropdown should not be shown
+      return false;
+    }
+  };
   const handleClickLogo = () => {
     navigate(props.homeUrl);
   };
@@ -34,17 +49,12 @@ const Navbar = (props: NavbarProps) => {
                         Chera
                       </Typography>
                     </Grid>
-                    <Grid
-                      container
-                      item
-                      className={navbar.linksContainer}
-                      xs={3}
-                      sm={9}
-                      md={8}
-                      lg={6}
-                    >
-                      {props.links}
-                    </Grid>
+                    <Grid item>{props.links}</Grid>
+                    {shouldShowProfileDropDown() && (
+                      <Grid item className={navbar.profileDropDown}>
+                        {props.profileDropDown}
+                      </Grid>
+                    )}
                   </Grid>
                 </Grid>
               </Toolbar>

@@ -18,7 +18,7 @@ const IntroTextBox = () => {
       xs={10}
     >
       <Grid item id="introTextBoxHeader">
-        <Typography className={styles.header}>Mindful</Typography>
+        <Typography className={styles.header}>Anti-diet</Typography>
         <Typography className={styles.header}>
           {!isMobile ? 'meal delivery for' : 'meal delivery'}
         </Typography>
@@ -35,11 +35,9 @@ const IntroTextBox = () => {
         ) : (
           <>
             <Typography className={styles.subheader}>
-              Chera is designed
+              Chera is designed to make recovery
             </Typography>
-            <Typography className={styles.subheader}>
-              to make recovery,
-            </Typography>
+
             <Typography className={styles.subheader}>
               simpler, kinder, and more accessible
             </Typography>

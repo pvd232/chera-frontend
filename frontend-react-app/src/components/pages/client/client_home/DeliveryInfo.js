@@ -18,7 +18,13 @@ const DeliveryInfo = (props) => {
   };
   return (
     <Grid container item className={deliveryInfo.rootContainer}>
-      <Grid container item xs={6} className={deliveryInfo.headerContainer}>
+      <Grid
+        container
+        item
+        lg={6}
+        xs={10}
+        className={deliveryInfo.headerContainer}
+      >
         <Grid item>
           <Stack className={deliveryInfo.stack}>
             {props.isFirstDelivery ? (
@@ -27,8 +33,11 @@ const DeliveryInfo = (props) => {
                   Welcome to Chera!
                 </Typography>
                 <Typography className={deliveryInfo.header}>
-                  This is your home page. Here you can view your upcoming
-                  deliveries and make changes to your subscription.
+                  This is your home page.
+                </Typography>
+                <Typography className={deliveryInfo.header}>
+                  From here you can view your upcoming deliveries and make
+                  changes to your subscription.
                 </Typography>
               </>
             ) : (
@@ -74,7 +83,13 @@ const DeliveryInfo = (props) => {
           </FormHelperText>
         </Grid>
       </Grid>
-      <Grid container item xs={6} className={deliveryInfo.modalButtonContainer}>
+      <Grid
+        container
+        item
+        lg={6}
+        xs={2}
+        className={deliveryInfo.modalButtonContainer}
+      >
         <EditDeliveryModal
           isFirstDelivery={props.isFirstDelivery}
           paused={props.paused}

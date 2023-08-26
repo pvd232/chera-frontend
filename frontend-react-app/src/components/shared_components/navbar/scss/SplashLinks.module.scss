@@ -6,6 +6,10 @@
   @include theme.xs {
     justify-content: center;
   }
+  .mobileDropdownContainer {
+    position: absolute;
+    right: 5vw;
+  }
   .dietitianSignupButton {
     background-color: theme.$fucia;
     color: white;

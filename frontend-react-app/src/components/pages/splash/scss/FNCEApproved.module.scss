@@ -52,7 +52,7 @@ $FNCE-logo: url('../../../static/images/fnce_logo.png');
       .content {
         font-size: 3rem;
         @include theme.xs {
-          font-size: 2rem;
+          font-size: 1rem;
         }
       }
     }

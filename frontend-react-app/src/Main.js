@@ -33,6 +33,8 @@ import ClientInvoice from './components/pages/client/client_home/client_invoice/
 import AccountManagement from './components/pages/client/AccountManagement';
 import Privacy from './components/pages/splash/Privacy';
 import TermsOfService from './components/pages/splash/TermsOfService';
+import ClientProfileDropDown from './components/shared_components/navbar/ClientProfileDropDown';
+import DietitianProfileDropDown from './components/shared_components/navbar/DietitianProfileDropDown';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -164,6 +166,7 @@ const Main = (props) => {
               <Navbar
                 childComponent={<ClientHomeContainer />}
                 links={<ClientLinks />}
+                profileDropDown={<ClientProfileDropDown />}
                 homeUrl="/home"
               />
             }
@@ -179,6 +182,7 @@ const Main = (props) => {
                   />
                 }
                 links={<DietitianLinks />}
+                profileDropDown={<DietitianProfileDropDown />}
                 homeUrl="/d-home"
               />
             }
@@ -210,6 +214,7 @@ const Main = (props) => {
                   />
                 }
                 links={<DietitianLinks />}
+                profileDropDown={<DietitianProfileDropDown />}
                 homeUrl={'/d-home'}
               />
             }
@@ -220,6 +225,7 @@ const Main = (props) => {
               <Navbar
                 childComponent={<PreviousDeliveries />}
                 links={<ClientLinks />}
+                profileDropDown={<ClientProfileDropDown />}
                 homeUrl="/home"
               />
             }
@@ -269,6 +275,7 @@ const Main = (props) => {
                   <DietitianMenuContainer childComponent={<DietitianMenu />} />
                 }
                 links={<DietitianLinks />}
+                profileDropDown={<DietitianProfileDropDown />}
                 homeUrl="/d-home"
               />
             }
