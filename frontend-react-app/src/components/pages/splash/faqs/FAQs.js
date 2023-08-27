@@ -36,10 +36,14 @@ const FAQs = () => {
               If you have more questions, please reach out!
             </Typography>
           </Grid>
-
-          <a className={styles.emailLink} href="mailto:contact@cherahealth.com">
-            contact@cherahealth.com
-          </a>
+          <Grid item>
+            <a
+              className={styles.emailLink}
+              href="mailto:contact@cherahealth.com"
+            >
+              contact@cherahealth.com
+            </a>
+          </Grid>
         </Grid>
         <Grid item container lg={7} xs={11} className={styles.RHS}>
           <Grid container item className={styles.segmentContainer}>

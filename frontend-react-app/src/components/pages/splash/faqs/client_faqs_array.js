@@ -2,32 +2,27 @@ const clientFAQsArray = [
   {
     question: 'How much is Chera?',
     answer:
-      'Depending on location and number of meals ordered, meals will usually range from $9-$11 each.',
+      'Depending on location and order size, meals range from $9-$11 each.',
   },
   {
-    question: 'Is there a minimum number of meals and snacks?',
-    answer: 'Yes, there is a 8 meal minimum per week, with snacks optional.',
+    question: 'Is there a minimum order size?',
+    answer: 'Yes, the minimum order is 6 meals.',
   },
 
   {
     question: 'Can I skip a week?',
     answer:
-      'Certainly! You have the option to skip any delivery until your order is processed every Wednesday at 10 PM CST.',
+      'Yes, you may skip any delivery until your order is processed on Wednesday at 10 PM CST.',
   },
   {
-    question: 'Is it required to order breakfast, lunch, and dinner?',
+    question: 'Can I change my order?',
     answer:
-      "No, you're welcome to choose any combination of meals and snacks that suits your preference!",
-  },
-  {
-    question: 'Can I change my meals and snacks?',
-    answer:
-      'You can customize your meals and snacks on a weekly basis. The deadline to modify your order is Wednesday at 10 PM CST.',
+      'You can customize your food on a weekly basis. The deadline to modify your order is Wednesday at 10 PM CST.',
   },
   {
     question: 'Can I use Chera without a dietitian?',
     answer:
-      'No, only dietitians can refer clients to the platform. Chera is designed to faciliate collaboration and oversight between dietitians and their clients.',
+      'Yes, but keep in mind that Chera is designed to faciliate collaboration and oversight between dietitians and their clients.',
   },
   {
     question: 'Does Chera offer allergy-friendly recipes?',

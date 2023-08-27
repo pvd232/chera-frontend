@@ -12,19 +12,13 @@ const ReasonFAQ = (props) => (
     className={styles.reasonFAQContainer}
   >
     <Grid container item className={styles.questionContainer}>
-      <Grid item>
+      <Grid item xs={10}>
         <Typography className={styles.questionText}>
           {props.question}
         </Typography>
       </Grid>
       <Grid item>
-        <Icon
-          sx={{
-            transform: `scale(1.3)`,
-          }}
-        >
-          arrow_drop_down
-        </Icon>
+        <Icon>arrow_drop_down</Icon>
       </Grid>
     </Grid>
     <Grid container item>
@@ -34,10 +28,10 @@ const ReasonFAQ = (props) => (
         }
       >
         <Grid container className={styles.answerTextContainer}>
-          <Grid item>
+          <Grid item xs={1}>
             <SubdirectoryArrowRightIcon />
           </Grid>
-          <Grid item>
+          <Grid item xs={10.5}>
             <Typography className={styles.answerText}>
               {props.answer}
             </Typography>

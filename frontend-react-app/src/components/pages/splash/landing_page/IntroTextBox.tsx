@@ -48,7 +48,7 @@ const IntroTextBox = () => {
         <Button
           id="getStartedButton"
           variant={'contained'}
-          onClick={() => navigate('/dietitian-sign-up')}
+          onClick={() => navigate('/sign-up-choice')}
           className={styles.button}
         >
           Get started

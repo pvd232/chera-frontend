@@ -8,6 +8,7 @@
   cursor: pointer;
   .questionContainer {
     justify-content: space-between;
+    align-items: center;
     .questionText {
       @include splash.splash-page-body;
     }
@@ -22,7 +23,7 @@
       .answerText {
         @include splash.splash-page-body;
         color: theme.$fucia;
-        font-family: theme.$defaultFontBold;
+        // font-family: theme.$defaultFontBold;
       }
     }
   }

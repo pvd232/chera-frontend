@@ -42,18 +42,9 @@ const SplashLinks = () => {
               id="dietitian-sign-up"
               variant="contained"
               className={styles.dietitianSignupButton}
-              onClick={() =>
-                loginWithRedirect({
-                  authorizationParams: {
-                    screen_hint: 'signup',
-                  },
-                  appState: {
-                    returnTo: '/dietitian-sign-up',
-                  },
-                })
-              }
+              onClick={() => navigate('sign-up-choice')}
             >
-              Dietitian sign up
+              Sign up
             </Button>
           </Grid>
 

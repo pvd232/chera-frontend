@@ -29,6 +29,8 @@
   .headerOpen {
     @include splash.splash-page-subheader;
     color: white;
+    font-family: theme.$defaultFontBold;
+
     @include theme.xs {
       font-size: splash.$contentSubHeaderFontSize;
     }

@@ -6,6 +6,9 @@ $contentSubHeaderFontSize: 1.1rem;
   padding-bottom: 15vh;
   justify-content: center;
   background-color: theme.$lightFucia;
+  @include theme.xs {
+    padding-top: 5vh;
+  }
 }
 @mixin splash-page-header {
   font-family: theme.$defaultFontBold;
@@ -15,7 +18,6 @@ $contentSubHeaderFontSize: 1.1rem;
   font-size: 2rem;
 }
 @mixin splash-page-subheader {
-  font-family: theme.$defaultFontBold;
   line-height: 100%;
   font-size: 1.2rem;
 }
@@ -24,6 +26,13 @@ $contentSubHeaderFontSize: 1.1rem;
   @include theme.xs {
     font-size: 0.95rem;
   }
+}
+@mixin action-button {
+  font-size: medium;
+  border-radius: theme.$buttonBorderRadius;
+  letter-spacing: 0.1px;
+  background-color: theme.$fucia;
+  text-transform: none;
 }
 .pageContainer {
   justify-content: center;

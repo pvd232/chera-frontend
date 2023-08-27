@@ -35,6 +35,7 @@ import Privacy from './components/pages/splash/Privacy';
 import TermsOfService from './components/pages/splash/TermsOfService';
 import ClientProfileDropDown from './components/shared_components/navbar/ClientProfileDropDown';
 import DietitianProfileDropDown from './components/shared_components/navbar/DietitianProfileDropDown';
+import { SignUpChoice } from './components/pages/splash/SignUpChoice';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -305,6 +306,16 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={<TermsOfService />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/sign-up-choice"
+            element={
+              <Navbar
+                childComponent={<SignUpChoice />}
                 links={<SplashLinks />}
                 homeUrl="/"
               />

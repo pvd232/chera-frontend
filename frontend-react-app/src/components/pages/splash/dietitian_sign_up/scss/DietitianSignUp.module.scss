@@ -5,8 +5,8 @@
   background-color: theme.$lightFucia;
   @include splash.splash-page-container;
   .header {
-    margin-bottom: 10vh;
     @include splash.splash-page-header;
+    margin-bottom: 10vh;
   }
   .submitButton {
     background-color: theme.$fucia;
@@ -24,7 +24,6 @@
     margin-top: 3vh;
   }
   .sampleCheckbox {
-    // color: theme.$fucia;
     background-color: theme.$antiqueWhite;
     margin: 0;
     border-radius: 4px;
