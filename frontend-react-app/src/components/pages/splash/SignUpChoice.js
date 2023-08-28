@@ -17,7 +17,7 @@ export const SignUpChoice = () => {
     });
   };
   const handleClientClick = () => {
-    navigate('/client-sign-up');
+    navigate('/dtc-sign-up');
   };
   return (
     <Grid container item className={styles.pageContainer}>

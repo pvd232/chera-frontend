@@ -1,0 +1,38 @@
+@use '../../../../../static/scss/index.scss' as theme;
+@use '../../scss/Splash.module.scss' as splash;
+
+.pageContainer {
+  justify-content: center;
+  background-color: theme.$lightFucia;
+  @include splash.splash-page-container;
+  .contentContainer {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    .header {
+      margin-bottom: 10vh;
+      @include splash.splash-page-header;
+    }
+    .subHeader {
+      margin-bottom: 3vh;
+      @include splash.splash-page-subheader;
+    }
+    .buttons {
+      justify-content: center;
+      column-gap: 3vw;
+      @include theme.xs {
+        column-gap: 5vw;
+      }
+      .container {
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-radius: 10px;
+        padding: 1vh 1vh 1vh 1vh;
+        .button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

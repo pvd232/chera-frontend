@@ -36,6 +36,9 @@ import TermsOfService from './components/pages/splash/TermsOfService';
 import ClientProfileDropDown from './components/shared_components/navbar/ClientProfileDropDown';
 import DietitianProfileDropDown from './components/shared_components/navbar/DietitianProfileDropDown';
 import { SignUpChoice } from './components/pages/splash/SignUpChoice';
+import { ReferDietitian } from './components/pages/splash/dtc_sign_up/ReferDietitian';
+import { DTCSignUp } from './components/pages/splash/dtc_sign_up/DTCSignUp';
+import { FindDietitian } from './components/pages/splash/dtc_sign_up/FindDietitian';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -316,6 +319,36 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={<SignUpChoice />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/refer-dietitian"
+            element={
+              <Navbar
+                childComponent={<ReferDietitian />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/dtc-sign-up"
+            element={
+              <Navbar
+                childComponent={<DTCSignUp />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/find-dietitian"
+            element={
+              <Navbar
+                childComponent={<FindDietitian />}
                 links={<SplashLinks />}
                 homeUrl="/"
               />

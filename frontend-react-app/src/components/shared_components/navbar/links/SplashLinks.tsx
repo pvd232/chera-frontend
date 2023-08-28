@@ -42,7 +42,7 @@ const SplashLinks = () => {
               id="dietitian-sign-up"
               variant="contained"
               className={styles.dietitianSignupButton}
-              onClick={() => navigate('sign-up-choice')}
+              onClick={() => navigate('/sign-up-choice')}
             >
               Sign up
             </Button>

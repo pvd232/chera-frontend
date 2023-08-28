@@ -228,7 +228,10 @@ const DietitianSignUp = () => {
                 <FormGroup>
                   <Stack direction={'column'} rowGap={3}>
                     <FormControl variant="filled">
-                      <ErrorMessage error={error} />
+                      <ErrorMessage
+                        error={error}
+                        errorText={'The email you entered is already taken.'}
+                      />
                       <CustomTextField
                         required
                         fullWidth
