@@ -1,11 +1,9 @@
 import { Button, Grid, Typography } from '@mui/material';
 import styles from './scss/SignUpChoice.module.scss';
 import { useAuth0 } from '@auth0/auth0-react';
-import { useNavigate } from 'react-router-dom';
 
 export const SignUpChoice = () => {
   const { loginWithRedirect } = useAuth0();
-  const navigate = useNavigate();
   const handleDieitianClick = () => {
     loginWithRedirect({
       authorizationParams: {
@@ -17,7 +15,14 @@ export const SignUpChoice = () => {
     });
   };
   const handleClientClick = () => {
-    navigate('/dtc-sign-up');
+    loginWithRedirect({
+      authorizationParams: {
+        screen_hint: 'signup',
+      },
+      appState: {
+        returnTo: '/dtc-sign-up',
+      },
+    });
   };
   return (
     <Grid container item className={styles.pageContainer}>

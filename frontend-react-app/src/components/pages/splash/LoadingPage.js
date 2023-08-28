@@ -30,7 +30,7 @@ const LoadingPage = () => {
             } else {
               APIClient.getDietitian(email).then((dietitianData) => {
                 if (!dietitianData) {
-                  navigate('/dietitian-sign-up');
+                  navigate('/sign-up-choice');
                 } else {
                   const dietitianDTO = new DietitianDTO(dietitianData);
                   const dietitian = new Dietitian(dietitianDTO);

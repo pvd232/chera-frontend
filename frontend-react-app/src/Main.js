@@ -39,6 +39,7 @@ import { SignUpChoice } from './components/pages/splash/SignUpChoice';
 import { ReferDietitian } from './components/pages/splash/dtc_sign_up/ReferDietitian';
 import { DTCSignUp } from './components/pages/splash/dtc_sign_up/DTCSignUp';
 import { FindDietitian } from './components/pages/splash/dtc_sign_up/FindDietitian';
+import { NoDietitian } from './components/pages/splash/dtc_sign_up/NoDietitian';
 const TRACKING_ID = 'UA-238874096-1'; // OUR_TRACKING_ID
 
 if (process.env.NODE_ENV === 'production') {
@@ -349,6 +350,16 @@ const Main = (props) => {
             element={
               <Navbar
                 childComponent={<FindDietitian />}
+                links={<SplashLinks />}
+                homeUrl="/"
+              />
+            }
+          />
+          <Route
+            path="/no-dietitian"
+            element={
+              <Navbar
+                childComponent={<NoDietitian />}
                 links={<SplashLinks />}
                 homeUrl="/"
               />

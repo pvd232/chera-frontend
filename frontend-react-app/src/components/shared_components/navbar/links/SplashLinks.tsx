@@ -39,7 +39,7 @@ const SplashLinks = () => {
           </Grid>
           <Grid item>
             <Button
-              id="dietitian-sign-up"
+              id="sign-up"
               variant="contained"
               className={styles.dietitianSignupButton}
               onClick={() => navigate('/sign-up-choice')}
