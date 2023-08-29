@@ -21,7 +21,6 @@ import CircularProgressPage from '../../../shared_components/CircularProgressPag
 import { getMealPlanMeal } from './helpers/getMealPlanMeal';
 import { useMealPlanMeal } from './hooks/useMealPlanMeal';
 import ExtendedRecipeIngredientDTO from '../../../../data_models/dto/ExtendedRecipeIngredientDTO';
-import { cloneMealPlanMeal } from './helpers/cloneMealPlanMeal';
 const MealPlanMealBuilder = (props) => {
   const [mealPlanMeal, setMealPlanMeal] = useMealPlanMeal(
     props.mealPlans[0].id,
@@ -118,23 +117,6 @@ const MealPlanMealBuilder = (props) => {
         // Update meal plan meal in backend
         await APIClient.updateMealPlanMeal(mealPlanMeal);
       }
-
-      // // Update recipe ingredients and nutrients in backend for even meal plan meal, which has identical recipe
-      const evenMealPlan = await APIClient.getMealPlan(
-        mealPlanMeal.associatedMealPlan.number + 1
-      );
-
-      const evenMealPlanMeal = await getMealPlanMeal(
-        evenMealPlan.id,
-        mealPlanMeal.mealId
-      );
-      const multiplierToUse =
-        multiplier !== 1 ? multiplier : mealPlanMeal.multiplier;
-      await cloneMealPlanMeal(
-        multipliedRecipe,
-        evenMealPlanMeal,
-        multiplierToUse
-      );
     }
 
     alert('Meals successfully updated!');

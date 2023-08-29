@@ -45,13 +45,13 @@ export default async function updateUSDAIngredients({
   if (mounted) {
     setDietaryRestrictions(dietaryRestrictions);
   }
-  const mealPlans = await APIClient.getMealPlans(true);
+  const mealPlans = await APIClient.getMealPlans(false);
   if (mounted) {
     setMealPlans(mealPlans);
   }
   //   4th meal plan is the default meal plan
   const mealPlanMeals = await APIClient.getSpecificExtendedMealPlanMeals(
-    mealPlans[4].id
+    mealPlans[1].id
   );
   const mealsToReturn = [];
   for (const extendedMealPlanMeal of mealPlanMeals) {
