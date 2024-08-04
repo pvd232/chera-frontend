@@ -27,8 +27,9 @@
     }
     .rhsContainer {
       flex-direction: column;
+      height: fit-content;
       align-items: center;
-      row-gap: 2vh;
+      row-gap: 10vh;
       .img {
         max-width: 300px;
       }
