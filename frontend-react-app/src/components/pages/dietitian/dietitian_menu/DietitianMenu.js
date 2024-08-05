@@ -24,6 +24,7 @@ import { mapMealNutrientStatsData } from './helpers/mapMealNutrientStatsData';
 import MediaCard from './MediaCard';
 import Info from '@mui/icons-material/Info';
 import VeggieSwitch from './VeggieSwitch';
+import { filterForImages } from './helpers/filterForImages';
 const DietitianMenu = (props) => {
   const customTheme = useTheme();
   const [filterMealPlanId, setFilterMealPlanId] = useState(
@@ -172,23 +173,23 @@ const DietitianMenu = (props) => {
           </Grid>
         ) : props.splash ? (
           <Grid container item spacing={4}>
-            {sortFilteredMealPlanMeals(props.extendedMeals).map(
-              (extendedMeal, i) => {
-                return (
-                  <Grid item key={i} md={4}>
-                    <MediaCard
-                      mealPlanMeal={extendedMeal}
-                      name={extendedMeal.name}
-                      description={extendedMeal.description}
-                      imageUrl={extendedMeal.imageUrl}
-                      mealTime={extendedMeal.mealTime}
-                      key={i}
-                      shouldDisplayNutritionDetails={false}
-                    />
-                  </Grid>
-                );
-              }
-            )}
+            {filterForImages(
+              sortFilteredMealPlanMeals(props.extendedMeals)
+            ).map((extendedMeal, i) => {
+              return (
+                <Grid item key={i} md={4}>
+                  <MediaCard
+                    mealPlanMeal={extendedMeal}
+                    name={extendedMeal.name}
+                    description={extendedMeal.description}
+                    imageUrl={extendedMeal.imageUrl}
+                    mealTime={extendedMeal.mealTime}
+                    key={i}
+                    shouldDisplayNutritionDetails={false}
+                  />
+                </Grid>
+              );
+            })}
           </Grid>
         ) : (
           <Grid container item spacing={4}>

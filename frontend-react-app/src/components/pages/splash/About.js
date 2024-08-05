@@ -12,43 +12,6 @@ const About = () => (
       <Typography className={styles.header}>Meet the team</Typography>
     </Grid>
     <Grid className={styles.contentContainer} container item>
-      {/* Zoe Profile */}
-      <Grid container item className={styles.VIPprofileContainer}>
-        <Grid item container lg={5} className={styles.zoeImgContainer}>
-          <img src={zoePic} alt="zoe headshot" className={styles.img}></img>
-        </Grid>
-        <Grid container item lg={6.3} className={styles.quoteContainer}>
-          <Grid item>
-            <Typography className={styles.quote}>
-              "At Chera, we understand that there can be so many obstacles
-              between our clients and eating disorder recovery. Through our
-              platform, we hope to ease the burden by providing individualized,
-              prepared meals with the guidance of our clients' dietitians.
-            </Typography>
-          </Grid>
-          <Grid item></Grid>
-
-          <Grid item>
-            <Typography className={styles.quote}>
-              The journey to recovery is not something you have to do alone, and
-              we at Chera hope to be a part of your support along the way."
-            </Typography>
-          </Grid>
-          <Grid item></Grid>
-
-          <Grid item>
-            <Typography className={styles.name}>
-              Zoe Woloszko, MCN, RD, LD
-            </Typography>
-          </Grid>
-
-          <Grid item>
-            <Typography className={styles.jobTitle}>
-              Chief Clinical Officer, Co-Founder
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
       {/* Peter Profile */}
       <Grid container item className={styles.VIPprofileContainer}>
         <Grid item lg={5}>
@@ -88,10 +51,50 @@ const About = () => (
           </Grid>
 
           <Grid item>
-            <Typography className={styles.jobTitle}>CEO, Co-Founder</Typography>
+            <Typography className={styles.jobTitle}>
+              CEO, Founding Engineer & Co-Founder
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
+      {/* Zoe Profile */}
+      <Grid container item className={styles.VIPprofileContainer}>
+        <Grid item container lg={5} className={styles.zoeImgContainer}>
+          <img src={zoePic} alt="zoe headshot" className={styles.img}></img>
+        </Grid>
+        <Grid container item lg={6.3} className={styles.quoteContainer}>
+          <Grid item>
+            <Typography className={styles.quote}>
+              "At Chera, we understand that there can be so many obstacles
+              between our clients and eating disorder recovery. Through our
+              platform, we hope to ease the burden by providing individualized,
+              prepared meals with the guidance of our clients' dietitians.
+            </Typography>
+          </Grid>
+          <Grid item></Grid>
+
+          <Grid item>
+            <Typography className={styles.quote}>
+              The journey to recovery is not something you have to do alone, and
+              we at Chera hope to be a part of your support along the way."
+            </Typography>
+          </Grid>
+          <Grid item></Grid>
+
+          <Grid item>
+            <Typography className={styles.name}>
+              Zoe Woloszko, MCN, RD, LD
+            </Typography>
+          </Grid>
+
+          <Grid item>
+            <Typography className={styles.jobTitle}>
+              Chief Clinical Officer, Co-Founder
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+
       {/* Rest of profiles */}
       <Grid container item className={styles.restOfProfilesContainer}>
         {/* Carol profile */}
