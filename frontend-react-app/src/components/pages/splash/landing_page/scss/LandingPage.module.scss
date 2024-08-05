@@ -1,6 +1,12 @@
+@use '../../../../../static/scss/index.scss' as theme;
 .landingPageContainer {
   justify-content: center;
   position: relative;
   height: 85vh;
   display: flex;
+  @include theme.smaller {
+    @include theme.landscape {
+      height: 120vh;
+    }
+  }
 }

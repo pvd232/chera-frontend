@@ -22,6 +22,9 @@ const SplashMobileDropDown = () => {
   const handleNavigate = (event: React.MouseEvent<HTMLElement>) => {
     const id = event.currentTarget.id;
     switch (id) {
+      case 'splash-menu':
+        navigate('/splash-menu');
+        break;
       case 'resources':
         navigate('/resources');
         break;
@@ -122,6 +125,15 @@ const SplashMobileDropDown = () => {
                       className={styles.menuItem}
                     >
                       <Typography className={styles.text}>Log in</Typography>
+                    </MenuItem>
+                    <MenuItem
+                      id="splash-menu"
+                      onClick={handleNavigate}
+                      className={styles.menuItem}
+                    >
+                      <Typography className={styles.text}>
+                        Weekly menu
+                      </Typography>
                     </MenuItem>
                     <MenuItem
                       id="resources"

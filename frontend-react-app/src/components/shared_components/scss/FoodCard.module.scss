@@ -1,3 +1,4 @@
+@use '../../../static/scss/index.scss' as theme;
 .card {
   height: 100%;
   max-width: 350px;
@@ -14,6 +15,11 @@
     margin-right: auto;
     margin-bottom: 20px;
     border-radius: 10px;
+    @include theme.smaller {
+      @include theme.landscape {
+        height: fit-content;
+      }
+    }
   }
   .svgImg {
     display: flex;

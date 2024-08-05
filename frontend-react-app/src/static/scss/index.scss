@@ -134,3 +134,9 @@ $buttonBorderRadius: 100px;
     @content;
   }
 }
+// Define the landscape mixin
+@mixin landscape {
+  @media screen and (orientation: landscape) {
+    @content;
+  }
+}

@@ -10,25 +10,27 @@ export const FoodCard = (props) => {
   const [image, setImage] = useState(true);
   return (
     <Card className={foodCard.card}>
-      {image ? (
-        <CardMedia
-          component={'img'}
-          onError={(e) => {
-            setImage(false);
-          }}
-          src={props.mealImageUrl}
-          alt="green iguana"
-          className={foodCard.img}
-        />
-      ) : (
-        <CardMedia
-          component={'div'}
-          alt="green iguana"
-          className={foodCard.svgImg}
-        >
-          <CheraLogo className={foodCard.img} />
-        </CardMedia>
-      )}
+      <>
+        {image ? (
+          <CardMedia
+            component={'img'}
+            onError={() => {
+              setImage(false);
+            }}
+            src={props.mealImageUrl}
+            alt="green iguana"
+            className={foodCard.img}
+          />
+        ) : (
+          <CardMedia
+            component={'div'}
+            alt="green iguana"
+            className={foodCard.svgImg}
+          >
+            <CheraLogo className={foodCard.img} />
+          </CardMedia>
+        )}
+      </>
 
       <CardContent>
         <Typography gutterBottom>{props.mealName}</Typography>

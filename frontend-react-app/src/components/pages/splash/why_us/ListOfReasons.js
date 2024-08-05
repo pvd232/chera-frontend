@@ -31,8 +31,8 @@ const ListOfReasons = (props) => (
       setReasonOpen={() => props.setReasonOpen('first')}
       bulletPrimaryText={
         props.xsScreen
-          ? 'Collaborative Meal Planning'
-          : 'Collaborative Meal Planning & Delivery'
+          ? 'Joint Meal Planning'
+          : 'Joint Meal Planning & Delivery'
       }
       bulletSecondaryText={
         'By making it easier for dietitians and clients to collaboratively build meal plans, we aim to support recovery and impede relapse.'
@@ -42,7 +42,7 @@ const ListOfReasons = (props) => (
     <ReasonBullet
       reasonOpen={props.reasonOpen.third}
       setReasonOpen={() => props.setReasonOpen('third')}
-      bulletPrimaryText={'Personalized Portion Sizes'}
+      bulletPrimaryText={'Catered Portion Sizes'}
       bulletSecondaryText={
         'We fine tune our meal portion sizes to your precise nutritional needs.'
       }

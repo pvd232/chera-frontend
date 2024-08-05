@@ -7,9 +7,13 @@
   top: 12%;
   row-gap: 2.75vh;
   color: theme.$fucia;
-  @include theme.xs {
+  @include theme.smaller {
     top: 4%;
     row-gap: 5vh;
+    @include theme.landscape {
+      height: max-content;
+      top: 0%;
+    }
   }
   .header {
     font-family: theme.$defaultFontBold;

@@ -3,9 +3,12 @@ import { Stage } from '@pixi/react';
 import { useWindowWidth } from '../../../hooks/useWindowWidth';
 import useOrbs from './hooks/useOrbs';
 import { useWindowHeight } from '../../../hooks/useWindowHeight';
+import { useWindowLandscape } from '../../../hooks/useLandscape';
+
 const OrbContainer = () => {
   const windowWidth = useWindowWidth();
   const windowHeight = useWindowHeight();
+  const isLandscape = useWindowLandscape();
   const orbs = useOrbs();
 
   return (
@@ -16,7 +19,7 @@ const OrbContainer = () => {
           backgroundAlpha: 0,
         }}
         width={0.989 * windowWidth}
-        height={0.85 * windowHeight}
+        height={isLandscape ? 1.2 * windowHeight : 0.85 * windowHeight}
       >
         {orbs.map((orb) => {
           return orb;
