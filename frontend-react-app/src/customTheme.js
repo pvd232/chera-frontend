@@ -5,8 +5,6 @@ import ScreenSize from './types/enums/ScreenSize';
 const themeBase = createTheme({
   palette: {
     olive: {
-      // main: '#ff3e56',
-      // secondary: '#ff2e48',
       main: '#D4218D',
       secondary: '#FFEDF8',
       tertiary: '#fcb052',
@@ -18,10 +16,6 @@ const themeBase = createTheme({
       tertiary: '#fcb052',
       quaternary: '#fee1be',
     },
-    // fucia: {
-    //   main: '#ff3e56',
-    //   secondary: '#ffd5da',
-    // },
     fucia: {
       main: '#D4218D',
       secondary: '#FFEDF8',
